@@ -842,24 +842,35 @@ display: flex;           /* Pour centrer l'icône DANS la bulle */
     display: flex;
     flex-direction: column;
 
-    /* CORRECTION HAUTEUR : On augmente la marge de sécurité */
-    /* 44px + safe-area assure que ça passe sous l'encoche */
-    padding-top: calc(44px + env(safe-area-inset-top));
+    /* CORRECTION ICI : On force 64px comme les autres écrans */
+    /* Au lieu de "calc(44px + env(safe-area-inset-top))" */
+    padding-top: 64px;
+
     padding-left: 24px;
     padding-right: 24px;
-
     box-sizing: border-box;
 }
 
-/* --- BARRE D'OUTILS --- */
+/* On garde le style du header qu'on a validé */
 .header-row {
+    position: relative;
+    width: 100%;
+    height: 60px; /* Hauteur forcée pour alignement */
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 56px;
+    justify-content: flex-end; /* Le score part à droite */
     flex-shrink: 0;
     margin-bottom: 8px;
+}
+
+/* 2. Le Bouton Home (Absolu Gauche) */
+.header-row .btn-home-simple {
+    position: absolute !important;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    z-index: 20;
 }
 
 .btn-home-simple {
@@ -890,19 +901,44 @@ display: flex;           /* Pour centrer l'icône DANS la bulle */
 }
 
 .sum-team {
+    /* Positionnement */
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    pointer-events: none;
+    z-index: 0;
+    padding: 0 60px; /* Marges pour ne pas toucher les boutons */
+
+    /* Style Visuel (Restauré) */
     font-family: system-ui, -apple-system, sans-serif;
-    font-size: 22px; font-weight: 800; letter-spacing: 0.5px;
-    text-align: center; flex: 1; padding: 0 16px;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     text-shadow: 0 2px 10px rgba(0,0,0,0.5);
 }
 
+/* 4. La Pilule de Score (Calée à droite + Style Restauré) */
 .sum-score-pill {
+    /* Positionnement */
+    position: relative;
+    z-index: 5;
+    margin-left: auto; /* Force la pilule à droite */
+
+    /* Style Visuel (Restauré) */
     background: var(--md-sys-color-secondary-container);
     color: var(--md-sys-color-on-secondary-container);
-    padding: 0 20px; height: 40px; border-radius: 100px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 18px; font-weight: 900;
+    padding: 0 20px;
+    height: 40px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 900;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     border: 1px solid rgba(255,255,255,0.1);
 }
@@ -911,7 +947,7 @@ display: flex;           /* Pour centrer l'icône DANS la bulle */
     width: 100%; height: 2px;
     background-image: linear-gradient(to right, rgba(255,255,255,0.2) 33%, rgba(255,255,255,0) 0%);
     background-position: bottom; background-size: 6px 1px; background-repeat: repeat-x;
-    margin-top: 4px; flex-shrink: 0; opacity: 0.5;
+    flex-shrink: 0; opacity: 0.5;
 }
 
 /* --- THÈME --- */
@@ -1040,12 +1076,12 @@ display: flex;           /* Pour centrer l'icône DANS la bulle */
 .md3-headline {
     font-family: system-ui, -apple-system, sans-serif;
     font-size: 17px; font-weight: 600; color: var(--md-sys-color-on-surface);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.1;
+    white-space: nowrap; text-overflow: ellipsis; line-height: 1.2;
 }
 .md3-supporting {
     font-family: system-ui, -apple-system, sans-serif;
     font-size: 12px; color: var(--md-sys-color-on-surface-variant);
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; line-height: 1.1; margin-top: 5px; opacity:0.8;
+    white-space: nowrap; text-overflow: ellipsis; line-height: 1.1; margin-top: 5px; opacity:0.8;
 }
 
 /* SCORE */
@@ -1174,15 +1210,29 @@ display: flex;           /* Pour centrer l'icône DANS la bulle */
             display: flex; flex-direction: column; align-items: center; width: 100%; height: 100%; gap: 24px; padding-bottom: 24px;
         }
 
-        /* Conteneur de la ligne du haut */
+/* --- CORRECTION ALIGNEMENT LEADERBOARD --- */
 .leaderboard-header-row {
-    position: relative; /* Crée le repère pour le bouton absolu */
+    position: relative;
     width: 100%;
-    height: 48px;       /* Hauteur fixe pour stabiliser l'alignement */
+
+    /* ON FORCE LA MÊME HAUTEUR QUE L'ÉCRAN CATÉGORIE */
+    height: 60px;
+
     display: flex;
-    align-items: center;      /* Centre verticalement */
-    justify-content: center;  /* Centre le badge horizontalement */
-    margin-bottom: 16px;      /* Espace avant le titre "Classement" */
+    align-items: center;
+    justify-content: center; /* Centre le badge "MANCHE" */
+    margin-bottom: 16px;
+    flex-shrink: 0;
+}
+
+/* Le bouton Home : Sorti du flux et collé à gauche */
+.leaderboard-header-row .btn-home-simple {
+    position: absolute !important;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    z-index: 20;
 }
 
         /* FORCE LA LISTE À POUSSER LE BOUTON VERS LE BAS */
@@ -1444,115 +1494,115 @@ display: flex;           /* Pour centrer l'icône DANS la bulle */
         </div>
     </div>
 
-<div id="rules-screen" class="screen">
-    <div style="display:flex; align-items:center; margin-bottom:32px;">
-        <button class="md3-btn btn-icon" onclick="transitionTo('landing-screen')"><span class="material-symbols-outlined">arrow_back</span></button>
-        <h2 style="margin:0 0 0 16px;">Règles du Jeu</h2>
-    </div>
-    <div class="rules-container" style="display: flex; flex-direction: column; gap: 20px;">
-        <div class="rule-card" style="padding: 20px;">
-            <div class="rule-row">
-                <span class="material-symbols-outlined rule-icon" style="color: var(--md-sys-color-success); font-size: 40px;">swipe_right</span>
-                <div class="rule-content">
-                    <div style="font-weight:900; color:var(--md-sys-color-success); text-transform: uppercase; font-size: 14px; letter-spacing: 1px; margin-bottom: 4px;">Étape 1</div>
-                    <div style="font-weight:700; font-size: 18px; color: var(--md-sys-color-on-surface);">C'est un match !</div>
-                    <div style="font-size:14px; color:var(--md-sys-color-on-surface-variant); line-height: 1.4;">Si le mot affiché sur la carte correspond au thème, swipez vers la droite.</div>
+    <div id="rules-screen" class="screen">
+        <div style="display:flex; align-items:center; margin-bottom:32px;">
+            <button class="md3-btn btn-icon" onclick="transitionTo('landing-screen')"><span class="material-symbols-outlined">arrow_back</span></button>
+            <h2 style="margin:0 0 0 16px;">Règles du Jeu</h2>
+        </div>
+        <div class="rules-container" style="display: flex; flex-direction: column; gap: 20px;">
+            <div class="rule-card" style="padding: 20px;">
+                <div class="rule-row">
+                    <span class="material-symbols-outlined rule-icon" style="color: var(--md-sys-color-success); font-size: 40px;">swipe_right</span>
+                    <div class="rule-content">
+                        <div style="font-weight:900; color:var(--md-sys-color-success); text-transform: uppercase; font-size: 14px; letter-spacing: 1px; margin-bottom: 4px;">Étape 1</div>
+                        <div style="font-weight:700; font-size: 18px; color: var(--md-sys-color-on-surface);">C'est un match !</div>
+                        <div style="font-size:14px; color:var(--md-sys-color-on-surface-variant); line-height: 1.4;">Si le mot affiché sur la carte correspond au thème, swipez vers la droite.</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="rule-card" style="padding: 20px;">
-            <div class="rule-row">
-                <span class="material-symbols-outlined rule-icon" style="color: var(--md-sys-color-error); font-size: 40px;">swipe_left</span>
-                <div class="rule-content">
-                    <div style="font-weight:900; color:var(--md-sys-color-error); text-transform: uppercase; font-size: 14px; letter-spacing: 1px; margin-bottom: 4px;">Étape 2</div>
-                    <div style="font-weight:700; font-size: 18px; color: var(--md-sys-color-on-surface);">C'est un intrus !</div>
-                    <div style="font-size:14px; color:var(--md-sys-color-on-surface-variant); line-height: 1.4;">Si le mot n'a aucun rapport avec le thème, swipez vers la gauche.</div>
+            <div class="rule-card" style="padding: 20px;">
+                <div class="rule-row">
+                    <span class="material-symbols-outlined rule-icon" style="color: var(--md-sys-color-error); font-size: 40px;">swipe_left</span>
+                    <div class="rule-content">
+                        <div style="font-weight:900; color:var(--md-sys-color-error); text-transform: uppercase; font-size: 14px; letter-spacing: 1px; margin-bottom: 4px;">Étape 2</div>
+                        <div style="font-weight:700; font-size: 18px; color: var(--md-sys-color-on-surface);">C'est un intrus !</div>
+                        <div style="font-size:14px; color:var(--md-sys-color-on-surface-variant); line-height: 1.4;">Si le mot n'a aucun rapport avec le thème, swipez vers la gauche.</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="rule-card" style="padding: 20px;">
-            <div class="rule-row">
-                <span class="material-symbols-outlined rule-icon" style="color: var(--md-sys-color-secondary); font-size: 40px;">fact_check</span>
-                <div class="rule-content">
-                    <div style="font-weight:900; color:var(--md-sys-color-secondary); text-transform: uppercase; font-size: 14px; letter-spacing: 1px; margin-bottom: 4px;">Étape 4</div>
-                    <div style="font-weight:700; font-size: 18px; color: var(--md-sys-color-on-surface);">Le Verdict</div>
-                    <div style="font-size:14px; color:var(--md-sys-color-on-surface-variant); line-height: 1.4;">
-                        À la fin, vérifiez vos réponses :<br><br>
-                        <span style="color:var(--md-sys-color-success); font-weight:700;">VERT</span> : Bravo, réponse correcte !<br>
-                        <span style="color:var(--md-sys-color-error); font-weight:700;">ROUGE</span> : Raté !<br><br>
-                        Fiez-vous au <strong>sous-titre</strong> pour connaître la vérité.
+            <div class="rule-card" style="padding: 20px;">
+                <div class="rule-row">
+                    <span class="material-symbols-outlined rule-icon" style="color: var(--md-sys-color-secondary); font-size: 40px;">fact_check</span>
+                    <div class="rule-content">
+                        <div style="font-weight:900; color:var(--md-sys-color-secondary); text-transform: uppercase; font-size: 14px; letter-spacing: 1px; margin-bottom: 4px;">Étape 4</div>
+                        <div style="font-weight:700; font-size: 18px; color: var(--md-sys-color-on-surface);">Le Verdict</div>
+                        <div style="font-size:14px; color:var(--md-sys-color-on-surface-variant); line-height: 1.4;">
+                            À la fin, vérifiez vos réponses :<br><br>
+                            <span style="color:var(--md-sys-color-success); font-weight:700;">VERT</span> : Bravo, réponse correcte !<br>
+                            <span style="color:var(--md-sys-color-error); font-weight:700;">ROUGE</span> : Raté !<br><br>
+                            Fiez-vous au <strong>sous-titre</strong> pour connaître la vérité.
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div id="settings-screen" class="screen">
-    <div style="display:flex; align-items:center; margin-bottom:24px;">
-        <button class="md3-btn btn-icon" onclick="transitionTo('landing-screen')"><span class="material-symbols-outlined">arrow_back</span></button>
-        <h2 style="margin:0 0 0 16px;">Options</h2>
-    </div>
-    <p style="text-align:center; margin-top:40px;">Version 1.2.0 (Museau)</p>
-    <button class="md3-btn" onclick="location.reload()">Reset App Data</button>
-</div>
-
-<div id="setup-screen" class="screen">
-    <div class="unified-header">
-        <button class="md3-btn btn-icon header-back-btn" onclick="goBack()"><span class="material-symbols-outlined">arrow_back</span></button>
-        <h2>Paramètres</h2>
-    </div>
-    <div style="flex-grow:1; overflow-y: auto;">
-        <div class="label-text">Nombre d'équipes</div>
-        <div class="segmented-button-group" id="player-count-opt">
-            <div class="selection-indicator"></div>
-            <button class="segment-btn" onclick="setTeamCount(1, this)">1</button>
-            <button class="segment-btn selected" onclick="setTeamCount(2, this)">2</button>
-            <button class="segment-btn" onclick="setTeamCount(3, this)">3</button>
-            <button class="segment-btn" onclick="setTeamCount(4, this)">4</button>
-            <button class="segment-btn" onclick="setTeamCount(5, this)">5</button>
+    <div id="settings-screen" class="screen">
+        <div style="display:flex; align-items:center; margin-bottom:24px;">
+            <button class="md3-btn btn-icon" onclick="transitionTo('landing-screen')"><span class="material-symbols-outlined">arrow_back</span></button>
+            <h2 style="margin:0 0 0 16px;">Options</h2>
         </div>
-        <div class="label-text" style="margin-top: 24px;">Noms et couleurs des équipes</div>
-        <div id="teams-container" style="margin-top: 8px; margin-bottom: 24px;"></div>
-
-        <div class="label-text">Nombre de tours</div>
-        <div class="segmented-button-group" id="rounds-opt">
-            <div class="selection-indicator"></div>
-            <button class="segment-btn selected" onclick="setRounds(5, this)">5</button>
-            <button class="segment-btn" onclick="setRounds(10, this)">10</button>
-            <button class="segment-btn" onclick="setRounds(15, this)">15</button>
-        </div>
-
-        <div class="label-text">Timer</div>
-        <div class="segmented-button-group" id="time-opt">
-            <div class="selection-indicator"></div>
-            <button class="segment-btn selected" onclick="setTimeLimit(0, this)">Off</button>
-            <button class="segment-btn" onclick="setTimeLimit(15, this)">15s</button>
-            <button class="segment-btn" onclick="setTimeLimit(20, this)">20s</button>
-            <button class="segment-btn" onclick="setTimeLimit(30, this)">30s</button>
-        </div>
+        <p style="text-align:center; margin-top:40px;">Version 1.2.0 (Museau)</p>
+        <button class="md3-btn" onclick="location.reload()">Reset App Data</button>
     </div>
-    <button class="md3-btn btn-primary" onclick="fetchDataAndShowCategories()">Valider <span class="material-symbols-outlined">arrow_forward</span></button>
-</div>
+
+    <div id="setup-screen" class="screen">
+        <div class="unified-header">
+            <button class="md3-btn btn-icon header-back-btn" onclick="goBack()"><span class="material-symbols-outlined">arrow_back</span></button>
+            <h2>Paramètres</h2>
+        </div>
+        <div style="flex-grow:1; overflow-y: auto;">
+            <div class="label-text">Nombre d'équipes</div>
+            <div class="segmented-button-group" id="player-count-opt">
+                <div class="selection-indicator"></div>
+                <button class="segment-btn" onclick="setTeamCount(1, this)">1</button>
+                <button class="segment-btn selected" onclick="setTeamCount(2, this)">2</button>
+                <button class="segment-btn" onclick="setTeamCount(3, this)">3</button>
+                <button class="segment-btn" onclick="setTeamCount(4, this)">4</button>
+                <button class="segment-btn" onclick="setTeamCount(5, this)">5</button>
+            </div>
+            <div class="label-text" style="margin-top: 24px;">Noms et couleurs des équipes</div>
+            <div id="teams-container" style="margin-top: 8px; margin-bottom: 24px;"></div>
+
+            <div class="label-text">Nombre de tours</div>
+            <div class="segmented-button-group" id="rounds-opt">
+                <div class="selection-indicator"></div>
+                <button class="segment-btn selected" onclick="setRounds(5, this)">5</button>
+                <button class="segment-btn" onclick="setRounds(10, this)">10</button>
+                <button class="segment-btn" onclick="setRounds(15, this)">15</button>
+            </div>
+
+            <div class="label-text">Timer</div>
+            <div class="segmented-button-group" id="time-opt">
+                <div class="selection-indicator"></div>
+                <button class="segment-btn selected" onclick="setTimeLimit(0, this)">Off</button>
+                <button class="segment-btn" onclick="setTimeLimit(15, this)">15s</button>
+                <button class="segment-btn" onclick="setTimeLimit(20, this)">20s</button>
+                <button class="segment-btn" onclick="setTimeLimit(30, this)">30s</button>
+            </div>
+        </div>
+        <button class="md3-btn btn-primary" onclick="fetchDataAndShowCategories()">Continuer</button>
+    </div>
 
     <div id="category-screen" class="screen">
 
         <div class="unified-header">
-            <button class="header-left-btn" onclick="transitionTo('landing-screen')">
-                <span class="material-symbols-outlined">home</span>
+            <button class="header-back-btn" onclick="goBack()">
+                <span class="material-symbols-outlined">arrow_back</span>
             </button>
-        <h2>Catégories</h2>
+            <h2>Catégories</h2>
+        </div>
+        <div id="category-counter" style="margin: -16px 0 16px 0;">
+            <span id="cat-count-val">0</span><span>séléctionnées</span>
+        </div>
+        <div id="category-container" class="category-cloud-layout"></div>
+        <div style="width: 100%;">
+            <button id="start-btn" class="md3-btn btn-primary" onclick="startGame()" disabled>
+                Continuer
+            </button>
+        </div>
     </div>
-    <div id="category-counter" style="margin: -16px 0 16px 0;">
-        <span id="cat-count-val">0</span><span>séléctionnées</span>
-    </div>
-    <div id="category-container" class="category-cloud-layout"></div>
-    <div style="width: 100%;">
-        <button id="start-btn" class="md3-btn btn-primary" onclick="startGame()" disabled>
-            Démarrer la partie <span class="material-symbols-outlined">play_arrow</span>
-        </button>
-    </div>
-</div>
 
     <div id="ready-screen" class="screen">
 
@@ -1608,66 +1658,101 @@ display: flex;           /* Pour centrer l'icône DANS la bulle */
 
     </div>
 
-<div id="game-screen" class="screen">
-    <div class="game-header">
-        <div class="badge" id="current-team-display">Team Name</div>
-        <div class="badge" id="round-display" style="background:transparent; border:1px solid var(--md-sys-color-outline); color:var(--md-sys-color-on-surface-variant);">Round 1/5</div>
-        <div class="badge" id="question-counter" style="background:transparent; border:1px solid var(--md-sys-color-outline); color:var(--md-sys-color-on-surface-variant);">1 / 10</div>
-        <div class="badge badge-timer" id="game-timer" style="display:none">30s</div>
-    </div>
-    <div class="pig-track-container">
-        <div id="pig-fill-bar" class="pig-track-fill"></div>
-        <div id="pig-wrapper" class="pig-character"><img src="pig.png" class="pig-img" alt="Pig"></div>
-    </div>
-    <div id="theme-centered-zone">
-        <span id="game-category-icon" class="material-symbols-outlined">category</span>
-        <div id="game-theme-display">Theme Name</div>
-    </div>
-    <div class="card-area">
-        <div class="md3-card" id="card">
-            <div class="card-inner-frame">
-                <div class="card-header-dark">
-                    <img src="logo.png" class="card-mini-logo" alt="logo">
-                    <span class="card-brand-text">Museau</span>
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <div class="badge" id="current-team-display">Team Name</div>
+            <div class="badge" id="round-display" style="background:transparent; border:1px solid var(--md-sys-color-outline); color:var(--md-sys-color-on-surface-variant);">Round 1/5</div>
+            <div class="badge" id="question-counter" style="background:transparent; border:1px solid var(--md-sys-color-outline); color:var(--md-sys-color-on-surface-variant);">1 / 10</div>
+            <div class="badge badge-timer" id="game-timer" style="display:none">30s</div>
+        </div>
+        <div class="pig-track-container">
+            <div id="pig-fill-bar" class="pig-track-fill"></div>
+            <div id="pig-wrapper" class="pig-character"><img src="pig.png" class="pig-img" alt="Pig"></div>
+        </div>
+        <div id="theme-centered-zone"
+             style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 20px;">
+
+            <div class="category-icon-container" style="width: 60px; height: 60px; margin-bottom: 8px;">
+        <span class="material-symbols-outlined" id="game-category-icon"
+              style="font-size: 32px; color: var(--md-sys-color-secondary); transform: rotate(-45deg);">
+            category
+        </span>
+            </div>
+
+            <div id="game-category-label" class="ready-label-small"
+                 style="opacity: 1; letter-spacing: 4px; margin-right: -4px; margin-bottom: 0; font-size: 11px; font-weight: 700; color: #ff4081; text-transform: uppercase;">
+                CATÉGORIE
+            </div>
+
+            <h1 id="game-theme-display"
+                style="margin: 4px 0 10px 0; font-size: 26px; line-height: 1.1; text-align: center; max-width: 95%;
+               background: linear-gradient(90deg, #FF5E98 0%, #00F0FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                Theme Name
+            </h1>
+
+        </div>
+        <div class="card-area">
+            <div class="md3-card" id="card">
+                <div class="card-inner-frame">
+                    <div class="card-header-dark">
+                        <img src="logo.png" class="card-mini-logo" alt="logo">
+                        <span class="card-brand-text">Museau</span>
+                    </div>
+                    <span id="card-text" class="card-main-text">Item Name</span>
                 </div>
-                <span id="card-text" class="card-main-text">Item Name</span>
-            </div>
-            <div class="swipe-overlay overlay-yes"><span class="material-symbols-outlined">check_circle</span></div>
-            <div class="swipe-overlay overlay-no"><span class="material-symbols-outlined">cancel</span></div>
-        </div>
-    </div>
-</div>
-
-<div id="summary-screen" class="screen">
-
-    <div class="summary-zone-top">
-
-        <div class="header-row">
-            <button class="btn-home-simple" onclick="goHome()">
-                <span class="material-symbols-outlined">home</span>
-            </button>
-
-            <div class="sum-team" id="summary-team-name">Team Name</div>
-
-            <div class="sum-score-pill">
-                <span class="sum-score-val" id="summary-score-val">+0</span>
+                <div class="swipe-overlay overlay-yes"><span class="material-symbols-outlined">check_circle</span></div>
+                <div class="swipe-overlay overlay-no"><span class="material-symbols-outlined">cancel</span></div>
             </div>
         </div>
-
-        <div class="header-divider"></div>
-
-        <div class="sum-theme-box">
-            <div class="sum-theme-lbl">Thème de la manche</div>
-            <div class="sum-theme-tit" id="summary-theme-name">THEME</div>
-        </div>
     </div>
 
-    <div class="summary-zone-bottom">
-        <div class="list-scroll-area" id="answer-list">
+    <div id="summary-screen" class="screen">
+
+        <div class="summary-zone-top">
+
+            <div class="header-row">
+                <button class="btn-home-simple" onclick="goHome()">
+                    <span class="material-symbols-outlined">home</span>
+                </button>
+
+                <div class="sum-team" id="summary-team-name">Team Name</div>
+
+                <div class="sum-score-pill">
+                    <span class="sum-score-val" id="summary-score-val">+0</span>
+                </div>
+            </div>
+
+            <div class="header-divider"></div>
+
+            <div class="sum-theme-box" style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+
+                <div class="category-icon-container" style="width: 60px; height: 60px; margin-bottom: 8px;">
+        <span class="material-symbols-outlined" id="summary-category-icon"
+              style="font-size: 32px; color: var(--md-sys-color-secondary); transform: rotate(-45deg);">
+            category
+        </span>
+                </div>
+
+                <div id="summary-category-label" class="ready-label-small"
+                     style="opacity: 1; letter-spacing: 4px; margin-right: -4px; margin-bottom: 0; font-size: 11px; font-weight: 700; color: #ff4081; text-transform: uppercase;">
+                    CATÉGORIE
+                </div>
+
+                <h1 id="summary-theme-name"
+                    style="margin: 4px 0 0px 0; font-size: 30px; line-height: 1.1; text-align: center; max-width: 95%;
+               background: linear-gradient(90deg, #FF5E98 0%, #00F0FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                    THEME
+                </h1>
+
+            </div>
         </div>
-        <button id="next-btn" class="md3-btn btn-primary">Suivant</button>
+
+        <div class="summary-zone-bottom">
+            <div class="list-scroll-area" id="answer-list">
+            </div>
+            <button id="next-btn" class="md3-btn btn-primary">Suivant</button>
+        </div>
     </div>
-</div>
 
 </div>
 
@@ -1716,24 +1801,15 @@ display: flex;           /* Pour centrer l'icône DANS la bulle */
     let numberOfTeams = 2;
     let currentCountdownTimeout = null;
 
-const TEAM_COLORS = [
-    '#EF9A9A', // Rouge Doux
-    '#FFCC80', // Orange Crème
-    '#FFF59D', // Jaune Paille
-    '#A5D6A7', // Vert Menthe
-    '#80CBC4', // Turquoise Pâle
-    '#90CAF9', // Bleu Ciel
-    '#9FA8DA', // Indigo Lavande
-    '#CE93D8', // Violet Orchidée
-    '#F48FB1', // Rose Bonbon
-    '#80DEEA'  // Cyan Glacé
-];
+    const TEAM_COLORS = [
+        '#EF9A9A', '#FFCC80', '#FFF59D', '#A5D6A7', '#80CBC4',
+        '#90CAF9', '#9FA8DA', '#CE93D8', '#F48FB1', '#80DEEA'
+    ];
 
     // --- 2. INIT & NAVIGATION ---
     window.onload = () => {
         renderTeamInputs(2);
         initSegmentedButtons();
-        // Init History
         history.replaceState({ screen: 'landing-screen' }, "", "#landing");
     };
 
@@ -1745,7 +1821,7 @@ const TEAM_COLORS = [
     function showScreen(screenId) {
         const current = document.querySelector('.screen.active');
         const next = document.getElementById(screenId);
-        if (current) {
+if (current) {
             current.classList.remove('active');
             setTimeout(() => {
                 current.style.display = 'none';
@@ -1753,6 +1829,13 @@ const TEAM_COLORS = [
                 void next.offsetWidth;
                 next.classList.add('active');
                 if(screenId === 'setup-screen') initSegmentedButtons();
+
+                // --- CORRECTION : Réactiver le bouton Suivant si on revient sur le résumé ---
+                if(screenId === 'summary-screen') {
+                    const nextBtn = document.getElementById('next-btn');
+                    if(nextBtn) nextBtn.disabled = false;
+                }
+
             }, 300);
         } else {
             next.style.display = 'flex';
@@ -1813,7 +1896,6 @@ const TEAM_COLORS = [
         container.innerHTML = '';
         let usedColors = [];
         for (let i = 0; i < Math.min(count, existingData.length); i++) usedColors.push(existingData[i].color);
-
         for(let i=0; i<count; i++) {
             let name, color;
             if (i < existingData.length) {
@@ -1837,7 +1919,6 @@ const TEAM_COLORS = [
         }
     }
 
-    // --- Cleaned up Input Handlers (French only) ---
     function handleInputFocus(input, teamNum) { if (input.value === `Équipe ${teamNum}`) input.value = ''; }
     function handleInputBlur(input, teamNum) { if (input.value.trim() === '') input.value = `Équipe ${teamNum}`; }
 
@@ -1871,7 +1952,8 @@ const TEAM_COLORS = [
 
         const btn = document.querySelector('#setup-screen .btn-primary');
         const txt = btn.innerHTML;
-        btn.innerHTML = "Loading..."; btn.disabled = true;
+        btn.innerHTML = "Oink Oink !...";
+        btn.disabled = true;
         try {
             const response = await fetch(DATA_URL + "?t=" + Date.now());
             if (!response.ok) throw new Error("Error");
@@ -1882,35 +1964,20 @@ const TEAM_COLORS = [
         finally { btn.innerHTML = txt; btn.disabled = false; }
     }
 
-function getIcon(categoryName) {
-    // On normalise le texte (tout en minuscule) pour éviter les erreurs d'accent ou de majuscule
-    // Exemple : "Cinéma" devient "cinema"
-    const lowerCat = categoryName.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-    switch (lowerCat) {
-        // --- VOS CATÉGORIES ---
-        case 'nature':
-            return 'forest';      // ou 'eco', 'landscape', 'pets'
-        case 'cinema':
-            return 'movie';       // ou 'theaters', 'videocam'
-        case 'musique':
-            return 'music_note';  // ou 'headphones', 'piano'
-        case 'histoire':
-            return 'history_edu'; // ou 'castle', 'menu_book'
-        case 'sport':
-            return 'sports_soccer';
-        case 'sciences':
-            return 'science';
-        case 'geographie':
-            return 'public';      // Globe terrestre
-        case 'culture pop':
-            return 'tv_gen';
-
-        // --- PAR DÉFAUT (Si la catégorie n'est pas trouvée) ---
-        default:
-            return 'category';    // Une icône générique (formes géométriques)
+    function getIcon(categoryName) {
+        const lowerCat = categoryName.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        switch (lowerCat) {
+            case 'nature': return 'forest';
+            case 'cinema': return 'movie';
+            case 'musique': return 'music_note';
+            case 'histoire': return 'history_edu';
+            case 'sport': return 'sports_soccer';
+            case 'sciences': return 'science';
+            case 'geographie': return 'public';
+            case 'culture pop': return 'tv_gen';
+            default: return 'category';
+        }
     }
-}
 
     function generateCategoryButtons() {
         const container = document.getElementById('category-container');
@@ -1953,61 +2020,44 @@ function getIcon(categoryName) {
     }
 
     // --- 5. GAME LOOP & LOGIC ---
-function prepareRound() {
-    const tm = teams[currentTeamIndex];
+    function prepareRound() {
+        const tm = teams[currentTeamIndex];
+        if(teams.every(t => t.roundsPlayed >= roundsPerTeam)) { endGame(); return; }
+        if (tm.roundsPlayed >= roundsPerTeam) { nextTeam(); return; }
 
-    // Vérifications fin de jeu
-    if(teams.every(t => t.roundsPlayed >= roundsPerTeam)) { endGame(); return; }
-    if (tm.roundsPlayed >= roundsPerTeam) { nextTeam(); return; }
+        const th = playableData[currentThemeIndex % playableData.length];
+        const cleanCategory = th.category ? th.category.trim() : "";
 
-    // Récupération des données (th = theme data)
-    const th = playableData[currentThemeIndex % playableData.length];
+        const tutZone = document.querySelector('.tutorial-zone');
+        if (tutZone) { tutZone.style.opacity = "1"; tutZone.style.visibility = "visible"; }
 
-    const cleanCategory = th.category ? th.category.trim() : "";
+        const btnGo = document.getElementById('btn-go');
+        if (btnGo) { btnGo.classList.remove('fade-out'); btnGo.style.display = 'flex'; btnGo.style.visibility = 'visible'; }
 
-    // --- RESET UI ---
-    const tutZone = document.querySelector('.tutorial-zone');
-    if (tutZone) { tutZone.style.opacity = "1"; tutZone.style.visibility = "visible"; }
+        const countdown = document.getElementById('countdown-overlay');
+        if (countdown) countdown.style.display = 'none';
 
-    const btnGo = document.getElementById('btn-go');
-    if (btnGo) { btnGo.classList.remove('fade-out'); btnGo.style.display = 'flex'; btnGo.style.visibility = 'visible'; }
+        transitionTo('ready-screen');
 
-    const countdown = document.getElementById('countdown-overlay');
-    if (countdown) countdown.style.display = 'none';
+        document.getElementById('ready-round-indicator').innerText = `MANCHE ${tm.roundsPlayed + 1} / ${roundsPerTeam}`;
+        const nameEl = document.getElementById('ready-team-name');
+        nameEl.innerText = tm.name; nameEl.style.color = tm.color;
 
-    transitionTo('ready-screen');
-
-    // --- MISE A JOUR DES TEXTES ---
-
-    document.getElementById('ready-round-indicator').innerText = `MANCHE ${tm.roundsPlayed + 1} / ${roundsPerTeam}`;
-
-    const nameEl = document.getElementById('ready-team-name');
-    nameEl.innerText = tm.name;
-    nameEl.style.color = tm.color;
-
-    // JUSTE LE NOM DE LA CATÉGORIE (La couleur est gérée par le CSS/HTML désormais)
-    // On utilise th.category pour être sûr d'avoir la bonne info
-    document.getElementById('ready-intro-text').innerText = cleanCategory;
-
-    document.getElementById('ready-theme-title').innerText = th.theme;
-
-    // On utilise aussi th.category pour l'icône
-    document.getElementById('ready-category-icon').innerText = getIcon(cleanCategory);
-
-    document.getElementById('tut-yes-text').innerText = th.theme;
-    document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
-}
+        document.getElementById('ready-intro-text').innerText = cleanCategory;
+        document.getElementById('ready-theme-title').innerText = th.theme;
+        document.getElementById('ready-category-icon').innerText = getIcon(cleanCategory);
+        document.getElementById('tut-yes-text').innerText = th.theme;
+        document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
+    }
 
     function generateBalancedRound(themeData) {
         const poolTrue = themeData.items.filter(i => i.isRelated === true);
         const poolFalse = themeData.items.filter(i => i.isRelated === false);
         if (themeData.items.length <= 10) return [...themeData.items].sort(() => Math.random() - 0.5);
-
         const roundSize = 10, minTrue = 2, minFalse = 2;
         const maxTruePossible = Math.min(poolTrue.length, roundSize - minFalse);
         const minTrueNecessary = Math.max(minTrue, roundSize - poolFalse.length);
         const countTrue = Math.floor(Math.random() * (maxTruePossible - minTrueNecessary + 1)) + minTrueNecessary;
-
         poolTrue.sort(() => Math.random() - 0.5);
         poolFalse.sort(() => Math.random() - 0.5);
         const finalSet = [...poolTrue.slice(0, countTrue), ...poolFalse.slice(0, roundSize - countTrue)];
@@ -2024,70 +2074,109 @@ function prepareRound() {
         if (btnGo) { btnGo.classList.remove('fade-out'); btnGo.style.opacity = "1"; btnGo.style.visibility = "visible"; btnGo.style.pointerEvents = "auto"; }
     }
 
-    function startGameplay() {
-        const btnGo = document.getElementById('btn-go');
-        if (btnGo) { btnGo.style.opacity = ""; btnGo.style.visibility = ""; btnGo.classList.add('fade-out'); }
-        const tutZone = document.querySelector('.tutorial-zone');
-        if (tutZone) { tutZone.style.transition = "opacity 0.5s ease"; tutZone.style.opacity = "0"; }
-
-        const overlay = document.getElementById('countdown-overlay');
-        const numEl = document.getElementById('countdown-number');
-        if(overlay) { overlay.classList.remove('fade-out'); overlay.style.opacity = "1"; overlay.style.display = 'flex'; }
-
-        const executeGameStart = () => {
-            transitionTo('game-screen');
-            const tm = teams[currentTeamIndex];
-            const th = playableData[currentThemeIndex % playableData.length];
-            currentCardIndex = 0; roundScore = 0; roundHistory = [];
-            currentRoundItems = generateBalancedRound(th);
-
-            document.getElementById('current-team-display').innerText = tm.name;
-            document.getElementById('current-team-display').style.color = tm.color;
-            document.getElementById('round-display').innerText = `Manche ${tm.roundsPlayed + 1}/${roundsPerTeam}`;
-            document.getElementById('game-theme-display').innerText = th.theme;
-            document.getElementById('game-category-icon').innerText = getIcon(th.category);
-
-            // Timer Logic
-            const tBadge = document.getElementById('game-timer');
-            clearInterval(gameTimerInterval);
-            if(timeLimit > 0) {
-                tBadge.style.display = 'block';
-                let tl = timeLimit; tBadge.innerText = tl + "s";
-                gameTimerInterval = setInterval(() => {
-                    tl--; tBadge.innerText = tl + "s";
-                    if(tl <= 0) { clearInterval(gameTimerInterval); endRound(); }
-                }, 1000);
-            } else { tBadge.style.display = 'none'; }
-
-            loadCard();
-            setTimeout(() => {
-                if(overlay) overlay.classList.add('fade-out');
-                setTimeout(() => { if(overlay) overlay.style.display = 'none'; }, 500);
-            }, 600);
-        };
-
-        let count = 3;
-        const playCount = () => {
-            if (count > 0) {
-                numEl.innerText = count; numEl.classList.remove('animate-pop');
-                void numEl.offsetWidth; numEl.classList.add('animate-pop');
-                count--;
-                currentCountdownTimeout = setTimeout(playCount, 1000);
-            } else {
-                numEl.innerText = "GO!"; numEl.classList.remove('animate-pop');
-                void numEl.offsetWidth; numEl.classList.add('animate-pop');
-                currentCountdownTimeout = setTimeout(executeGameStart, 300);
-            }
-        };
-        playCount();
+function startGameplay() {
+    // 1. Nettoyage UI immédiat
+    const btnGo = document.getElementById('btn-go');
+    if (btnGo) {
+        btnGo.style.opacity = "";
+        btnGo.style.visibility = "";
+        btnGo.classList.add('fade-out');
     }
+
+    const tutZone = document.querySelector('.tutorial-zone');
+    if (tutZone) {
+        tutZone.style.transition = "opacity 0.5s ease";
+        tutZone.style.opacity = "0";
+    }
+
+    const overlay = document.getElementById('countdown-overlay');
+    const numEl = document.getElementById('countdown-number');
+    if(overlay) {
+        overlay.classList.remove('fade-out');
+        overlay.style.opacity = "1";
+        overlay.style.display = 'flex';
+    }
+
+    // 2. Fonction de lancement réel du jeu
+    const executeGameStart = () => {
+        transitionTo('game-screen');
+        const tm = teams[currentTeamIndex];
+        const th = playableData[currentThemeIndex % playableData.length];
+
+        // ON RÉCUPÈRE LE NOM PROPRE DE LA CATÉGORIE
+        const cleanCategory = th.category ? th.category.trim() : "";
+
+        currentCardIndex = 0; roundScore = 0; roundHistory = [];
+        currentRoundItems = generateBalancedRound(th);
+
+        document.getElementById('current-team-display').innerText = tm.name;
+        document.getElementById('current-team-display').style.color = tm.color;
+        document.getElementById('round-display').innerText = `Manche ${tm.roundsPlayed + 1}/${roundsPerTeam}`;
+
+        // --- REMPLISSAGE DES NOUVEAUX ÉLÉMENTS ---
+        // 1. L'icône
+        document.getElementById('game-category-icon').innerText = getIcon(cleanCategory);
+        // 2. Le label catégorie (NOUVEAU)
+        const catLabel = document.getElementById('game-category-label');
+        if(catLabel) catLabel.innerText = cleanCategory;
+        // 3. Le titre
+        document.getElementById('game-theme-display').innerText = th.theme;
+        // ------------------------------------------
+
+        const tBadge = document.getElementById('game-timer');
+        clearInterval(gameTimerInterval);
+        if(timeLimit > 0) {
+            tBadge.style.display = 'block';
+            let tl = timeLimit; tBadge.innerText = tl + "s";
+            gameTimerInterval = setInterval(() => {
+                tl--; tBadge.innerText = tl + "s";
+                if(tl <= 0) { clearInterval(gameTimerInterval); endRound(); }
+            }, 1000);
+        } else { tBadge.style.display = 'none'; }
+
+        loadCard();
+        setTimeout(() => {
+            if(overlay) overlay.classList.add('fade-out');
+            setTimeout(() => { if(overlay) overlay.style.display = 'none'; }, 500);
+        }, 600);
+    };
+
+    // 3. Compte à rebours
+    let count = 3;
+    const playCount = () => {
+        if (count > 0) {
+            sndTick.currentTime = 0;
+            sndTick.play().catch(()=>{});
+
+            numEl.innerText = count;
+            numEl.classList.remove('animate-pop');
+            void numEl.offsetWidth;
+            numEl.classList.add('animate-pop');
+
+            count--;
+            currentCountdownTimeout = setTimeout(playCount, 1000);
+        } else {
+            sndGo.currentTime = 0;
+            sndGo.play().catch(()=>{});
+
+            numEl.innerText = "GO!";
+            numEl.classList.remove('animate-pop');
+            void numEl.offsetWidth;
+            numEl.classList.add('animate-pop');
+
+            currentCountdownTimeout = setTimeout(executeGameStart, 300);
+        }
+    };
+    playCount();
+}
 
     function loadCard() {
         const pct = (currentCardIndex / 10) * 100;
         const pigWrap = document.getElementById('pig-wrapper');
         const fillBar = document.getElementById('pig-fill-bar');
         if (pigWrap) {
-            pigWrap.style.left = pct + "%"; fillBar.style.width = pct + "%";
+            pigWrap.style.left = pct + "%";
+            fillBar.style.width = pct + "%";
             if (currentCardIndex > 0) { pigWrap.classList.remove('pig-jump-anim'); void pigWrap.offsetWidth; pigWrap.classList.add('pig-jump-anim'); }
         }
 
@@ -2102,7 +2191,6 @@ function prepareRound() {
         card.style.boxShadow = 'var(--md-sys-elevation-3)';
         card.querySelector('.overlay-yes').style.opacity = '0'; card.querySelector('.overlay-no').style.opacity = '0';
         document.getElementById('card-text').innerText = item.text;
-
         setTimeout(() => {
             card.style.transition = 'opacity 0.3s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
             card.style.opacity = '1'; card.classList.add('card-pulse');
@@ -2119,10 +2207,12 @@ function prepareRound() {
         cardEl.style.transform = `translate(${dx}px, ${Math.abs(dx)/10}px) rotate(${dx * 0.05}deg)`;
         const intensity = Math.min(Math.abs(dx) / 150, 1);
         if (dx > 0) {
-            cardEl.querySelector('.overlay-yes').style.opacity = intensity; cardEl.querySelector('.overlay-no').style.opacity = 0;
+            cardEl.querySelector('.overlay-yes').style.opacity = intensity;
+            cardEl.querySelector('.overlay-no').style.opacity = 0;
             cardEl.style.borderColor = `rgba(105, 240, 174, ${intensity})`; cardEl.style.boxShadow = `0 0 ${20 * intensity}px rgba(105, 240, 174, 0.4)`;
         } else {
-            cardEl.querySelector('.overlay-yes').style.opacity = 0; cardEl.querySelector('.overlay-no').style.opacity = intensity;
+            cardEl.querySelector('.overlay-yes').style.opacity = 0;
+            cardEl.querySelector('.overlay-no').style.opacity = intensity;
             cardEl.style.borderColor = `rgba(255, 82, 82, ${intensity})`; cardEl.style.boxShadow = `0 0 ${20 * intensity}px rgba(255, 82, 82, 0.4)`;
         }
     };
@@ -2130,10 +2220,12 @@ function prepareRound() {
         if (!drag) return;
         drag = false; const dx = cx - sx;
         if (Math.abs(dx) < 10) { resetCard(); return; }
-        if (dx > 100) finishSwipe(true); else if (dx < -100) finishSwipe(false); else resetCard();
+        if (dx > 100) finishSwipe(true); else if (dx < -100) finishSwipe(false);
+        else resetCard();
     };
     function resetCard() {
-        cardEl.style.transition = '0.4s cubic-bezier(0.2, 0.8, 0.2, 1)'; cardEl.style.transform = 'translate(0,0) rotate(0)';
+        cardEl.style.transition = '0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
+        cardEl.style.transform = 'translate(0,0) rotate(0)';
         cardEl.style.borderColor = 'var(--md-sys-color-outline)'; cardEl.style.boxShadow = 'var(--md-sys-elevation-3)';
         cardEl.querySelector('.overlay-yes').style.opacity = 0; cardEl.querySelector('.overlay-no').style.opacity = 0;
         setTimeout(() => cardEl.classList.add('card-pulse'), 400);
@@ -2152,37 +2244,25 @@ function prepareRound() {
         window.addEventListener('mouseup', end);
     }
 
-    // --- 7. ANSWER PROCESSING ---
-// --- 7. ANSWER PROCESSING ---
+    // --- 7. ANSWER PROCESSING & SOUNDS ---
     const sndCorrect = new Audio('correct.mp3');
 
-    // Au lieu d'un seul son, on crée une liste de 10 fichiers
-    const wrongSoundFiles = [
-        'wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3'
-    ];
+    // --- NOUVEAUX SONS ---
+    const sndTick = new Audio('tick.mp3');
+    const sndGo = new Audio('go.mp3');
 
-    // On pré-charge les objets Audio pour éviter les latences pendant le jeu
+    const wrongSoundFiles = ['wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3'];
     const wrongAudios = wrongSoundFiles.map(file => new Audio(file));
-
     const sndWinner = new Audio('winner.mp3');
     let isConfettiActive = false;
 
     function playSound(type) {
         try {
-            if (type === 'correct') {
-                sndCorrect.currentTime = 0;
-                sndCorrect.play().catch(()=>{});
-            }
+            if (type === 'correct') { sndCorrect.currentTime = 0; sndCorrect.play().catch(()=>{}); }
             else if (type === 'wrong') {
-                // 1. On choisit un index au hasard entre 0 et 9
                 const randomIndex = Math.floor(Math.random() * wrongAudios.length);
-
-                // 2. On récupère l'objet audio correspondant
                 const randomSound = wrongAudios[randomIndex];
-
-                // 3. On le joue
-                randomSound.currentTime = 0;
-                randomSound.play().catch(()=>{});
+                randomSound.currentTime = 0; randomSound.play().catch(()=>{});
             }
         } catch (e) {}
     }
@@ -2201,8 +2281,10 @@ function prepareRound() {
 
     let feedbackTimer = null;
     function showFeedbackAnim(isCorrect) {
-        if (feedbackTimer) { clearTimeout(feedbackTimer); feedbackTimer = null; document.querySelectorAll('.score-popup').forEach(el => el.remove()); document.body.style.boxShadow = 'none'; void document.body.offsetWidth; }
-        const el = document.createElement('div'); el.className = isCorrect ? 'score-popup' : 'score-popup wrong';
+        if (feedbackTimer) { clearTimeout(feedbackTimer); feedbackTimer = null; document.querySelectorAll('.score-popup').forEach(el => el.remove());
+        document.body.style.boxShadow = 'none'; void document.body.offsetWidth; }
+        const el = document.createElement('div');
+        el.className = isCorrect ? 'score-popup' : 'score-popup wrong';
         el.innerHTML = isCorrect ? "+1" : "X"; document.body.appendChild(el);
         document.body.style.transition = "box-shadow 0.1s ease-out";
         document.body.style.boxShadow = isCorrect ? "inset 0 0 80px rgba(0, 230, 118, 0.6)" : "inset 0 0 80px rgba(255, 82, 82, 0.6)";
@@ -2218,7 +2300,6 @@ function endRound() {
 
     // 2. Remplissage Header
     const tm = teams[currentTeamIndex];
-
     // Équipe
     const nameEl = document.getElementById('summary-team-name');
     nameEl.innerText = tm.name;
@@ -2226,37 +2307,40 @@ function endRound() {
 
     // Score
     const scoreEl = document.getElementById('summary-score-val');
-    // Ajout du pluriel "pts"
     scoreEl.innerText = `+${roundScore} pts`;
 
-    // Animation et Couleur
+    // Animation et Couleur Pilule
     const scorePill = document.querySelector('.sum-score-pill');
-    // On nettoie d'abord
     scorePill.className = 'sum-score-pill';
-
-    // Si le score est positif, on active l'animation de pulsation verte
     if (roundScore > 0) {
         scorePill.classList.add('score-highlight-anim');
-        // On force aussi la couleur du texte à l'intérieur
         scoreEl.style.color = "var(--md-sys-color-success)";
     } else {
-        // Sinon couleur normale de l'équipe
         scoreEl.style.color = tm.color;
     }
 
-    // Thème (Avec ajustement automatique de taille)
+    // --- MISE À JOUR DES NOUVEAUX ÉLÉMENTS CENTRAUX ---
     const th = playableData[currentThemeIndex % playableData.length];
+    const cleanCategory = th.category ? th.category.trim() : "";
+
+    // 1. L'Icône
+    document.getElementById('summary-category-icon').innerText = getIcon(cleanCategory);
+
+    // 2. Le Label Catégorie
+    const sumCatLabel = document.getElementById('summary-category-label');
+    if(sumCatLabel) sumCatLabel.innerText = cleanCategory;
+
+    // 3. Le Thème
     const themeTitleEl = document.getElementById('summary-theme-name');
     themeTitleEl.innerText = th.theme;
 
-    // --- AUTO-RESIZE DU TITRE ---
-    themeTitleEl.style.fontSize = "36px"; // Reset taille max
+    // --- AUTO-RESIZE DU TITRE (Adapté pour 26px) ---
+    themeTitleEl.style.fontSize = "26px"; // Taille de base
     requestAnimationFrame(() => {
-        // On récupère la largeur dispo (le conteneur parent)
         const container = document.querySelector('.sum-theme-box');
         if(container) {
-            const maxWidth = container.offsetWidth * 0.90; // Marge de sécurité
-            let currentSize = 36;
+            const maxWidth = container.offsetWidth * 0.95;
+            let currentSize = 26;
             themeTitleEl.style.fontSize = currentSize + "px";
 
             // Réduire tant que ça dépasse
@@ -2267,8 +2351,7 @@ function endRound() {
         }
     });
 
-    // 3. Remplissage Liste
-// --- GÉNÉRATION LISTE (STYLE MD3 - NO SCROLL) ---
+    // 3. Remplissage Liste (Inchangé)
     const list = document.getElementById('answer-list');
     list.innerHTML = '';
 
@@ -2278,15 +2361,9 @@ function endRound() {
         item.style.animationDelay = `${i * 0.05}s`;
 
         const isCorrect = h.correct;
-
-        // --- NOUVELLE LOGIQUE TEXTE & COULEUR ---
-        // Texte : +1 pt ou +0 pt
         const scoreText = isCorrect ? '+1 pt' : '+0 pt';
-
-        // Couleur du texte de score : Vert si juste, gris/normal si faux
         const trailingColor = isCorrect ? 'var(--md-sys-color-success)' : 'var(--md-sys-color-on-surface)';
 
-        // Couleurs Icône (inchangé)
         let iconBg, iconColor, iconName;
         if (isCorrect) {
             iconBg = 'var(--md-sys-color-success)';
@@ -2298,7 +2375,6 @@ function endRound() {
             iconName = 'close';
         }
 
-        const th = playableData[currentThemeIndex % playableData.length];
         let subText = h.isRelated ? th.theme : `Pas ${th.theme}`;
 
         item.innerHTML = `
@@ -2311,13 +2387,13 @@ function endRound() {
             </div>
             <div class="md3-trailing" style="color: ${trailingColor};">${scoreText}</div>
         `;
-
         list.appendChild(item);
     });
 
-    // 4. Gestion Bouton Suivant
+    // 4. Gestion Bouton Suivant (Avec votre correction de navigation)
     const btn = document.getElementById('next-btn');
     btn.disabled = false;
+
     const isOver = teams.every(t => t.roundsPlayed >= roundsPerTeam);
     const isCycleEnd = currentTeamIndex === teams.length - 1;
 
@@ -2328,9 +2404,17 @@ function endRound() {
         btn.innerText = "Voir le Classement";
         btn.onclick = () => { btn.disabled = true; showLeaderboard(); };
     } else {
-        let next = (currentTeamIndex + 1) % teams.length;
-        btn.innerText = `Suivant : ${teams[next].name}`;
-        btn.onclick = () => { btn.disabled = true; nextTeam(); };
+        let nextIndex = (currentTeamIndex + 1) % teams.length;
+        let nextThemeIndex = currentThemeIndex + 1;
+
+        btn.innerText = `Suivant : ${teams[nextIndex].name}`;
+
+        btn.onclick = () => {
+            btn.disabled = true;
+            currentTeamIndex = nextIndex;
+            currentThemeIndex = nextThemeIndex;
+            prepareRound();
+        };
     }
 }
 
@@ -2347,11 +2431,12 @@ function endRound() {
         cont.innerHTML = '';
         const sort = [...teams].sort((a, b) => b.totalScore - a.totalScore);
         if (sort.length === 0) return;
-        const layout = document.createElement('div'); layout.className = 'leaderboard-layout';
+        const layout = document.createElement('div');
+        layout.className = 'leaderboard-layout';
 
-        // Winner
         const winner = sort[0];
-        const winnerCard = document.createElement('div'); winnerCard.className = 'winner-card';
+        const winnerCard = document.createElement('div');
+        winnerCard.className = 'winner-card';
         winnerCard.style.borderColor = winner.color; winnerCard.style.boxShadow = `0 0 30px ${winner.color}40`;
         winnerCard.innerHTML = `
             <span class="material-symbols-outlined winner-icon-badge" style="color:${winner.color}">emoji_events</span>
@@ -2361,9 +2446,9 @@ function endRound() {
         `;
         layout.appendChild(winnerCard);
 
-        // Runners up
         if (sort.length > 1) {
-            const listContainer = document.createElement('div'); listContainer.className = 'runners-up-list';
+            const listContainer = document.createElement('div');
+            listContainer.className = 'runners-up-list';
             for (let i = 1; i < sort.length; i++) {
                 const t = sort[i];
                 const row = document.createElement('div'); row.className = 'rank-box-small';
