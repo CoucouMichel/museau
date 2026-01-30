@@ -7,9 +7,9 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
-
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
     <style>
         /* --- 1. RESET & VARIABLES --- */
 * { -webkit-tap-highlight-color: transparent; }
@@ -95,41 +95,70 @@
     background: transparent;
 }
 
-/* Unified Headers (Back Button + Title) */
 .unified-header {
-    /* C'est votre code original */
-    position: relative;
+    position: relative; /* Référent pour le bouton absolu */
     width: 100%;
-    height: 60px;
+    height: 60px; /* Hauteur fixe GARANTIE */
+
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 16px;
+
+    /* Espacement standard autour de l'en-tête */
+    margin-top: 0;
     margin-bottom: 24px;
-    box-sizing: border-box;
+    flex-shrink: 0; /* Empêche l'écrasement sur petits écrans */
+}
+
+/* Le bouton (Home ou Retour) calé à gauche */
+.unified-header .header-left-btn {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%); /* Centrage vertical parfait */
+
+    /* Style Bulle Grise */
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--md-sys-color-on-surface-variant);
+    border: none;
+
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    margin: 0;
 }
 
 .header-back-btn {
-    /* C'est la ligne magique qui remet le bouton à gauche */
+    /* 1. Positionnement (Reste calé à gauche) */
     position: absolute !important;
     left: 0;
     top: 50%;
-    transform: translateY(-50%); /* Centre verticalement par rapport au titre */
-
-    margin: 0 !important;
+    transform: translateY(-50%);
     z-index: 10;
+    margin: 0 !important;
 
-    /* Style du bouton rond */
+    /* 2. Taille & Forme */
     width: 48px;
     height: 48px;
-    border-radius: 50%;
+    border-radius: 50%; /* Rond parfait */
+
     display: flex;
     align-items: center;
     justify-content: center;
-    background: transparent !important;
-    color: var(--md-sys-color-on-surface);
-    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+
+    /* 3. LE STYLE VISUEL (Identique au bouton Home) */
+    background: rgba(255, 255, 255, 0.1) !important; /* La bulle grise */
+    color: var(--md-sys-color-on-surface-variant) !important; /* Icône gris clair */
+    border: none; /* On enlève l'ancienne bordure fine */
+
+    transition: background 0.2s;
+}
+
+/* Petit effet quand on appuie dessus */
+.header-back-btn:active {
+    background: rgba(255, 255, 255, 0.2) !important;
 }
 
 .unified-header h2 {
@@ -171,6 +200,30 @@
     transform: none !important; /* Pas de zoom */
     transition: opacity 0.3s ease-in-out !important;
     background: transparent;
+}
+
+/* --- ICONES MATERIAL SYMBOLS OUTLINED --- */
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined'; /* La nouvelle police */
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+
+    /* Gère le remplissage (0 = Contour, 1 = Plein) */
+    font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 24;
 }
 
 /* QUAND UN ÉCRAN EST ACTIF */
@@ -281,14 +334,12 @@
     font-size: 26px;
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 5px;
     line-height: 1;
     color: #ffffff;
     text-align: center;
     position: relative;
     z-index: 2;
-
-
 
     /* L'EFFET NÉON BLANC/CYAN */
     text-shadow:
@@ -311,7 +362,7 @@
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 4px;
-    padding: 12px 40px;
+    padding: 0px 25px;
     border-radius: 100px;
     z-index: 2;
 
@@ -412,6 +463,70 @@ body::after {
     }
 }
 
+/* --- CSS POUR LES NOUVEAUX BOUTONS --- */
+.landing-actions {
+    width: 100%;
+    padding: 0 0 24px 0;
+    box-sizing: border-box;
+    display: flex; flex-direction: column; gap: 12px;
+
+    /* IMPORTANT : Fait passer les boutons DEVANT les scanlines */
+    position: relative;
+    z-index: 100;
+}
+
+.sub-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 24px; /* Marges latérales */
+}
+
+.cyber-btn {
+    background: transparent;
+    border: 2px solid;
+    font-family: system-ui, -apple-system, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+/* Bouton Principal (Prend toute la largeur - les marges sont gérées par le parent si besoin, ou ajoutez margin: 0 24px ici) */
+.cyber-btn.primary {
+    height: 72px;
+    margin: 0 24px; /* Marge latérale */
+    border-color: #ff4081;
+    color: #ff4081;
+    font-size: 20px;
+    font-weight: 900;
+    box-shadow: 0 0 15px rgba(255, 64, 129, 0.2), inset 0 0 15px rgba(255, 64, 129, 0.1);
+}
+.cyber-btn.primary:active {
+    background: rgba(255, 64, 129, 0.2);
+    transform: scale(0.98);
+}
+
+/* Boutons Secondaires */
+.cyber-btn.secondary {
+    height: 56px;
+    border-color: rgba(0, 229, 255, 0.3);
+    color: #00e5ff;
+    font-size: 14px;
+    font-weight: 700;
+}
+.cyber-btn.secondary:active {
+    background: rgba(0, 229, 255, 0.1);
+    transform: scale(0.98);
+}
+
 /* EXCEPTION : ÉCRAN RÉSUMÉ (SUMMARY) */
 #summary-screen {
     /* Pas de padding interne pour que le fond touche les bords */
@@ -436,21 +551,33 @@ body::after {
 
         /* Buttons */
         .md3-btn {
-            width: 100%; height: 56px; border-radius: 28px;
-            background: var(--md-sys-color-surface-container-high);
-            color: var(--md-sys-color-primary); border: none;
-            font-size: 16px; font-weight: 500; letter-spacing: 0.1px;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            cursor: pointer; margin-bottom: 12px; transition: 0.2s;
-position: relative;  /* Nécessaire pour activer le z-index */
-    z-index: 50 !important; /* Force le bouton à passer DEVANT les scanlines (qui sont à 20) */
+    width: 100%; height: 56px; border-radius: 28px;
+    background: var(--md-sys-color-surface-container-high);
+    color: var(--md-sys-color-primary); border: none;
+    font-size: 16px; font-weight: 500; letter-spacing: 0.1px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    cursor: pointer; transition: 0.2s;
+
+    /* SECURITÉ : On force le bouton à être au-dessus de tout */
+    position: relative;
+    z-index: 100 !important;
 }
-        .btn-primary {
-            background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary);
-            font-weight: 700; font-size: 18px;
-            box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3);
-        }
-        .btn-tonal { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-secondary); }
+.landing-actions .btn-primary {
+    width: calc(100% - 48px); /* 100% moins les 24px de chaque côté */
+    margin: 0 auto; /* Centré */
+}
+
+.btn-primary {
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3);
+}
+
+.btn-tonal {
+    background: var(--md-sys-color-secondary-container);
+    color: var(--md-sys-color-secondary);
+}
         .md3-btn:active { transform: scale(0.98); }
         .btn-icon { width: 48px; height: 48px; border-radius: 50%; padding: 0; flex-shrink: 0; }
 
@@ -541,20 +668,45 @@ position: relative;  /* Nécessaire pour activer le z-index */
         }
         .cat-chip.selected .icon { opacity: 1; color: var(--md-sys-color-secondary); }
         .cat-chip.selected::after {
-            content: 'check'; font-family: 'Material Symbols Rounded'; font-weight: bold; font-size: 18px;
+            content: 'check'; font-family: 'Material Symbols Outlined'; font-weight: bold; font-size: 18px;
             margin-left: 4px; animation: scaleIn 0.2s ease-out;
         }
         .cat-chip:active { transform: scale(0.95); }
 
         /* --- 6. READY & GAME SCREENS --- */
-        .ready-content { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; width: 100%; }
-        .category-icon-container { display: flex; align-items: center; justify-content: center; margin-bottom: 8px; width: 100%; }
-        #ready-category-icon {
-            font-size: 100px; line-height: 1; display: block;
-            background: linear-gradient(135deg, #FF5E98, #00F0FF);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 4px 12px rgba(255, 94, 152, 0.4));
-        }
+/* --- TECH DATA CARD --- */
+/* --- ROTATED DIAMOND --- */
+.category-icon-container {
+    width: 100px; /* Slightly smaller because rotation takes up more space */
+    height: 100px;
+
+    border-radius: 24px; /* Soft corners on the diamond */
+
+    /* ROTATION MAGIC */
+    transform: rotate(45deg);
+
+display: flex;           /* Pour centrer l'icône DANS la bulle */
+    align-items: center;     /* Centre verticalement l'icône */
+    justify-content: center; /* Centre horizontalement l'icône */
+
+    margin-left: auto !important;  /* Force le centrage sur la page */
+    margin-right: auto !important; /* Force le centrage sur la page */
+    margin-bottom: 24px;           /* Votre marge du bas */
+
+    /* Glass Style */
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(0, 229, 255, 0.3);
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
+}
+
+#ready-category-icon {
+    font-size: 56px;
+    color: var(--md-sys-color-secondary);
+    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;
+
+    /* COUNTER-ROTATION (Important!) */
+    transform: rotate(-45deg);
+}
         #ready-theme-title {
             background: linear-gradient(90deg, #FF5E98 0%, #00F0FF 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
@@ -567,6 +719,14 @@ position: relative;  /* Nécessaire pour activer le z-index */
             color: var(--md-sys-color-on-surface-variant); letter-spacing: 1px; margin-bottom: 16px;
         }
         .ready-highlight { color: var(--md-sys-color-primary); font-weight: 900; }
+
+        .ready-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* <--- C'est la clé. Force tout au milieu horizontalement */
+    justify-content: center;
+    width: 100%;
+}
 
         /* Game Header & Track */
         .game-header { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 16px; }
@@ -703,16 +863,31 @@ position: relative;  /* Nécessaire pour activer le z-index */
 }
 
 .btn-home-simple {
-    width: 48px; height: 48px;
-    border-radius: 24px;
-    display: flex; align-items: center; justify-content: center;
-    background: var(--md-sys-color-surface-container-high);
-    color: var(--md-sys-color-primary);
-    border: 1px solid rgba(255,255,255,0.05);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%; /* Cercle parfait */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    /* LE STYLE "BULLE BLANCHE" */
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--md-sys-color-on-surface-variant); /* Gris clair pour l'icône */
+    border: none; /* Pas de bordure */
+
     cursor: pointer;
-    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transition: background 0.2s;
+
+    /* Pour éviter qu'il ne s'écrase dans un flexbox */
+    flex-shrink: 0;
+    margin: 0;
 }
-.btn-home-simple:active { transform: scale(0.9); }
+
+/* Effet au clic */
+.btn-home-simple:active {
+    background: rgba(255, 255, 255, 0.25); /* Devient plus blanc quand on appuie */
+}
 
 .sum-team {
     font-family: system-ui, -apple-system, sans-serif;
@@ -999,6 +1174,17 @@ position: relative;  /* Nécessaire pour activer le z-index */
             display: flex; flex-direction: column; align-items: center; width: 100%; height: 100%; gap: 24px; padding-bottom: 24px;
         }
 
+        /* Conteneur de la ligne du haut */
+.leaderboard-header-row {
+    position: relative; /* Crée le repère pour le bouton absolu */
+    width: 100%;
+    height: 48px;       /* Hauteur fixe pour stabiliser l'alignement */
+    display: flex;
+    align-items: center;      /* Centre verticalement */
+    justify-content: center;  /* Centre le badge horizontalement */
+    margin-bottom: 16px;      /* Espace avant le titre "Classement" */
+}
+
         /* FORCE LA LISTE À POUSSER LE BOUTON VERS LE BAS */
 #leaderboard-list {
     width: 100%;
@@ -1073,18 +1259,28 @@ position: relative;  /* Nécessaire pour activer le z-index */
     100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(105, 240, 174, 0); }
 }
 /* Classe qui sera ajoutée par le JS au score total */
+/* --- ANIMATION SCORE : CLIGNOTEMENT 3 SECONDES --- */
+
 .score-highlight-anim {
-    animation: score-pulse 2s infinite ease-in-out;
-    /* On force la bordure en vert pour que ça ressorte bien */
-    border-color: var(--md-sys-color-success) !important;
-    background-color: rgba(105, 240, 174, 0.15) !important;
-    color: var(--md-sys-color-success) !important;
+    /* 0.5s (durée d'un clignotement) x 6 répétitions = 3 secondes EXACTES.
+       Une fois fini, l'animation s'arrête et le texte redevient fixe (opacity: 1).
+    */
+    animation: blink-no-scale 0.5s linear 6;
+
+    /* On force la suppression de tout effet de grossissement précédent */
+    transform: none !important;
+
+    /* Couleur verte (succès) pendant l'anim */
+    color: var(--md-sys-color-success);
+    background: rgba(105, 240, 174, 0.15); /* Fond vert léger optionnel */
+    border-color: var(--md-sys-color-success);
 }
-        @keyframes score-pop-glow {
-            0% { opacity: 0; transform: scale(0.5); text-shadow: 0 0 0 transparent; }
-            50% { opacity: 1; transform: scale(1.3); text-shadow: 0 0 40px var(--md-sys-color-secondary); }
-            100% { opacity: 1; transform: scale(1); text-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-        }
+
+/* Les étapes du clignotement (Juste la transparence, pas de taille) */
+@keyframes blink-no-scale {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; } /* Devient presque transparent au milieu */
+}
         @keyframes list-cascade { to { opacity: 1; transform: translateY(0); } }
         @keyframes btn-appear { to { opacity: 1; transform: translateY(0); } }
         @keyframes popIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
@@ -1229,30 +1425,34 @@ position: relative;  /* Nécessaire pour activer le z-index */
             <span class="hero-text-line">ou PAS Museau ?</span>
         </div>
 
-        <div style="width: 100%; display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; padding: 0 24px; box-sizing: border-box;">
-            <button class="md3-btn btn-primary" style="height: 72px; font-size: 20px; margin: 0;" onclick="transitionTo('setup-screen')">
-                Nouvelle Partie <span class="material-symbols-rounded" style="font-size: 28px;">swords</span>
+        <div class="landing-actions">
+
+            <button class="md3-btn btn-primary" style="height: 72px; font-size: 20px;" onclick="transitionTo('setup-screen')">
+                Nouvelle Partie <span class="material-symbols-outlined" style="font-size: 28px;">swords</span>
             </button>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
-                <button class="md3-btn btn-tonal" style="margin:0; height: 56px;" onclick="transitionTo('rules-screen')">
-                    Règles <span class="material-symbols-rounded">menu_book</span>
+
+            <div class="sub-actions">
+                <button class="md3-btn btn-tonal" onclick="transitionTo('rules-screen')">
+                    Règles <span class="material-symbols-outlined">menu_book</span>
                 </button>
-                <button class="md3-btn" style="margin:0; height: 56px; background: var(--md-sys-color-surface-container-high);" onclick="transitionTo('settings-screen')">
-                    Options <span class="material-symbols-rounded">settings</span>
+
+                <button class="md3-btn" style="background: var(--md-sys-color-surface-container-high);" onclick="transitionTo('settings-screen')">
+                    Options <span class="material-symbols-outlined">settings</span>
                 </button>
             </div>
+
         </div>
     </div>
 
 <div id="rules-screen" class="screen">
     <div style="display:flex; align-items:center; margin-bottom:32px;">
-        <button class="md3-btn btn-icon" onclick="transitionTo('landing-screen')"><span class="material-symbols-rounded">arrow_back</span></button>
+        <button class="md3-btn btn-icon" onclick="transitionTo('landing-screen')"><span class="material-symbols-outlined">arrow_back</span></button>
         <h2 style="margin:0 0 0 16px;">Règles du Jeu</h2>
     </div>
     <div class="rules-container" style="display: flex; flex-direction: column; gap: 20px;">
         <div class="rule-card" style="padding: 20px;">
             <div class="rule-row">
-                <span class="material-symbols-rounded rule-icon" style="color: var(--md-sys-color-success); font-size: 40px;">swipe_right</span>
+                <span class="material-symbols-outlined rule-icon" style="color: var(--md-sys-color-success); font-size: 40px;">swipe_right</span>
                 <div class="rule-content">
                     <div style="font-weight:900; color:var(--md-sys-color-success); text-transform: uppercase; font-size: 14px; letter-spacing: 1px; margin-bottom: 4px;">Étape 1</div>
                     <div style="font-weight:700; font-size: 18px; color: var(--md-sys-color-on-surface);">C'est un match !</div>
@@ -1262,7 +1462,7 @@ position: relative;  /* Nécessaire pour activer le z-index */
         </div>
         <div class="rule-card" style="padding: 20px;">
             <div class="rule-row">
-                <span class="material-symbols-rounded rule-icon" style="color: var(--md-sys-color-error); font-size: 40px;">swipe_left</span>
+                <span class="material-symbols-outlined rule-icon" style="color: var(--md-sys-color-error); font-size: 40px;">swipe_left</span>
                 <div class="rule-content">
                     <div style="font-weight:900; color:var(--md-sys-color-error); text-transform: uppercase; font-size: 14px; letter-spacing: 1px; margin-bottom: 4px;">Étape 2</div>
                     <div style="font-weight:700; font-size: 18px; color: var(--md-sys-color-on-surface);">C'est un intrus !</div>
@@ -1272,7 +1472,7 @@ position: relative;  /* Nécessaire pour activer le z-index */
         </div>
         <div class="rule-card" style="padding: 20px;">
             <div class="rule-row">
-                <span class="material-symbols-rounded rule-icon" style="color: var(--md-sys-color-secondary); font-size: 40px;">fact_check</span>
+                <span class="material-symbols-outlined rule-icon" style="color: var(--md-sys-color-secondary); font-size: 40px;">fact_check</span>
                 <div class="rule-content">
                     <div style="font-weight:900; color:var(--md-sys-color-secondary); text-transform: uppercase; font-size: 14px; letter-spacing: 1px; margin-bottom: 4px;">Étape 4</div>
                     <div style="font-weight:700; font-size: 18px; color: var(--md-sys-color-on-surface);">Le Verdict</div>
@@ -1290,7 +1490,7 @@ position: relative;  /* Nécessaire pour activer le z-index */
 
 <div id="settings-screen" class="screen">
     <div style="display:flex; align-items:center; margin-bottom:24px;">
-        <button class="md3-btn btn-icon" onclick="transitionTo('landing-screen')"><span class="material-symbols-rounded">arrow_back</span></button>
+        <button class="md3-btn btn-icon" onclick="transitionTo('landing-screen')"><span class="material-symbols-outlined">arrow_back</span></button>
         <h2 style="margin:0 0 0 16px;">Options</h2>
     </div>
     <p style="text-align:center; margin-top:40px;">Version 1.2.0 (Museau)</p>
@@ -1299,7 +1499,7 @@ position: relative;  /* Nécessaire pour activer le z-index */
 
 <div id="setup-screen" class="screen">
     <div class="unified-header">
-        <button class="md3-btn btn-icon header-back-btn" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
+        <button class="md3-btn btn-icon header-back-btn" onclick="goBack()"><span class="material-symbols-outlined">arrow_back</span></button>
         <h2>Paramètres</h2>
     </div>
     <div style="flex-grow:1; overflow-y: auto;">
@@ -1332,43 +1532,81 @@ position: relative;  /* Nécessaire pour activer le z-index */
             <button class="segment-btn" onclick="setTimeLimit(30, this)">30s</button>
         </div>
     </div>
-    <button class="md3-btn btn-primary" onclick="fetchDataAndShowCategories()">Valider <span class="material-symbols-rounded">arrow_forward</span></button>
+    <button class="md3-btn btn-primary" onclick="fetchDataAndShowCategories()">Valider <span class="material-symbols-outlined">arrow_forward</span></button>
 </div>
 
-<div id="category-screen" class="screen">
-    <div class="unified-header">
-        <button class="md3-btn btn-icon header-back-btn" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
+    <div id="category-screen" class="screen">
+
+        <div class="unified-header">
+            <button class="header-left-btn" onclick="transitionTo('landing-screen')">
+                <span class="material-symbols-outlined">home</span>
+            </button>
         <h2>Catégories</h2>
     </div>
     <div id="category-counter" style="margin: -16px 0 16px 0;">
-        <span id="cat-count-val">0</span><span>selected</span>
+        <span id="cat-count-val">0</span><span>séléctionnées</span>
     </div>
     <div id="category-container" class="category-cloud-layout"></div>
     <div style="width: 100%;">
         <button id="start-btn" class="md3-btn btn-primary" onclick="startGame()" disabled>
-            Démarrer la partie <span class="material-symbols-rounded">play_arrow</span>
+            Démarrer la partie <span class="material-symbols-outlined">play_arrow</span>
         </button>
     </div>
 </div>
 
-<div id="ready-screen" class="screen">
-    <div class="unified-header" style="height: auto; min-height: 60px;">
-        <button class="md3-btn btn-icon header-back-btn" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
-        <div id="ready-round-indicator" class="header-subtitle">ROUND 1 / 5</div>
-        <h2 id="ready-team-name" style="color: var(--md-sys-color-primary);">Team Name</h2>
-    </div>
-    <div class="ready-content">
-        <div class="category-icon-container"><span class="material-symbols-rounded" id="ready-category-icon">category</span></div>
-        <div id="ready-intro-text" class="ready-label-small">GET READY FOR</div>
-        <h1 id="ready-theme-title">Theme Name</h1>
-        <div class="tutorial-zone capsule-mode">
-            <div class="cap-label left" id="tut-no-text">NOT THEME</div>
-            <div class="cap-track"><div class="cap-thumb"><span class="material-symbols-rounded">compare_arrows</span></div></div>
-            <div class="cap-label right" id="tut-yes-text">THEME</div>
+    <div id="ready-screen" class="screen">
+
+        <div class="unified-header" style="margin-bottom: 8px;">
+            <button class="header-back-btn" onclick="goBack()">
+                <span class="material-symbols-outlined">arrow_back</span>
+            </button>
+
+            <div id="ready-round-indicator" class="round-badge" style="margin:0;">
+                MANCHE 1 / 5
+            </div>
         </div>
+
+        <h2 id="ready-team-name" style="margin: 0 0 16px 0; color: var(--md-sys-color-primary); font-size: 24px; text-align: center; flex-shrink: 0;">
+            Équipe 1
+        </h2>
+
+        <div class="ready-content" style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+
+            <div class="category-icon-container" style="margin-bottom: 24px;">
+                <span class="material-symbols-outlined" id="ready-category-icon" style="font-size: 64px; color: var(--md-sys-color-secondary);">category</span>
+            </div>
+
+            <div id="ready-intro-text" class="ready-label-small"
+                 style="opacity: 1;
+            letter-spacing: 8px;
+            margin-right: -8px; /* <--- AJOUTEZ CECI (Annule l'espace de la dernière lettre) */
+            font-size: 15px;
+            font-weight: 500;
+            color: #ff4081;
+            text-transform: uppercase;">
+            </div>
+
+            <h1 id="ready-theme-title" style="margin: 0 0 40px 0; font-size: 40px; line-height: 1.1; text-align: center; max-width: 90%;">
+                Classiques Disney
+            </h1>
+
+            <div class="tutorial-zone capsule-mode">
+                <div class="cap-label left" id="tut-no-text">PAS CLASSIQUES</div>
+                <div class="cap-track">
+                    <div class="cap-thumb">
+                        <span class="material-symbols-outlined">compare_arrows</span>
+                    </div>
+                </div>
+                <div class="cap-label right" id="tut-yes-text">CLASSIQUES</div>
+            </div>
+
+        </div>
+
+        <button id="btn-go" class="md3-btn btn-primary" onclick="startGameplay()" style="margin-top: 16px;">
+            C'EST PARTI ! <span class="material-symbols-outlined">play_arrow</span>
+        </button>
+
     </div>
-    <button id="btn-go" class="md3-btn btn-primary" onclick="startGameplay()">GO! <span class="material-symbols-rounded">play_arrow</span></button>
-</div>
 
 <div id="game-screen" class="screen">
     <div class="game-header">
@@ -1382,7 +1620,7 @@ position: relative;  /* Nécessaire pour activer le z-index */
         <div id="pig-wrapper" class="pig-character"><img src="pig.png" class="pig-img" alt="Pig"></div>
     </div>
     <div id="theme-centered-zone">
-        <span id="game-category-icon" class="material-symbols-rounded">category</span>
+        <span id="game-category-icon" class="material-symbols-outlined">category</span>
         <div id="game-theme-display">Theme Name</div>
     </div>
     <div class="card-area">
@@ -1394,8 +1632,8 @@ position: relative;  /* Nécessaire pour activer le z-index */
                 </div>
                 <span id="card-text" class="card-main-text">Item Name</span>
             </div>
-            <div class="swipe-overlay overlay-yes"><span class="material-symbols-rounded">check_circle</span></div>
-            <div class="swipe-overlay overlay-no"><span class="material-symbols-rounded">cancel</span></div>
+            <div class="swipe-overlay overlay-yes"><span class="material-symbols-outlined">check_circle</span></div>
+            <div class="swipe-overlay overlay-no"><span class="material-symbols-outlined">cancel</span></div>
         </div>
     </div>
 </div>
@@ -1406,7 +1644,7 @@ position: relative;  /* Nécessaire pour activer le z-index */
 
         <div class="header-row">
             <button class="btn-home-simple" onclick="goHome()">
-                <span class="material-symbols-rounded">home</span>
+                <span class="material-symbols-outlined">home</span>
             </button>
 
             <div class="sum-team" id="summary-team-name">Team Name</div>
@@ -1434,17 +1672,23 @@ position: relative;  /* Nécessaire pour activer le z-index */
 </div>
 
 <div id="leaderboard-screen" class="screen">
-    <div style="display:flex; flex-direction:column; align-items:center; width:100%; margin-bottom: 24px; margin-top: 16px;">
-        <button class="md3-btn btn-icon"
-                style="position: absolute; top: 60px; left: 24px; z-index: 10; background: rgba(255,255,255,0.1); color: var(--md-sys-color-on-surface-variant);"
-                onclick="goHome()">
-            <span class="material-symbols-rounded">home</span>
+
+    <div class="leaderboard-header-row">
+
+        <button class="md3-btn btn-icon btn-home-simple" onclick="goHome()">
+            <span class="material-symbols-outlined">home</span>
         </button>
-        <div id="leaderboard-subtitle" class="round-badge">MANCHES : 1 / 5</div>
-        <h2 style="margin:0; text-align:center; font-size:40px;">Résultats</h2>
+
+        <div id="leaderboard-subtitle" class="round-badge" style="margin:0;">
+            MANCHE : 1 / 5
+        </div>
+
     </div>
+
+    <h2 style="margin: 0 0 24px 0; text-align:center; font-size:40px;">Résultats</h2>
+
     <div class="list-wrap" id="leaderboard-list" style="width:100%;"></div>
-    <button class="md3-btn btn-primary" onclick="prepareRound()">Start Next Round <span class="material-symbols-rounded">arrow_forward</span></button>
+    <button class="md3-btn btn-primary" onclick="prepareRound()">Manche Suivante <span class="material-symbols-outlined">arrow_forward</span></button>
 </div>
 
 <canvas id="confetti-canvas"></canvas>
@@ -1638,10 +1882,35 @@ const TEAM_COLORS = [
         finally { btn.innerHTML = txt; btn.disabled = false; }
     }
 
-    function getIcon(cat) {
-        const map = { 'Geography':'public', 'History':'history_edu', 'Science':'science', 'Art':'palette', 'Sports':'sports_basketball', 'Music':'music_note', 'Movies':'movie', 'Food':'restaurant' };
-        return map[cat] || 'category';
+function getIcon(categoryName) {
+    // On normalise le texte (tout en minuscule) pour éviter les erreurs d'accent ou de majuscule
+    // Exemple : "Cinéma" devient "cinema"
+    const lowerCat = categoryName.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+    switch (lowerCat) {
+        // --- VOS CATÉGORIES ---
+        case 'nature':
+            return 'forest';      // ou 'eco', 'landscape', 'pets'
+        case 'cinema':
+            return 'movie';       // ou 'theaters', 'videocam'
+        case 'musique':
+            return 'music_note';  // ou 'headphones', 'piano'
+        case 'histoire':
+            return 'history_edu'; // ou 'castle', 'menu_book'
+        case 'sport':
+            return 'sports_soccer';
+        case 'sciences':
+            return 'science';
+        case 'geographie':
+            return 'public';      // Globe terrestre
+        case 'culture pop':
+            return 'tv_gen';
+
+        // --- PAR DÉFAUT (Si la catégorie n'est pas trouvée) ---
+        default:
+            return 'category';    // Une icône générique (formes géométriques)
     }
+}
 
     function generateCategoryButtons() {
         const container = document.getElementById('category-container');
@@ -1652,7 +1921,7 @@ const TEAM_COLORS = [
             selectedCategories.add(cat);
             const chip = document.createElement('div');
             chip.className = 'cat-chip selected';
-            chip.innerHTML = `<span class="material-symbols-rounded icon">${getIcon(cat)}</span><span>${cat}</span>`;
+            chip.innerHTML = `<span class="material-symbols-outlined icon">${getIcon(cat)}</span><span>${cat}</span>`;
             chip.onclick = () => {
                 if (selectedCategories.has(cat)) { selectedCategories.delete(cat); chip.classList.remove('selected'); }
                 else { selectedCategories.add(cat); chip.classList.add('selected'); }
@@ -1684,33 +1953,50 @@ const TEAM_COLORS = [
     }
 
     // --- 5. GAME LOOP & LOGIC ---
-    function prepareRound() {
-        const tm = teams[currentTeamIndex];
-        if(teams.every(t => t.roundsPlayed >= roundsPerTeam)) { endGame(); return; }
-        if (tm.roundsPlayed >= roundsPerTeam) { nextTeam(); return; }
+function prepareRound() {
+    const tm = teams[currentTeamIndex];
 
-        const th = playableData[currentThemeIndex % playableData.length];
+    // Vérifications fin de jeu
+    if(teams.every(t => t.roundsPlayed >= roundsPerTeam)) { endGame(); return; }
+    if (tm.roundsPlayed >= roundsPerTeam) { nextTeam(); return; }
 
-        // Reset UI Elements
-        const tutZone = document.querySelector('.tutorial-zone');
-        if (tutZone) { tutZone.style.opacity = "1"; tutZone.style.visibility = "visible"; }
-        const btnGo = document.getElementById('btn-go');
-        if (btnGo) { btnGo.classList.remove('fade-out'); btnGo.style.display = 'flex'; btnGo.style.visibility = 'visible'; }
-        const countdown = document.getElementById('countdown-overlay');
-        if (countdown) countdown.style.display = 'none';
+    // Récupération des données (th = theme data)
+    const th = playableData[currentThemeIndex % playableData.length];
 
-        transitionTo('ready-screen');
+    const cleanCategory = th.category ? th.category.trim() : "";
 
-        document.getElementById('ready-round-indicator').innerText = `MANCHE ${tm.roundsPlayed + 1} / ${roundsPerTeam}`;
-        const nameEl = document.getElementById('ready-team-name');
-        nameEl.innerText = tm.name; nameEl.style.color = tm.color;
+    // --- RESET UI ---
+    const tutZone = document.querySelector('.tutorial-zone');
+    if (tutZone) { tutZone.style.opacity = "1"; tutZone.style.visibility = "visible"; }
 
-        document.getElementById('ready-intro-text').innerHTML = `CATÉGORIE DE LA MANCHE : <span class="ready-highlight">${th.category.toUpperCase()}</span>`;
-        document.getElementById('ready-theme-title').innerText = th.theme;
-        document.getElementById('ready-category-icon').innerText = getIcon(th.category);
-        document.getElementById('tut-yes-text').innerText = th.theme;
-        document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
-    }
+    const btnGo = document.getElementById('btn-go');
+    if (btnGo) { btnGo.classList.remove('fade-out'); btnGo.style.display = 'flex'; btnGo.style.visibility = 'visible'; }
+
+    const countdown = document.getElementById('countdown-overlay');
+    if (countdown) countdown.style.display = 'none';
+
+    transitionTo('ready-screen');
+
+    // --- MISE A JOUR DES TEXTES ---
+
+    document.getElementById('ready-round-indicator').innerText = `MANCHE ${tm.roundsPlayed + 1} / ${roundsPerTeam}`;
+
+    const nameEl = document.getElementById('ready-team-name');
+    nameEl.innerText = tm.name;
+    nameEl.style.color = tm.color;
+
+    // JUSTE LE NOM DE LA CATÉGORIE (La couleur est gérée par le CSS/HTML désormais)
+    // On utilise th.category pour être sûr d'avoir la bonne info
+    document.getElementById('ready-intro-text').innerText = cleanCategory;
+
+    document.getElementById('ready-theme-title').innerText = th.theme;
+
+    // On utilise aussi th.category pour l'icône
+    document.getElementById('ready-category-icon').innerText = getIcon(cleanCategory);
+
+    document.getElementById('tut-yes-text').innerText = th.theme;
+    document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
+}
 
     function generateBalancedRound(themeData) {
         const poolTrue = themeData.items.filter(i => i.isRelated === true);
@@ -2017,7 +2303,7 @@ function endRound() {
 
         item.innerHTML = `
             <div class="md3-leading-icon" style="background-color: ${iconBg}; color: ${iconColor};">
-                <span class="material-symbols-rounded">${iconName}</span>
+                <span class="material-symbols-outlined">${iconName}</span>
             </div>
             <div class="md3-content">
                 <div class="md3-headline">${h.text}</div>
@@ -2053,7 +2339,7 @@ function endRound() {
     function showLeaderboard() {
         transitionTo('leaderboard-screen'); currentTeamIndex = 0; currentThemeIndex++;
         const currentRounds = Math.min(teams[0].roundsPlayed, roundsPerTeam);
-        document.getElementById('leaderboard-subtitle').innerText = `Manches : ${currentRounds}/${roundsPerTeam}`;
+        document.getElementById('leaderboard-subtitle').innerText = `Manche : ${currentRounds}/${roundsPerTeam}`;
         renderRankings(document.getElementById('leaderboard-list'));
     }
 
@@ -2068,7 +2354,7 @@ function endRound() {
         const winnerCard = document.createElement('div'); winnerCard.className = 'winner-card';
         winnerCard.style.borderColor = winner.color; winnerCard.style.boxShadow = `0 0 30px ${winner.color}40`;
         winnerCard.innerHTML = `
-            <span class="material-symbols-rounded winner-icon-badge" style="color:${winner.color}">emoji_events</span>
+            <span class="material-symbols-outlined winner-icon-badge" style="color:${winner.color}">emoji_events</span>
             <div class="winner-team-name">${winner.name}</div>
             <div class="winner-score" style="color:${winner.color}">${winner.totalScore} PTS</div>
             <div style="position:absolute; top:12px; right:16px; background:${winner.color}; color:#000; padding:4px 12px; border-radius:20px; font-weight:900; font-size:14px; box-shadow:0 4px 8px rgba(0,0,0,0.3);">#1</div>
