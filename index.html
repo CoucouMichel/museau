@@ -2508,6 +2508,12 @@ function endRound() {
         }
         draw();
     }
+    function openFullscreen() {
+  let elem = document.documentElement;
+  if (elem.requestFullscreen) {
+    elem.requestFullscreen();
+  }
+}
 </script>
 </body>
 </html>
