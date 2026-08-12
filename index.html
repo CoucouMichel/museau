@@ -62,11 +62,11 @@
         
         .material-symbols-rounded {
             font-family: 'Material Symbols Rounded';
-            font-weight: normal; font-style: normal; font-size: 24px;
+            font-weight: normal; font-style: normal; font-size: 32px;
             line-height: 1; letter-spacing: normal; text-transform: none;
             display: inline-block; white-space: nowrap; word-wrap: normal;
             direction: ltr; -webkit-font-feature-settings: 'liga'; -webkit-font-smoothing: antialiased;
-            font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+            font-variation-settings: 'FILL' 1, 'wght' 200, 'GRAD' 0, 'opsz' 24;
         }
 
         /* --- 3. LAYOUT & SCREENS --- */
@@ -464,6 +464,25 @@
     from { opacity: 0; transform: translateX(60px); } 
     to { opacity: 1; transform: translateX(0); } 
 }
+/* --- READY SCREEN CATEGORY ICON --- */
+.ready-icon-box {
+    width: 80px; 
+    height: 80px; 
+    background: white; 
+    border-radius: var(--radius-lg);
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    box-shadow: var(--shadow-soft); 
+    margin-bottom: 24px;
+}
+
+.ready-icon-box .material-symbols-rounded {
+    font-size: 40px;
+    color: var(--secondary);
+    /* Style fin et élégant (non rempli, trait de 400) */
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
     </style>
 </head>
 <body>
@@ -547,8 +566,8 @@
         <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
             <h2 id="ready-team" style="font-size: 32px; margin-bottom: 40px; color: var(--primary);">Nom de l'équipe</h2>
             
-            <div style="width: 80px; height: 80px; background: white; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-soft); margin-bottom: 24px;">
-                <span class="material-symbols-rounded" id="ready-icon" style="font-size: 48px; color: var(--secondary);">category</span>
+<div class="ready-icon-box">
+                <span class="material-symbols-rounded" id="ready-icon">category</span>
             </div>
             
             <div class="section-label" id="ready-cat" style="color: var(--secondary);">CATÉGORIE</div>
@@ -757,12 +776,39 @@ function renderTeams() {
         const cont = document.getElementById('category-container');
         cont.innerHTML = ''; selectedCats.clear();
         const cats = [...new Set(fullData.map(d => d.category))];
+        
+        // Dictionnaire associant des mots-clés de catégories à des icônes spécifiques
+        const iconMap = {
+            'histoire': 'history_edu',
+            'sport': 'sports_soccer',
+            'cinema': 'movie',
+            'musique': 'music_note',
+            'géographie': 'globe',
+            'science': 'science',
+            'animaux': 'pets',
+            'nourriture': 'restaurant',
+            'art': 'palette',
+            'technologie': 'devices',
+            'jeux': 'sports_esports'
+        };
+
         cats.forEach(c => {
-            // Toutes les catégories sont choisies par défaut
-            selectedCats.add(c);
+            selectedCats.add(c); // Toutes sélectionnées par défaut[cite: 1]
+            
+            // Recherche d'une icône correspondante (insensible à la casse/accents)
+            let iconName = 'category';
+            const lowerCat = c.toLowerCase();
+            for (const [key, icon] of Object.entries(iconMap)) {
+                if (lowerCat.includes(key)) {
+                    iconName = icon;
+                    break;
+                }
+            }
+
             const pill = document.createElement('div');
             pill.className = 'cat-pill selected'; 
-            pill.innerHTML = `<span class="material-symbols-rounded">category</span> ${c}`;
+            pill.innerHTML = `<span class="material-symbols-rounded">${iconName}</span> ${c}`;
+            
             pill.onclick = () => {
                 if (selectedCats.has(c)) { selectedCats.delete(c); pill.classList.remove('selected'); }
                 else { selectedCats.add(c); pill.classList.add('selected'); }
@@ -810,8 +856,36 @@ function renderTeams() {
         const tname = document.getElementById('ready-team');
         tname.innerText = tm.name; tname.style.color = tm.color;
         
-        document.getElementById('ready-cat').innerText = th.category;
+document.getElementById('ready-cat').innerText = th.category;
         document.getElementById('ready-theme').innerText = th.theme;
+
+        // Dictionnaire d'icônes
+        const iconMap = {
+            'histoire': 'history_edu', 
+            'sport': 'sports_soccer', 
+            'cinema': 'movie',
+            'musique': 'music_note', 
+            'geographie': 'public', 
+            'science': 'science',
+            'animaux': 'pets', 
+            'nourriture': 'restaurant', 
+            'art': 'palette',
+            'technologie': 'devices', 
+            'jeux': 'sports_esports'
+        };
+
+        // Détection de l'icône
+        let readyIconName = 'category';
+        const lowerCat = th.category.toLowerCase();
+        for (const [key, icon] of Object.entries(iconMap)) {
+            if (lowerCat.includes(key)) {
+                readyIconName = icon;
+                break;
+            }
+        }
+
+        // Mise à jour de l'élément HTML sur l'écran Ready
+        document.getElementById('ready-icon').innerText = readyIconName;
 
         document.getElementById('tut-yes-text').innerText = th.theme;
 document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
