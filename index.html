@@ -7,2513 +7,1085 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@500;700;800;900&display=swap" rel="stylesheet">
     <style>
         /* --- 1. RESET & VARIABLES --- */
-* { -webkit-tap-highlight-color: transparent; }
+        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
 
         :root {
-            /* Themes & Colors */
-            --md-sys-color-background: #0f0a14;
-            --app-gradient: radial-gradient(circle at top right, #1e1b2e 0%, #000000 100%);
-            --md-sys-color-surface-container: #1d1724;
-            --md-sys-color-surface-container-high: #2b2433;
-            --md-sys-color-primary: #ff4081; /* Pink */
-            --md-sys-color-on-primary: #ffffff;
-            --md-sys-color-primary-container: #5c0026;
-            --md-sys-color-secondary: #00e5ff; /* Cyan */
-            --md-sys-color-secondary-container: #004f5a;
-            --md-sys-color-tertiary: #ffd740; /* Amber */
-            --md-sys-color-on-surface: #e6e1e5;
-            --md-sys-color-on-surface-variant: #cac4d0;
-            --md-sys-color-outline: #938f99;
-            --md-sys-color-success: #69f0ae;
-            --md-sys-color-error: #ff5252;
+            /* Claymorphism Palette */
+            --bg-color: #F4F0FA; /* Off-white/lavender background */
+            --surface-color: #FFFFFF;
+            
+            --primary: #FF3B7C; /* Punchy Pink */
+            --primary-shadow: #D81A5B;
+            --primary-light: #FF85B3;
+            
+            --secondary: #FFB800; /* Warm Yellow */
+            --secondary-shadow: #D69A00;
+            
+            --text-main: #2D2342; /* Deep purple/navy */
+            --text-muted: #736B82;
+            
+            --success: #00D084;
+            --success-shadow: #00A368;
+            --success-bg: #E0F9ED;
+            
+            --danger: #FF4D4D;
+            --danger-shadow: #D63333;
+            --danger-bg: #FFE5E5;
 
             /* Utilities */
-            --md-sys-shape-corner-extra-large: 28px;
-            --md-sys-elevation-3: 0px 4px 8px 3px rgba(0,0,0,0.3);
-            --m3-easing-standard: cubic-bezier(0.2, 0.0, 0, 1.0);
+            --radius-xl: 32px;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-pill: 999px;
+            --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --shadow-soft: 0 8px 24px rgba(45, 35, 66, 0.08);
+            --shadow-hard: 0 4px 0 rgba(45, 35, 66, 0.1);
         }
 
-        /* RETOUR À LA NORMALE : Le fond est géré par le body */
         body {
             margin: 0;
-            font-family: 'Roboto', sans-serif;
-            background: var(--app-gradient); /* Le dégradé revient ici */
-            background-attachment: fixed;
-            background-size: cover;
-            color: var(--md-sys-color-on-surface);
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-main);
             width: 100vw;
             height: 100dvh;
             overflow: hidden;
             user-select: none;
         }
 
-
-
-        /* --- 2. TYPOGRAPHY --- */
-        h1 {
-            font-size: 57px;
-            line-height: 64px; font-weight: 900; margin: 0 0 8px 0;
-            background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-secondary));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-align: center; letter-spacing: -1px;
-        }
-        h2 {
-            font-size: 32px; font-weight: 700; margin: 0;
-            color: var(--md-sys-color-on-surface);
-        }
-        .landing-title {
-            font-size: 75px; line-height: 64px; font-weight: 900;
-            background: linear-gradient(135deg, var(--md-sys-color-primary), var(--md-sys-color-secondary));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-align: center;
-        }
-        p { color: var(--md-sys-color-on-surface-variant); line-height: 1.5; margin-bottom: 24px; }
-
-        .label-text {
-            font-size: 11px; font-weight: 700; letter-spacing: 1px;
-            text-transform: uppercase; color: var(--md-sys-color-on-surface-variant);
-            margin: 20px 0 10px 4px; opacity: 0.8;
+        /* --- 2. TYPOGRAPHY & ICONS --- */
+        h1, h2, h3 { margin: 0; font-weight: 900; letter-spacing: -0.5px; }
+        
+        .material-symbols-rounded {
+            font-family: 'Material Symbols Rounded';
+            font-weight: normal; font-style: normal; font-size: 24px;
+            line-height: 1; letter-spacing: normal; text-transform: none;
+            display: inline-block; white-space: nowrap; word-wrap: normal;
+            direction: ltr; -webkit-font-feature-settings: 'liga'; -webkit-font-smoothing: antialiased;
+            font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
         }
 
         /* --- 3. LAYOUT & SCREENS --- */
-
-/* --- 3. LAYOUT & SCREENS --- */
-
-/* LE CADRE PRINCIPAL (Téléphone virtuel) */
-#app-frame {
-    position: relative;
-    width: 100%;
-    max-width: 500px; /* Largeur max téléphone */
-    height: 100dvh;   /* Toute la hauteur */
-    margin: 0 auto;   /* Centré sur iPad/PC */
-    overflow: hidden;
-    background: transparent;
-}
-
-.unified-header {
-    position: relative; /* Référent pour le bouton absolu */
-    width: 100%;
-    height: 60px; /* Hauteur fixe GARANTIE */
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    /* Espacement standard autour de l'en-tête */
-    margin-top: 0;
-    margin-bottom: 24px;
-    flex-shrink: 0; /* Empêche l'écrasement sur petits écrans */
-}
-
-/* Le bouton (Home ou Retour) calé à gauche */
-.unified-header .header-left-btn {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%); /* Centrage vertical parfait */
-
-    /* Style Bulle Grise */
-    width: 48px; height: 48px; border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--md-sys-color-on-surface-variant);
-    border: none;
-
-    display: flex; align-items: center; justify-content: center;
-    cursor: pointer;
-    z-index: 10;
-    margin: 0;
-}
-
-.header-back-btn {
-    /* 1. Positionnement (Reste calé à gauche) */
-    position: absolute !important;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 10;
-    margin: 0 !important;
-
-    /* 2. Taille & Forme */
-    width: 48px;
-    height: 48px;
-    border-radius: 50%; /* Rond parfait */
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-    /* 3. LE STYLE VISUEL (Identique au bouton Home) */
-    background: rgba(255, 255, 255, 0.1) !important; /* La bulle grise */
-    color: var(--md-sys-color-on-surface-variant) !important; /* Icône gris clair */
-    border: none; /* On enlève l'ancienne bordure fine */
-
-    transition: background 0.2s;
-}
-
-/* Petit effet quand on appuie dessus */
-.header-back-btn:active {
-    background: rgba(255, 255, 255, 0.2) !important;
-}
-
-.unified-header h2 {
-    margin: 0;
-    font-size: 32px;
-    font-weight: 900;
-    text-align: center;
-    line-height: 1.1;
-}
-
-.header-subtitle {
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    opacity: 0.7;
-    margin-bottom: 4px;
-}
-
-/* LA CONFIGURATION STANDARD DES ÉCRANS */
-.screen {
-    /* Positionnement Absolu : Pour qu'ils se superposent exactement au même endroit */
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-
-    /* Mise en page interne */
-    display: none; /* Caché par défaut */
-    flex-direction: column;
-    box-sizing: border-box;
-
-    /* Marges standard (Padding) */
-    padding: 64px 24px calc(24px + env(safe-area-inset-bottom)) 24px;
-
-    /* ANIMATIONS & TRANSITIONS */
-    opacity: 0;
-    transform: none !important; /* Pas de zoom */
-    transition: opacity 0.3s ease-in-out !important;
-    background: transparent;
-}
-
-/* --- ICONES MATERIAL SYMBOLS OUTLINED --- */
-.material-symbols-outlined {
-    font-family: 'Material Symbols Outlined'; /* La nouvelle police */
-    font-weight: normal;
-    font-style: normal;
-    font-size: 24px;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    display: inline-block;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-feature-settings: 'liga';
-    -webkit-font-smoothing: antialiased;
-
-    /* Gère le remplissage (0 = Contour, 1 = Plein) */
-    font-variation-settings:
-      'FILL' 0,
-      'wght' 400,
-      'GRAD' 0,
-      'opsz' 24;
-}
-
-/* QUAND UN ÉCRAN EST ACTIF */
-.screen.active {
-    display: flex;
-    opacity: 1 !important; /* ON FORCE L'AFFICHAGE */
-    transform: none !important;
-    z-index: 10; /* Passe au premier plan */
-}
-
-/* --- STYLE LANDING : NÉON GRÉSILLANT + SCANLINES SUR TOUT LE TEXTE --- */
-
-/* 1. LE CONTENEUR GLOBAL (Parent) */
-.landing-hero-container {
-    position: relative; /* Indispensable pour positionner les scanlines par-dessus */
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-    padding-bottom: 24px;
-}
-
-/* 2. LES SCANLINES (Appliquées sur tout le conteneur) */
-.landing-hero-container::after {
-    content: "";
-    position: absolute;
-    top: -10%; left: -10%; /* On déborde un peu pour couvrir les ombres */
-    width: 120%; height: 120%;
-
-    /* Texture Lignes TV */
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.1),       /* Ligne sombre légère */
-        rgba(0, 0, 0, 0.1) 1px,
-        transparent 1px,          /* Espace transparent */
-        transparent 3px
-    );
-
-    pointer-events: none; /* Clic à travers */
-    z-index: 20; /* AU-DESSUS des textes */
-    opacity: 0.6; /* Intensité de l'effet grille */
-
-    /* Optionnel : un petit flou pour fondre les lignes dans le néon */
-    backdrop-filter: blur(0.5px);
-}
-
-/* --- LE MUSEAU EN ARRIÈRE-PLAN --- */
-/* --- LE MUSEAU EN ARRIÈRE-PLAN (Effet Tunnel Infini) --- */
-.hero-bg-snout {
-    position: absolute;
-    top: 50%; left: 50%;
-    /* Le transform de base est géré dans l'animation */
-
-    width: 280px;
-    height: auto;
-
-    /* GESTION DE L'APPARENCE */
-    /* On garde vos filtres roses pour l'ambiance */
-    filter: drop-shadow(0 0 20px #ff4081) brightness(0.8) sepia(1) hue-rotate(300deg) saturate(3);
-
-    z-index: 0; /* Derrière le texte */
-    pointer-events: none;
-
-    /* L'ANIMATION DE ZOOM INFINI */
-    /* 6s : Durée du trajet (plus c'est petit, plus c'est rapide) */
-    /* ease-in : Commence doucement et accélère vers l'écran */
-    animation: snout-infinite-zoom 6s ease-in infinite;
-}
-
-/* --- L'ANIMATION DE ZOOM INFINI (Plus visible à la fin) --- */
-@keyframes snout-infinite-zoom {
-    0% {
-        /* DÉPART : Tout petit au fond */
-        transform: translate(-50%, -50%) scale(0.1);
-        opacity: 0;
-
-        /* Net au début */
-        filter: drop-shadow(0 0 20px #ff4081) brightness(0.8) sepia(1) hue-rotate(300deg) saturate(3) blur(0px);
-    }
-    10% {
-        /* Apparition rapide */
-        opacity: 0.3;
-    }
-    50% {
-        /* Mi-parcours : Flou léger */
-        filter: drop-shadow(0 0 20px #ff4081) brightness(0.8) sepia(1) hue-rotate(300deg) saturate(3) blur(4px);
-    }
-    90% {
-        /* FIN DU PARCOURS : Il est énorme et ENCORE BIEN VISIBLE */
-        opacity: 0.4; /* On garde une bonne opacité */
-        filter: drop-shadow(0 0 20px #ff4081) brightness(0.8) sepia(1) hue-rotate(300deg) saturate(3) blur(12px);
-    }
-    100% {
-        /* DISPARITION SUBITE (Juste pour boucler) */
-        transform: translate(-50%, -50%) scale(15); /* Encore plus grand */
-        opacity: 0;
-
-        /* Flou final modéré */
-        filter: drop-shadow(0 0 20px #ff4081) brightness(0.8) sepia(1) hue-rotate(300deg) saturate(3) blur(20px);
-    }
-}
-
-/* 3. LES TEXTES "SERAS-TU" & "OU PAS..." (Style conservé) */
-.hero-text-line {
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 26px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 5px;
-    line-height: 1;
-    color: #ffffff;
-    text-align: center;
-    position: relative;
-    z-index: 2;
-
-    /* L'EFFET NÉON BLANC/CYAN */
-    text-shadow:
-        0 0 5px #fff,
-        0 0 15px rgba(0, 229, 255, 0.8),
-        0 0 25px rgba(0, 229, 255, 0.6);
-
-    animation: neon-flicker-slight 5s infinite alternate-reverse;
-}
-
-/* 4. LA BULLE CENTRALE (Style conservé, sans overflow) */
-.hero-bubble-museau {
-    /* On retire overflow:hidden pour laisser le néon briller */
-    position: relative;
-
-    background-color: rgba(255, 64, 129, 0.15);
-    color: #ffffff;
-
-    font-size: 52px;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    padding: 0px 25px;
-    border-radius: 100px;
-    z-index: 2;
-
-    transform: rotate(-3deg);
-
-    /* TUBE NÉON ROSE */
-    border: 3px solid #ff4081;
-
-    /* LUMIÈRE INTENSE */
-    box-shadow:
-        0 0 15px #ff4081,
-        0 0 40px #ff4081,
-        inset 0 0 20px #ff4081;
-
-    text-shadow:
-        0 0 5px #fff,
-        0 0 20px #ff4081;
-
-    /* ANIMATION VIOLENTE */
-    animation: neon-broken-flicker 4s linear infinite;
-    user-select: none;
-
-    z-index: 1; /* Sous les scanlines (qui sont à 20) */
-}
-
-/* (Gardez vos keyframes neon-flicker-slight et neon-broken-flicker existantes) */
-
-/* L'EFFET SCANLINES (Limité à la bulle) */
-.hero-bubble-museau::after {
-    content: "";
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-
-    /* Les lignes horizontales fines */
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.2),
-        rgba(0, 0, 0, 0.2) 1px,
-        transparent 1px,
-        transparent 3px
-    );
-
-    pointer-events: none; /* On peut cliquer à travers */
-    z-index: 2; /* Se pose par-dessus le texte et le fond rose */
-}
-
-/* --- TEXTURE ÉCRAN CRT (SCANLINES) --- */
-body::after {
-    content: "";
-    position: fixed;
-    top: 0; left: 0; width: 100vw; height: 100vh;
-    /* Lignes fines horizontales */
-    background: repeating-linear-gradient(
-        0deg,
-        rgba(0, 0, 0, 0.15),
-        rgba(0, 0, 0, 0.15) 1px,
-        transparent 1px,
-        transparent 3px
-    );
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.4; /* Texture subtile */
-    display: none !important;
-}
-
-/* --- ANIMATIONS --- */
-
-/* Texte blanc : Variation de tension lente */
-@keyframes neon-flicker-slight {
-    0%, 100% { opacity: 1; text-shadow: 0 0 5px #fff, 0 0 15px #00e5ff; }
-    50% { opacity: 0.8; text-shadow: 0 0 2px #fff, 0 0 5px #00e5ff; }
-
-    /* Petits sauts */
-    20%, 22% { opacity: 0.5; text-shadow: none; }
-    80%, 82% { opacity: 0.6; text-shadow: none; }
-}
-
-/* Bulle Rose : Court-circuit */
-@keyframes neon-broken-flicker {
-    /* ON */
-    0%, 18%, 22%, 25%, 53%, 57%, 100% {
-        opacity: 1;
-        box-shadow: 0 0 15px #ff4081, 0 0 40px #ff4081, inset 0 0 20px #ff4081;
-        color: #fff;
-    }
-    /* OFF (Saut) */
-    20%, 24%, 55% {
-        opacity: 0.3;
-        box-shadow: none;
-        color: rgba(255, 255, 255, 0.2);
-    }
-    /* SURTENSION (Flash) */
-    21%, 23%, 56% {
-        opacity: 1;
-        box-shadow: 0 0 80px #ff4081, 0 0 100px #fff;
-        color: #fff;
-    }
-}
-
-/* --- CSS POUR LES NOUVEAUX BOUTONS --- */
-.landing-actions {
-    width: 100%;
-    padding: 0 0 24px 0;
-    box-sizing: border-box;
-    display: flex; flex-direction: column; gap: 12px;
-
-    /* IMPORTANT : Fait passer les boutons DEVANT les scanlines */
-    position: relative;
-    z-index: 100;
-}
-
-.sub-actions {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    padding: 0 24px; /* Marges latérales */
-}
-
-.cyber-btn {
-    background: transparent;
-    border: 2px solid;
-    font-family: system-ui, -apple-system, sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-    border-radius: 16px;
-}
-
-/* Bouton Principal (Prend toute la largeur - les marges sont gérées par le parent si besoin, ou ajoutez margin: 0 24px ici) */
-.cyber-btn.primary {
-    height: 72px;
-    margin: 0 24px; /* Marge latérale */
-    border-color: #ff4081;
-    color: #ff4081;
-    font-size: 20px;
-    font-weight: 900;
-    box-shadow: 0 0 15px rgba(255, 64, 129, 0.2), inset 0 0 15px rgba(255, 64, 129, 0.1);
-}
-.cyber-btn.primary:active {
-    background: rgba(255, 64, 129, 0.2);
-    transform: scale(0.98);
-}
-
-/* Boutons Secondaires */
-.cyber-btn.secondary {
-    height: 56px;
-    border-color: rgba(0, 229, 255, 0.3);
-    color: #00e5ff;
-    font-size: 14px;
-    font-weight: 700;
-}
-.cyber-btn.secondary:active {
-    background: rgba(0, 229, 255, 0.1);
-    transform: scale(0.98);
-}
-
-/* EXCEPTION : ÉCRAN RÉSUMÉ (SUMMARY) */
-#summary-screen {
-    /* Pas de padding interne pour que le fond touche les bords */
-    padding: 0 !important;
-
-    /* Son propre fond violet */
-    background: radial-gradient(circle at top right, #1e1b2e 0%, #000000 100%);
-    z-index: 20; /* Toujours au-dessus si besoin */
-}
-
-#summary-screen.active {
-    display: flex;
-    opacity: 1 !important;
-}
-
-/* EXCEPTION : ÉCRAN JEU (GAME) */
-#game-screen {
-    background: transparent;
-}
-
-        /* --- 4. COMPONENTS --- */
-
-        /* Buttons */
-        .md3-btn {
-    width: 100%; height: 56px; border-radius: 28px;
-    background: var(--md-sys-color-surface-container-high);
-    color: var(--md-sys-color-primary); border: none;
-    font-size: 16px; font-weight: 500; letter-spacing: 0.1px;
-    display: flex; align-items: center; justify-content: center; gap: 8px;
-    cursor: pointer; transition: 0.2s;
-
-    /* SECURITÉ : On force le bouton à être au-dessus de tout */
-    position: relative;
-    z-index: 100 !important;
-}
-.landing-actions .btn-primary {
-    width: calc(100% - 48px); /* 100% moins les 24px de chaque côté */
-    margin: 0 auto; /* Centré */
-}
-
-.btn-primary {
-    background: var(--md-sys-color-primary);
-    color: var(--md-sys-color-on-primary);
-    font-weight: 700;
-    box-shadow: 0 4px 12px rgba(255, 64, 129, 0.3);
-}
-
-.btn-tonal {
-    background: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-secondary);
-}
-        .md3-btn:active { transform: scale(0.98); }
-        .btn-icon { width: 48px; height: 48px; border-radius: 50%; padding: 0; flex-shrink: 0; }
-
-        /* Inputs */
-        .input-wrapper {
-            position: relative; width: 100%; height: 56px;
-            background: var(--md-sys-color-surface-container-high);
-            border-radius: 28px; margin-bottom: 12px;
-            display: flex; align-items: center; box-sizing: border-box;
-            border: 2px solid transparent; transition: 0.2s;
-            animation: slideInRow 0.3s ease;
-        }
-        .input-wrapper:focus-within { background: rgba(255, 64, 129, 0.08); border-color: var(--md-sys-color-primary); }
-
-        .color-dot {
-            position: absolute; left: 0; top: 0; bottom: 0; width: 72px; height: 100%;
-            border-radius: 28px; cursor: pointer; z-index: 2;
-            transition: transform 0.2s, background-color 0.2s;
-            box-shadow: 2px 0 8px rgba(0,0,0,0.25);
-        }
-        .color-dot:active { transform: scale(0.95); }
-
-        .md3-text-field { flex-grow: 1; height: 100%; background: transparent; border: none; border-radius: 28px; }
-        .md3-text-field input {
-            width: 100%; height: 100%; background: transparent; border: none; outline: none;
-            color: var(--md-sys-color-on-surface); font-size: 16px; font-family: 'Roboto', sans-serif;
-            padding: 24px 16px 8px 84px; box-sizing: border-box;
-        }
-        .md3-text-field label {
-            position: absolute; left: 84px; top: 18px;
-            color: var(--md-sys-color-on-surface-variant); font-size: 16px; pointer-events: none; transition: 0.2s;
-        }
-        .md3-text-field input:focus ~ label, .md3-text-field input:not(:placeholder-shown) ~ label {
-            top: 8px; font-size: 11px; color: var(--md-sys-color-primary);
-            font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+        #app-frame {
+            position: relative; width: 100%; max-width: 500px; height: 100dvh;
+            margin: 0 auto; overflow: hidden; background: transparent;
         }
 
-        /* Segmented Buttons */
-        .segmented-button-group {
-            position: relative; display: inline-flex; flex-direction: row; width: 100%;
-            border-radius: 9999px; background-color: var(--md-sys-color-surface-container-high);
-            padding: 4px; box-sizing: border-box; height: 56px; margin-bottom: 8px;
+        .screen {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: none; flex-direction: column;
+            padding: 48px 24px calc(24px + env(safe-area-inset-bottom)) 24px;
+            opacity: 0; transform: translateY(20px); transition: opacity 0.3s, transform 0.3s;
         }
-        .selection-indicator {
-            position: absolute; top: 4px; bottom: 4px; left: 0; border-radius: 9999px;
-            background-color: var(--md-sys-color-primary); z-index: 1; width: 0;
-            transition: transform 300ms cubic-bezier(0.2, 0.0, 0, 1.0), width 300ms cubic-bezier(0.2, 0.0, 0, 1.0);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-        }
-        .segment-btn {
-            position: relative; z-index: 2; flex: 1; appearance: none; background: transparent; border: none;
-            cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center;
-            font-family: 'Roboto', sans-serif; font-weight: 500; font-size: 14px;
-            color: var(--md-sys-color-on-surface-variant); transition: color 200ms linear; border-radius: 9999px;
-        }
-        .segment-btn.selected { color: var(--md-sys-color-on-primary); font-weight: 700; }
+        .screen.active { display: flex; opacity: 1; transform: translateY(0); z-index: 10; }
 
-        /* --- 5. CATEGORY SCREEN --- */
-        #category-counter {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            margin: 16px 0 24px 0; gap: 0;
-        }
-        #cat-count-val {
-            font-size: 80px; font-weight: 900; line-height: 0.9; color: var(--md-sys-color-primary);
-            margin: 0; filter: drop-shadow(0 4px 12px rgba(255, 64, 129, 0.3));
-        }
-        #category-counter span:last-child {
-            font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 4px;
-            color: var(--md-sys-color-on-surface-variant); opacity: 0.8; margin-top: 8px; margin-bottom: 8px;
-        }
-        .category-cloud-layout {
-            display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start;
-            gap: 12px; width: 100%; padding: 0 8px; box-sizing: border-box;
-            overflow-y: auto; flex-grow: 1;
-        }
-        .cat-chip {
-            position: relative; display: flex; align-items: center; gap: 8px;
-            height: 48px; padding: 0 20px 0 16px; border-radius: 24px;
-            background: rgba(255, 255, 255, 0.03); border: 1px solid var(--md-sys-color-outline);
-            color: var(--md-sys-color-on-surface-variant); font-size: 14px; font-weight: 500;
-            cursor: pointer; transition: all 0.2s cubic-bezier(0.2, 0.0, 0, 1.0); user-select: none;
-        }
-        .cat-chip .icon { font-size: 20px; opacity: 0.7; transition: 0.2s; }
-        .cat-chip.selected {
-            background: rgba(0, 229, 255, 0.15); border-color: var(--md-sys-color-secondary);
-            color: var(--md-sys-color-secondary); box-shadow: 0 0 15px rgba(0, 229, 255, 0.15);
-            padding-right: 16px;
-        }
-        .cat-chip.selected .icon { opacity: 1; color: var(--md-sys-color-secondary); }
-        .cat-chip.selected::after {
-            content: 'check'; font-family: 'Material Symbols Outlined'; font-weight: bold; font-size: 18px;
-            margin-left: 4px; animation: scaleIn 0.2s ease-out;
-        }
-        .cat-chip:active { transform: scale(0.95); }
-
-        /* --- 6. READY & GAME SCREENS --- */
-/* --- TECH DATA CARD --- */
-/* --- ROTATED DIAMOND --- */
-.category-icon-container {
-    width: 100px; /* Slightly smaller because rotation takes up more space */
-    height: 100px;
-
-    border-radius: 24px; /* Soft corners on the diamond */
-
-    /* ROTATION MAGIC */
-    transform: rotate(45deg);
-
-display: flex;           /* Pour centrer l'icône DANS la bulle */
-    align-items: center;     /* Centre verticalement l'icône */
-    justify-content: center; /* Centre horizontalement l'icône */
-
-    margin-left: auto !important;  /* Force le centrage sur la page */
-    margin-right: auto !important; /* Force le centrage sur la page */
-    margin-bottom: 24px;           /* Votre marge du bas */
-
-    /* Glass Style */
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(0, 229, 255, 0.3);
-    box-shadow: 0 0 15px rgba(0, 229, 255, 0.2);
-}
-
-#ready-category-icon {
-    font-size: 56px;
-    color: var(--md-sys-color-secondary);
-    font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 48;
-
-    /* COUNTER-ROTATION (Important!) */
-    transform: rotate(-45deg);
-}
-        #ready-theme-title {
-            background: linear-gradient(90deg, #FF5E98 0%, #00F0FF 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-family: system-ui, -apple-system, sans-serif; font-weight: 900; font-size: 46px;
-            text-align: center; line-height: 1.3; padding-bottom: 10px; display: block;
-            margin: 0 0 8px 0; position: relative; z-index: 2; width: 100%;
-        }
-        .ready-label-small {
-            font-family: system-ui, sans-serif; font-size: 12px; font-weight: 700;
-            color: var(--md-sys-color-on-surface-variant); letter-spacing: 1px; margin-bottom: 16px;
-        }
-        .ready-highlight { color: var(--md-sys-color-primary); font-weight: 900; }
-
-        .ready-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* <--- C'est la clé. Force tout au milieu horizontalement */
-    justify-content: center;
-    width: 100%;
-}
-
-        /* Game Header & Track */
-        .game-header { display: flex; justify-content: space-between; align-items: center; width: 100%; margin-bottom: 16px; }
-        .badge { background: var(--md-sys-color-surface-container-high); padding: 6px 16px; border-radius: 16px; font-weight: 700; font-size: 14px; }
-        .badge-timer { color: var(--md-sys-color-primary); border: 1px solid var(--md-sys-color-primary); }
-        .pig-track-container {
-            width: auto; height: 6px; background-color: var(--md-sys-color-surface-container-high);
-            border-radius: 4px; margin: 24px 20px 0 20px; position: relative; overflow: visible;
-        }
-        .pig-track-fill {
-            position: absolute; top: 0; left: 0; bottom: 0; width: 0%;
-            background-color: var(--md-sys-color-primary); opacity: 0.5; border-radius: 4px;
-            transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        .pig-character {
-            position: absolute; top: -28px; left: 0%; width: 50px; height: 50px;
-            transform: translateX(-50%); transition: left 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            z-index: 2; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-        }
-        .pig-img { width: 100%; height: 100%; object-fit: contain; }
-        .pig-jump-anim { animation: pig-jump 0.5s ease-out; }
-
-        /* Game Card */
-        .card-area {
-            flex-grow: 0; width: 100%; max-width: 340px; aspect-ratio: 3/4;
-            margin: 0 auto 24px auto; position: relative;
-        }
-        .md3-card {
-            width: 100%; max-width: 340px; height: auto; max-height: 100%; aspect-ratio: 3/4;
-            background: var(--md-sys-color-surface-container); border-radius: 24px; padding: 12px;
-            box-sizing: border-box; display: flex; flex-direction: column;
-            box-shadow: var(--md-sys-elevation-3); position: absolute; border: 1px solid var(--md-sys-color-outline);
-        }
-        .card-inner-frame {
-            width: 100%; height: 100%;
-            background: linear-gradient(145deg, #2b2433 0%, #1d1724 100%);
-            /* SVG Snoot Pattern */
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ff4081' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M30 20c-6 0-11 3-11 7s5 7 11 7 11-3 11-7-5-7-11-7zm-4 7c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm8 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z'/%3E%3C/g%3E%3C/svg%3E");
-            border: 2px solid var(--md-sys-color-surface-container-high); border-radius: 16px;
-            display: flex; flex-direction: column; align-items: center; position: relative; overflow: hidden;
-        }
-        .card-header-dark {
-            width: 100%; background-color: rgba(0, 0, 0, 0.3); padding: 12px 0;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 2;
-        }
-        .card-mini-logo { width: 24px; height: 24px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3)); }
-        .card-brand-text { font-size: 13px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--md-sys-color-on-surface); opacity: 0.9; }
-        .card-main-text {
-            flex-grow: 1; display: flex; align-items: center; justify-content: center;
-            font-size: 38px; font-weight: 900; line-height: 1.1; text-align: center;
-            padding: 0 16px 32px 16px; z-index: 2; text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-        .card-pulse { animation: heartbeat 2.5s infinite ease-in-out; }
-        .swipe-overlay {
-            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            display: flex; align-items: center; justify-content: center; border-radius: 28px;
-            opacity: 0; transition: opacity 0.1s; z-index: 1;
-        }
-        .swipe-overlay span { font-size: 120px; opacity: 0.8; }
-        .overlay-yes { color: var(--md-sys-color-success); background: rgba(0, 230, 118, 0.1); }
-        .overlay-no { color: var(--md-sys-color-error); background: rgba(255, 82, 82, 0.1); }
-
-        #theme-centered-zone {
-            flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; margin: 0;
-        }
-        #game-category-icon {
-            font-size: 48px;
-            background: linear-gradient(135deg, #FF5E98 0%, #00F0FF 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-        }
-        #game-theme-display {
-            font-family: system-ui, -apple-system, sans-serif; font-weight: 900; font-size: 40px;
-            text-align: center; line-height: 1.2; margin: 0; flex-grow: 0;
-            background: linear-gradient(90deg, #FF5E98 0%, #00F0FF 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-            padding-bottom: 8px;
+        .unified-header {
+            position: relative; width: 100%; height: 64px;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 24px; flex-shrink: 0;
         }
 
-/* ========================================= */
-/* SUMMARY SCREEN - FINAL FIXED & GROUPED    */
-/* ========================================= */
-#summary-screen {
-    /* Il doit prendre toute la place, sans marges internes */
-    padding: 0 !important;
-    width: 100%;
-    height: 100dvh; /* Force la hauteur totale */
-
-    /* On lui force son propre fond violet permanent */
-    background: radial-gradient(circle at top right, #1e1b2e 0%, #000000 100%);
-}
-
-#summary-screen.active {
-    display: flex;
-    /* Le reste est hérité de .screen.active (opacity: 1) */
-}
-
-/* 4. EXCEPTION POUR L'ÉCRAN GAME (Si besoin d'ajustements) */
-#game-screen {
-    /* S'assure qu'il utilise bien les règles standard */
-    background: transparent;
-}
-
-/* ----------------------------------------- */
-/* ZONE 1 : HEADER (CORRIGÉ - PLUS BAS)      */
-/* ----------------------------------------- */
-.summary-zone-top {
-    height: 33%;
-    width: 100%;
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-
-    /* CORRECTION ICI : On force 64px comme les autres écrans */
-    /* Au lieu de "calc(44px + env(safe-area-inset-top))" */
-    padding-top: 64px;
-
-    padding-left: 24px;
-    padding-right: 24px;
-    box-sizing: border-box;
-}
-
-/* On garde le style du header qu'on a validé */
-.header-row {
-    position: relative;
-    width: 100%;
-    height: 60px; /* Hauteur forcée pour alignement */
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; /* Le score part à droite */
-    flex-shrink: 0;
-    margin-bottom: 8px;
-}
-
-/* 2. Le Bouton Home (Absolu Gauche) */
-.header-row .btn-home-simple {
-    position: absolute !important;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    margin: 0;
-    z-index: 20;
-}
-
-.btn-home-simple {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%; /* Cercle parfait */
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    /* LE STYLE "BULLE BLANCHE" */
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--md-sys-color-on-surface-variant); /* Gris clair pour l'icône */
-    border: none; /* Pas de bordure */
-
-    cursor: pointer;
-    transition: background 0.2s;
-
-    /* Pour éviter qu'il ne s'écrase dans un flexbox */
-    flex-shrink: 0;
-    margin: 0;
-}
-
-/* Effet au clic */
-.btn-home-simple:active {
-    background: rgba(255, 255, 255, 0.25); /* Devient plus blanc quand on appuie */
-}
-
-.sum-team {
-    /* Positionnement */
-    position: absolute;
-    left: 0;
-    right: 0;
-    text-align: center;
-    pointer-events: none;
-    z-index: 0;
-    padding: 0 60px; /* Marges pour ne pas toucher les boutons */
-
-    /* Style Visuel (Restauré) */
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: 0.5px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-}
-
-/* 4. La Pilule de Score (Calée à droite + Style Restauré) */
-.sum-score-pill {
-    /* Positionnement */
-    position: relative;
-    z-index: 5;
-    margin-left: auto; /* Force la pilule à droite */
-
-    /* Style Visuel (Restauré) */
-    background: var(--md-sys-color-secondary-container);
-    color: var(--md-sys-color-on-secondary-container);
-    padding: 0 20px;
-    height: 40px;
-    border-radius: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    font-weight: 900;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.header-divider {
-    width: 100%; height: 2px;
-    background-image: linear-gradient(to right, rgba(255,255,255,0.2) 33%, rgba(255,255,255,0) 0%);
-    background-position: bottom; background-size: 6px 1px; background-repeat: repeat-x;
-    flex-shrink: 0; opacity: 0.5;
-}
-
-/* --- THÈME --- */
-.sum-theme-box {
-    flex-grow: 1;
-    width: 100%;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    overflow: hidden;
-}
-.sum-theme-lbl {
-    font-size: 11px; text-transform: uppercase;
-    letter-spacing: 2px; opacity: 0.9; margin-bottom: 8px;
-    color: var(--md-sys-color-tertiary);
-    background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 12px;
-}
-/* TITRE DU THÈME : 2 LIGNES AUTORISÉES */
-.sum-theme-tit {
-    font-family: system-ui, -apple-system, sans-serif;
-    font-weight: 900;
-    text-align: center;
-    line-height: 1.1; /* Interligne serré pour gagner de la place */
-
-    background: linear-gradient(135deg, #FF6EC4 0%, #7873F5 50%, #4ADEDE 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    filter: drop-shadow(0 4px 0px rgba(0,0,0,0.2));
-
-    width: 100%;
-    max-width: 100%;
-    padding: 0 10px;
-    box-sizing: border-box;
-
-    /* MODIFICATIONS POUR 2 LIGNES : */
-    white-space: normal;  /* Autorise le retour à la ligne */
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* Force 2 lignes maximum */
-    -webkit-box-orient: vertical;
-    overflow: hidden;     /* Coupe si ça dépasse 2 lignes */
-
-    font-size: 36px; /* Taille de départ */
-}
-
-/* ----------------------------------------- */
-/* ZONE 2 : LISTE (NO SCROLL & GROUPED)      */
-/* ----------------------------------------- */
-.summary-zone-bottom {
-    height: 67%;
-    width: 100%;
-    flex-shrink: 0;
-    display: flex; flex-direction: column;
-    padding: 0 16px calc(12px + env(safe-area-inset-bottom)) 16px;
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-.list-scroll-area {
-    flex-grow: 1;
-    width: 100%;
-    overflow: hidden;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centre le bloc si peu de réponses */
-
-    /* MODIF : Gap minime pour l'effet "bloc coupé" */
-    gap: 1px;
-
-    padding-top: 4px; padding-bottom: 8px;
-}
-
-/* ITEM STYLE (Effet Groupé) */
-.md3-list-item {
-    display: flex; align-items: center; justify-content: space-between;
-    width: 100%;
-    flex: 1; /* S'adapte à la hauteur */
-    min-height: 42px;
-    max-height: 72px;
-    background-color: #452e5f4d;
-    padding: 0 12px;
-    box-sizing: border-box;
-
-    /* MODIF : Pas d'arrondis par défaut (pour les éléments du milieu) */
-    border-radius: 2px;
-
-    opacity: 0;
-    animation: slideInResult 0.3s ease-out forwards;
-}
-
-/* MODIF : Arrondi SEULEMENT pour le premier élément (Haut) */
-.md3-list-item:first-child {
-    border-top-left-radius: 24px;
-    border-top-right-radius: 24px;
-    /* On garde le bas carré ou presque */
-    border-bottom-left-radius: 2px;
-    border-bottom-right-radius: 2px;
-}
-
-/* MODIF : Arrondi SEULEMENT pour le dernier élément (Bas) */
-.md3-list-item:last-child {
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
-    /* On arrondit le bas */
-    border-bottom-left-radius: 24px;
-    border-bottom-right-radius: 24px;
-}
-
-/* Si un seul élément existe, il doit être tout rond */
-.md3-list-item:only-child {
-    border-radius: 24px;
-}
-
-
-/* CERCLE À GAUCHE */
-.md3-leading-icon {
-    width: 36px; height: 36px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    margin-right: 12px; flex-shrink: 0; font-size: 20px;
-}
-
-/* TEXTE */
-.md3-content {
-    flex: 1; display: flex; flex-direction: column; justify-content: center;
-    overflow: hidden; margin-right: 8px;
-}
-.md3-headline {
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 17px; font-weight: 600; color: var(--md-sys-color-on-surface);
-    white-space: nowrap; text-overflow: ellipsis; line-height: 1.2;
-}
-.md3-supporting {
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 12px; color: var(--md-sys-color-on-surface-variant);
-    white-space: nowrap; text-overflow: ellipsis; line-height: 1.1; margin-top: 5px; opacity:0.8;
-}
-
-/* SCORE */
-.md3-trailing {
-    font-size: 13px; /* Un poil plus petit pour que "pt" passe bien */
-    font-weight: 800;
-}
-
-/* BOUTON SUIVANT */
-#next-btn {
-    flex-shrink: 0; margin-top: 8px; height: 50px; border-radius: 25px;
-}
-
-@keyframes slideInResult {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* THE NEW BAR ITEM STRUCTURE */
-.result-bar-item {
-    width: 100%;
-
-    /* FLEXIBLE HEIGHT MAGIC: */
-    /* Grow: 1, Shrink: 1, Basis: 32px (Ideal height) */
-    flex: 1 1 32px;
-    /* Absolute minimum height before text overlaps (must be small for 15+ items) */
-    min-height: 24px;
-    /* Maximum height so they don't look gigantic if only 2 items */
-    max-height: 48px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    /* No background color on the item itself anymore */
-    background: transparent;
-    border-radius: 4px;
-    padding: 0 8px;
-    box-sizing: border-box;
-}
-
-/* LEFT SIDE: Icon + Text */
-.result-label-group {
-    flex: 1; /* Takes all space left by the chart */
-    display: flex;
-    align-items: center;
-    min-width: 0; /* Allows text truncation */
-    margin-right: 12px;
-}
-
-.result-icon {
-    font-size: 20px;
-    margin-right: 8px;
-    /* Color set by JS */
-}
-
-.result-text-line {
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--md-sys-color-on-surface);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    line-height: 1;
-}
-
-/* RIGHT SIDE: The Chart Area */
-.result-chart-area {
-    /* Fixed width for the chart part to align vertically */
-    width: 80px;
-    height: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
-
-/* The dark background track of the bar */
-.chart-track {
-    position: absolute;
-    left: 0; right: 0;
-    /* Height of the bar track relative to the item height */
-    height: 60%;
-    background: rgba(255,255,255,0.1); /* Subtle dark track */
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-/* The colored part that fills up */
-.chart-fill {
-    height: 100%;
-    /* Width and Color set by JS */
-    border-radius: 0 4px 4px 0; /* Round right corners only */
-    transition: width 0.5s ease-out;
-}
-
-/* The number sitting on top */
-.score-number-overlay {
-    position: relative;
-    z-index: 2; /* Sits on top of the bar */
-    font-weight: 900;
-    font-size: 14px;
-    color: white;
-    margin-right: 6px;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* Ensure readability */
-}
-
-/* Next Button (Slightly more compact) */
-#next-btn {
-    flex-shrink: 0;
-    margin-top: 4px;
-    height: 50px;
-    /* Keep previous styling if you want, just ensuring height is manageable */
-}
-        .result-item-name {
-            font-size: 15px; font-weight: 700; line-height: 1.1; color: var(--md-sys-color-on-surface);
-            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        /* --- 4. BUTTONS & UI COMPONENTS --- */
+        .btn-3d {
+            position: relative; width: 100%; height: 64px; border-radius: var(--radius-pill);
+            border: none; font-family: 'Nunito', sans-serif; font-size: 18px; font-weight: 800;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            cursor: pointer; transition: transform 0.1s; outline: none; text-transform: uppercase; letter-spacing: 1px;
         }
-        .result-sub {
-            font-size: 12px; font-weight: 500; color: var(--md-sys-color-on-surface-variant);
-            opacity: 0.9; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-            line-height: 1.1; width: 100%; margin-top: 2px;
+        .btn-3d:active { transform: translateY(4px); }
+        
+        .btn-primary { background: var(--primary); color: white; box-shadow: 0 8px 0 var(--primary-shadow); margin-bottom: 8px; }
+        .btn-primary:active { box-shadow: 0 4px 0 var(--primary-shadow); }
+        
+        .btn-secondary { background: white; color: var(--text-main); box-shadow: 0 8px 0 rgba(45, 35, 66, 0.1); }
+        .btn-secondary:active { box-shadow: 0 4px 0 rgba(45, 35, 66, 0.1); }
+        
+        .btn-icon-round {
+            width: 48px; height: 48px; border-radius: 50%;
+            background: white; color: var(--text-main); border: none;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 0 rgba(45, 35, 66, 0.1); cursor: pointer; transition: transform 0.1s;
+            position: absolute; left: 0;
         }
-        .leaderboard-layout {
-            display: flex; flex-direction: column; align-items: center; width: 100%; height: 100%; gap: 24px; padding-bottom: 24px;
+        .btn-icon-round:active { transform: translateY(4px); box-shadow: 0 0px 0 rgba(45, 35, 66, 0.1); }
+
+        /* Segmented Toggles */
+        .toggle-group {
+            display: flex; background: white; border-radius: var(--radius-pill);
+            padding: 6px; box-shadow: var(--shadow-soft); margin-bottom: 24px;
+        }
+        .toggle-btn {
+            flex: 1; height: 44px; border-radius: var(--radius-pill); border: none;
+            background: transparent; color: var(--text-muted); font-family: 'Nunito', sans-serif;
+            font-size: 16px; font-weight: 800; cursor: pointer; transition: 0.2s;
+        }
+        .toggle-btn.selected { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(255, 59, 124, 0.3); }
+
+        /* Form Inputs */
+        .input-row {
+            display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+        }
+        .color-picker {
+            width: 56px; height: 56px; border-radius: var(--radius-pill);
+            box-shadow: inset 0 -4px 0 rgba(0,0,0,0.15); cursor: pointer; flex-shrink: 0;
+            transition: transform 0.1s;
+        }
+        .color-picker:active { transform: scale(0.9); }
+        .team-input {
+            flex-grow: 1; height: 56px; background: white; border-radius: var(--radius-pill);
+            border: none; padding: 0 24px; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 700;
+            color: var(--text-main); box-shadow: var(--shadow-soft);
+        }
+        .team-input:focus { outline: 2px solid var(--primary); }
+        .section-label { font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block; }
+
+        /* --- 5. LANDING SCREEN --- */
+        .landing-hero { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+        .logo-placeholder { width: 140px; height: 140px; background: var(--secondary); border-radius: 40px; transform: rotate(-10deg); box-shadow: 0 16px 0 var(--secondary-shadow); margin-bottom: 24px; display:flex; align-items:center; justify-content:center;}
+        .app-title { font-size: 48px; line-height: 1; color: var(--primary); text-align: center; }
+        .app-subtitle { font-size: 20px; color: var(--text-muted); font-weight: 700; }
+
+        /* --- 6. CATEGORY SCREEN --- */
+        .category-grid {
+            display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-content: flex-start;
+            flex-grow: 1; overflow-y: auto; padding: 12px 0;
+        }
+        .cat-pill {
+            background: white; border: 2px solid transparent; color: var(--text-muted);
+            padding: 12px 20px; border-radius: var(--radius-pill); font-weight: 800; font-size: 14px;
+            display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s var(--bounce);
+            box-shadow: var(--shadow-soft);
+        }
+        .cat-pill.selected {
+            background: var(--primary-light); color: white; border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(255, 59, 124, 0.3); transform: scale(1.05);
         }
 
-/* --- CORRECTION ALIGNEMENT LEADERBOARD --- */
-.leaderboard-header-row {
-    position: relative;
-    width: 100%;
-
-    /* ON FORCE LA MÊME HAUTEUR QUE L'ÉCRAN CATÉGORIE */
-    height: 60px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Centre le badge "MANCHE" */
-    margin-bottom: 16px;
-    flex-shrink: 0;
-}
-
-/* Le bouton Home : Sorti du flux et collé à gauche */
-.leaderboard-header-row .btn-home-simple {
-    position: absolute !important;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    margin: 0;
-    z-index: 20;
-}
-
-        /* FORCE LA LISTE À POUSSER LE BOUTON VERS LE BAS */
-#leaderboard-list {
-    width: 100%;
-
-    /* C'est LA propriété magique : occupe tout l'espace vide restant */
-    flex-grow: 1;
-
-    /* Si la liste est longue, on scroll à l'intérieur, mais le bouton reste fixe en bas */
-    overflow-y: auto;
-
-    /* Mise en page interne de la liste */
-    display: flex;
-    flex-direction: column;
-    gap: 8px; /* Espacement entre les lignes de score */
-    padding: 4px; /* Petite marge interne pour les ombres */
-    margin-bottom: 16px; /* Espace de respiration avant le bouton */
-    /* 1. Cache la barre pour Firefox */
-    scrollbar-width: none;
-
-    /* 2. Empêche le rebond gris sur certains mobiles */
-    overscroll-behavior: none;
-
-}
-
-/* 3. Cache la barre pour Chrome, Safari et Edge */
-#leaderboard-list::-webkit-scrollbar {
-    display: none;
-    width: 0;
-    height: 0;
-}
-        .winner-card {
-            position: relative; width: 100%; aspect-ratio: 2/1; max-height: 200px;
-            background: var(--md-sys-color-surface-container); border-radius: 28px; border: 2px solid transparent;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            box-sizing: border-box; margin: 0 auto;
+        /* --- 7. GAME SCREEN (THE NEW LOOK) --- */
+        .game-top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+        .pill-badge {
+            background: white; color: var(--text-main); font-weight: 800; font-size: 14px;
+            padding: 8px 16px; border-radius: var(--radius-pill); box-shadow: var(--shadow-soft);
         }
-        .winner-icon-badge {
-            font-size: 64px; margin-bottom: 8px; filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
-            animation: floating 3s ease-in-out infinite;
+        
+        .game-area-centered { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .theme-display-game { font-size: 28px; color: var(--primary); margin-bottom: 32px; text-align: center; }
+        
+        .play-card-container { position: relative; width: 100%; max-width: 320px; aspect-ratio: 3/4; perspective: 1000px; }
+        .play-card {
+            width: 100%; height: 100%; background: white; border-radius: var(--radius-xl);
+            box-shadow: 0 16px 32px rgba(45, 35, 66, 0.15); display: flex; flex-direction: column;
+            position: absolute; border: 4px solid white; transform-origin: center bottom;
         }
-        .winner-team-name { font-size: 32px; font-weight: 900; color: var(--md-sys-color-on-surface); margin: 0; text-align: center; line-height: 1.1; }
-        .winner-score {
-            font-size: 16px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px;
-            opacity: 0.9; margin-top: 8px; background: rgba(0,0,0,0.3); padding: 4px 12px; border-radius: 12px;
+        .play-card-inner { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 24px; text-align: center; }
+        .card-word { font-size: 40px; font-weight: 900; color: var(--text-main); line-height: 1.1; word-break: break-word; }
+        
+        .card-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: calc(var(--radius-xl) - 4px);
+            display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.1s; pointer-events: none;
         }
-        .runners-up-list { width: 100%; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; padding: 4px; }
-        .rank-box-small {
-            background-color: var(--md-sys-color-surface-container); border-radius: 16px; padding: 12px 20px;
-            display: flex; align-items: center; justify-content: space-between; font-weight: 700; font-size: 16px;
-            border-left: 4px solid transparent; animation: slideUp 0.5s ease-out forwards; opacity: 0; transform: translateY(20px);
+        .card-overlay .material-symbols-rounded { font-size: 120px; color: white; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2)); }
+        .card-overlay.yes { background: rgba(0, 208, 132, 0.9); }
+        .card-overlay.no { background: rgba(255, 77, 77, 0.9); }
+
+        .action-buttons-row { display: flex; justify-content: center; gap: 24px; margin-top: 32px; width: 100%; }
+        .action-btn {
+            width: 80px; height: 80px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: transform 0.1s; outline: none;
         }
-        .round-badge {
-            font-family: system-ui, -apple-system, sans-serif; font-size: 13px; font-weight: 800;
-            text-transform: uppercase; letter-spacing: 2px; color: var(--md-sys-color-on-surface-variant);
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 8px 16px; border-radius: 50px; margin-bottom: 16px; display: inline-block;
+        .action-btn.no { background: var(--danger); box-shadow: 0 8px 0 var(--danger-shadow); color: white; }
+        .action-btn.no:active { transform: translateY(4px); box-shadow: 0 4px 0 var(--danger-shadow); }
+        .action-btn.yes { background: var(--success); box-shadow: 0 8px 0 var(--success-shadow); color: white; }
+        .action-btn.yes:active { transform: translateY(4px); box-shadow: 0 4px 0 var(--success-shadow); }
+        .action-btn .material-symbols-rounded { font-size: 40px; }
+
+        /* --- 8. SUMMARY SCREEN (WORD CLOUD) --- */
+        .summary-header { text-align: center; margin-bottom: 24px; }
+        .summary-score { font-size: 64px; color: var(--primary); font-weight: 900; line-height: 1; }
+        .summary-theme { font-size: 20px; color: var(--text-muted); font-weight: 700; margin-top: 8px; }
+
+        .word-cloud-container {
+            flex-grow: 1; width: 100%; display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 10px; padding: 12px 0; overflow: hidden;
+        }
+        
+        .result-pill {
+            display: flex; align-items: center; padding: 6px 16px 6px 6px;
+            border-radius: var(--radius-pill); font-weight: 800; font-size: 15px;
+            opacity: 0; transform: scale(0.5); /* For animation */
+            box-shadow: var(--shadow-soft); color: white; gap: 8px;
+        }
+        .result-pill.correct { background: var(--success); }
+        .result-pill.wrong { background: var(--danger); }
+        
+        /* NOUVEAU : Badge de vérité (OUI/NON) à l'intérieur des pilules */
+        .truth-badge {
+            background: rgba(255, 255, 255, 0.25); border-radius: var(--radius-pill);
+            display: flex; align-items: center; padding: 4px 8px; gap: 4px;
+        }
+        .truth-badge .material-symbols-rounded { font-size: 16px; }
+        .truth-badge span { font-size: 11px; font-weight: 900; letter-spacing: 1px; }
+
+        /* --- 9. ANIMATIONS & DRAMATIC EFFECTS --- */
+        @keyframes popPill { to { opacity: 1; transform: scale(1); } }
+        
+        /* NOUVEAU : Feedback Furtif (+1 / X) */
+        .feedback-pop {
+            position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 80px; font-weight: 900; pointer-events: none; z-index: 100; opacity: 0;
+            animation: floatUpFade 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        .feedback-pop.correct { color: var(--success); text-shadow: 0 8px 24px rgba(0, 208, 132, 0.4); }
+        .feedback-pop.wrong { color: var(--danger); text-shadow: 0 8px 24px rgba(255, 77, 77, 0.4); }
+        
+        @keyframes floatUpFade {
+            0% { opacity: 0; transform: translate(-50%, -20%) scale(0.5); }
+            20% { opacity: 1; transform: translate(-50%, -50%) scale(1.2); }
+            100% { opacity: 0; transform: translate(-50%, -100%) scale(1); }
         }
 
-        /* --- 8. ANIMATIONS --- */
-        @keyframes scaleIn { from { transform: scale(0); width: 0; opacity: 0;} to { transform: scale(1); width: 18px; opacity: 1;} }
-        @keyframes heartbeat {
-            0% { box-shadow: 0 4px 8px rgba(0,0,0,0.3); border-color: var(--md-sys-color-outline); }
-            50% { box-shadow: 0 0 25px rgba(0, 229, 255, 0.6); border-color: var(--md-sys-color-secondary); }
-            100% { box-shadow: 0 4px 8px rgba(0,0,0,0.3); border-color: var(--md-sys-color-outline); }
+        #countdown-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(244, 240, 250, 0.9); z-index: 2000; pointer-events: none;
+            opacity: 1; transition: opacity 0.3s;
         }
-
-        /* --- ANIMATION SCORE TOTAL --- */
-@keyframes score-pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(105, 240, 174, 0.7); }
-    50% { transform: scale(1.1); box-shadow: 0 0 0 6px rgba(105, 240, 174, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(105, 240, 174, 0); }
-}
-/* Classe qui sera ajoutée par le JS au score total */
-/* --- ANIMATION SCORE : CLIGNOTEMENT 3 SECONDES --- */
-
-.score-highlight-anim {
-    /* 0.5s (durée d'un clignotement) x 6 répétitions = 3 secondes EXACTES.
-       Une fois fini, l'animation s'arrête et le texte redevient fixe (opacity: 1).
-    */
-    animation: blink-no-scale 0.5s linear 6;
-
-    /* On force la suppression de tout effet de grossissement précédent */
-    transform: none !important;
-
-    /* Couleur verte (succès) pendant l'anim */
-    color: var(--md-sys-color-success);
-    background: rgba(105, 240, 174, 0.15); /* Fond vert léger optionnel */
-    border-color: var(--md-sys-color-success);
-}
-
-/* Les étapes du clignotement (Juste la transparence, pas de taille) */
-@keyframes blink-no-scale {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.2; } /* Devient presque transparent au milieu */
-}
-        @keyframes list-cascade { to { opacity: 1; transform: translateY(0); } }
-        @keyframes btn-appear { to { opacity: 1; transform: translateY(0); } }
-        @keyframes popIn { from { opacity: 0; transform: scale(0.5); } to { opacity: 1; transform: scale(1); } }
-        @keyframes floating { 0% { transform: translateY(0px); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0px); } }
-        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
-        @keyframes pig-jump { 0% { transform: translateX(-50%) translateY(0) scale(1); } 50% { transform: translateX(-50%) translateY(-15px) scale(1.1); } 100% { transform: translateX(-50%) translateY(0) scale(1); } }
-        @keyframes snout-drop {
-            0% { transform: translateY(-500px) scaleY(1.2); opacity: 0; }
-            60% { transform: translateY(0) scaleY(0.7); }
-            75% { transform: translateY(-30px) scaleY(1.1); }
-            92% { transform: translateY(-10px) scaleY(1.02); }
-            100% { transform: translateY(0) scaleY(1); opacity: 1; }
-        }
-        @keyframes snout-behavior {
-            0%, 40%, 60%, 100% { transform: translateX(0) rotate(0deg) scale(1); }
-            45%, 55% { transform: translateX(0) rotate(0deg) scale(1.08); }
-            15%, 25% { transform: translateX(-12px) rotate(-8deg) scale(1); }
-            75%, 85% { transform: translateX(12px) rotate(8deg) scale(1); }
-        }
-        .snout-animation {
-            animation: snout-drop 0.8s 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both, snout-behavior 5s 1.8s infinite ease-in-out;
-            will-change: transform; display: block;
-        }
-        @keyframes capsule-slide {
-            0%, 100% { transform: translateX(24px); background: #fff; }
-            25% { transform: translateX(0px); background: var(--md-sys-color-error); color: #fff; }
-            50% { transform: translateX(24px); background: #fff; color: #000; }
-            75% { transform: translateX(48px); background: var(--md-sys-color-success); color: #fff; }
-        }
-        .capsule-mode:has(.cap-thumb) .cap-label.left { animation: highlight-left 4s infinite ease-in-out; }
-        .capsule-mode:has(.cap-thumb) .cap-label.right { animation: highlight-right 4s infinite ease-in-out; }
-        @keyframes highlight-left { 0%, 50%, 100% { opacity: 0.3; } 25% { opacity: 1; text-shadow: 0 0 10px rgba(255,0,0,0.5); } }
-        @keyframes highlight-right { 0%, 50%, 100% { opacity: 0.3; } 75% { opacity: 1; text-shadow: 0 0 10px rgba(0,255,0,0.5); } }
-
-        @keyframes slideInResult {
-    from {
-        opacity: 0;
-        transform: translateY(10px); /* Arrive du bas */
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-        /* Countdown Overlay & Anim */
-#countdown-overlay {
-    position: fixed;
-    /* Centrage horizontal dans le conteneur de l'app */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 420px;
-    top: 55%;
-    height: 45%;
-
-    /* Centrage du chiffre à l'intérieur de cette zone */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    background: transparent;
-    z-index: 2000;
-    pointer-events: none;
-    transition: opacity 0.5s ease-out;
-    opacity: 1;
-}
-        #countdown-overlay.fade-out { opacity: 0; }
+        #countdown-overlay.hidden { opacity: 0; }
         #countdown-number {
-            font-family: system-ui, -apple-system, sans-serif; font-size: 200px; font-weight: 900; line-height: 1;
-            color: rgba(255, 255, 255, 0.05); -webkit-text-stroke: 4px #FF5E98;
-            filter: drop-shadow(0 0 15px rgba(255, 94, 152, 0.6));
-            opacity: 0; transform: scale(1.5);
+            font-size: 150px; font-weight: 900; color: var(--primary);
+            text-shadow: 0 10px 0 var(--primary-shadow);
         }
         .animate-pop { animation: count-pop 0.9s ease-out forwards; }
-        @keyframes count-pop {
-            0% { transform: scale(0.5); opacity: 0; }
-            40% { transform: scale(1.1); opacity: 1; }
-            100% { transform: scale(1.4); opacity: 0; }
-        }
-        #btn-go { transition: opacity 0.5s ease, transform 0.2s; opacity: 1; visibility: visible; }
-        #btn-go.fade-out { opacity: 0; pointer-events: none; }
+        @keyframes count-pop { 0% { transform: scale(0.5); opacity: 0; } 40% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
 
-        /* Tutorial Animations */
-        .tutorial-zone.capsule-mode {
-            display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px;
-            width: 100%; margin-top: 24px; margin-bottom: 32px;
-        }
-        .cap-track {
-            width: 80px; height: 32px; background: rgba(255,255,255,0.1); border-radius: 20px;
-            position: relative; border: 1px solid rgba(255,255,255,0.1);
-        }
-        .cap-thumb {
-            width: 28px; height: 28px; background: #fff; border-radius: 50%; position: absolute;
-            top: 1px; left: 2px; display: flex; align-items: center; justify-content: center;
-            color: #000; box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            animation: capsule-slide 4s infinite ease-in-out;
-        }
-        .cap-thumb span { font-size: 18px; font-weight: bold; }
-        .cap-label {
-            font-family: system-ui, -apple-system, sans-serif; font-size: 13px; font-weight: 800;
-            text-transform: uppercase; line-height: 1.2; opacity: 0.5;
-        }
-        .cap-label.left { text-align: right; color: var(--md-sys-color-error); }
-        .cap-label.right { text-align: left; color: var(--md-sys-color-success); }
+/* --- TUTORIAL CAPSULE (Thème Clair) --- */
+.tutorial-zone.capsule-mode {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
 
-        /* Feedback Popups */
-        .score-popup {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 80px; font-weight: 900; color: var(--md-sys-color-success);
-            text-shadow: 0 4px 12px rgba(0,0,0,0.5); pointer-events: none; z-index: 100;
-            animation: floatUpFade 0.8s ease-out forwards;
-        }
-        .score-popup.wrong { color: var(--md-sys-color-error); font-size: 60px; }
-        @keyframes floatUpFade {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-            20% { opacity: 1; transform: translate(-50%, -150%) scale(1.2); }
-            100% { opacity: 0; transform: translate(-50%, -300%) scale(1); }
-        }
+.cap-track {
+    width: 70px;
+    height: 36px;
+    background: #e0e0e0;
+    border-radius: 20px;
+    position: relative;
+    border: 2px solid #d0d0d0;
+    flex-shrink: 0;
+}
 
-        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
+.cap-thumb {
+    width: 28px;
+    height: 28px;
+    background: #101828;
+    border-radius: 50%;
+    position: absolute;
+    top: 2px;
+    left: 20px; /* Centré au départ */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    animation: capsule-slide 4s infinite ease-in-out;
+}
+
+.cap-label {
+    font-family: system-ui, -apple-system, sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 1.2;
+    flex: 1;
+}
+
+.cap-label.left {
+    text-align: right;
+    color: #d32f2f;
+}
+
+.cap-label.right {
+    text-align: left;
+    color: #2e7d32;
+}
+
+@keyframes capsule-slide {
+    /* 1. DÉPART : Centre */
+    0% {
+        transform: translateX(0px);
+        background: #101828;
+        color: #ffffff;
+    }
+    
+    /* 2. DROITE : Vers "OUI" (Vert) */
+    25% {
+        transform: translateX(18px);
+        background: #2e7d32;
+        color: #ffffff;
+    }
+    
+    /* 3. RETOUR : Centre */
+    50% {
+        transform: translateX(0px);
+        background: #101828;
+        color: #ffffff;
+    }
+    
+    /* 4. GAUCHE : Vers "NON" (Rouge) */
+    75% {
+        transform: translateX(-18px);
+        background: #d32f2f;
+        color: #ffffff;
+    }
+    
+    /* 5. FIN : Retour au centre */
+    100% {
+        transform: translateX(0px);
+        background: #101828;
+        color: #ffffff;
+    }
+}
+/* --- PODIUM 3D PARTY GAME --- */
+.podium-container {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 48px;
+    margin-bottom: 32px;
+    height: 260px;
+    position: relative;
+}
+
+.podium-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    position: relative;
+    opacity: 0;
+    animation: slideUpBounce 0.6s var(--bounce) forwards;
+}
+
+.podium-step.rank-1 { order: 2; z-index: 10; width: 110px; }
+.podium-step.rank-2 { order: 1; z-index: 5; }
+.podium-step.rank-3 { order: 3; z-index: 5; }
+
+/* La carte avec le nom qui chevauche le bloc */
+.podium-info {
+    background: white;
+    padding: 12px 8px;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 16px rgba(45,35,66,0.15);
+    text-align: center;
+    width: 110%;
+    margin-bottom: -16px; /* Fait descendre la carte SUR le bloc */
+    z-index: 2;
+    border: 3px solid transparent; /* Prépare la bordure colorée */
+}
+
+.rank-1 .podium-info {
+    transform: scale(1.1);
+    margin-bottom: -12px;
+}
+
+.podium-name {
+    font-weight: 900;
+    font-size: 14px;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.podium-score {
+    font-weight: 900;
+    font-size: 22px;
+    margin-top: 2px;
+}
+
+/* Le bloc 3D */
+.podium-block {
+    width: 100%;
+    border-radius: 16px 16px 8px 8px;
+    display: flex;
+    justify-content: center;
+    padding-top: 32px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 56px;
+    font-weight: 900;
+    box-shadow: inset 0 -10px 0 rgba(0,0,0,0.15), 0 12px 24px rgba(45,35,66,0.2);
+}
+
+.rank-1 .podium-block { height: 160px; font-size: 72px; padding-top: 40px; }
+.rank-2 .podium-block { height: 110px; }
+.rank-3 .podium-block { height: 80px; padding-top: 24px; font-size: 48px; }
+
+/* L'icône de couronne animée pour le 1er */
+.crown-icon {
+    position: absolute;
+    top: -50px;
+    font-size: 48px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+    animation: floatCrown 2.5s ease-in-out infinite;
+    z-index: 15;
+}
+
+/* Pour les rangs 4 et + (inchangé, on le garde) */
+.lb-list-item {
+    background: white; padding: 16px 24px; border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft); display: flex; align-items: center; margin-bottom: 8px;
+    opacity: 0; animation: slideInRight 0.5s var(--bounce) forwards;
+}
+.lb-list-rank { font-weight: 900; font-size: 18px; color: var(--text-muted); width: 40px; }
+.lb-list-name { font-weight: 800; font-size: 18px; flex-grow: 1; color: var(--text-main); }
+.lb-list-score { font-weight: 900; font-size: 20px; }
+
+/* Nouvelles Animations */
+@keyframes slideUpBounce {
+    0% { opacity: 0; transform: translateY(150px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatCrown {
+    0%, 100% { transform: translateY(0) rotate(15deg) scale(1); }
+    50% { transform: translateY(-12px) rotate(0deg) scale(1.1); }
+}
+
+@keyframes slideInRight { 
+    from { opacity: 0; transform: translateX(60px); } 
+    to { opacity: 1; transform: translateX(0); } 
+}
     </style>
 </head>
 <body>
-<div id="global-background"></div>
 
 <div id="app-frame">
-
+    <!-- LANDING SCREEN -->
     <div id="landing-screen" class="screen active">
-
-        <div class="landing-hero-container">
-
-            <img src="logo.png" class="hero-bg-snout" alt="">
-
-            <span class="hero-text-line">Seras-tu</span>
-
-            <div class="hero-bubble-museau">
-                MUSEAU
-            </div>
-
-            <span class="hero-text-line">ou PAS Museau ?</span>
+        <div class="landing-hero">
+            <div class="logo-placeholder"><span class="material-symbols-rounded" style="font-size: 80px; color: white;">pets</span></div>
+            <h1 class="app-title">MUSEAU<br>PARTY</h1>
+            <div class="app-subtitle">Le party game des intrus</div>
         </div>
-
-        <div class="landing-actions">
-
-            <button class="md3-btn btn-primary" style="height: 72px; font-size: 20px;" onclick="transitionTo('setup-screen')">
-                Nouvelle Partie <span class="material-symbols-outlined" style="font-size: 28px;">swords</span>
-            </button>
-
-            <div class="sub-actions">
-                <button class="md3-btn btn-tonal" onclick="transitionTo('rules-screen')">
-                    Règles <span class="material-symbols-outlined">menu_book</span>
-                </button>
-
-                <button class="md3-btn" style="background: var(--md-sys-color-surface-container-high);" onclick="transitionTo('settings-screen')">
-                    Options <span class="material-symbols-outlined">settings</span>
-                </button>
-            </div>
-
+        <div style="width: 100%;">
+            <button class="btn-3d btn-primary" onclick="transitionTo('setup-screen')">Jouer</button>
+            <button class="btn-3d btn-secondary">Règles</button>
         </div>
     </div>
 
-    <div id="rules-screen" class="screen">
-        <div style="display:flex; align-items:center; margin-bottom:32px;">
-            <button class="md3-btn btn-icon" onclick="transitionTo('landing-screen')"><span class="material-symbols-outlined">arrow_back</span></button>
-            <h2 style="margin:0 0 0 16px;">Règles du Jeu</h2>
-        </div>
-        <div class="rules-container" style="display: flex; flex-direction: column; gap: 20px;">
-            <div class="rule-card" style="padding: 20px;">
-                <div class="rule-row">
-                    <span class="material-symbols-outlined rule-icon" style="color: var(--md-sys-color-success); font-size: 40px;">swipe_right</span>
-                    <div class="rule-content">
-                        <div style="font-weight:900; color:var(--md-sys-color-success); text-transform: uppercase; font-size: 14px; letter-spacing: 1px; margin-bottom: 4px;">Étape 1</div>
-                        <div style="font-weight:700; font-size: 18px; color: var(--md-sys-color-on-surface);">C'est un match !</div>
-                        <div style="font-size:14px; color:var(--md-sys-color-on-surface-variant); line-height: 1.4;">Si le mot affiché sur la carte correspond au thème, swipez vers la droite.</div>
-                    </div>
-                </div>
-            </div>
-            <div class="rule-card" style="padding: 20px;">
-                <div class="rule-row">
-                    <span class="material-symbols-outlined rule-icon" style="color: var(--md-sys-color-error); font-size: 40px;">swipe_left</span>
-                    <div class="rule-content">
-                        <div style="font-weight:900; color:var(--md-sys-color-error); text-transform: uppercase; font-size: 14px; letter-spacing: 1px; margin-bottom: 4px;">Étape 2</div>
-                        <div style="font-weight:700; font-size: 18px; color: var(--md-sys-color-on-surface);">C'est un intrus !</div>
-                        <div style="font-size:14px; color:var(--md-sys-color-on-surface-variant); line-height: 1.4;">Si le mot n'a aucun rapport avec le thème, swipez vers la gauche.</div>
-                    </div>
-                </div>
-            </div>
-            <div class="rule-card" style="padding: 20px;">
-                <div class="rule-row">
-                    <span class="material-symbols-outlined rule-icon" style="color: var(--md-sys-color-secondary); font-size: 40px;">fact_check</span>
-                    <div class="rule-content">
-                        <div style="font-weight:900; color:var(--md-sys-color-secondary); text-transform: uppercase; font-size: 14px; letter-spacing: 1px; margin-bottom: 4px;">Étape 4</div>
-                        <div style="font-weight:700; font-size: 18px; color: var(--md-sys-color-on-surface);">Le Verdict</div>
-                        <div style="font-size:14px; color:var(--md-sys-color-on-surface-variant); line-height: 1.4;">
-                            À la fin, vérifiez vos réponses :<br><br>
-                            <span style="color:var(--md-sys-color-success); font-weight:700;">VERT</span> : Bravo, réponse correcte !<br>
-                            <span style="color:var(--md-sys-color-error); font-weight:700;">ROUGE</span> : Raté !<br><br>
-                            Fiez-vous au <strong>sous-titre</strong> pour connaître la vérité.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="settings-screen" class="screen">
-        <div style="display:flex; align-items:center; margin-bottom:24px;">
-            <button class="md3-btn btn-icon" onclick="transitionTo('landing-screen')"><span class="material-symbols-outlined">arrow_back</span></button>
-            <h2 style="margin:0 0 0 16px;">Options</h2>
-        </div>
-        <p style="text-align:center; margin-top:40px;">Version 1.2.0 (Museau)</p>
-        <button class="md3-btn" onclick="location.reload()">Reset App Data</button>
-    </div>
-
+    <!-- SETUP SCREEN -->
     <div id="setup-screen" class="screen">
         <div class="unified-header">
-            <button class="md3-btn btn-icon header-back-btn" onclick="goBack()"><span class="material-symbols-outlined">arrow_back</span></button>
+            <button class="btn-icon-round" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
             <h2>Paramètres</h2>
         </div>
-        <div style="flex-grow:1; overflow-y: auto;">
-            <div class="label-text">Nombre d'équipes</div>
-            <div class="segmented-button-group" id="player-count-opt">
-                <div class="selection-indicator"></div>
-                <button class="segment-btn" onclick="setTeamCount(1, this)">1</button>
-                <button class="segment-btn selected" onclick="setTeamCount(2, this)">2</button>
-                <button class="segment-btn" onclick="setTeamCount(3, this)">3</button>
-                <button class="segment-btn" onclick="setTeamCount(4, this)">4</button>
-                <button class="segment-btn" onclick="setTeamCount(5, this)">5</button>
-            </div>
-            <div class="label-text" style="margin-top: 24px;">Noms et couleurs des équipes</div>
-            <div id="teams-container" style="margin-top: 8px; margin-bottom: 24px;"></div>
-
-            <div class="label-text">Nombre de tours</div>
-            <div class="segmented-button-group" id="rounds-opt">
-                <div class="selection-indicator"></div>
-                <button class="segment-btn selected" onclick="setRounds(5, this)">5</button>
-                <button class="segment-btn" onclick="setRounds(10, this)">10</button>
-                <button class="segment-btn" onclick="setRounds(15, this)">15</button>
+        
+        <div style="flex-grow: 1; overflow-y: auto;">
+            <span class="section-label">Équipes</span>
+            <div class="toggle-group" id="team-count">
+                <button class="toggle-btn selected" onclick="setOpt('team', 2, this)">2</button>
+                <button class="toggle-btn" onclick="setOpt('team', 3, this)">3</button>
+                <button class="toggle-btn" onclick="setOpt('team', 4, this)">4</button>
             </div>
 
-            <div class="label-text">Timer</div>
-            <div class="segmented-button-group" id="time-opt">
-                <div class="selection-indicator"></div>
-                <button class="segment-btn selected" onclick="setTimeLimit(0, this)">Off</button>
-                <button class="segment-btn" onclick="setTimeLimit(15, this)">15s</button>
-                <button class="segment-btn" onclick="setTimeLimit(20, this)">20s</button>
-                <button class="segment-btn" onclick="setTimeLimit(30, this)">30s</button>
+            <span class="section-label">Noms & Couleurs</span>
+            <div id="teams-container">
+                <!-- Injected via JS -->
+            </div>
+
+            <span class="section-label" style="margin-top: 24px;">Manches par équipe</span>
+            <div class="toggle-group" id="round-count">
+                <button class="toggle-btn selected" onclick="setOpt('round', 5, this)">5</button>
+                <button class="toggle-btn" onclick="setOpt('round', 10, this)">10</button>
+                <button class="toggle-btn" onclick="setOpt('round', 15, this)">15</button>
+            </div>
+
+            <span class="section-label" style="margin-top: 24px;">Timer (Secondes)</span>
+            <div class="toggle-group" id="time-opt">
+                <button class="toggle-btn selected" onclick="setOpt('time', 0, this)">Off</button>
+                <button class="toggle-btn" onclick="setOpt('time', 15, this)">15s</button>
+                <button class="toggle-btn" onclick="setOpt('time', 30, this)">30s</button>
             </div>
         </div>
-        <button class="md3-btn btn-primary" onclick="fetchDataAndShowCategories()">Continuer</button>
+
+        <button class="btn-3d btn-primary" onclick="fetchData()">Continuer</button>
     </div>
 
+    <!-- CATEGORY SCREEN -->
     <div id="category-screen" class="screen">
-
         <div class="unified-header">
-            <button class="header-back-btn" onclick="goBack()">
-                <span class="material-symbols-outlined">arrow_back</span>
-            </button>
+            <button class="btn-icon-round" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
             <h2>Catégories</h2>
         </div>
-        <div id="category-counter" style="margin: -16px 0 16px 0;">
-            <span id="cat-count-val">0</span><span>séléctionnées</span>
+        <div style="text-align: center; font-weight: 800; color: var(--text-muted); margin-bottom: 16px;">
+            <span id="cat-count-val" style="color: var(--primary);">0</span> sélectionnées
         </div>
-        <div id="category-container" class="category-cloud-layout"></div>
-        <div style="width: 100%;">
-            <button id="start-btn" class="md3-btn btn-primary" onclick="startGame()" disabled>
-                Continuer
-            </button>
+        
+        <div class="category-grid" id="category-container">
+            <!-- Injected via JS -->
         </div>
+
+        <button id="start-btn" class="btn-3d btn-primary" onclick="startGame()" disabled style="opacity: 0.5;">C'est parti !</button>
     </div>
 
+    <!-- READY SCREEN -->
     <div id="ready-screen" class="screen">
-
-        <div class="unified-header" style="margin-bottom: 8px;">
-            <button class="header-back-btn" onclick="goBack()">
-                <span class="material-symbols-outlined">arrow_back</span>
-            </button>
-
-            <div id="ready-round-indicator" class="round-badge" style="margin:0;">
-                MANCHE 1 / 5
+        <div class="unified-header">
+            <button class="btn-icon-round" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
+            <div class="pill-badge" id="ready-round">Manche 1 / 5</div>
+        </div>
+        
+        <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+            <h2 id="ready-team" style="font-size: 32px; margin-bottom: 40px; color: var(--primary);">Nom de l'équipe</h2>
+            
+            <div style="width: 80px; height: 80px; background: white; border-radius: var(--radius-lg); display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-soft); margin-bottom: 24px;">
+                <span class="material-symbols-rounded" id="ready-icon" style="font-size: 48px; color: var(--secondary);">category</span>
             </div>
+            
+            <div class="section-label" id="ready-cat" style="color: var(--secondary);">CATÉGORIE</div>
+            <h1 id="ready-theme" style="font-size: 40px; color: var(--text-main); line-height: 1.1;">Nom du Thème</h1>
+<div class="tutorial-zone capsule-mode">
+    <div class="cap-label left" id="tut-no-text">PAS CLASSIQUES</div>
+    <div class="cap-track">
+        <div class="cap-thumb">
+            <span style="font-size: 14px; font-weight: bold; line-height: 1;">⇄</span>
+        </div>
+    </div>
+    <div class="cap-label right" id="tut-yes-text">CLASSIQUES</div>
+</div>
         </div>
 
-        <h2 id="ready-team-name" style="margin: 0 0 16px 0; color: var(--md-sys-color-primary); font-size: 24px; text-align: center; flex-shrink: 0;">
-            Équipe 1
-        </h2>
-
-        <div class="ready-content" style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
-
-            <div class="category-icon-container" style="margin-bottom: 24px;">
-                <span class="material-symbols-outlined" id="ready-category-icon" style="font-size: 64px; color: var(--md-sys-color-secondary);">category</span>
-            </div>
-
-            <div id="ready-intro-text" class="ready-label-small"
-                 style="opacity: 1;
-            letter-spacing: 8px;
-            margin-right: -8px; /* <--- AJOUTEZ CECI (Annule l'espace de la dernière lettre) */
-            font-size: 15px;
-            font-weight: 500;
-            color: #ff4081;
-            text-transform: uppercase;">
-            </div>
-
-            <h1 id="ready-theme-title" style="margin: 0 0 40px 0; font-size: 40px; line-height: 1.1; text-align: center; max-width: 90%;">
-                Classiques Disney
-            </h1>
-
-            <div class="tutorial-zone capsule-mode">
-                <div class="cap-label left" id="tut-no-text">PAS CLASSIQUES</div>
-                <div class="cap-track">
-                    <div class="cap-thumb">
-                        <span class="material-symbols-outlined">compare_arrows</span>
-                    </div>
-                </div>
-                <div class="cap-label right" id="tut-yes-text">CLASSIQUES</div>
-            </div>
-
-        </div>
-
-        <button id="btn-go" class="md3-btn btn-primary" onclick="startGameplay()" style="margin-top: 16px;">
-            C'EST PARTI ! <span class="material-symbols-outlined">play_arrow</span>
-        </button>
-
+        <button class="btn-3d btn-primary" onclick="startGameplay()">GO !</button>
     </div>
 
+ <!-- GAME SCREEN -->
     <div id="game-screen" class="screen">
-        <div class="game-header">
-            <div class="badge" id="current-team-display">Team Name</div>
-            <div class="badge" id="round-display" style="background:transparent; border:1px solid var(--md-sys-color-outline); color:var(--md-sys-color-on-surface-variant);">Round 1/5</div>
-            <div class="badge" id="question-counter" style="background:transparent; border:1px solid var(--md-sys-color-outline); color:var(--md-sys-color-on-surface-variant);">1 / 10</div>
-            <div class="badge badge-timer" id="game-timer" style="display:none">30s</div>
+        <div class="game-top-bar">
+            <button class="btn-icon-round" style="position: relative; left: 0; width: 40px; height: 40px;" onclick="goHome()"><span class="material-symbols-rounded" style="font-size: 20px;">home</span></button>
+            <div class="pill-badge" id="game-team-badge">Team</div>
+            <div class="pill-badge" id="game-timer" style="display: none; color: var(--danger);">--</div>
+            <div class="pill-badge" id="game-progress">1/10</div>
         </div>
-        <div class="pig-track-container">
-            <div id="pig-fill-bar" class="pig-track-fill"></div>
-            <div id="pig-wrapper" class="pig-character"><img src="pig.png" class="pig-img" alt="Pig"></div>
-        </div>
-        <div id="theme-centered-zone"
-             style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 20px;">
-
-            <div class="category-icon-container" style="width: 60px; height: 60px; margin-bottom: 8px;">
-        <span class="material-symbols-outlined" id="game-category-icon"
-              style="font-size: 32px; color: var(--md-sys-color-secondary); transform: rotate(-45deg);">
-            category
-        </span>
-            </div>
-
-            <div id="game-category-label" class="ready-label-small"
-                 style="opacity: 1; letter-spacing: 4px; margin-right: -4px; margin-bottom: 0; font-size: 11px; font-weight: 700; color: #ff4081; text-transform: uppercase;">
-                CATÉGORIE
-            </div>
-
-            <h1 id="game-theme-display"
-                style="margin: 4px 0 10px 0; font-size: 26px; line-height: 1.1; text-align: center; max-width: 95%;
-               background: linear-gradient(90deg, #FF5E98 0%, #00F0FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                Theme Name
-            </h1>
-
-        </div>
-        <div class="card-area">
-            <div class="md3-card" id="card">
-                <div class="card-inner-frame">
-                    <div class="card-header-dark">
-                        <img src="logo.png" class="card-mini-logo" alt="logo">
-                        <span class="card-brand-text">Museau</span>
+        
+        <div class="game-area-centered">
+            <h2 class="theme-display-game" id="game-theme-display">Thème</h2>
+            
+            <div class="play-card-container">
+                <div class="play-card" id="play-card">
+                    <div class="play-card-inner">
+                        <span class="card-word" id="play-card-text">Mot à deviner</span>
                     </div>
-                    <span id="card-text" class="card-main-text">Item Name</span>
+                    <div class="card-overlay yes"><span class="material-symbols-rounded">check</span></div>
+                    <div class="card-overlay no"><span class="material-symbols-rounded">close</span></div>
                 </div>
-                <div class="swipe-overlay overlay-yes"><span class="material-symbols-outlined">check_circle</span></div>
-                <div class="swipe-overlay overlay-no"><span class="material-symbols-outlined">cancel</span></div>
+            </div>
+
+            <!-- New Action Buttons -->
+            <div class="action-buttons-row">
+                <button class="action-btn no" onclick="handleBtnSwipe(false)"><span class="material-symbols-rounded">close</span></button>
+                <button class="action-btn yes" onclick="handleBtnSwipe(true)"><span class="material-symbols-rounded">check</span></button>
             </div>
         </div>
     </div>
 
+    <!-- SUMMARY SCREEN -->
     <div id="summary-screen" class="screen">
-
-        <div class="summary-zone-top">
-
-            <div class="header-row">
-                <button class="btn-home-simple" onclick="goHome()">
-                    <span class="material-symbols-outlined">home</span>
-                </button>
-
-                <div class="sum-team" id="summary-team-name">Team Name</div>
-
-                <div class="sum-score-pill">
-                    <span class="sum-score-val" id="summary-score-val">+0</span>
-                </div>
-            </div>
-
-            <div class="header-divider"></div>
-
-            <div class="sum-theme-box" style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-
-                <div class="category-icon-container" style="width: 60px; height: 60px; margin-bottom: 8px;">
-        <span class="material-symbols-outlined" id="summary-category-icon"
-              style="font-size: 32px; color: var(--md-sys-color-secondary); transform: rotate(-45deg);">
-            category
-        </span>
-                </div>
-
-                <div id="summary-category-label" class="ready-label-small"
-                     style="opacity: 1; letter-spacing: 4px; margin-right: -4px; margin-bottom: 0; font-size: 11px; font-weight: 700; color: #ff4081; text-transform: uppercase;">
-                    CATÉGORIE
-                </div>
-
-                <h1 id="summary-theme-name"
-                    style="margin: 4px 0 0px 0; font-size: 30px; line-height: 1.1; text-align: center; max-width: 95%;
-               background: linear-gradient(90deg, #FF5E98 0%, #00F0FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
-                    THEME
-                </h1>
-
-            </div>
+        <button class="btn-icon-round" onclick="goHome()" style="position: absolute; top: 48px; left: 24px; z-index: 10;"><span class="material-symbols-rounded">home</span></button>
+        <div class="summary-header">
+            <h2 id="sum-team" style="color: var(--primary);">Equipe</h2>
+            <div class="summary-score" id="sum-score">+0</div>
+            <div class="summary-theme" id="sum-theme">Theme</div>
         </div>
 
-        <div class="summary-zone-bottom">
-            <div class="list-scroll-area" id="answer-list">
-            </div>
-            <button id="next-btn" class="md3-btn btn-primary">Suivant</button>
+        <!-- NEW WORD CLOUD CONTAINER -->
+        <div class="word-cloud-container" id="word-cloud">
+            <!-- Pills injected here -->
         </div>
+
+        <button class="btn-3d btn-primary" id="sum-next-btn">Suivant</button>
+    </div>
+    
+    <!-- LEADERBOARD SCREEN -->
+    <div id="leaderboard-screen" class="screen">
+        <button class="btn-icon-round" onclick="goHome()" style="position: absolute; top: 48px; left: 24px; z-index: 10;"><span class="material-symbols-rounded">home</span></button>
+         <div class="unified-header">
+            <h2>Classement</h2>
+        </div>
+        <div id="lb-container" style="flex-grow:1; overflow-y:auto; display:flex; flex-direction:column; gap:16px;"></div>
+        <button class="btn-3d btn-primary" onclick="prepareRound()">Continuer</button>
     </div>
 
 </div>
 
-<div id="leaderboard-screen" class="screen">
-
-    <div class="leaderboard-header-row">
-
-        <button class="md3-btn btn-icon btn-home-simple" onclick="goHome()">
-            <span class="material-symbols-outlined">home</span>
-        </button>
-
-        <div id="leaderboard-subtitle" class="round-badge" style="margin:0;">
-            MANCHE : 1 / 5
-        </div>
-
-    </div>
-
-    <h2 style="margin: 0 0 24px 0; text-align:center; font-size:40px;">Résultats</h2>
-
-    <div class="list-wrap" id="leaderboard-list" style="width:100%;"></div>
-    <button class="md3-btn btn-primary" onclick="prepareRound()">Manche Suivante <span class="material-symbols-outlined">arrow_forward</span></button>
-</div>
-
-<canvas id="confetti-canvas"></canvas>
-
-<div id="gameover-screen" class="screen">
-    <div class="winner-section">
-        <div class="winner-label">Fin de la partie !</div>
-        <div id="winner-name" class="winner-name">Équipe</div>
-    </div>
-    <div class="label-text" style="text-align:center;">Classement final</div>
-    <div class="list-wrap" id="final-rankings"></div>
-    <button class="md3-btn btn-primary" onclick="location.reload()">Rejouer</button>
-</div>
-
-<div id="countdown-overlay"><div id="countdown-number">3</div></div>
+<!-- COUNTDOWN OVERLAY -->
+<div id="countdown-overlay" class="hidden"><div id="countdown-number">3</div></div>
 
 <script>
-    // --- 1. CONFIGURATION & STATE ---
+    /* --- JS LOGIC & STATE --- */
     const DATA_URL = "https://gist.githubusercontent.com/CoucouMichel/1a8f14455a4ad686716af94e8408a18d/raw/data.json";
-    let fullData = [], playableData = [], teams = [], selectedCategories = new Set();
-    let roundsPerTeam = 5, timeLimit = 0;
-    let currentTeamIndex = 0, currentThemeIndex = 0;
-    let currentRoundItems = [], currentCardIndex = 0, roundScore = 0, roundHistory = [];
-    let gameTimerInterval;
-    let numberOfTeams = 2;
-    let currentCountdownTimeout = null;
+    let fullData = [], playableData = [], teams = [], selectedCats = new Set();
+    let numTeams = 2, roundsPerTeam = 5, curTeam = 0, curTheme = 0;
+    let roundItems = [], cardIdx = 0, roundScore = 0, roundHist = [];
+    let timeLimit = 0, gameTimerInterval;
+    const colors = [
+    '#FF3B7C', '#00D084', '#FFB800', '#9C27B0', '#03A9F4',
+    '#FF5722', '#E91E63', '#3F51B5', '#00BCD4', '#8BC34A'
+];
+    
+    // Audio (Removed real files for demo, add back your mp3s here if needed)
+    const playsound = (type) => { /* console.log('Playing', type); */ };
 
-    const TEAM_COLORS = [
-        '#EF9A9A', '#FFCC80', '#FFF59D', '#A5D6A7', '#80CBC4',
-        '#90CAF9', '#9FA8DA', '#CE93D8', '#F48FB1', '#80DEEA'
-    ];
-
-    // --- 2. INIT & NAVIGATION ---
-    window.onload = () => {
-        renderTeamInputs(2);
-        initSegmentedButtons();
-        history.replaceState({ screen: 'landing-screen' }, "", "#landing");
-    };
-
-    function transitionTo(screenId) {
-        history.pushState({ screen: screenId }, "", "#" + screenId.replace('-screen', ''));
-        showScreen(screenId);
-    }
-
-    function showScreen(screenId) {
-        const current = document.querySelector('.screen.active');
-        const next = document.getElementById(screenId);
-if (current) {
-            current.classList.remove('active');
-            setTimeout(() => {
-                current.style.display = 'none';
-                next.style.display = 'flex';
-                void next.offsetWidth;
-                next.classList.add('active');
-                if(screenId === 'setup-screen') initSegmentedButtons();
-
-                // --- CORRECTION : Réactiver le bouton Suivant si on revient sur le résumé ---
-                if(screenId === 'summary-screen') {
-                    const nextBtn = document.getElementById('next-btn');
-                    if(nextBtn) nextBtn.disabled = false;
-                }
-
-            }, 300);
-        } else {
-            next.style.display = 'flex';
-            setTimeout(() => next.classList.add('active'), 10);
-        }
-    }
-
-    window.onpopstate = function(event) {
-        if (event.state && event.state.screen) showScreen(event.state.screen);
-        else showScreen('landing-screen');
-    };
-
-    function goBack() { stopCountdown(); history.back(); }
+    window.onload = () => { renderTeams(); history.replaceState({ screen: 'landing-screen' }, "", "#landing"); };
+    function transitionTo(sc) { history.pushState({ screen: sc }, "", "#" + sc.split('-')[0]); show(sc); }
+    function goBack() { history.back(); }
     function goHome() { transitionTo('landing-screen'); }
 
-    // --- 3. UI COMPONENTS ---
-    function selectSegment(clickedBtn) {
-        const container = clickedBtn.closest('.segmented-button-group');
-        const indicator = container.querySelector('.selection-indicator');
-        const allBtns = container.querySelectorAll('.segment-btn');
-        allBtns.forEach(btn => btn.classList.remove('selected'));
-        clickedBtn.classList.add('selected');
-        moveIndicator(clickedBtn, indicator);
-    }
-    function moveIndicator(targetBtn, indicator) {
-        const width = targetBtn.offsetWidth;
-        const left = targetBtn.offsetLeft;
-        indicator.style.width = `${width}px`;
-        indicator.style.transform = `translateX(${left}px)`;
-    }
-    function initSegmentedButtons() {
-        document.querySelectorAll('.segmented-button-group').forEach(group => {
-            const selected = group.querySelector('.segment-btn.selected');
-            const indicator = group.querySelector('.selection-indicator');
-            if (selected && indicator) {
-                indicator.style.transition = 'none';
-                moveIndicator(selected, indicator);
-                setTimeout(() => { indicator.style.transition = ''; }, 10);
-            }
+    function show(sc) {
+        document.querySelectorAll('.screen').forEach(s => {
+            s.classList.remove('active');
+            setTimeout(() => s.style.display = 'none', 300);
         });
+        const next = document.getElementById(sc);
+        setTimeout(() => {
+            next.style.display = 'flex';
+            void next.offsetWidth;
+            next.classList.add('active');
+        }, 300);
     }
-    window.addEventListener('resize', initSegmentedButtons);
+    window.onpopstate = (e) => { show(e.state?.screen || 'landing-screen'); };
 
-    // --- 4. SETUP LOGIC ---
-    function setTeamCount(num, btn) { selectSegment(btn); numberOfTeams = num; renderTeamInputs(num); }
-    function setRounds(num, btn) { selectSegment(btn); roundsPerTeam = num; }
-    function setTimeLimit(sec, btn) { selectSegment(btn); timeLimit = sec; }
+    /* --- SETUP --- */
+function setOpt(type, val, btn) {
+        btn.parentElement.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
+        btn.classList.add('selected');
+        if (type === 'team') { numTeams = val; renderTeams(); }
+        if (type === 'round') roundsPerTeam = val;
+        if (type === 'time') timeLimit = val;
+    }
 
-    function renderTeamInputs(count) {
-        const container = document.getElementById('teams-container');
-        const existingData = [];
-        container.querySelectorAll('.input-wrapper').forEach(wrapper => {
-            existingData.push({
-                name: wrapper.querySelector('input').value,
-                color: wrapper.querySelector('.color-dot').dataset.color
+function renderTeams() {
+        const cont = document.getElementById('teams-container');
+        
+        // 1. On sauvegarde l'état actuel (noms et couleurs)
+        const savedData = [];
+        cont.querySelectorAll('.input-row').forEach(row => {
+            savedData.push({
+                name: row.querySelector('.team-input').value,
+                color: row.querySelector('.color-picker').dataset.color
             });
         });
-        container.innerHTML = '';
+
+        cont.innerHTML = '';
         let usedColors = [];
-        for (let i = 0; i < Math.min(count, existingData.length); i++) usedColors.push(existingData[i].color);
-        for(let i=0; i<count; i++) {
+
+        // On enregistre les couleurs déjà attribuées aux équipes conservées
+        for (let i = 0; i < Math.min(numTeams, savedData.length); i++) {
+            usedColors.push(savedData[i].color);
+        }
+
+        for (let i = 0; i < numTeams; i++) {
             let name, color;
-            if (i < existingData.length) {
-                name = existingData[i].name;
-                color = existingData[i].color;
+
+            if (i < savedData.length) {
+                // Si l'équipe existait déjà, on réutilise son nom et sa couleur
+                name = savedData[i].name;
+                color = savedData[i].color;
             } else {
+                // Pour une nouvelle équipe, on prend un nom par défaut et la première couleur libre
                 name = `Équipe ${i+1}`;
-                color = TEAM_COLORS.find(c => !usedColors.includes(c)) || TEAM_COLORS[i % TEAM_COLORS.length];
+                color = colors.find(c => !usedColors.includes(c)) || colors[i % colors.length];
                 usedColors.push(color);
             }
+
             const div = document.createElement('div');
-            div.className = 'input-wrapper';
+            div.className = 'input-row';
             div.innerHTML = `
-                <div class="color-dot" style="background-color:${color};" data-color="${color}" onclick="cycleColor(this)"></div>
-                <div class="md3-text-field">
-                    <input type="text" class="team-name-input" value="${name}" onfocus="handleInputFocus(this, ${i+1})" onblur="handleInputBlur(this, ${i+1})">
-                    <label>Équipe ${i+1}</label>
-                </div>
+                <div class="color-picker" style="background:${color}" data-color="${color}" onclick="cycleTeamColor(this)"></div>
+                <input type="text" class="team-input" value="${name}">
             `;
-            container.appendChild(div);
+            cont.appendChild(div);
         }
     }
 
-    function handleInputFocus(input, teamNum) { if (input.value === `Équipe ${teamNum}`) input.value = ''; }
-    function handleInputBlur(input, teamNum) { if (input.value.trim() === '') input.value = `Équipe ${teamNum}`; }
-
-    function cycleColor(dot) {
-        const currentColor = dot.dataset.color;
-        const allDots = Array.from(document.querySelectorAll('.color-dot'));
-        const takenColors = allDots.filter(d => d !== dot).map(d => d.dataset.color);
-        let idx = TEAM_COLORS.indexOf(currentColor);
-        let found = false, attempts = 0;
-        while (!found && attempts < TEAM_COLORS.length) {
-            idx = (idx + 1) % TEAM_COLORS.length;
-            const candidate = TEAM_COLORS[idx];
-            if (!takenColors.includes(candidate)) {
-                dot.style.backgroundColor = candidate;
-                dot.dataset.color = candidate;
+    function cycleTeamColor(pickerEl) {
+        const currentColor = pickerEl.dataset.color;
+        const allPickers = Array.from(document.querySelectorAll('.color-picker'));
+        const takenColors = allPickers.filter(p => p !== pickerEl).map(p => p.dataset.color);
+        
+        let currentIndex = colors.indexOf(currentColor);
+        let found = false;
+        let attempts = 0;
+        
+        while (!found && attempts < colors.length) {
+            currentIndex = (currentIndex + 1) % colors.length;
+            const candidateColor = colors[currentIndex];
+            if (!takenColors.includes(candidateColor)) {
+                pickerEl.style.background = candidateColor;
+                pickerEl.dataset.color = candidateColor;
                 found = true;
             }
             attempts++;
         }
     }
 
-    async function fetchDataAndShowCategories() {
+    async function fetchData() {
         teams = [];
-        const container = document.getElementById('teams-container');
-        container.querySelectorAll('.input-wrapper').forEach(wrapper => {
-            const name = wrapper.querySelector('.team-name-input').value.trim();
-            const color = wrapper.querySelector('.color-dot').dataset.color;
-            if(name) teams.push({ name: name, color: color, totalScore: 0, roundsPlayed: 0 });
+        document.querySelectorAll('.input-row').forEach((row, i) => {
+            const name = row.querySelector('.team-input').value;
+            const color = row.querySelector('.color-picker').dataset.color;
+            teams.push({ name: name, color: color, score: 0, rounds: 0 });
         });
-        if(teams.length === 0) { alert("Please ensure teams have names."); return; }
-
-        const btn = document.querySelector('#setup-screen .btn-primary');
-        const txt = btn.innerHTML;
-        btn.innerHTML = "Oink Oink !...";
-        btn.disabled = true;
+        
         try {
-            const response = await fetch(DATA_URL + "?t=" + Date.now());
-            if (!response.ok) throw new Error("Error");
-            fullData = await response.json();
-            generateCategoryButtons();
+            const res = await fetch(DATA_URL + "?t=" + Date.now());
+            fullData = await res.json();
+            genCats();
             transitionTo('category-screen');
-        } catch (e) { alert("Failed to load data."); }
-        finally { btn.innerHTML = txt; btn.disabled = false; }
+        } catch(e) { alert("Erreur de chargement"); }
     }
 
-    function getIcon(categoryName) {
-        const lowerCat = categoryName.toLowerCase().trim().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        switch (lowerCat) {
-            case 'nature': return 'forest';
-            case 'cinema': return 'movie';
-            case 'musique': return 'music_note';
-            case 'histoire': return 'history_edu';
-            case 'sport': return 'sports_soccer';
-            case 'sciences': return 'science';
-            case 'geographie': return 'public';
-            case 'culture pop': return 'tv_gen';
-            default: return 'category';
-        }
-    }
-
-    function generateCategoryButtons() {
-        const container = document.getElementById('category-container');
-        container.innerHTML = '';
-        selectedCategories.clear();
-        const categories = [...new Set(fullData.map(item => item.category))].sort();
-        categories.forEach(cat => {
-            selectedCategories.add(cat);
-            const chip = document.createElement('div');
-            chip.className = 'cat-chip selected';
-            chip.innerHTML = `<span class="material-symbols-outlined icon">${getIcon(cat)}</span><span>${cat}</span>`;
-            chip.onclick = () => {
-                if (selectedCategories.has(cat)) { selectedCategories.delete(cat); chip.classList.remove('selected'); }
-                else { selectedCategories.add(cat); chip.classList.add('selected'); }
-                updateCategoryCounter();
+    function genCats() {
+        const cont = document.getElementById('category-container');
+        cont.innerHTML = ''; selectedCats.clear();
+        const cats = [...new Set(fullData.map(d => d.category))];
+        cats.forEach(c => {
+            // Toutes les catégories sont choisies par défaut
+            selectedCats.add(c);
+            const pill = document.createElement('div');
+            pill.className = 'cat-pill selected'; 
+            pill.innerHTML = `<span class="material-symbols-rounded">category</span> ${c}`;
+            pill.onclick = () => {
+                if (selectedCats.has(c)) { selectedCats.delete(c); pill.classList.remove('selected'); }
+                else { selectedCats.add(c); pill.classList.add('selected'); }
+                
+                // Mise à jour de l'UI
+                document.getElementById('cat-count-val').innerText = selectedCats.size;
+                const startBtn = document.getElementById('start-btn');
+                
+                // Désactivation robuste
+                if (selectedCats.size === 0) {
+                    startBtn.disabled = true;
+                    startBtn.style.opacity = "0.5";
+                    startBtn.style.pointerEvents = "none";
+                } else {
+                    startBtn.disabled = false;
+                    startBtn.style.opacity = "1";
+                    startBtn.style.pointerEvents = "auto";
+                }
             };
-            container.appendChild(chip);
+            cont.appendChild(pill);
         });
-        updateCategoryCounter();
-    }
-
-    function updateCategoryCounter() {
-        const count = selectedCategories.size;
-        const valSpan = document.getElementById('cat-count-val');
-        valSpan.innerText = count;
-        valSpan.style.color = count === 0 ? 'var(--md-sys-color-error)' : 'var(--md-sys-color-primary)';
-        valSpan.classList.remove('pop-anim'); void valSpan.offsetWidth; valSpan.classList.add('pop-anim');
+        document.getElementById('cat-count-val').innerText = selectedCats.size;
+        
+        // Sécurité au chargement
         const startBtn = document.getElementById('start-btn');
-        if (selectedCategories.size === 0) { startBtn.disabled = true; startBtn.style.opacity = "0.5"; startBtn.style.cursor = "not-allowed"; }
-        else { startBtn.disabled = false; startBtn.style.opacity = "1"; startBtn.style.cursor = "pointer"; }
+        startBtn.disabled = (selectedCats.size === 0);
+        startBtn.style.opacity = (selectedCats.size === 0) ? "0.5" : "1";
+        startBtn.style.pointerEvents = (selectedCats.size === 0) ? "none" : "auto";
     }
 
+    /* --- GAME LOOP --- */
     function startGame() {
-        if (selectedCategories.size === 0) return;
-        playableData = fullData.filter(d => selectedCategories.has(d.category));
-        if (playableData.length === 0) { alert("No data found for these categories."); return; }
-        playableData.sort(() => Math.random() - 0.5);
-        currentTeamIndex = 0; currentThemeIndex = 0;
-        prepareRound();
+        if(selectedCats.size === 0) return; // Sécurité supplémentaire
+        playableData = fullData.filter(d => selectedCats.has(d.category)).sort(() => Math.random() - 0.5);
+        curTeam = 0; curTheme = 0; prepareRound();
     }
 
-    // --- 5. GAME LOOP & LOGIC ---
     function prepareRound() {
-        const tm = teams[currentTeamIndex];
-        if(teams.every(t => t.roundsPlayed >= roundsPerTeam)) { endGame(); return; }
-        if (tm.roundsPlayed >= roundsPerTeam) { nextTeam(); return; }
+        if(teams.every(t => t.rounds >= roundsPerTeam)) { showLB(true); return; }
+        if(teams[curTeam].rounds >= roundsPerTeam) { curTeam = (curTeam+1)%teams.length; prepareRound(); return; }
+        
+        const tm = teams[curTeam], th = playableData[curTheme % playableData.length];
+        
+        document.getElementById('ready-round').innerText = `Manche ${tm.rounds + 1} / ${roundsPerTeam}`;
+        const tname = document.getElementById('ready-team');
+        tname.innerText = tm.name; tname.style.color = tm.color;
+        
+        document.getElementById('ready-cat').innerText = th.category;
+        document.getElementById('ready-theme').innerText = th.theme;
 
-        const th = playableData[currentThemeIndex % playableData.length];
-        const cleanCategory = th.category ? th.category.trim() : "";
-
-        const tutZone = document.querySelector('.tutorial-zone');
-        if (tutZone) { tutZone.style.opacity = "1"; tutZone.style.visibility = "visible"; }
-
-        const btnGo = document.getElementById('btn-go');
-        if (btnGo) { btnGo.classList.remove('fade-out'); btnGo.style.display = 'flex'; btnGo.style.visibility = 'visible'; }
-
-        const countdown = document.getElementById('countdown-overlay');
-        if (countdown) countdown.style.display = 'none';
-
-        transitionTo('ready-screen');
-
-        document.getElementById('ready-round-indicator').innerText = `MANCHE ${tm.roundsPlayed + 1} / ${roundsPerTeam}`;
-        const nameEl = document.getElementById('ready-team-name');
-        nameEl.innerText = tm.name; nameEl.style.color = tm.color;
-
-        document.getElementById('ready-intro-text').innerText = cleanCategory;
-        document.getElementById('ready-theme-title').innerText = th.theme;
-        document.getElementById('ready-category-icon').innerText = getIcon(cleanCategory);
         document.getElementById('tut-yes-text').innerText = th.theme;
-        document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
+document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
+        
+        transitionTo('ready-screen');
     }
 
-    function generateBalancedRound(themeData) {
-        const poolTrue = themeData.items.filter(i => i.isRelated === true);
-        const poolFalse = themeData.items.filter(i => i.isRelated === false);
-        if (themeData.items.length <= 10) return [...themeData.items].sort(() => Math.random() - 0.5);
-        const roundSize = 10, minTrue = 2, minFalse = 2;
-        const maxTruePossible = Math.min(poolTrue.length, roundSize - minFalse);
-        const minTrueNecessary = Math.max(minTrue, roundSize - poolFalse.length);
-        const countTrue = Math.floor(Math.random() * (maxTruePossible - minTrueNecessary + 1)) + minTrueNecessary;
-        poolTrue.sort(() => Math.random() - 0.5);
-        poolFalse.sort(() => Math.random() - 0.5);
-        const finalSet = [...poolTrue.slice(0, countTrue), ...poolFalse.slice(0, roundSize - countTrue)];
-        return finalSet.sort(() => Math.random() - 0.5);
-    }
-
-    function stopCountdown() {
-        if (currentCountdownTimeout) { clearTimeout(currentCountdownTimeout); currentCountdownTimeout = null; }
+    function startGameplay() {
         const overlay = document.getElementById('countdown-overlay');
-        const numEl = document.getElementById('countdown-number');
-        if (overlay) { overlay.classList.add('fade-out'); setTimeout(() => { overlay.style.display = 'none'; }, 300); }
-        if (numEl) { numEl.innerText = "3"; numEl.classList.remove('animate-pop'); }
-        const btnGo = document.getElementById('btn-go');
-        if (btnGo) { btnGo.classList.remove('fade-out'); btnGo.style.opacity = "1"; btnGo.style.visibility = "visible"; btnGo.style.pointerEvents = "auto"; }
+        const num = document.getElementById('countdown-number');
+        overlay.classList.remove('hidden');
+        
+        let c = 3;
+        const tick = () => {
+            if(c > 0) {
+                num.innerText = c; num.classList.remove('animate-pop'); void num.offsetWidth; num.classList.add('animate-pop');
+                c--; setTimeout(tick, 1000);
+            } else {
+                num.innerText = "GO!"; num.classList.remove('animate-pop'); void num.offsetWidth; num.classList.add('animate-pop');
+                setTimeout(startRealGame, 500);
+            }
+        };
+        tick();
     }
 
-function startGameplay() {
-    // 1. Nettoyage UI immédiat
-    const btnGo = document.getElementById('btn-go');
-    if (btnGo) {
-        btnGo.style.opacity = "";
-        btnGo.style.visibility = "";
-        btnGo.classList.add('fade-out');
-    }
-
-    const tutZone = document.querySelector('.tutorial-zone');
-    if (tutZone) {
-        tutZone.style.transition = "opacity 0.5s ease";
-        tutZone.style.opacity = "0";
-    }
-
-    const overlay = document.getElementById('countdown-overlay');
-    const numEl = document.getElementById('countdown-number');
-    if(overlay) {
-        overlay.classList.remove('fade-out');
-        overlay.style.opacity = "1";
-        overlay.style.display = 'flex';
-    }
-
-    // 2. Fonction de lancement réel du jeu
-    const executeGameStart = () => {
+function startRealGame() {
+        document.getElementById('countdown-overlay').classList.add('hidden');
         transitionTo('game-screen');
-        const tm = teams[currentTeamIndex];
-        const th = playableData[currentThemeIndex % playableData.length];
-
-        // ON RÉCUPÈRE LE NOM PROPRE DE LA CATÉGORIE
-        const cleanCategory = th.category ? th.category.trim() : "";
-
-        currentCardIndex = 0; roundScore = 0; roundHistory = [];
-        currentRoundItems = generateBalancedRound(th);
-
-        document.getElementById('current-team-display').innerText = tm.name;
-        document.getElementById('current-team-display').style.color = tm.color;
-        document.getElementById('round-display').innerText = `Manche ${tm.roundsPlayed + 1}/${roundsPerTeam}`;
-
-        // --- REMPLISSAGE DES NOUVEAUX ÉLÉMENTS ---
-        // 1. L'icône
-        document.getElementById('game-category-icon').innerText = getIcon(cleanCategory);
-        // 2. Le label catégorie (NOUVEAU)
-        const catLabel = document.getElementById('game-category-label');
-        if(catLabel) catLabel.innerText = cleanCategory;
-        // 3. Le titre
+        
+        const th = playableData[curTheme % playableData.length];
+        const poolT = th.items.filter(i=>i.isRelated), poolF = th.items.filter(i=>!i.isRelated);
+        roundItems = [...poolT.slice(0,5), ...poolF.slice(0,5)].sort(()=>Math.random()-0.5); 
+        
+        cardIdx = 0; roundScore = 0; roundHist = [];
+        
+        const tm = teams[curTeam];
+        document.getElementById('game-team-badge').innerText = tm.name;
         document.getElementById('game-theme-display').innerText = th.theme;
-        // ------------------------------------------
-
+        
         const tBadge = document.getElementById('game-timer');
         clearInterval(gameTimerInterval);
-        if(timeLimit > 0) {
+        if (timeLimit > 0) {
             tBadge.style.display = 'block';
-            let tl = timeLimit; tBadge.innerText = tl + "s";
+            let tl = timeLimit;
+            tBadge.innerText = tl + "s";
             gameTimerInterval = setInterval(() => {
-                tl--; tBadge.innerText = tl + "s";
-                if(tl <= 0) { clearInterval(gameTimerInterval); endRound(); }
+                tl--;
+                tBadge.innerText = tl + "s";
+                if (tl <= 0) { 
+                    clearInterval(gameTimerInterval); 
+                    endRound(); 
+                }
             }, 1000);
-        } else { tBadge.style.display = 'none'; }
-
-        loadCard();
-        setTimeout(() => {
-            if(overlay) overlay.classList.add('fade-out');
-            setTimeout(() => { if(overlay) overlay.style.display = 'none'; }, 500);
-        }, 600);
-    };
-
-    // 3. Compte à rebours
-    let count = 3;
-    const playCount = () => {
-        if (count > 0) {
-            sndTick.currentTime = 0;
-            sndTick.play().catch(()=>{});
-
-            numEl.innerText = count;
-            numEl.classList.remove('animate-pop');
-            void numEl.offsetWidth;
-            numEl.classList.add('animate-pop');
-
-            count--;
-            currentCountdownTimeout = setTimeout(playCount, 1000);
         } else {
-            sndGo.currentTime = 0;
-            sndGo.play().catch(()=>{});
-
-            numEl.innerText = "GO!";
-            numEl.classList.remove('animate-pop');
-            void numEl.offsetWidth;
-            numEl.classList.add('animate-pop');
-
-            currentCountdownTimeout = setTimeout(executeGameStart, 300);
+            tBadge.style.display = 'none';
         }
-    };
-    playCount();
-}
+        
+        loadCard();
+    }
 
     function loadCard() {
-        const pct = (currentCardIndex / 10) * 100;
-        const pigWrap = document.getElementById('pig-wrapper');
-        const fillBar = document.getElementById('pig-fill-bar');
-        if (pigWrap) {
-            pigWrap.style.left = pct + "%";
-            fillBar.style.width = pct + "%";
-            if (currentCardIndex > 0) { pigWrap.classList.remove('pig-jump-anim'); void pigWrap.offsetWidth; pigWrap.classList.add('pig-jump-anim'); }
-        }
-
-        if (currentCardIndex >= currentRoundItems.length) { endRound(); return; }
-
-        document.getElementById('question-counter').innerText = `${currentCardIndex + 1} / ${currentRoundItems.length}`;
-        const item = currentRoundItems[currentCardIndex];
-        const card = document.getElementById('card');
-
-        card.style.transition = 'none'; card.style.transform = 'translate(0,0) rotate(0)';
-        card.style.opacity = '0'; card.style.border = '1px solid var(--md-sys-color-outline)';
-        card.style.boxShadow = 'var(--md-sys-elevation-3)';
-        card.querySelector('.overlay-yes').style.opacity = '0'; card.querySelector('.overlay-no').style.opacity = '0';
-        document.getElementById('card-text').innerText = item.text;
+        if(cardIdx >= roundItems.length) { endRound(); return; }
+        document.getElementById('game-progress').innerText = `${cardIdx+1}/${roundItems.length}`;
+        const card = document.getElementById('play-card');
+        
+        // Reset card state
+        card.style.transition = 'none'; card.style.transform = 'translate(0,0) rotate(0)'; card.style.opacity = '0';
+        card.style.boxShadow = '0 16px 32px rgba(45, 35, 66, 0.15)'; // Reset de l'ombre
+        card.querySelector('.yes').style.opacity = '0'; card.querySelector('.no').style.opacity = '0';
+        
+        document.getElementById('play-card-text').innerText = roundItems[cardIdx].text;
+        
         setTimeout(() => {
-            card.style.transition = 'opacity 0.3s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
-            card.style.opacity = '1'; card.classList.add('card-pulse');
+            card.style.transition = 'transform 0.4s var(--bounce), opacity 0.3s';
+            card.style.opacity = '1';
         }, 50);
     }
 
-    // --- 6. SWIPE PHYSICS ---
-    let sx = 0, cx = 0, drag = false;
-    const cardEl = document.getElementById('card');
-    const start = (x) => { sx = x; cx = x; drag = true; cardEl.style.transition = 'none'; cardEl.classList.remove('card-pulse'); };
-    const move = (x) => {
-        if (!drag) return;
-        cx = x; const dx = cx - sx;
-        cardEl.style.transform = `translate(${dx}px, ${Math.abs(dx)/10}px) rotate(${dx * 0.05}deg)`;
-        const intensity = Math.min(Math.abs(dx) / 150, 1);
-        if (dx > 0) {
-            cardEl.querySelector('.overlay-yes').style.opacity = intensity;
-            cardEl.querySelector('.overlay-no').style.opacity = 0;
-            cardEl.style.borderColor = `rgba(105, 240, 174, ${intensity})`; cardEl.style.boxShadow = `0 0 ${20 * intensity}px rgba(105, 240, 174, 0.4)`;
+    /* --- BUTTONS & SOBER PHYSICS --- */
+    function handleBtnSwipe(isRight) {
+        if(cardIdx >= roundItems.length) return;
+        const item = roundItems[cardIdx];
+        const correct = (isRight === item.isRelated);
+        const card = document.getElementById('play-card');
+        
+        card.querySelector(isRight ? '.yes' : '.no').style.opacity = '1';
+        
+        // 1. Sober Card Physics (Glisse proprement vers le choix de l'utilisateur)
+        card.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.3s, box-shadow 0.2s';
+        card.style.transform = `translate(calc(-50% + ${isRight ? 200 : -200}px), 50px) rotate(${isRight ? 20 : -20}deg)`;
+        card.style.opacity = '0';
+
+        // 2. Feedback visuel subtil (Léger halo de couleur sur la carte avant de disparaitre)
+        card.style.boxShadow = correct ? '0 0 40px rgba(0, 208, 132, 0.8)' : '0 0 40px rgba(255, 77, 77, 0.8)';
+
+        // --- NOUVEAU : Apparition furtive du +1 ou de la croix ---
+        const pop = document.createElement('div');
+        pop.className = `feedback-pop ${correct ? 'correct' : 'wrong'}`;
+        pop.innerHTML = correct ? '+1' : '<span class="material-symbols-rounded" style="font-size: 100px;">close</span>';
+        document.querySelector('.game-area-centered').appendChild(pop);
+        setTimeout(() => pop.remove(), 600); // Nettoyage propre après l'animation
+
+        // 3. Audio & Score
+        // 3. Calcul & Son
+        console.log("Swipe validé. Réponse correcte ?", correct);
+        if (correct) {
+            roundScore++;
+            playSound('correct');
         } else {
-            cardEl.querySelector('.overlay-yes').style.opacity = 0;
-            cardEl.querySelector('.overlay-no').style.opacity = intensity;
-            cardEl.style.borderColor = `rgba(255, 82, 82, ${intensity})`; cardEl.style.boxShadow = `0 0 ${20 * intensity}px rgba(255, 82, 82, 0.4)`;
+            playSound('wrong');
+        }
+        
+        // Sauvegarde de l'historique ET de la vérité (isRelated)
+        roundHist.push({ text: item.text, correct: correct, isRelated: item.isRelated });
+        cardIdx++;
+        
+        setTimeout(loadCard, 350);
+    }
+
+    // Touch Drag Physics (Simplified wrapper for buttons)
+    let sx = 0, drag = false, cardEl = document.getElementById('play-card');
+    const startDrag = (x) => { sx = x; drag = true; cardEl.style.transition = 'none'; };
+    const moveDrag = (x) => {
+        if(!drag) return; const dx = x - sx;
+        cardEl.style.transform = `translate(${dx}px, ${Math.abs(dx)/10}px) rotate(${dx*0.05}deg)`;
+        cardEl.querySelector('.yes').style.opacity = dx>0 ? Math.min(dx/100,1) : 0;
+        cardEl.querySelector('.no').style.opacity = dx<0 ? Math.min(-dx/100,1) : 0;
+    };
+    const endDrag = (x) => {
+        if(!drag) return; drag = false; const dx = x - sx;
+        if(Math.abs(dx) > 80) handleBtnSwipe(dx > 0);
+        else {
+            cardEl.style.transition = 'transform 0.4s var(--bounce)'; cardEl.style.transform = 'translate(0,0) rotate(0)';
+            cardEl.querySelector('.yes').style.opacity = 0; cardEl.querySelector('.no').style.opacity = 0;
         }
     };
-    const end = () => {
-        if (!drag) return;
-        drag = false; const dx = cx - sx;
-        if (Math.abs(dx) < 10) { resetCard(); return; }
-        if (dx > 100) finishSwipe(true); else if (dx < -100) finishSwipe(false);
-        else resetCard();
-    };
-    function resetCard() {
-        cardEl.style.transition = '0.4s cubic-bezier(0.2, 0.8, 0.2, 1)';
-        cardEl.style.transform = 'translate(0,0) rotate(0)';
-        cardEl.style.borderColor = 'var(--md-sys-color-outline)'; cardEl.style.boxShadow = 'var(--md-sys-elevation-3)';
-        cardEl.querySelector('.overlay-yes').style.opacity = 0; cardEl.querySelector('.overlay-no').style.opacity = 0;
-        setTimeout(() => cardEl.classList.add('card-pulse'), 400);
-    }
-    function finishSwipe(right) {
-        cardEl.style.transition = '0.4s cubic-bezier(0.4, 0.0, 0.2, 1)';
-        cardEl.style.transform = `translate(${right?1000:-1000}px, 100px) rotate(${right?45:-45}deg)`;
-        cardEl.style.opacity = '0'; processAnswer(right);
-    }
-    if(cardEl) {
-        cardEl.addEventListener('touchstart', e => start(e.touches[0].clientX));
-        cardEl.addEventListener('touchmove', e => { e.preventDefault(); move(e.touches[0].clientX); });
-        cardEl.addEventListener('touchend', end);
-        cardEl.addEventListener('mousedown', e => start(e.clientX));
-        window.addEventListener('mousemove', e => move(e.clientX));
-        window.addEventListener('mouseup', end);
-    }
+    
+    // Attach touch to card container
+    const cCont = document.querySelector('.play-card-container');
+    cCont.addEventListener('touchstart', e => startDrag(e.touches[0].clientX));
+    cCont.addEventListener('touchmove', e => moveDrag(e.touches[0].clientX));
+    cCont.addEventListener('touchend', e => endDrag(e.changedTouches[0].clientX));
+    cCont.addEventListener('mousedown', e => startDrag(e.clientX));
+    window.addEventListener('mousemove', e => moveDrag(e.clientX));
+    window.addEventListener('mouseup', e => endDrag(e.clientX));
 
-    // --- 7. ANSWER PROCESSING & SOUNDS ---
-    const sndCorrect = new Audio('correct.mp3');
+// --- 7. ANSWER PROCESSING & SOUNDS ---
+const sndCorrect = new Audio('correct.mp3');
+const sndTick = new Audio('tick.mp3');
+const sndGo = new Audio('go.mp3');
 
-    // --- NOUVEAUX SONS ---
-    const sndTick = new Audio('tick.mp3');
-    const sndGo = new Audio('go.mp3');
+const wrongSoundFiles = ['wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3'];
+const wrongAudios = wrongSoundFiles.map(file => new Audio(file));
+const sndWinner = new Audio('winner.mp3');
+let isConfettiActive = false;
 
-    const wrongSoundFiles = ['wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3'];
-    const wrongAudios = wrongSoundFiles.map(file => new Audio(file));
-    const sndWinner = new Audio('winner.mp3');
-    let isConfettiActive = false;
-
-    function playSound(type) {
-        try {
-            if (type === 'correct') { sndCorrect.currentTime = 0; sndCorrect.play().catch(()=>{}); }
-            else if (type === 'wrong') {
-                const randomIndex = Math.floor(Math.random() * wrongAudios.length);
-                const randomSound = wrongAudios[randomIndex];
-                randomSound.currentTime = 0; randomSound.play().catch(()=>{});
-            }
-        } catch (e) {}
-    }
-
-    function processAnswer(swipedRight) {
-        const currentCard = currentRoundItems[currentCardIndex];
-        if (!currentCard) return;
-        const isCorrect = (swipedRight === currentCard.isRelated);
-        if (isCorrect) { roundScore++; showFeedbackAnim(true); playSound('correct'); }
-        else { showFeedbackAnim(false); playSound('wrong'); }
-
-        roundHistory.push({ text: currentCard.text, correct: isCorrect, isRelated: currentCard.isRelated });
-        currentCardIndex++;
-        setTimeout(() => { if (currentCardIndex < currentRoundItems.length) loadCard(); else endRound(); }, 200);
-    }
-
-    let feedbackTimer = null;
-    function showFeedbackAnim(isCorrect) {
-        if (feedbackTimer) { clearTimeout(feedbackTimer); feedbackTimer = null; document.querySelectorAll('.score-popup').forEach(el => el.remove());
-        document.body.style.boxShadow = 'none'; void document.body.offsetWidth; }
-        const el = document.createElement('div');
-        el.className = isCorrect ? 'score-popup' : 'score-popup wrong';
-        el.innerHTML = isCorrect ? "+1" : "X"; document.body.appendChild(el);
-        document.body.style.transition = "box-shadow 0.1s ease-out";
-        document.body.style.boxShadow = isCorrect ? "inset 0 0 80px rgba(0, 230, 118, 0.6)" : "inset 0 0 80px rgba(255, 82, 82, 0.6)";
-        feedbackTimer = setTimeout(() => { el.remove(); document.body.style.boxShadow = "none"; feedbackTimer = null; }, 500);
-    }
-
-function endRound() {
-    // 1. Nettoyage et transition
-    clearInterval(gameTimerInterval);
-    teams[currentTeamIndex].totalScore += roundScore;
-    teams[currentTeamIndex].roundsPlayed += 1;
-    transitionTo('summary-screen');
-
-    // 2. Remplissage Header
-    const tm = teams[currentTeamIndex];
-    // Équipe
-    const nameEl = document.getElementById('summary-team-name');
-    nameEl.innerText = tm.name;
-    nameEl.style.color = tm.color;
-
-    // Score
-    const scoreEl = document.getElementById('summary-score-val');
-    scoreEl.innerText = `+${roundScore} pts`;
-
-    // Animation et Couleur Pilule
-    const scorePill = document.querySelector('.sum-score-pill');
-    scorePill.className = 'sum-score-pill';
-    if (roundScore > 0) {
-        scorePill.classList.add('score-highlight-anim');
-        scoreEl.style.color = "var(--md-sys-color-success)";
-    } else {
-        scoreEl.style.color = tm.color;
-    }
-
-    // --- MISE À JOUR DES NOUVEAUX ÉLÉMENTS CENTRAUX ---
-    const th = playableData[currentThemeIndex % playableData.length];
-    const cleanCategory = th.category ? th.category.trim() : "";
-
-    // 1. L'Icône
-    document.getElementById('summary-category-icon').innerText = getIcon(cleanCategory);
-
-    // 2. Le Label Catégorie
-    const sumCatLabel = document.getElementById('summary-category-label');
-    if(sumCatLabel) sumCatLabel.innerText = cleanCategory;
-
-    // 3. Le Thème
-    const themeTitleEl = document.getElementById('summary-theme-name');
-    themeTitleEl.innerText = th.theme;
-
-    // --- AUTO-RESIZE DU TITRE (Adapté pour 26px) ---
-    themeTitleEl.style.fontSize = "26px"; // Taille de base
-    requestAnimationFrame(() => {
-        const container = document.querySelector('.sum-theme-box');
-        if(container) {
-            const maxWidth = container.offsetWidth * 0.95;
-            let currentSize = 26;
-            themeTitleEl.style.fontSize = currentSize + "px";
-
-            // Réduire tant que ça dépasse
-            while (themeTitleEl.scrollWidth > maxWidth && currentSize > 14) {
-                currentSize--;
-                themeTitleEl.style.fontSize = currentSize + "px";
-            }
+function playSound(type) {
+    console.log("Tentative de lecture du son :", type);
+    try {
+        if (type === 'correct') { 
+            sndCorrect.currentTime = 0; 
+            sndCorrect.play().catch(e => console.error("Erreur de lecture correct.mp3 :", e)); 
         }
-    });
-
-    // 3. Remplissage Liste (Inchangé)
-    const list = document.getElementById('answer-list');
-    list.innerHTML = '';
-
-    roundHistory.forEach((h, i) => {
-        const item = document.createElement('div');
-        item.className = 'md3-list-item';
-        item.style.animationDelay = `${i * 0.05}s`;
-
-        const isCorrect = h.correct;
-        const scoreText = isCorrect ? '+1 pt' : '+0 pt';
-        const trailingColor = isCorrect ? 'var(--md-sys-color-success)' : 'var(--md-sys-color-on-surface)';
-
-        let iconBg, iconColor, iconName;
-        if (isCorrect) {
-            iconBg = 'var(--md-sys-color-success)';
-            iconColor = '#003112';
-            iconName = 'check';
-        } else {
-            iconBg = 'var(--md-sys-color-error)';
-            iconColor = '#690005';
-            iconName = 'close';
+        else if (type === 'wrong') {
+            const randomIndex = Math.floor(Math.random() * wrongAudios.length);
+            const randomSound = wrongAudios[randomIndex];
+            console.log("Fichier wrong sélectionné : wrong" + (randomIndex + 1) + ".mp3");
+            randomSound.currentTime = 0; 
+            randomSound.play().catch(e => console.error("Erreur de lecture wrong.mp3 :", e));
         }
-
-        let subText = h.isRelated ? th.theme : `Pas ${th.theme}`;
-
-        item.innerHTML = `
-            <div class="md3-leading-icon" style="background-color: ${iconBg}; color: ${iconColor};">
-                <span class="material-symbols-outlined">${iconName}</span>
-            </div>
-            <div class="md3-content">
-                <div class="md3-headline">${h.text}</div>
-                <div class="md3-supporting">${subText}</div>
-            </div>
-            <div class="md3-trailing" style="color: ${trailingColor};">${scoreText}</div>
-        `;
-        list.appendChild(item);
-    });
-
-    // 4. Gestion Bouton Suivant (Avec votre correction de navigation)
-    const btn = document.getElementById('next-btn');
-    btn.disabled = false;
-
-    const isOver = teams.every(t => t.roundsPlayed >= roundsPerTeam);
-    const isCycleEnd = currentTeamIndex === teams.length - 1;
-
-    if (isOver) {
-        btn.innerText = "Terminer la Partie";
-        btn.onclick = () => { btn.disabled = true; endGame(); };
-    } else if (isCycleEnd) {
-        btn.innerText = "Voir le Classement";
-        btn.onclick = () => { btn.disabled = true; showLeaderboard(); };
-    } else {
-        let nextIndex = (currentTeamIndex + 1) % teams.length;
-        let nextThemeIndex = currentThemeIndex + 1;
-
-        btn.innerText = `Suivant : ${teams[nextIndex].name}`;
-
-        btn.onclick = () => {
-            btn.disabled = true;
-            currentTeamIndex = nextIndex;
-            currentThemeIndex = nextThemeIndex;
-            prepareRound();
-        };
+    } catch (e) {
+        console.error("Erreur globale audio :", e);
     }
 }
 
-    function nextTeam() { currentTeamIndex = (currentTeamIndex + 1) % teams.length; currentThemeIndex++; prepareRound(); }
-
-    function showLeaderboard() {
-        transitionTo('leaderboard-screen'); currentTeamIndex = 0; currentThemeIndex++;
-        const currentRounds = Math.min(teams[0].roundsPlayed, roundsPerTeam);
-        document.getElementById('leaderboard-subtitle').innerText = `Manche : ${currentRounds}/${roundsPerTeam}`;
-        renderRankings(document.getElementById('leaderboard-list'));
+/* --- SUMMARY & END GAME --- */
+    function endRound() {
+        clearInterval(gameTimerInterval);
+        teams[curTeam].score += roundScore; teams[curTeam].rounds++;
+        transitionTo('summary-screen');
+        
+        const tm = teams[curTeam];
+        const th = playableData[curTheme % playableData.length];
+        
+        const sumTeam = document.getElementById('sum-team');
+        sumTeam.innerText = tm.name; sumTeam.style.color = tm.color;
+        document.getElementById('sum-score').innerText = `+${roundScore}`;
+        document.getElementById('sum-theme').innerText = th.theme;
+        
+        // Build Word Cloud avec Badges de Vérité
+        const cloud = document.getElementById('word-cloud');
+        cloud.innerHTML = '';
+        roundHist.forEach((h, i) => {
+            const pill = document.createElement('div');
+            pill.className = `result-pill ${h.correct ? 'correct' : 'wrong'}`;
+            pill.style.animation = `popPill 0.4s var(--bounce) ${i * 0.05}s forwards`;
+            
+            // On définit le texte et l'icône de vérité absolue
+            const truthIcon = h.isRelated ? 'check' : 'close';
+            const truthText = h.isRelated ? 'OUI' : 'NON';
+            
+            pill.innerHTML = `
+                <div class="truth-badge">
+                    <span class="material-symbols-rounded">${truthIcon}</span>
+                    <span>${truthText}</span>
+                </div>
+                <span>${h.text}</span>
+            `;
+            cloud.appendChild(pill);
+        });
+        
+        const btn = document.getElementById('sum-next-btn');
+        if (teams.every(t => t.rounds >= roundsPerTeam)) {
+            btn.innerText = "Terminer"; btn.onclick = () => showLB(true);
+        } else if (curTeam === teams.length - 1) {
+            btn.innerText = "Classement"; btn.onclick = () => showLB(false);
+        } else {
+            btn.innerText = `Suivant : ${teams[(curTeam+1)%teams.length].name}`;
+            btn.onclick = () => { curTeam++; curTheme++; prepareRound(); };
+        }
     }
 
-    function renderRankings(cont) {
+    function showLB(final) {
+        transitionTo('leaderboard-screen');
+        if(!final) { curTeam = 0; curTheme++; }
+        
+        const cont = document.getElementById('lb-container');
         cont.innerHTML = '';
-        const sort = [...teams].sort((a, b) => b.totalScore - a.totalScore);
-        if (sort.length === 0) return;
-        const layout = document.createElement('div');
-        layout.className = 'leaderboard-layout';
-
-        const winner = sort[0];
-        const winnerCard = document.createElement('div');
-        winnerCard.className = 'winner-card';
-        winnerCard.style.borderColor = winner.color; winnerCard.style.boxShadow = `0 0 30px ${winner.color}40`;
-        winnerCard.innerHTML = `
-            <span class="material-symbols-outlined winner-icon-badge" style="color:${winner.color}">emoji_events</span>
-            <div class="winner-team-name">${winner.name}</div>
-            <div class="winner-score" style="color:${winner.color}">${winner.totalScore} PTS</div>
-            <div style="position:absolute; top:12px; right:16px; background:${winner.color}; color:#000; padding:4px 12px; border-radius:20px; font-weight:900; font-size:14px; box-shadow:0 4px 8px rgba(0,0,0,0.3);">#1</div>
-        `;
-        layout.appendChild(winnerCard);
-
-        if (sort.length > 1) {
-            const listContainer = document.createElement('div');
-            listContainer.className = 'runners-up-list';
-            for (let i = 1; i < sort.length; i++) {
-                const t = sort[i];
-                const row = document.createElement('div'); row.className = 'rank-box-small';
-                row.style.borderLeftColor = t.color; row.style.animationDelay = `${i * 0.1}s`;
-                row.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:16px;">
-                        <span style="opacity:0.5; font-size:14px; font-weight:900; width:20px;">#${i+1}</span>
-                        <span style="color: var(--md-sys-color-on-surface);">${t.name}</span>
+        const sort = [...teams].sort((a,b) => b.score - a.score);
+        
+// 1. Génération du Podium 3D (Top 1 à 3)
+        let podiumHtml = '<div class="podium-container">';
+        const top3 = sort.slice(0, 3);
+        
+        top3.forEach((t, i) => {
+            const rank = i + 1;
+            const delay = (3 - rank) * 0.15; // Animation : le 3ème pop, puis le 2ème, puis le 1er
+            const isFirst = rank === 1;
+            
+            podiumHtml += `
+                <div class="podium-step rank-${rank}" style="animation-delay: ${delay}s">
+                    ${isFirst ? '<div class="crown-icon">👑</div>' : ''}
+                    <div class="podium-info" style="border-color: ${t.color}">
+                        <div class="podium-name">${t.name}</div>
+                        <div class="podium-score" style="color: ${t.color}">${t.score}</div>
                     </div>
-                    <div style="color:${t.color}; font-weight:900;">${t.totalScore}</div>
-                `;
-                listContainer.appendChild(row);
-            }
-            layout.appendChild(listContainer);
-        }
-        cont.appendChild(layout);
-    }
+                    <div class="podium-block" style="background: ${t.color}">
+                        ${rank}
+                    </div>
+                </div>
+            `;
+        });
+        podiumHtml += '</div>';
+        cont.innerHTML += podiumHtml;
 
-    function endGame() {
-        transitionTo('gameover-screen');
-        const sort = [...teams].sort((a, b) => b.totalScore - a.totalScore);
-        const winner = sort[0];
-        const winEl = document.getElementById('winner-name');
-        winEl.innerText = winner.name; winEl.style.color = winner.color;
-        renderRankings(document.getElementById('final-rankings'));
-        isConfettiActive = true; startConfetti();
-        sndWinner.currentTime = 0; sndWinner.play().catch(()=>{});
-        sndWinner.onended = () => { isConfettiActive = false; };
+        // 2. Génération de la liste classique (Rangs 4 et +)
+        const rest = sort.slice(3);
+        rest.forEach((t, i) => {
+            const rank = i + 4;
+            const delay = 0.6 + (i * 0.1);
+            
+            cont.innerHTML += `
+                <div class="lb-list-item" style="animation-delay: ${delay}s; border-left: 6px solid ${t.color}">
+                    <div class="lb-list-rank">#${rank}</div>
+                    <div class="lb-list-name">${t.name}</div>
+                    <div class="lb-list-score" style="color: ${t.color}">${t.score}</div>
+                </div>
+            `;
+        });
+        
+        const btn = document.querySelector('#leaderboard-screen .btn-primary');
+        if(final) { btn.innerText = "Rejouer"; btn.onclick = () => location.reload(); }
+        else { btn.innerText = "Manche Suivante"; btn.onclick = () => prepareRound(); }
     }
-
-    // --- 8. CONFETTI ---
-    function startConfetti() {
-        const canvas = document.getElementById('confetti-canvas');
-        if(!canvas) return;
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        const pieces = []; const colors = ['#ff4081', '#00e5ff', '#ffd740', '#ffffff'];
-        for (let i = 0; i < 150; i++) {
-            pieces.push({
-                x: Math.random() * canvas.width, y: Math.random() * canvas.height - canvas.height,
-                w: Math.random() * 10 + 5, h: Math.random() * 10 + 5,
-                color: colors[Math.floor(Math.random() * colors.length)],
-                speed: Math.random() * 5 + 2, angle: Math.random() * 6.2
-            });
-        }
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            let active = false;
-            pieces.forEach(p => {
-                p.y += p.speed; p.angle += 0.1;
-                ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.angle);
-                ctx.fillStyle = p.color; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h); ctx.restore();
-                if (p.y < canvas.height) active = true;
-                else if (isConfettiActive && Math.random() > 0.95) p.y = -20;
-            });
-            if (active) requestAnimationFrame(draw); else ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-        draw();
-    }
-    function openFullscreen() {
-  let elem = document.documentElement;
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  }
-}
 </script>
 </body>
 </html>
