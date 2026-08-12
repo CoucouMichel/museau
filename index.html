@@ -893,7 +893,7 @@ document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
         transitionTo('ready-screen');
     }
 
-    function startGameplay() {
+function startGameplay() {
         const overlay = document.getElementById('countdown-overlay');
         const num = document.getElementById('countdown-number');
         overlay.classList.remove('hidden');
@@ -901,10 +901,27 @@ document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
         let c = 3;
         const tick = () => {
             if(c > 0) {
-                num.innerText = c; num.classList.remove('animate-pop'); void num.offsetWidth; num.classList.add('animate-pop');
-                c--; setTimeout(tick, 1000);
+                // Son du cochon pour 3, 2, 1
+                sndTick.currentTime = 0;
+                sndTick.play().catch(e => console.error("Erreur Tick :", e));
+
+                num.innerText = c; 
+                num.classList.remove('animate-pop'); 
+                void num.offsetWidth; 
+                num.classList.add('animate-pop');
+                
+                c--; 
+                setTimeout(tick, 1000);
             } else {
-                num.innerText = "GO!"; num.classList.remove('animate-pop'); void num.offsetWidth; num.classList.add('animate-pop');
+                // Son final pour le GO !
+                sndGo.currentTime = 0;
+                sndGo.play().catch(e => console.error("Erreur Go :", e));
+
+                num.innerText = "GO!"; 
+                num.classList.remove('animate-pop'); 
+                void num.offsetWidth; 
+                num.classList.add('animate-pop');
+                
                 setTimeout(startRealGame, 500);
             }
         };
