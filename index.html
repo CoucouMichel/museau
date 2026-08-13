@@ -891,11 +891,39 @@
         });
         
         try {
-            const res = await fetch(DATA_URL + "?t=" + Date.now());
-            fullData = await res.json();
+            // 1. On va chercher les données plates depuis ton API SheetDB
+            const res = await fetch("https://sheetdb.io/api/v1/yaa8qntqjl8t3" + "?t=" + Date.now());
+            const flatData = await res.json();
+            
+            // 2. On regroupe les lignes par Catégorie et par Thème
+            const groupedMap = {};
+            flatData.forEach(row => {
+                const cat = row.category;
+                const thm = row.theme;
+                
+                if (!groupedMap[cat]) groupedMap[cat] = {};
+                if (!groupedMap[cat][thm]) groupedMap[cat][thm] = [];
+                
+                groupedMap[cat][thm].push({
+                    text: row.text,
+                    isRelated: row.isRelated === "TRUE" || row.isRelated === true
+                });
+            });
+            
+            // 3. On reformate le tout pour recréer la structure exacte qu'attend ton jeu
+            fullData = [];
+            for (const [cat, themes] of Object.entries(groupedMap)) {
+                for (const [thm, items] of Object.entries(themes)) {
+                    fullData.push({ category: cat, theme: thm, items: items });
+                }
+            }
+
             genCats();
             transitionTo('category-screen');
-        } catch(e) { alert("Erreur de chargement"); }
+        } catch(e) { 
+            console.error(e);
+            alert("Erreur de chargement depuis Google Sheets"); 
+        }
     }
 
     function genCats() {
