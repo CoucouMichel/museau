@@ -208,15 +208,40 @@
         .summary-score { font-size: 64px; color: var(--primary); font-weight: 900; line-height: 1; }
         .summary-theme { font-size: 20px; color: var(--text-muted); font-weight: 700; margin-top: 8px; }
 
+/* --- WORD CLOUD RESPONSIVE FIX --- */
         .word-cloud-container {
-            flex-grow: 1; width: 100%; display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 10px; padding: 12px 0; overflow: hidden;
+            flex-grow: 1; 
+            width: 100%; 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            align-content: flex-start; /* Aligne vers le haut pour un scroll naturel */
+            gap: 8px; 
+            padding: 8px 4px 24px 4px; 
+            overflow-y: auto; /* Permet le scroll si la liste est longue */
+            max-height: 52vh; /* Empêche de chevaucher le bouton du bas */
         }
         
         .result-pill {
-            display: flex; align-items: center; padding: 6px 16px 6px 6px;
-            border-radius: var(--radius-pill); font-weight: 800; font-size: 15px;
-            opacity: 0; transform: scale(0.5); /* For animation */
-            box-shadow: var(--shadow-soft); color: white; gap: 8px;
+            display: flex; 
+            align-items: center; 
+            padding: 4px 12px 4px 6px;
+            border-radius: var(--radius-pill); 
+            font-weight: 800; 
+            font-size: 13px; /* Taille de police légèrement réduite */
+            opacity: 0; 
+            transform: scale(0.5); 
+            box-shadow: var(--shadow-soft); 
+            color: white; 
+            gap: 6px;
+            max-width: 100%; /* S'adapte à la largeur de l'écran */
+            white-space: normal; /* Permet le retour à la ligne si très long */
+            word-break: break-word;
+            text-align: left;
+        }
+
+        .result-pill .truth-badge {
+            flex-shrink: 0; /* Empêche le badge OUI/NON de s'écraser */
         }
         .result-pill.correct { background: var(--success); }
         .result-pill.wrong { background: var(--danger); }
