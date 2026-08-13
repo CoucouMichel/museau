@@ -182,16 +182,27 @@
             display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-content: flex-start;
             flex-grow: 1; overflow-y: auto; padding: 12px 0;
         }
-        .cat-pill {
-            background: white; border: 2px solid transparent; color: var(--text-muted);
-            padding: clamp(8px, 2vh, 12px) clamp(16px, 4vw, 20px); border-radius: var(--radius-pill); 
-            font-weight: 800; font-size: clamp(12px, 3.5vw, 14px);
-            display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.2s var(--bounce);
+.cat-pill {
+            /* Catégorie non sélectionnée : Blanc propre et épuré */
+            background: white; 
+            border: 2px solid transparent; 
+            color: var(--text-main);
+            padding: clamp(8px, 2vh, 12px) clamp(16px, 4vw, 20px); 
+            border-radius: var(--radius-pill); 
+            font-weight: 800; 
+            font-size: clamp(12px, 3.5vw, 14px);
+            display: flex; align-items: center; gap: 8px; 
+            cursor: pointer; transition: 0.2s var(--bounce);
             box-shadow: var(--shadow-soft);
         }
+        
         .cat-pill.selected {
-            background: var(--primary-light); color: white; border-color: var(--primary);
-            box-shadow: 0 4px 12px rgba(255, 59, 124, 0.3); transform: scale(1.05);
+            /* Catégorie sélectionnée : Rose foncé / vif bien voyant */
+            background: var(--primary); 
+            color: white; 
+            border-color: var(--primary-shadow);
+            box-shadow: 0 4px 12px rgba(255, 59, 124, 0.35); 
+            transform: scale(1.05);
         }
 
         /* --- 7. GAME SCREEN (THE NEW LOOK) --- */
@@ -540,6 +551,33 @@
             border-radius: var(--radius-pill); border: 1px solid rgba(45, 35, 66, 0.08); 
             text-align: center; max-width: 100%; word-break: normal; overflow-wrap: normal;
         }
+        .action-pill-btn {
+            background: white;
+            border: 1px solid rgba(45, 35, 66, 0.08);
+            color: var(--text-main);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 12px;
+            padding: 8px 16px;
+            border-radius: var(--radius-pill);
+            box-shadow: var(--shadow-soft);
+            cursor: pointer;
+            transition: all 0.2s var(--bounce);
+        }
+        .action-pill-btn:active {
+            transform: scale(0.95);
+            background: var(--bg-color);
+        }
+        .category-counter {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+        .category-counter span {
+            font-size: 20px; /* Chiffre plus grand et impactant */
+            font-weight: 900;
+            color: var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -602,8 +640,14 @@
             <button class="btn-icon-round" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
             <h2>Catégories</h2>
         </div>
-        <div style="text-align: center; font-weight: 800; color: var(--text-muted); margin-bottom: 16px;">
-            <span id="cat-count-val" style="color: var(--primary);">0</span> sélectionnées
+        <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 16px; gap: 12px;">
+            <div class="category-counter">
+                <span id="cat-count-val">0</span> <span id="cat-label">sélectionnées</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+                <button class="action-pill-btn" onclick="selectAllCats(true)">Tout sélectionner</button>
+                <button class="action-pill-btn" onclick="selectAllCats(false)">Tout désélectionner</button>
+            </div>
         </div>
         
         <div class="category-grid" id="category-container">
@@ -894,7 +938,9 @@
                 if (selectedCats.has(c)) { selectedCats.delete(c); pill.classList.remove('selected'); }
                 else { selectedCats.add(c); pill.classList.add('selected'); }
                 
-                document.getElementById('cat-count-val').innerText = selectedCats.size;
+                const count = selectedCats.size;
+        document.getElementById('cat-count-val').innerText = count;
+        document.getElementById('cat-label').innerText = count <= 1 ? "sélectionnée" : "sélectionnées";
                 const startBtn = document.getElementById('start-btn');
                 
                 if (selectedCats.size === 0) {
@@ -909,12 +955,47 @@
             };
             cont.appendChild(pill);
         });
-        document.getElementById('cat-count-val').innerText = selectedCats.size;
+        const count = selectedCats.size;
+        document.getElementById('cat-count-val').innerText = count;
+        document.getElementById('cat-label').innerText = count <= 1 ? "sélectionnée" : "sélectionnées";
         
         const startBtn = document.getElementById('start-btn');
         startBtn.disabled = (selectedCats.size === 0);
         startBtn.style.opacity = (selectedCats.size === 0) ? "0.5" : "1";
         startBtn.style.pointerEvents = (selectedCats.size === 0) ? "none" : "auto";
+    }
+
+    function selectAllCats(select) {
+        const pills = document.querySelectorAll('.cat-pill');
+        selectedCats.clear();
+        
+        pills.forEach(pill => {
+            // On extrait le nom de la catégorie depuis le texte de l'élément (en ignorant l'icône)
+            const catName = pill.childNodes[pill.childNodes.length - 1].textContent.trim();
+            
+            if (select) {
+                selectedCats.add(catName);
+                pill.classList.add('selected');
+            } else {
+                pill.classList.remove('selected');
+            }
+        });
+        
+        // Mise à jour du compteur et du bouton de validation
+        const count = selectedCats.size;
+        document.getElementById('cat-count-val').innerText = count;
+        document.getElementById('cat-label').innerText = count <= 1 ? "sélectionnée" : "sélectionnées";
+        const startBtn = document.getElementById('start-btn');
+        
+        if (selectedCats.size === 0) {
+            startBtn.disabled = true;
+            startBtn.style.opacity = "0.5";
+            startBtn.style.pointerEvents = "none";
+        } else {
+            startBtn.disabled = false;
+            startBtn.style.opacity = "1";
+            startBtn.style.pointerEvents = "auto";
+        }
     }
 
     /* --- GAME LOOP --- */
@@ -998,8 +1079,23 @@
         const th = playableData[curTheme % playableData.length];
         
         // 1. On regénère le paquet EXACTEMENT au moment de jouer
-        const poolT = th.items.filter(i=>i.isRelated), poolF = th.items.filter(i=>!i.isRelated);
-        roundItems = [...poolT.slice(0,5), ...poolF.slice(0,5)].sort(()=>Math.random()-0.5); 
+// 1. On sépare et on mélange tout le catalogue du thème de façon aléatoire
+        const poolT = th.items.filter(i => i.isRelated).sort(() => Math.random() - 0.5);
+        const poolF = th.items.filter(i => !i.isRelated).sort(() => Math.random() - 0.5);
+        
+        // 2. On garantit d'office un minimum de 2 bonnes et 2 mauvaises réponses
+        const guaranteedT = poolT.slice(0, 2);
+        const guaranteedF = poolF.slice(0, 2);
+        
+        // 3. On prend le reste des éléments disponibles (le surplus de poolT et poolF)
+        const remainingPool = [...poolT.slice(2), ...poolF.slice(2)].sort(() => Math.random() - 0.5);
+        
+        // 4. On complète pour atteindre exactement 10 cartes au total
+        const remainingNeeded = 10 - (guaranteedT.length + guaranteedF.length);
+        const selectedRemaining = remainingPool.slice(0, Math.max(0, remainingNeeded));
+        
+        // 5. On assemble le tout et on mélange définitivement l'ordre d'affichage
+        roundItems = [...guaranteedT, ...guaranteedF, ...selectedRemaining].sort(() => Math.random() - 0.5);
         
         cardIdx = 0; roundScore = 0; roundHist = [];
         
