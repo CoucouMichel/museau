@@ -808,6 +808,98 @@
             color: var(--text-main);
             font-weight: 800;
         }
+
+        /* --- SETTINGS SCREEN --- */
+        .settings-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow-y: auto;
+            padding: 8px 4px;
+        }
+
+        .setting-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(45, 35, 66, 0.04);
+        }
+
+        .setting-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .setting-info .material-symbols-rounded {
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .setting-info h3 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 2px;
+        }
+
+        .setting-info p {
+            margin: 0;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Toggle Switches (Material Style) */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+            flex-shrink: 0;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #E2DDF0;
+            transition: .3s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(22px);
+        }
     </style>
 </head>
 <body>
@@ -839,10 +931,10 @@
                 <span class="material-symbols-rounded">menu_book</span>
                 <span>Règles</span>
             </button>
-            <button class="btn-3d btn-ghost btn-grid" onclick="transitionTo('setup-screen')">
-                <span class="material-symbols-rounded">settings</span>
-                <span>Paramètres</span>
-            </button>
+            <button class="btn-3d btn-ghost btn-grid" onclick="transitionTo('settings-screen')">
+    <span class="material-symbols-rounded">settings</span>
+    <span>Paramètres</span>
+</button>
         </div>
     </div>
 
@@ -854,15 +946,17 @@
         </div>
         
         <div style="flex-grow: 1; overflow-y: auto;">
-            <span class="section-label">Équipes</span>
-            <div class="toggle-group" id="team-count">
-                <button class="toggle-btn" id="btn-team-1" onclick="setOpt('team', 1, this)">1</button>
-                <button class="toggle-btn selected" id="btn-team-2" onclick="setOpt('team', 2, this)">2</button>
-                <button class="toggle-btn" onclick="setOpt('team', 3, this)">3</button>
-                <button class="toggle-btn" onclick="setOpt('team', 4, this)">4</button>
+            <div id="team-select-wrapper">
+                <span class="section-label">Nombre d'équipes</span>
+                <div class="toggle-group" id="team-count">
+                    <button class="toggle-btn selected" id="btn-team-2" onclick="setOpt('team', 2, this)">2</button>
+                    <button class="toggle-btn" onclick="setOpt('team', 3, this)">3</button>
+                    <button class="toggle-btn" onclick="setOpt('team', 4, this)">4</button>
+                    <button class="toggle-btn" onclick="setOpt('team', 5, this)">5</button>
+                </div>
             </div>
 
-            <span class="section-label">Noms & Couleurs</span>
+            <span class="section-label" id="teams-label">Noms & Couleurs</span>
             <div id="teams-container">
                 <!-- Injected via JS -->
             </div>
@@ -1065,6 +1159,48 @@
     </div>
 </div>
 
+<!-- SETTINGS SCREEN -->
+    <div id="settings-screen" class="screen">
+        <div class="unified-header">
+            <button class="btn-icon-round" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
+            <h2>Paramètres</h2>
+        </div>
+
+        <div class="settings-content">
+            <!-- Option 1 : Effets sonores -->
+            <div class="setting-card">
+                <div class="setting-info">
+                    <span class="material-symbols-rounded">volume_up</span>
+                    <div>
+                        <h3>Effets sonores</h3>
+                        <p>Sons de validation, d'erreur et compte à rebours</p>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="toggle-sound" checked onchange="toggleSoundSetting(this.checked)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Option 2 : Vibrations / Haptique -->
+            <div class="setting-card">
+                <div class="setting-info">
+                    <span class="material-symbols-rounded">vibration</span>
+                    <div>
+                        <h3>Vibrations</h3>
+                        <p>Retour haptique lors du glissement des cartes</p>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="toggle-vibration" checked onchange="toggleVibeSetting(this.checked)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <button class="btn-3d btn-primary" onclick="goBack()" style="margin-top: 16px;">Enregistrer</button>
+    </div>
+
 <!-- COUNTDOWN OVERLAY -->
 <div id="countdown-overlay" class="hidden"><div id="countdown-number">3</div></div>
 
@@ -1076,6 +1212,8 @@
     let numTeams = 2, roundsPerTeam = 5, curTeam = 0, curTheme = 0;
     let roundItems = [], cardIdx = 0, roundScore = 0, roundHist = [];
     let timeLimit = 0, gameTimerInterval;
+    let soundEnabled = true;
+    let vibeEnabled = true;
     const colors = [
         '#00D084', '#3b82f6', '#FFB800', '#9C27B0', '#00bcd4',
         '#FF5722', '#E91E63', '#3F51B5', '#8BC34A'
@@ -1088,6 +1226,42 @@
     function transitionTo(sc) { history.pushState({ screen: sc }, "", "#" + sc.split('-')[0]); show(sc); }
     function goBack() { history.back(); }
     function goHome() { transitionTo('landing-screen'); }
+
+function toggleSoundSetting(enabled) {
+        soundEnabled = enabled;
+    }
+
+    function toggleVibeSetting(enabled) {
+        vibeEnabled = enabled;
+    }
+
+function playSound(type) {
+        if (!soundEnabled) return; // Bloque le son si l'option est désactivée
+        
+        try {
+            if (type === 'correct') { 
+                sndCorrect.currentTime = 0; 
+                sndCorrect.play().catch(e => console.error("Audio block:", e)); 
+            }
+            else if (type === 'wrong') {
+                const randomIndex = Math.floor(Math.random() * wrongAudios.length);
+                const randomSound = wrongAudios[randomIndex];
+                randomSound.currentTime = 0; 
+                randomSound.play().catch(e => console.error("Audio block:", e));
+            }
+        } catch (e) {
+            console.error("Audio error:", e);
+        }
+    }
+
+    function triggerVibration(pattern) {
+        if (vibeEnabled && "vibrate" in navigator) {
+            navigator.vibrate(pattern);
+        }
+    }
+
+    // Exemple dans handleBtnSwipe :
+    // triggerVibration(50); // Petite vibration de 50ms
 
     function assignCategoryColors() {
         categoryColors = {
@@ -1128,22 +1302,28 @@
         if (type === 'time') timeLimit = val;
     }
     
-    function startSoloMode() {
+function startSoloMode() {
         numTeams = 1;
-        // Sélectionne visuellement le bouton "1" dans les paramètres
-        const teamGroup = document.getElementById('team-count');
-        if (teamGroup) {
-            teamGroup.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
-            const btn1 = document.getElementById('btn-team-1');
-            if (btn1) btn1.classList.add('selected');
-        }
+        const wrapper = document.getElementById('team-select-wrapper');
+        if (wrapper) wrapper.style.display = 'none';
+        
+        // Passe l'intitulé au singulier
+        const label = document.getElementById('teams-label');
+        if (label) label.innerText = "Nom & Couleur";
+
         renderTeams();
         transitionTo('setup-screen');
     }
 
     function startMultiMode() {
         numTeams = 2;
-        // Sélectionne visuellement le bouton "2" dans les paramètres
+        const wrapper = document.getElementById('team-select-wrapper');
+        if (wrapper) wrapper.style.display = 'block';
+
+        // Remet l'intitulé au pluriel
+        const label = document.getElementById('teams-label');
+        if (label) label.innerText = "Noms & Couleurs";
+
         const teamGroup = document.getElementById('team-count');
         if (teamGroup) {
             teamGroup.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
