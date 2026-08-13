@@ -167,15 +167,93 @@
         .section-label { font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block; }
 
         /* --- 5. LANDING SCREEN --- */
-        .landing-hero { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(8px, 2vh, 16px); }
-        .logo-placeholder { 
-            width: clamp(100px, 25vw, 140px); height: clamp(100px, 25vw, 140px); 
-            background: var(--secondary); border-radius: clamp(24px, 6vw, 40px); 
-            transform: rotate(-10deg); box-shadow: 0 clamp(8px, 2vw, 16px) 0 var(--secondary-shadow); 
-            margin-bottom: clamp(16px, 4vh, 24px); display:flex; align-items:center; justify-content:center;
+/* --- 5. LANDING SCREEN (Minimaliste & Élégant) --- */
+        .landing-hero { 
+            flex-grow: 1; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 32px; /* Grille plus aérée */
         }
-        .app-title { font-size: clamp(36px, 10vw, 48px); line-height: 1; color: var(--primary); text-align: center; }
-        .app-subtitle { font-size: clamp(16px, 4vw, 20px); color: var(--text-muted); font-weight: 700; }
+        
+        /* Conteneur du logo en forme de disque pur */
+        .logo-snout-container { 
+            width: 140px; 
+            height: 140px; 
+            background: white; 
+            border-radius: 50%; /* Cercle parfait */
+            box-shadow: 0 24px 48px rgba(45, 35, 66, 0.08), inset 0 0 0 1px rgba(255, 59, 124, 0.05); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            position: relative;
+        }
+        
+        /* Le Groin de Cochon CSS (Design plat et élégant) */
+        .snout-shape {
+            width: 72px;
+            height: 48px;
+            background: var(--primary-light); /* Rose doux */
+            border-radius: 40px; /* Forme ovale/pilule */
+            position: relative;
+            box-shadow: inset 0 -6px 0 rgba(255, 59, 124, 0.15); /* Légère profondeur */
+        }
+        
+        /* Les narines */
+        .snout-shape::before, .snout-shape::after {
+            content: '';
+            position: absolute;
+            top: 14px;
+            width: 12px;
+            height: 18px;
+            background: var(--primary-shadow); /* Rose foncé */
+            border-radius: 50%;
+            opacity: 0.9;
+        }
+        .snout-shape::before { left: 16px; transform: rotate(10deg); }
+        .snout-shape::after { right: 16px; transform: rotate(-10deg); }
+
+        /* Typographie du titre */
+        .app-title-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .app-title { 
+            font-size: 56px; 
+            font-weight: 900;
+            line-height: 1; 
+            color: var(--text-main); /* Noir/Violet foncé pour faire sérieux */
+            text-align: center; 
+            letter-spacing: -2px; /* Rapproche les lettres pour un effet logo moderne */
+        }
+        
+        .app-title span {
+            color: var(--primary); /* Le point rose vif à la fin */
+        }
+
+        .app-subtitle { 
+            font-size: 16px; 
+            color: var(--text-muted); 
+            font-weight: 800; 
+            letter-spacing: 4px; /* Très espacé pour le contraste */
+            text-transform: uppercase;
+        }
+
+        /* Nouveau bouton secondaire "fantôme" pour alléger l'interface */
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-muted);
+            box-shadow: none;
+            border: 2px solid rgba(45, 35, 66, 0.1);
+        }
+        .btn-ghost:active {
+            background: rgba(45, 35, 66, 0.05);
+            transform: translateY(2px);
+        }
 
         /* --- 6. CATEGORY SCREEN --- */
 .category-grid {
@@ -664,21 +742,87 @@
             font-weight: 900;
             color: var(--primary);
         }
+
+        /* --- RULES SCREEN --- */
+        .rules-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow-y: auto;
+            padding: 8px 4px;
+        }
+
+        .rule-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(45, 35, 66, 0.04);
+        }
+
+        .rule-icon-box {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-color);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--primary);
+        }
+
+        .rule-icon-box .material-symbols-rounded {
+            font-size: 28px;
+        }
+
+        .rule-text h3 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-main);
+            margin-bottom: 4px;
+        }
+
+        .rule-text p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.4;
+            font-weight: 600;
+        }
+
+        .rule-text strong {
+            color: var(--text-main);
+            font-weight: 800;
+        }
     </style>
 </head>
 <body>
 
 <div id="app-frame">
-    <!-- LANDING SCREEN -->
+<!-- LANDING SCREEN -->
     <div id="landing-screen" class="screen active">
         <div class="landing-hero">
-            <div class="logo-placeholder"><span class="material-symbols-rounded" style="font-size: 80px; color: white;">pets</span></div>
-            <h1 class="app-title">MUSEAU<br>PARTY</h1>
-            <div class="app-subtitle">Le party game des intrus</div>
+            <!-- Nouveau Logo : Le Groin CSS -->
+            <div class="logo-snout-container">
+                <div class="snout-shape"></div>
+            </div>
+            
+            <!-- Titre restructuré et chic -->
+            <div class="app-title-group">
+                <h1 class="app-title">MUSEAU<span>.</span></h1>
+                <div class="app-subtitle">groin ou pas groin ?</div>
+            </div>
         </div>
-        <div style="width: 100%;">
-            <button class="btn-3d btn-primary" onclick="transitionTo('setup-screen')">Jouer</button>
-            <button class="btn-3d btn-secondary">Règles</button>
+        
+        <!-- Boutons aérés -->
+        <div style="width: 100%; display: flex; flex-direction: column; gap: 12px;">
+            <button class="btn-3d btn-primary" onclick="transitionTo('setup-screen')">Commencer à jouer</button>
+            <button class="btn-3d btn-ghost" onclick="transitionTo('rules-screen')">Règles du jeu</button>
         </div>
     </div>
 
@@ -831,7 +975,7 @@
             
             <div class="summary-score-wrapper">
                 <div class="summary-score" id="sum-score">+0</div>
-                <div class="summary-score-unit" id="sum-score-unit">pts</div>
+                <div class="summary-score-unit" id="sum-score-unit">groins</div>
             </div>
             
             <div class="summary-category" id="sum-category">Catégorie</div>
@@ -856,6 +1000,51 @@
     </div>
 
 </div>
+
+<!-- RULES SCREEN -->
+    <div id="rules-screen" class="screen">
+        <div class="unified-header">
+            <button class="btn-icon-round" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
+            <h2>Règles du jeu</h2>
+        </div>
+
+        <div class="rules-content">
+            <!-- Règle 1 -->
+            <div class="rule-card">
+                <div class="rule-icon-box">
+                    <span class="material-symbols-rounded">search</span>
+                </div>
+                <div class="rule-text">
+                    <h3>Le But du Jeu</h3>
+                    <p>Détecte les intrus ! Dans chaque thème, élimine les mots qui n'ont rien à voir et valide les vrais éléments.</p>
+                </div>
+            </div>
+
+            <!-- Règle 2 -->
+            <div class="rule-card">
+                <div class="rule-icon-box">
+                    <span class="material-symbols-rounded">swipe</span>
+                </div>
+                <div class="rule-text">
+                    <h3>Comment Jouer ?</h3>
+                    <p>Glisse la carte vers la <strong>droite (OUI)</strong> si le mot correspond au thème, ou vers la <strong>gauche (NON)</strong> s'il s'agit d'un intrus.</p>
+                </div>
+            </div>
+
+            <!-- Règle 3 -->
+            <div class="rule-card">
+                <div class="rule-icon-box">
+                    <span class="material-symbols-rounded">pets</span>
+                </div>
+                <div class="rule-text">
+                    <h3>Gagner des Groins</h3>
+                    <p>Chaque bonne décision te rapporte <strong>1 groin</strong>. L'équipe avec le plus de groins à la fin de la partie l'emporte !</p>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn-3d btn-primary" onclick="goBack()" style="margin-top: 16px;">J'ai compris !</button>
+    </div>
 
 <!-- COUNTDOWN OVERLAY -->
 <div id="countdown-overlay" class="hidden"><div id="countdown-number">3</div></div>
@@ -1391,7 +1580,7 @@ function handleBtnSwipe(isRight) {
     const sndTick = new Audio('tick.mp3');
     const sndGo = new Audio('go.mp3');
 
-    const wrongSoundFiles = ['wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3'];
+    const wrongSoundFiles = ['wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3', 'wrong6.mp3'];
     const wrongAudios = wrongSoundFiles.map(file => new Audio(file));
     const sndWinner = new Audio('winner.mp3');
 
@@ -1433,7 +1622,7 @@ function handleBtnSwipe(isRight) {
         scoreEl.style.color = tm.color;
         
         const unitEl = document.getElementById('sum-score-unit');
-        unitEl.innerText = roundScore <= 1 ? "pt" : "pts";
+        unitEl.innerText = roundScore <= 1 ? "groin" : "groins";
         unitEl.style.color = tm.color;
         
         document.getElementById('sum-category').innerText = th.category;
