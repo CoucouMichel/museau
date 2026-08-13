@@ -610,6 +610,49 @@
     /* Style fin et élégant (non rempli, trait de 400) */
     font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
+
+/* --- READY SCREEN HIERARCHY --- */
+.ready-content-wrapper {
+    flex-grow: 1; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center;
+    gap: clamp(16px, 4vh, 32px); /* Espace harmonieux entre l'équipe, la carte et la capsule */
+}
+
+.ready-team-title {
+    font-size: clamp(28px, 8vw, 36px);
+    margin: 0;
+    line-height: 1;
+}
+
+.ready-theme-card {
+    background: white;
+    padding: clamp(24px, 5vh, 32px) clamp(16px, 4vw, 24px);
+    border-radius: var(--radius-xl);
+    box-shadow: 0 8px 24px rgba(45, 35, 66, 0.05);
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid rgba(45, 35, 66, 0.05);
+}
+
+.ready-theme-card .ready-icon-box {
+    margin-bottom: 16px; /* Rapproche l'icône du texte */
+    box-shadow: 0 4px 12px rgba(45, 35, 66, 0.08); /* Ombre plus douce */
+}
+
+.ready-theme-title {
+    font-size: clamp(24px, 7vw, 36px);
+    color: var(--text-main);
+    line-height: 1.15;
+    margin: 0;
+    word-break: normal;
+    overflow-wrap: normal;
+}
     </style>
 </head>
 <body>
@@ -690,15 +733,17 @@
             <div class="pill-badge" id="ready-round">Manche 1 / 5</div>
         </div>
         
-        <div style="flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
-            <h2 id="ready-team" style="font-size: 32px; margin-bottom: 40px; color: var(--primary);">Nom de l'équipe</h2>
+        <div class="ready-content-wrapper">
+            <h2 id="ready-team" class="ready-team-title">Nom de l'équipe</h2>
             
-<div class="ready-icon-box">
-                <span class="material-symbols-rounded" id="ready-icon">category</span>
+            <!-- Nouvelle carte regroupant le contexte du jeu -->
+            <div class="ready-theme-card">
+                <div class="ready-icon-box">
+                    <span class="material-symbols-rounded" id="ready-icon">category</span>
+                </div>
+                <div class="section-label" id="ready-cat" style="color: var(--text-muted); margin-bottom: 8px;">CATÉGORIE</div>
+                <h1 id="ready-theme" class="ready-theme-title">Nom du Thème</h1>
             </div>
-            
-            <div class="section-label" id="ready-cat" style="color: var(--secondary);">CATÉGORIE</div>
-            <h1 id="ready-theme" style="font-size: 40px; color: var(--text-main); line-height: 1.1;">Nom du Thème</h1>
 <div class="tutorial-zone capsule-mode">
     <div class="cap-label left" id="tut-no-text">PAS CLASSIQUES</div>
     <div class="cap-track">
