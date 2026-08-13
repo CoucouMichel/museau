@@ -196,13 +196,27 @@
             box-shadow: var(--shadow-soft);
         }
         
+        .cat-pill {
+            background: white; 
+            border: 2px solid transparent; 
+            color: var(--text-main);
+            padding: clamp(8px, 2vh, 12px) clamp(16px, 4vw, 20px); 
+            border-radius: var(--radius-pill); 
+            font-weight: 800; 
+            font-size: clamp(12px, 3.5vw, 14px);
+            display: flex; align-items: center; gap: 8px; 
+            cursor: pointer; transition: 0.2s var(--bounce);
+            box-shadow: var(--shadow-soft);
+            opacity: 0.5; /* Grisé quand non sélectionné */
+        }
+
         .cat-pill.selected {
-            /* Catégorie sélectionnée : Rose foncé / vif bien voyant */
-            background: var(--primary); 
-            color: white; 
-            border-color: var(--primary-shadow);
-            box-shadow: 0 4px 12px rgba(255, 59, 124, 0.35); 
+            background: white; 
+            color: var(--text-main); 
+            border-color: var(--cat-color); /* Contour à la couleur de la catégorie */
+            box-shadow: 0 4px 12px rgba(45, 35, 66, 0.08); 
             transform: scale(1.05);
+            opacity: 1; /* Bien visible quand sélectionné */
         }
 
         /* --- 7. GAME SCREEN (THE NEW LOOK) --- */
@@ -250,29 +264,88 @@
             perspective: 1000px; 
             margin: 0 auto; /* Aligne la carte au centre parfait */
         }
-/* --- CARTE DE JEU MINIMALISTE (Flottaison) --- */
+
+/* --- CARTE DE JEU STYLE PRO DYNAMIQUE --- */
         .play-card {
-            background: var(--surface-color); 
+            --cat-color: var(--primary);
+
+            /* La bordure extérieure de la carte prend la couleur de la catégorie */
+            background: var(--cat-color); 
             border-radius: var(--radius-xl);
-            /* Ombre douce et large pour un effet de flottaison élégant */
-            box-shadow: 0 16px 40px rgba(45, 35, 66, 0.08), 0 4px 8px rgba(45, 35, 66, 0.04);
-            border: 1px solid rgba(45, 35, 66, 0.03);
+            
+            box-shadow: 
+                0 20px 40px rgba(45, 35, 66, 0.15), 
+                0 4px 12px rgba(45, 35, 66, 0.08);
+            
+            border: none;
             width: 100%; 
             max-width: 320px; 
             aspect-ratio: 3/4;
-            display: flex; align-items: center; justify-content: center;
-            text-align: center; padding: 24px; position: relative; z-index: 10;
-            user-select: none; touch-action: pan-y;
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            text-align: center; 
+            padding: 16px; /* Espace pour laisser apparaître la bordure colorée */
+            position: relative; 
+            z-index: 10;
+            user-select: none; 
+            touch-action: pan-y;
+            overflow: hidden;
+            transition: background 0.3s ease;
         }
-        .play-card-inner { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 24px; text-align: center; }
+
+        /* Fond blanc intérieur encadré par les pointillés */
+        .play-card-inner { 
+            flex-grow: 1; 
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(145deg, #FFFFFF 0%, #F9F7FC 100%);
+            border-radius: calc(var(--radius-xl) - 8px);
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 16px; 
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        /* Filigrane en arrière-plan teinté selon la catégorie */
+        .play-card-inner::after {
+            content: 'pets';
+            font-family: 'Material Symbols Rounded';
+            position: absolute;
+            font-size: 140px;
+            color: var(--cat-color);
+            opacity: 0.06;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) rotate(-10deg);
+            pointer-events: none;
+        }
+
+        /* PASTILLE DISCRÈTE SUR LES CATÉGORIES */
+        .cat-color-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+        
+        .cat-pill.selected .cat-color-dot {
+            box-shadow: 0 0 0 2px white;
+        }
+
         .card-word { 
             font-size: 34px;
             font-weight: 900; 
             color: var(--text-main); 
-            line-height: 1.15; 
+            line-height: 1.2; 
             word-break: normal; 
             overflow-wrap: normal;
             transition: font-size 0.2s ease;
+            text-shadow: 0 2px 4px rgba(45, 35, 66, 0.05);
         }
         
         .card-overlay {
@@ -282,6 +355,18 @@
         .card-overlay .material-symbols-rounded { font-size: 120px; color: white; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2)); }
         .card-overlay.yes { background: rgba(0, 208, 132, 0.9); }
         .card-overlay.no { background: rgba(255, 77, 77, 0.9); }
+
+        /* Pastille discrète pour la couleur de catégorie */
+        .cat-color-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+        .cat-pill.selected .cat-color-dot {
+            box-shadow: 0 0 0 2px white;
+        }
 
         .action-buttons-row {
             display: flex; 
@@ -778,6 +863,7 @@
     /* --- JS LOGIC & STATE --- */
     const DATA_URL = "https://gist.githubusercontent.com/CoucouMichel/1a8f14455a4ad686716af94e8408a18d/raw/data.json";
     let fullData = [], playableData = [], teams = [], selectedCats = new Set();
+    let categoryColors = {};
     let numTeams = 2, roundsPerTeam = 5, curTeam = 0, curTheme = 0;
     let roundItems = [], cardIdx = 0, roundScore = 0, roundHist = [];
     let timeLimit = 0, gameTimerInterval;
@@ -793,6 +879,22 @@
     function transitionTo(sc) { history.pushState({ screen: sc }, "", "#" + sc.split('-')[0]); show(sc); }
     function goBack() { history.back(); }
     function goHome() { transitionTo('landing-screen'); }
+
+function assignCategoryColors() {
+        categoryColors = {
+            "Histoire": "#3B82F6",
+            "Geographie": "#00BCD4",
+            "Art & Litterature": "#FFB800",
+            "Cinéma & TV": "#9C27B0",
+            "Musique": "#EC4899",
+            "Science & Nature": "#F97316",
+            "Pop Culture & Geek": "#6366F1",
+            "Gastronomie": "#8B5CF6",
+            "Sport": "#14B8A6",
+            "Vie Quotidienne & Société": "#D97706",
+            "Monde & Langues": "#0284C7"
+        };
+    }
 
     function show(sc) {
         document.querySelectorAll('.screen').forEach(s => {
@@ -918,6 +1020,7 @@
                 }
             }
 
+            assignCategoryColors();    
             genCats();
             transitionTo('category-screen');
         } catch(e) { 
@@ -958,9 +1061,15 @@
                 }
             }
 
+            const catColor = categoryColors[c] || 'var(--primary)';
             const pill = document.createElement('div');
             pill.className = 'cat-pill selected'; 
-            pill.innerHTML = `<span class="material-symbols-rounded">${iconName}</span> ${c}`;
+            pill.style.setProperty('--cat-color', catColor);
+            
+            pill.innerHTML = `
+                <span class="material-symbols-rounded" style="color: ${catColor}">${iconName}</span> 
+                ${c}
+            `;
             
             pill.onclick = () => {
                 if (selectedCats.has(c)) { selectedCats.delete(c); pill.classList.remove('selected'); }
@@ -1059,7 +1168,10 @@
             if (lowerCat.includes(key)) { readyIconName = icon; break; }
         }
 
-        document.getElementById('ready-icon').innerText = readyIconName;
+        const catColor = categoryColors[th.category] || 'var(--primary)';
+        const readyIcon = document.getElementById('ready-icon');
+        readyIcon.innerText = readyIconName;
+        readyIcon.style.color = catColor;
         document.getElementById('tut-yes-text').innerText = th.theme;
         document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
         
@@ -1105,6 +1217,9 @@
         drag = false; // Sécurité : annule tout glissement en cours du joueur précédent
         
         const th = playableData[curTheme % playableData.length];
+
+        const catColor = categoryColors[th.category] || 'var(--primary)';
+        document.getElementById('play-card').style.setProperty('--cat-color', catColor);
         
         // 1. On regénère le paquet EXACTEMENT au moment de jouer
 // 1. On sépare et on mélange tout le catalogue du thème de façon aléatoire
