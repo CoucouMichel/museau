@@ -166,15 +166,40 @@
         .team-input:focus { outline: 2px solid var(--primary); }
         .section-label { font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block; }
 
-        /* --- 5. LANDING SCREEN --- */
-/* --- 5. LANDING SCREEN (Minimaliste & Élégant) --- */
+        /* --- 5. LANDING SCREEN (Minimaliste & Élégant) --- */
         .landing-hero { 
             flex-grow: 1; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            gap: 32px; /* Grille plus aérée */
+            gap: 32px;
+        }
+
+        /* Grille 2x2 rééquilibrée */
+        .landing-menu-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .btn-grid {
+            height: 68px; 
+            border-radius: var(--radius-lg); 
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            padding: 0 16px;
+            text-transform: none;
+        }
+
+        .btn-grid .material-symbols-rounded {
+            font-size: 26px;
         }
         
         /* Conteneur du logo en forme de disque pur */
@@ -182,7 +207,7 @@
             width: 140px; 
             height: 140px; 
             background: white; 
-            border-radius: 50%; /* Cercle parfait */
+            border-radius: 50%; 
             box-shadow: 0 24px 48px rgba(45, 35, 66, 0.08), inset 0 0 0 1px rgba(255, 59, 124, 0.05); 
             display: flex; 
             align-items: center; 
@@ -190,14 +215,14 @@
             position: relative;
         }
         
-        /* Le Groin de Cochon CSS (Design plat et élégant) */
+        /* Le Groin de Cochon CSS */
         .snout-shape {
             width: 72px;
             height: 48px;
-            background: var(--primary-light); /* Rose doux */
-            border-radius: 40px; /* Forme ovale/pilule */
+            background: var(--primary-light); 
+            border-radius: 40px; 
             position: relative;
-            box-shadow: inset 0 -6px 0 rgba(255, 59, 124, 0.15); /* Légère profondeur */
+            box-shadow: inset 0 -6px 0 rgba(255, 59, 124, 0.15); 
         }
         
         /* Les narines */
@@ -207,7 +232,7 @@
             top: 14px;
             width: 12px;
             height: 18px;
-            background: var(--primary-shadow); /* Rose foncé */
+            background: var(--primary-shadow); 
             border-radius: 50%;
             opacity: 0.9;
         }
@@ -226,29 +251,32 @@
             font-size: 56px; 
             font-weight: 900;
             line-height: 1; 
-            color: var(--text-main); /* Noir/Violet foncé pour faire sérieux */
+            color: var(--text-main); 
             text-align: center; 
-            letter-spacing: -2px; /* Rapproche les lettres pour un effet logo moderne */
+            letter-spacing: -2px;
         }
         
         .app-title span {
-            color: var(--primary); /* Le point rose vif à la fin */
+            color: var(--primary); 
         }
 
         .app-subtitle { 
             font-size: 16px; 
             color: var(--text-muted); 
             font-weight: 800; 
-            letter-spacing: 4px; /* Très espacé pour le contraste */
+            letter-spacing: 4px; 
             text-transform: uppercase;
         }
 
-        /* Nouveau bouton secondaire "fantôme" pour alléger l'interface */
         .btn-ghost {
             background: transparent;
-            color: var(--text-muted);
+            color: var(--text-main);
             box-shadow: none;
-            border: 2px solid rgba(45, 35, 66, 0.1);
+            border: 2px solid rgba(45, 35, 66, 0.12);
+        }
+        .btn-ghost .material-symbols-rounded {
+            color: var(--text-muted);
+            font-size: 26px;
         }
         .btn-ghost:active {
             background: rgba(45, 35, 66, 0.05);
@@ -256,60 +284,60 @@
         }
 
         /* --- 6. CATEGORY SCREEN --- */
-.category-grid {
-    display: flex; 
-    flex-wrap: wrap; 
-    gap: 12px; 
-    justify-content: center; 
-    align-items: center; /* Force le centrage horizontal de chaque ligne */
-    align-content: flex-start;
-    width: 100%; /* S'assure de prendre toute la largeur pour centrer correctement */
-    flex-grow: 1; 
-    overflow-y: auto; 
-    padding: 12px 4px 24px 4px;
-    margin-bottom: 8px;
-    -webkit-overflow-scrolling: touch;
-}
+        .category-grid {
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 12px; 
+            justify-content: center; 
+            align-items: center; 
+            align-content: flex-start;
+            width: 100%; 
+            flex-grow: 1; 
+            overflow-y: auto; 
+            padding: 12px 4px 24px 4px;
+            margin-bottom: 8px;
+            -webkit-overflow-scrolling: touch;
+        }
         
-.cat-pill {
-    background: white; 
-    border: 1px solid transparent; 
-    color: var(--text-main);
-    padding: 5px 10px;
-    border-radius: var(--radius-pill); 
-    font-weight: 800; 
-    font-size: clamp(12px, 3.5vw, 14px);
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
-    cursor: pointer; 
-    transition: 0.2s var(--bounce);
-    box-shadow: var(--shadow-soft);
-    opacity: 0.5;
-    width: auto; /* Taille naturelle selon le texte */
-}
+        .cat-pill {
+            background: white; 
+            border: 1px solid transparent; 
+            color: var(--text-main);
+            padding: 5px 10px;
+            border-radius: var(--radius-pill); 
+            font-weight: 800; 
+            font-size: clamp(12px, 3.5vw, 14px);
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            cursor: pointer; 
+            transition: 0.2s var(--bounce);
+            box-shadow: var(--shadow-soft);
+            opacity: 0.5;
+            width: auto; 
+        }
 
         .cat-pill.selected {
             background: white; 
             color: var(--text-main); 
-            border-color: var(--cat-color); /* Contour à la couleur de la catégorie */
+            border-color: var(--cat-color); 
             box-shadow: 0 4px 12px rgba(45, 35, 66, 0.08); 
             transform: scale(1.05);
-            opacity: 1; /* Bien visible quand sélectionné */
+            opacity: 1; 
         }
 
-        /* --- 7. GAME SCREEN (THE NEW LOOK) --- */
-.game-top-bar { 
+        /* --- 7. GAME SCREEN --- */
+        .game-top-bar { 
             position: relative; 
             display: flex; 
-            justify-content: center; /* Centre les badges principaux de l'équipe */
+            justify-content: center; 
             align-items: center; 
             width: 100%; 
-            height: 48px; /* Stabilise la hauteur */
+            height: 48px; 
             margin-bottom: 24px; 
         }
 
-.pill-badge {
+        .pill-badge {
             background: white; 
             color: var(--text-main); 
             font-family: 'Nunito', sans-serif;
@@ -319,7 +347,7 @@
             border-radius: var(--radius-pill); 
             box-shadow: 0 4px 12px rgba(45, 35, 66, 0.08);
             border: 1px solid rgba(45, 35, 66, 0.04);
-            display: inline-flex; /* Assure que la bulle s'adapte au texte */
+            display: inline-flex; 
             align-items: center;
             justify-content: center;
             white-space: nowrap;
@@ -332,7 +360,7 @@
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            width: 100%; /* Oblige la zone à occuper tout l'écran */
+            width: 100%; 
         }
         
         .play-card-container { 
@@ -341,21 +369,17 @@
             max-width: 320px; 
             aspect-ratio: 3/4; 
             perspective: 1000px; 
-            margin: 0 auto; /* Aligne la carte au centre parfait */
+            margin: 0 auto; 
         }
 
-/* --- CARTE DE JEU STYLE PRO DYNAMIQUE --- */
+        /* --- CARTE DE JEU STYLE PRO DYNAMIQUE --- */
         .play-card {
             --cat-color: var(--primary);
-
-            /* La bordure extérieure de la carte prend la couleur de la catégorie */
             background: var(--cat-color); 
             border-radius: var(--radius-xl);
-            
             box-shadow: 
                 0 20px 40px rgba(45, 35, 66, 0.15), 
                 0 4px 12px rgba(45, 35, 66, 0.08);
-            
             border: none;
             width: 100%; 
             max-width: 320px; 
@@ -364,7 +388,7 @@
             align-items: center; 
             justify-content: center;
             text-align: center; 
-            padding: 16px; /* Espace pour laisser apparaître la bordure colorée */
+            padding: 16px; 
             position: relative; 
             z-index: 10;
             user-select: none; 
@@ -373,7 +397,6 @@
             transition: background 0.3s ease;
         }
 
-        /* Fond blanc intérieur encadré par les pointillés */
         .play-card-inner { 
             flex-grow: 1; 
             width: 100%;
@@ -389,7 +412,6 @@
             position: relative;
         }
 
-        /* Filigrane en arrière-plan teinté selon la catégorie */
         .play-card-inner::after {
             content: 'pets';
             font-family: 'Material Symbols Rounded';
@@ -402,7 +424,6 @@
             pointer-events: none;
         }
 
-        /* PASTILLE DISCRÈTE SUR LES CATÉGORIES */
         .cat-color-dot {
             width: 10px;
             height: 10px;
@@ -434,18 +455,6 @@
         .card-overlay .material-symbols-rounded { font-size: 120px; color: white; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.2)); }
         .card-overlay.yes { background: rgba(0, 208, 132, 0.9); }
         .card-overlay.no { background: rgba(255, 77, 77, 0.9); }
-
-        /* Pastille discrète pour la couleur de catégorie */
-        .cat-color-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
-            flex-shrink: 0;
-        }
-        .cat-pill.selected .cat-color-dot {
-            box-shadow: 0 0 0 2px white;
-        }
 
         .action-buttons-row {
             display: flex; 
@@ -738,7 +747,7 @@
             color: var(--text-muted);
         }
         .category-counter span {
-            font-size: 20px; /* Chiffre plus grand et impactant */
+            font-size: 20px; 
             font-weight: 900;
             color: var(--primary);
         }
@@ -804,25 +813,36 @@
 <body>
 
 <div id="app-frame">
-<!-- LANDING SCREEN -->
+    <!-- LANDING SCREEN -->
     <div id="landing-screen" class="screen active">
         <div class="landing-hero">
-            <!-- Nouveau Logo : Le Groin CSS -->
             <div class="logo-snout-container">
                 <div class="snout-shape"></div>
             </div>
-            
-            <!-- Titre restructuré et chic -->
             <div class="app-title-group">
                 <h1 class="app-title">MUSEAU<span>.</span></h1>
                 <div class="app-subtitle">groin ou pas groin ?</div>
             </div>
         </div>
         
-        <!-- Boutons aérés -->
-        <div style="width: 100%; display: flex; flex-direction: column; gap: 12px;">
-            <button class="btn-3d btn-primary" onclick="transitionTo('setup-screen')">Commencer à jouer</button>
-            <button class="btn-3d btn-ghost" onclick="transitionTo('rules-screen')">Règles du jeu</button>
+        <!-- Menu principal 2x2 propre -->
+        <div class="landing-menu-grid">
+            <button class="btn-3d btn-primary btn-grid" onclick="startSoloMode()">
+                <span class="material-symbols-rounded">person</span>
+                <span>Solo</span>
+            </button>
+            <button class="btn-3d btn-primary btn-grid" onclick="startMultiMode()">
+                <span class="material-symbols-rounded">groups</span>
+                <span>Multi</span>
+            </button>
+            <button class="btn-3d btn-ghost btn-grid" onclick="transitionTo('rules-screen')">
+                <span class="material-symbols-rounded">menu_book</span>
+                <span>Règles</span>
+            </button>
+            <button class="btn-3d btn-ghost btn-grid" onclick="transitionTo('setup-screen')">
+                <span class="material-symbols-rounded">settings</span>
+                <span>Paramètres</span>
+            </button>
         </div>
     </div>
 
@@ -836,7 +856,8 @@
         <div style="flex-grow: 1; overflow-y: auto;">
             <span class="section-label">Équipes</span>
             <div class="toggle-group" id="team-count">
-                <button class="toggle-btn selected" onclick="setOpt('team', 2, this)">2</button>
+                <button class="toggle-btn" id="btn-team-1" onclick="setOpt('team', 1, this)">1</button>
+                <button class="toggle-btn selected" id="btn-team-2" onclick="setOpt('team', 2, this)">2</button>
                 <button class="toggle-btn" onclick="setOpt('team', 3, this)">3</button>
                 <button class="toggle-btn" onclick="setOpt('team', 4, this)">4</button>
             </div>
@@ -927,7 +948,7 @@
 
     <!-- GAME SCREEN -->
     <div id="game-screen" class="screen">
-<div class="game-top-bar">
+        <div class="game-top-bar">
             <!-- Ancré à gauche -->
             <button class="btn-icon-round" style="position: absolute; left: 0; width: 40px; height: 40px;" onclick="goHome()">
                 <span class="material-symbols-rounded" style="font-size: 20px;">home</span>
@@ -943,27 +964,26 @@
             <div class="pill-badge" id="game-progress" style="position: absolute; right: 0;">1/10</div>
         </div>
         
-<!-- Catégorie + Thème Uniformisés (Style Résumé) -->
-            <div style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: clamp(16px, 4vh, 24px);">
-                <div class="summary-category" id="game-cat">CATÉGORIE</div>
-                <div id="game-theme-display" class="summary-theme">Thème</div>
-            </div>
-            
-            <div class="play-card-container">
-                <div class="play-card" id="play-card">
-                    <div class="play-card-inner">
-                        <span class="card-word" id="play-card-text">Mot à deviner</span>
-                    </div>
-                    <div class="card-overlay yes"><span class="material-symbols-rounded">check</span></div>
-                    <div class="card-overlay no"><span class="material-symbols-rounded">close</span></div>
+        <!-- Catégorie + Thème Uniformisés -->
+        <div style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: clamp(16px, 4vh, 24px);">
+            <div class="summary-category" id="game-cat">CATÉGORIE</div>
+            <div id="game-theme-display" class="summary-theme">Thème</div>
+        </div>
+        
+        <div class="play-card-container">
+            <div class="play-card" id="play-card">
+                <div class="play-card-inner">
+                    <span class="card-word" id="play-card-text">Mot à deviner</span>
                 </div>
+                <div class="card-overlay yes"><span class="material-symbols-rounded">check</span></div>
+                <div class="card-overlay no"><span class="material-symbols-rounded">close</span></div>
             </div>
+        </div>
 
-            <!-- Action Buttons -->
-            <div class="action-buttons-row">
-                <button class="action-btn no" onclick="handleBtnSwipe(false)"><span class="material-symbols-rounded">close</span></button>
-                <button class="action-btn yes" onclick="handleBtnSwipe(true)"><span class="material-symbols-rounded">check</span></button>
-            </div>
+        <!-- Action Buttons -->
+        <div class="action-buttons-row">
+            <button class="action-btn no" onclick="handleBtnSwipe(false)"><span class="material-symbols-rounded">close</span></button>
+            <button class="action-btn yes" onclick="handleBtnSwipe(true)"><span class="material-symbols-rounded">check</span></button>
         </div>
     </div>
 
@@ -999,9 +1019,7 @@
         <button class="btn-3d btn-primary" onclick="prepareRound()">Continuer</button>
     </div>
 
-</div>
-
-<!-- RULES SCREEN -->
+    <!-- RULES SCREEN -->
     <div id="rules-screen" class="screen">
         <div class="unified-header">
             <button class="btn-icon-round" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
@@ -1045,6 +1063,7 @@
 
         <button class="btn-3d btn-primary" onclick="goBack()" style="margin-top: 16px;">J'ai compris !</button>
     </div>
+</div>
 
 <!-- COUNTDOWN OVERLAY -->
 <div id="countdown-overlay" class="hidden"><div id="countdown-number">3</div></div>
@@ -1070,7 +1089,7 @@
     function goBack() { history.back(); }
     function goHome() { transitionTo('landing-screen'); }
 
-function assignCategoryColors() {
+    function assignCategoryColors() {
         categoryColors = {
             "Histoire": "#3B82F6",
             "Géographie": "#00BCD4",
@@ -1108,7 +1127,33 @@ function assignCategoryColors() {
         if (type === 'round') roundsPerTeam = val;
         if (type === 'time') timeLimit = val;
     }
+    
+    function startSoloMode() {
+        numTeams = 1;
+        // Sélectionne visuellement le bouton "1" dans les paramètres
+        const teamGroup = document.getElementById('team-count');
+        if (teamGroup) {
+            teamGroup.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
+            const btn1 = document.getElementById('btn-team-1');
+            if (btn1) btn1.classList.add('selected');
+        }
+        renderTeams();
+        transitionTo('setup-screen');
+    }
 
+    function startMultiMode() {
+        numTeams = 2;
+        // Sélectionne visuellement le bouton "2" dans les paramètres
+        const teamGroup = document.getElementById('team-count');
+        if (teamGroup) {
+            teamGroup.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
+            const btn2 = document.getElementById('btn-team-2');
+            if (btn2) btn2.classList.add('selected');
+        }
+        renderTeams();
+        transitionTo('setup-screen');
+    }
+    
     function renderTeams() {
         const cont = document.getElementById('teams-container');
         
@@ -1266,8 +1311,8 @@ function assignCategoryColors() {
                 else { selectedCats.add(c); pill.classList.add('selected'); }
                 
                 const count = selectedCats.size;
-        document.getElementById('cat-count-val').innerText = count;
-        document.getElementById('cat-label').innerText = count <= 1 ? "sélectionnée" : "sélectionnées";
+                document.getElementById('cat-count-val').innerText = count;
+                document.getElementById('cat-label').innerText = count <= 1 ? "sélectionnée" : "sélectionnées";
                 const startBtn = document.getElementById('start-btn');
                 
                 if (selectedCats.size === 0) {
@@ -1297,7 +1342,6 @@ function assignCategoryColors() {
         selectedCats.clear();
         
         pills.forEach(pill => {
-            // On extrait le nom de la catégorie depuis le texte de l'élément (en ignorant l'icône)
             const catName = pill.childNodes[pill.childNodes.length - 1].textContent.trim();
             
             if (select) {
@@ -1308,7 +1352,6 @@ function assignCategoryColors() {
             }
         });
         
-        // Mise à jour du compteur et du bouton de validation
         const count = selectedCats.size;
         document.getElementById('cat-count-val').innerText = count;
         document.getElementById('cat-label').innerText = count <= 1 ? "sélectionnée" : "sélectionnées";
@@ -1404,15 +1447,14 @@ function assignCategoryColors() {
     }
 
     function startRealGame() {
-        drag = false; // Sécurité : annule tout glissement en cours du joueur précédent
+        drag = false; 
         
         const th = playableData[curTheme % playableData.length];
 
         const catColor = categoryColors[th.category] || 'var(--primary)';
         document.getElementById('play-card').style.setProperty('--cat-color', catColor);
         
-        // 1. On regénère le paquet EXACTEMENT au moment de jouer
-// 1. On sépare et on mélange tout le catalogue du thème de façon aléatoire
+        // 1. On sépare et on mélange tout le catalogue du thème de façon aléatoire
         const poolT = th.items.filter(i => i.isRelated).sort(() => Math.random() - 0.5);
         const poolF = th.items.filter(i => !i.isRelated).sort(() => Math.random() - 0.5);
         
@@ -1432,12 +1474,10 @@ function assignCategoryColors() {
         
         cardIdx = 0; roundScore = 0; roundHist = [];
         
-        // 2. On précharge le texte en cachette pour éviter le glitch "Mot à deviner"
         if(roundItems.length > 0) {
             document.getElementById('play-card-text').innerText = roundItems[0].text;
         }
 
-        // 3. Une fois que tout est prêt, on affiche l'écran de jeu
         document.getElementById('countdown-overlay').classList.add('hidden');
         transitionTo('game-screen');
         
@@ -1472,11 +1512,10 @@ function assignCategoryColors() {
         document.getElementById('game-progress').innerText = `${cardIdx+1}/${roundItems.length}`;
         const card = document.getElementById('play-card');
         
-        // Reset card state PROPREMENT
         card.style.transition = 'none'; 
         card.style.transform = 'translate(0px, 0px) rotate(0deg)'; 
         card.style.opacity = '0';
-        card.style.boxShadow = ''; // Retire le style en ligne pour laisser l'effet pile du CSS
+        card.style.boxShadow = ''; 
         card.querySelector('.yes').style.opacity = '0'; 
         card.querySelector('.no').style.opacity = '0';
         
@@ -1494,12 +1533,10 @@ function assignCategoryColors() {
             cardTextEl.style.fontSize = '34px';
         }
 
-cardTextEl.innerText = cardText;
+        cardTextEl.innerText = cardText;
         
-        // CORRECTION VITALE : Force le navigateur mobile à "dessiner" le reset avant d'animer
         void card.offsetWidth; 
         
-        // Utilise requestAnimationFrame pour être 100% sûr de la fluidité
         requestAnimationFrame(() => {
             card.style.transition = 'transform 0.4s var(--bounce), opacity 0.3s';
             card.style.opacity = '1';
@@ -1507,11 +1544,9 @@ cardTextEl.innerText = cardText;
     }
 
     /* --- BUTTONS & SOBER PHYSICS --- */
-function handleBtnSwipe(isRight) {
-        // On déclare "card" une seule fois, tout en haut
+    function handleBtnSwipe(isRight) {
         const card = document.getElementById('play-card');
         
-        // SÉCURITÉ ANTI-BUG : Ignore si la carte est déjà en train de disparaître
         if (card.style.opacity === '0') return; 
         
         if(cardIdx >= roundItems.length) return;
@@ -1520,18 +1555,15 @@ function handleBtnSwipe(isRight) {
         
         card.querySelector(isRight ? '.yes' : '.no').style.opacity = '1';
         
-        // 1. Sober Card Physics (Correction du décalage qui cassait le centrage)
         card.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.3s, box-shadow 0.2s';
         card.style.transform = `translate(${isRight ? 200 : -200}px, 50px) rotate(${isRight ? 20 : -20}deg)`;
         card.style.opacity = '0';
 
         card.style.boxShadow = correct ? '0 0 40px rgba(0, 208, 132, 0.8)' : '0 0 40px rgba(255, 77, 77, 0.8)';
 
-// --- NOUVEAU : Apparition furtive du +1 ou de la croix ---
         const pop = document.createElement('div');
         pop.className = `feedback-pop ${correct ? 'correct' : 'wrong'}`;
         pop.innerHTML = correct ? '+1' : '<span class="material-symbols-rounded" style="font-size: 100px;">close</span>';
-        // On l'attache directement à l'écran de jeu, impossible de le rater !
         document.getElementById('game-screen').appendChild(pop);
         setTimeout(() => pop.remove(), 600);
 
@@ -1603,7 +1635,6 @@ function handleBtnSwipe(isRight) {
 
     /* --- SUMMARY & END GAME --- */
     function endRound() {
-        // Sécurité anti-crash : empêche la fonction de s'exécuter 2 fois (Timer + Swipe simultanés)
         if (document.getElementById('summary-screen').classList.contains('active')) return;
         
         clearInterval(gameTimerInterval);
