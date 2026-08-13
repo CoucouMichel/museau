@@ -15,17 +15,17 @@
 
         :root {
             /* Claymorphism Palette */
-            --bg-color: #F4F0FA; /* Off-white/lavender background */
+            --bg-color: #F4F0FA;
             --surface-color: #FFFFFF;
             
-            --primary: #FF3B7C; /* Punchy Pink */
+            --primary: #FF3B7C;
             --primary-shadow: #D81A5B;
             --primary-light: #FF85B3;
             
-            --secondary: #FFB800; /* Warm Yellow */
+            --secondary: #FFB800;
             --secondary-shadow: #D69A00;
             
-            --text-main: #2D2342; /* Deep purple/navy */
+            --text-main: #2D2342;
             --text-muted: #736B82;
             
             --success: #00D084;
@@ -90,8 +90,8 @@
             margin-bottom: clamp(16px, 4vh, 24px); flex-shrink: 0;
         }
 
- /* --- 4. BUTTONS & UI COMPONENTS --- */
-.btn-3d {
+        /* --- 4. BUTTONS & UI COMPONENTS --- */
+        .btn-3d {
             position: relative; width: 100%; 
             height: clamp(54px, 8vh, 64px); border-radius: var(--radius-pill);
             border: none; font-family: 'Nunito', sans-serif; 
@@ -122,7 +122,7 @@
             box-shadow: 0 2px 6px rgba(45, 35, 66, 0.05); 
         }
         
-.btn-icon-round {
+        .btn-icon-round {
             width: clamp(40px, 10vw, 48px); height: clamp(40px, 10vw, 48px); 
             border-radius: 50%; background: white; color: var(--text-main); border: none;
             display: flex; align-items: center; justify-content: center;
@@ -141,7 +141,7 @@
             display: flex; background: white; border-radius: var(--radius-pill);
             padding: 6px; box-shadow: var(--shadow-soft); margin-bottom: 24px;
         }
-.toggle-btn {
+        .toggle-btn {
             flex: 1; height: clamp(38px, 6vh, 44px); border-radius: var(--radius-pill); border: none;
             background: transparent; color: var(--text-muted); font-family: 'Nunito', sans-serif;
             font-size: clamp(14px, 3.5vw, 16px); font-weight: 800; cursor: pointer; transition: 0.2s;
@@ -152,13 +152,13 @@
         .input-row {
             display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
         }
-.color-picker {
+        .color-picker {
             width: clamp(48px, 12vw, 56px); height: clamp(48px, 12vw, 56px); 
             border-radius: var(--radius-pill); box-shadow: inset 0 -4px 0 rgba(0,0,0,0.15); 
             cursor: pointer; flex-shrink: 0; transition: transform 0.1s;
         }
         .color-picker:active { transform: scale(0.9); }
-.team-input {
+        .team-input {
             flex-grow: 1; height: clamp(48px, 12vw, 56px); background: white; border-radius: var(--radius-pill);
             border: none; padding: 0 clamp(16px, 4vw, 24px); font-family: 'Nunito', sans-serif; 
             font-size: clamp(14px, 4vw, 16px); font-weight: 700; color: var(--text-main); box-shadow: var(--shadow-soft);
@@ -167,7 +167,7 @@
         .section-label { font-size: 14px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: block; }
 
         /* --- 5. LANDING SCREEN --- */
- .landing-hero { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(8px, 2vh, 16px); }
+        .landing-hero { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(8px, 2vh, 16px); }
         .logo-placeholder { 
             width: clamp(100px, 25vw, 140px); height: clamp(100px, 25vw, 140px); 
             background: var(--secondary); border-radius: clamp(24px, 6vw, 40px); 
@@ -182,7 +182,7 @@
             display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-content: flex-start;
             flex-grow: 1; overflow-y: auto; padding: 12px 0;
         }
-.cat-pill {
+        .cat-pill {
             background: white; border: 2px solid transparent; color: var(--text-muted);
             padding: clamp(8px, 2vh, 12px) clamp(16px, 4vw, 20px); border-radius: var(--radius-pill); 
             font-weight: 800; font-size: clamp(12px, 3.5vw, 14px);
@@ -202,17 +202,26 @@
         }
         
         .game-area-centered { flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .theme-display-game { font-size: 28px; color: var(--primary); margin-bottom: 32px; text-align: center; }
         
         .play-card-container { position: relative; width: 100%; max-width: 320px; aspect-ratio: 3/4; perspective: 1000px; }
         .play-card {
-            width: 100%; height: 100%; background: white; border-radius: var(--radius-xl);
-            box-shadow: 0 16px 32px rgba(45, 35, 66, 0.15); display: flex; flex-direction: column;
-            position: absolute; border: 4px solid white; transform-origin: center bottom;
+            background: white; 
+            border-radius: calc(var(--radius-xl) + 8px);
+            box-shadow: 
+                0 8px 0 -2px rgba(255, 255, 255, 0.9), 
+                0 8px 0 rgba(45, 35, 66, 0.05), 
+                0 16px 32px rgba(45, 35, 66, 0.08);
+            border: 2px solid rgba(45, 35, 66, 0.04);
+            width: 100%; 
+            max-width: 320px; 
+            aspect-ratio: 3/4;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; padding: 24px; position: relative; z-index: 10;
+            user-select: none; touch-action: pan-y;
         }
         .play-card-inner { flex-grow: 1; display: flex; align-items: center; justify-content: center; padding: 24px; text-align: center; }
         .card-word { 
-            font-size: 34px; /* Un tout petit peu plus ajusté pour mobile */
+            font-size: 34px;
             font-weight: 900; 
             color: var(--text-main); 
             line-height: 1.15; 
@@ -229,34 +238,35 @@
         .card-overlay.yes { background: rgba(0, 208, 132, 0.9); }
         .card-overlay.no { background: rgba(255, 77, 77, 0.9); }
 
-        .action-buttons-row { display: flex; justify-content: center; gap: 24px; margin-top: 32px; width: 100%; }
-.action-btn {
-            width: 80px; height: 80px; border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center;
-            cursor: pointer; outline: none;
+        .action-buttons-row {
+            display: flex; 
+            justify-content: center; 
+            gap: clamp(48px, 15vw, 80px);
+            width: 100%; 
+            margin-top: clamp(16px, 4vh, 32px);
+        }
+
+        .action-btn {
+            width: clamp(48px, 12vw, 56px); 
+            height: clamp(48px, 12vw, 56px); 
+            border-radius: 50%; border: none; display: flex; align-items: center; justify-content: center;
+            cursor: pointer; outline: none; 
             transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            opacity: 0.65;
         }
-        .action-btn.no { 
-            background: var(--danger); 
-            box-shadow: 0 6px 16px rgba(255, 77, 77, 0.35); 
-            color: white; 
+        .action-btn:active { 
+            opacity: 1; 
+            transform: scale(0.9); 
         }
-        .action-btn.no:active { 
-            transform: translateY(2px); 
-            box-shadow: 0 3px 8px rgba(255, 77, 77, 0.25); 
+        
+        .action-btn.no { background: var(--danger); box-shadow: 0 4px 12px rgba(255, 77, 77, 0.25); color: white; }
+        .action-btn.yes { background: var(--success); box-shadow: 0 4px 12px rgba(0, 208, 132, 0.25); color: white; }
+
+        .action-btn .material-symbols-rounded {
+            font-size: clamp(24px, 6vw, 28px);
         }
-        .action-btn.yes { 
-            background: var(--success); 
-            box-shadow: 0 6px 16px rgba(0, 208, 132, 0.35); 
-            color: white; 
-        }
-        .action-btn.yes:active { 
-            transform: translateY(2px); 
-            box-shadow: 0 3px 8px rgba(0, 208, 132, 0.25); 
-        }
-        .action-btn .material-symbols-rounded { font-size: 40px; }
 
         /* --- 8. SUMMARY SCREEN (WORD CLOUD) --- */
-/* --- EN-TÊTE RÉSUMÉ RESPONSIVE --- */
         .summary-header { 
             display: flex; 
             flex-direction: column; 
@@ -278,7 +288,6 @@
         }
         
         .summary-score { 
-            /* S'ajuste entre 48px et 72px selon la largeur de l'écran */
             font-size: clamp(48px, 15vw, 72px); 
             font-weight: 900; 
             line-height: 1; 
@@ -310,18 +319,17 @@
             text-align: center;
         }
 
-/* --- WORD CLOUD RESPONSIVE FIX --- */
         .word-cloud-container {
             flex-grow: 1; 
             width: 100%; 
             display: flex; 
             flex-wrap: wrap; 
             justify-content: center; 
-            align-content: flex-start; /* Aligne vers le haut pour un scroll naturel */
+            align-content: flex-start;
             gap: 8px; 
             padding: 8px 4px 24px 4px; 
-            overflow-y: auto; /* Permet le scroll si la liste est longue */
-            max-height: 52vh; /* Empêche de chevaucher le bouton du bas */
+            overflow-y: auto; 
+            max-height: 52vh;
         }
         
         .result-pill {
@@ -330,25 +338,22 @@
             padding: 4px 12px 4px 6px;
             border-radius: var(--radius-pill); 
             font-weight: 800; 
-            font-size: 13px; /* Taille de police légèrement réduite */
+            font-size: 13px;
             opacity: 0; 
             transform: scale(0.5); 
             box-shadow: var(--shadow-soft); 
             color: white; 
             gap: 6px;
-            max-width: 100%; /* S'adapte à la largeur de l'écran */
-            white-space: normal; /* Permet le retour à la ligne si très long */
+            max-width: 100%;
+            white-space: normal;
             word-break: break-word;
             text-align: left;
         }
 
-        .result-pill .truth-badge {
-            flex-shrink: 0; /* Empêche le badge OUI/NON de s'écraser */
-        }
+        .result-pill .truth-badge { flex-shrink: 0; }
         .result-pill.correct { background: var(--success); }
         .result-pill.wrong { background: var(--danger); }
         
-        /* NOUVEAU : Badge de vérité (OUI/NON) à l'intérieur des pilules */
         .truth-badge {
             background: rgba(255, 255, 255, 0.25); border-radius: var(--radius-pill);
             display: flex; align-items: center; padding: 4px 8px; gap: 4px;
@@ -359,7 +364,6 @@
         /* --- 9. ANIMATIONS & DRAMATIC EFFECTS --- */
         @keyframes popPill { to { opacity: 1; transform: scale(1); } }
         
-        /* NOUVEAU : Feedback Furtif (+1 / X) */
         .feedback-pop {
             position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%);
             font-size: 80px; font-weight: 900; pointer-events: none; z-index: 100; opacity: 0;
@@ -388,230 +392,120 @@
         .animate-pop { animation: count-pop 0.9s ease-out forwards; }
         @keyframes count-pop { 0% { transform: scale(0.5); opacity: 0; } 40% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
 
-/* --- SWIPE TUTORIAL HINT --- */
-.swipe-hint-container {
-    display: flex;
-    align-items: flex-start; /* Aligne les icônes parfaitement en haut */
-    justify-content: center;
-    gap: clamp(8px, 4vw, 24px); /* Équilibre l'espace autour de la main */
-    margin-top: clamp(24px, 5vh, 40px); /* Sépare élégamment la zone de la bulle du thème */
-    width: 100%;
-    padding: 0 clamp(12px, 3vw, 24px); /* Empêche le texte de toucher les bords de l'écran */
-}
-
-.swipe-label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: clamp(10px, 3vw, 12px); /* Taille légèrement réduite pour la lisibilité */
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    gap: 8px; /* Laisse respirer l'icône et le texte */
-    flex: 1; /* Force les deux textes à prendre une largeur identique et maximale */
-    text-align: center;
-    word-wrap: break-word;
-}
-
-.swipe-label.left { color: var(--danger); }
-.swipe-label.right { color: var(--success); }
-
-.swipe-label .material-symbols-rounded {
-    font-size: clamp(24px, 6vw, 32px);
-    background: white;
-    border-radius: 50%;
-    padding: 4px;
-    box-shadow: var(--shadow-soft);
-}
-
-.swipe-hand-wrapper {
-    color: var(--text-muted);
-    opacity: 0.7;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-shrink: 0; /* Protège la main : elle ne sera jamais écrasée par le texte */
-    padding-top: 2px; /* Ajustement optique pour centrer la main avec les cercles X et V */
-}
-
-.swipe-hand-icon {
-    font-size: clamp(32px, 8vw, 48px);
-    animation: swipeHandAnim 2.5s infinite ease-in-out;
-}
-
-@keyframes swipeHandAnim {
-    0%, 100% { transform: translateX(0) rotate(0deg); color: var(--text-muted); }
-    25% { transform: translateX(20px) rotate(15deg); color: var(--success); }
-    50% { transform: translateX(0) rotate(0deg); color: var(--text-muted); }
-    75% { transform: translateX(-20px) rotate(-15deg); color: var(--danger); }
-}
-/* --- PODIUM 3D PARTY GAME --- */
-.podium-container {
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 48px;
-    margin-bottom: 32px;
-    height: 260px;
-    position: relative;
-}
-
-.podium-step {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100px;
-    position: relative;
-    opacity: 0;
-    animation: slideUpBounce 0.6s var(--bounce) forwards;
-}
-
-.podium-step.rank-1 { order: 2; z-index: 10; width: 110px; }
-.podium-step.rank-2 { order: 1; z-index: 5; }
-.podium-step.rank-3 { order: 3; z-index: 5; }
-
-/* La carte avec le nom qui chevauche le bloc */
-.podium-info {
-    background: white;
-    padding: 12px 8px;
-    border-radius: var(--radius-lg);
-    box-shadow: 0 8px 16px rgba(45,35,66,0.15);
-    text-align: center;
-    width: 110%;
-    margin-bottom: -16px; /* Fait descendre la carte SUR le bloc */
-    z-index: 2;
-    border: 3px solid transparent; /* Prépare la bordure colorée */
-}
-
-.rank-1 .podium-info {
-    transform: scale(1.1);
-    margin-bottom: -12px;
-}
-
-.podium-name {
-    font-weight: 900;
-    font-size: 14px;
-    color: var(--text-main);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.podium-score {
-    font-weight: 900;
-    font-size: 22px;
-    margin-top: 2px;
-}
-
-/* Le bloc 3D */
-.podium-block {
-    width: 100%;
-    border-radius: 16px 16px 8px 8px;
-    display: flex;
-    justify-content: center;
-    padding-top: 32px;
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 56px;
-    font-weight: 900;
-    box-shadow: inset 0 -10px 0 rgba(0,0,0,0.15), 0 12px 24px rgba(45,35,66,0.2);
-}
-
-.rank-1 .podium-block { height: 160px; font-size: 72px; padding-top: 40px; }
-.rank-2 .podium-block { height: 110px; }
-.rank-3 .podium-block { height: 80px; padding-top: 24px; font-size: 48px; }
-
-/* L'icône de couronne animée pour le 1er */
-.crown-icon {
-    position: absolute;
-    top: -50px;
-    font-size: 48px;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-    animation: floatCrown 2.5s ease-in-out infinite;
-    z-index: 15;
-}
-
-/* Pour les rangs 4 et + (inchangé, on le garde) */
-.lb-list-item {
-    background: white; padding: 16px 24px; border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-soft); display: flex; align-items: center; margin-bottom: 8px;
-    opacity: 0; animation: slideInRight 0.5s var(--bounce) forwards;
-}
-.lb-list-rank { font-weight: 900; font-size: 18px; color: var(--text-muted); width: 40px; }
-.lb-list-name { font-weight: 800; font-size: 18px; flex-grow: 1; color: var(--text-main); }
-.lb-list-score { font-weight: 900; font-size: 20px; }
-
-/* Nouvelles Animations */
-@keyframes slideUpBounce {
-    0% { opacity: 0; transform: translateY(150px); }
-    100% { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes floatCrown {
-    0%, 100% { transform: translateY(0) rotate(15deg) scale(1); }
-    50% { transform: translateY(-12px) rotate(0deg) scale(1.1); }
-}
-
-@keyframes slideInRight { 
-    from { opacity: 0; transform: translateX(60px); } 
-    to { opacity: 1; transform: translateX(0); } 
-}
-/* --- READY SCREEN CATEGORY MINIMALIST GROUP --- */
-        .ready-category-group {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            margin-bottom: clamp(12px, 3vh, 20px);
+        /* --- SWIPE TUTORIAL HINT --- */
+        .swipe-hint-container {
+            display: flex; align-items: flex-start; justify-content: center;
+            gap: clamp(8px, 4vw, 24px); margin-top: clamp(24px, 5vh, 40px);
+            width: 100%; padding: 0 clamp(12px, 3vw, 24px);
         }
-        
-.ready-category-icon {
-            /* Icône agrandie (précédemment entre 48px et 56px) */
-            font-size: clamp(64px, 16vw, 76px);
-            color: #FF3B7C;
-            /* Trait fin et élégant pour conserver la légèreté visuelle */
+
+        .swipe-label {
+            display: flex; flex-direction: column; align-items: center;
+            font-size: clamp(10px, 3vw, 12px); font-weight: 900; text-transform: uppercase;
+            letter-spacing: 1px; gap: 8px; flex: 1; text-align: center; word-wrap: break-word;
+        }
+        .swipe-label.left { color: var(--danger); }
+        .swipe-label.right { color: var(--success); }
+
+        .swipe-label .material-symbols-rounded {
+            font-size: clamp(24px, 6vw, 32px); background: white;
+            border-radius: 50%; padding: 4px; box-shadow: var(--shadow-soft);
+        }
+
+        .swipe-hand-wrapper {
+            color: var(--text-muted); opacity: 0.7; display: flex; flex-direction: column;
+            align-items: center; flex-shrink: 0; padding-top: 2px;
+        }
+
+        .swipe-hand-icon {
+            font-size: clamp(32px, 8vw, 48px);
+            animation: swipeHandAnim 2.5s infinite ease-in-out;
+        }
+
+        @keyframes swipeHandAnim {
+            0%, 100% { transform: translateX(0) rotate(0deg); color: var(--text-muted); }
+            25% { transform: translateX(20px) rotate(15deg); color: var(--success); }
+            50% { transform: translateX(0) rotate(0deg); color: var(--text-muted); }
+            75% { transform: translateX(-20px) rotate(-15deg); color: var(--danger); }
+        }
+
+        /* --- PODIUM 3D PARTY GAME --- */
+        .podium-container {
+            display: flex; align-items: flex-end; justify-content: center;
+            gap: 8px; margin-top: 48px; margin-bottom: 32px; height: 260px; position: relative;
+        }
+
+        .podium-step {
+            display: flex; flex-direction: column; align-items: center;
+            width: 100px; position: relative; opacity: 0;
+            animation: slideUpBounce 0.6s var(--bounce) forwards;
+        }
+        .podium-step.rank-1 { order: 2; z-index: 10; width: 110px; }
+        .podium-step.rank-2 { order: 1; z-index: 5; }
+        .podium-step.rank-3 { order: 3; z-index: 5; }
+
+        .podium-info {
+            background: white; padding: 12px 8px; border-radius: var(--radius-lg);
+            box-shadow: 0 8px 16px rgba(45,35,66,0.15); text-align: center;
+            width: 110%; margin-bottom: -16px; z-index: 2; border: 3px solid transparent;
+        }
+        .rank-1 .podium-info { transform: scale(1.1); margin-bottom: -12px; }
+
+        .podium-name { font-weight: 900; font-size: 14px; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .podium-score { font-weight: 900; font-size: 22px; margin-top: 2px; }
+
+        .podium-block {
+            width: 100%; border-radius: 16px 16px 8px 8px; display: flex;
+            justify-content: center; padding-top: 32px; color: rgba(255, 255, 255, 0.9);
+            font-size: 56px; font-weight: 900; box-shadow: inset 0 -10px 0 rgba(0,0,0,0.15), 0 12px 24px rgba(45,35,66,0.2);
+        }
+        .rank-1 .podium-block { height: 160px; font-size: 72px; padding-top: 40px; }
+        .rank-2 .podium-block { height: 110px; }
+        .rank-3 .podium-block { height: 80px; padding-top: 24px; font-size: 48px; }
+
+        .crown-icon {
+            position: absolute; top: -50px; font-size: 48px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            animation: floatCrown 2.5s ease-in-out infinite; z-index: 15;
+        }
+
+        .lb-list-item {
+            background: white; padding: 16px 24px; border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-soft); display: flex; align-items: center; margin-bottom: 8px;
+            opacity: 0; animation: slideInRight 0.5s var(--bounce) forwards;
+        }
+        .lb-list-rank { font-weight: 900; font-size: 18px; color: var(--text-muted); width: 40px; }
+        .lb-list-name { font-weight: 800; font-size: 18px; flex-grow: 1; color: var(--text-main); }
+        .lb-list-score { font-weight: 900; font-size: 20px; }
+
+        @keyframes slideUpBounce { 0% { opacity: 0; transform: translateY(150px); } 100% { opacity: 1; transform: translateY(0); } }
+        @keyframes floatCrown { 0%, 100% { transform: translateY(0) rotate(15deg) scale(1); } 50% { transform: translateY(-12px) rotate(0deg) scale(1.1); } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: translateX(0); } }
+
+        /* --- READY SCREEN CATEGORY MINIMALIST GROUP --- */
+        .ready-category-group {
+            display: flex; flex-direction: column; align-items: center; gap: 4px; margin-bottom: clamp(12px, 3vh, 20px);
+        }
+        .ready-category-icon {
+            font-size: clamp(64px, 16vw, 76px); color: #FF3B7C;
             font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
         }
-        
         .ready-category-label {
-            /* Nom de catégorie agrandi (précédemment entre 12px et 14px) */
-            font-size: clamp(15px, 4vw, 18px);
-            font-weight: 800;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-size: clamp(15px, 4vw, 18px); font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px;
         }
 
-/* --- READY SCREEN HIERARCHY --- */
-.ready-content-wrapper {
-    flex-grow: 1; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center; 
-    text-align: center;
-    gap: clamp(16px, 4vh, 32px); /* Espace harmonieux entre l'équipe, la carte et la capsule */
-}
-
-.ready-team-title {
-    font-size: clamp(28px, 8vw, 36px);
-    margin: 0;
-    line-height: 1;
-}
-
-.ready-theme-pill {
-    background: rgba(45, 35, 66, 0.05); 
-    color: var(--text-main); 
-    font-size: clamp(18px, 6vw, 28px); 
-    font-weight: 800; 
-    padding: clamp(12px, 2vh, 16px) clamp(24px, 6vw, 32px); 
-    border-radius: var(--radius-pill); 
-    border: 1px solid rgba(45, 35, 66, 0.08); 
-    text-align: center;
-    max-width: 100%;
-    word-break: normal;
-    overflow-wrap: normal;
-}
+        /* --- READY SCREEN HIERARCHY --- */
+        .ready-content-wrapper {
+            flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; 
+            text-align: center; gap: clamp(16px, 4vh, 32px);
+        }
+        .ready-team-title { font-size: clamp(28px, 8vw, 36px); margin: 0; line-height: 1; }
+        .ready-theme-pill {
+            background: rgba(45, 35, 66, 0.05); color: var(--text-main); font-size: clamp(18px, 6vw, 28px); 
+            font-weight: 800; padding: clamp(12px, 2vh, 16px) clamp(24px, 6vw, 32px); 
+            border-radius: var(--radius-pill); border: 1px solid rgba(45, 35, 66, 0.08); 
+            text-align: center; max-width: 100%; word-break: normal; overflow-wrap: normal;
+        }
     </style>
 </head>
 <body>
@@ -695,38 +589,35 @@
         <div class="ready-content-wrapper">
             <h2 id="ready-team" class="ready-team-title">Nom de l'équipe</h2>
             
-<!-- Contexte du jeu fluide et minimaliste -->
             <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-                
                 <div class="ready-category-group">
                     <span class="material-symbols-rounded ready-category-icon" id="ready-icon">category</span>
                     <div class="ready-category-label" id="ready-cat">CATÉGORIE</div>
                 </div>
-                
                 <div id="ready-theme" class="ready-theme-pill">Nom du Thème</div>
-                
             </div>
-<div class="swipe-hint-container">
-    <div class="swipe-label left" style="text-align: center;">
-        <span class="material-symbols-rounded">close</span>
-        <span id="tut-no-text">PAS CLASSIQUES</span>
-    </div>
-    
-    <div class="swipe-hand-wrapper">
-        <span class="material-symbols-rounded swipe-hand-icon">swipe</span>
-    </div>
-    
-    <div class="swipe-label right" style="text-align: center;">
-        <span class="material-symbols-rounded">check</span>
-        <span id="tut-yes-text">CLASSIQUES</span>
-    </div>
-</div>
+
+            <div class="swipe-hint-container">
+                <div class="swipe-label left" style="text-align: center;">
+                    <span class="material-symbols-rounded">close</span>
+                    <span id="tut-no-text">PAS CLASSIQUES</span>
+                </div>
+                
+                <div class="swipe-hand-wrapper">
+                    <span class="material-symbols-rounded swipe-hand-icon">swipe</span>
+                </div>
+                
+                <div class="swipe-label right" style="text-align: center;">
+                    <span class="material-symbols-rounded">check</span>
+                    <span id="tut-yes-text">CLASSIQUES</span>
+                </div>
+            </div>
         </div>
 
         <button class="btn-3d btn-primary" onclick="startGameplay()">GO !</button>
     </div>
 
- <!-- GAME SCREEN -->
+    <!-- GAME SCREEN -->
     <div id="game-screen" class="screen">
         <div class="game-top-bar">
             <button class="btn-icon-round" style="position: relative; left: 0; width: 40px; height: 40px;" onclick="goHome()"><span class="material-symbols-rounded" style="font-size: 20px;">home</span></button>
@@ -736,7 +627,11 @@
         </div>
         
         <div class="game-area-centered">
-            <h2 class="theme-display-game" id="game-theme-display">Thème</h2>
+            <!-- Catégorie + Thème Uniformisés -->
+            <div style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: clamp(16px, 4vh, 24px);">
+                <div class="section-label" id="game-cat" style="color: var(--text-muted); margin-bottom: 8px;">CATÉGORIE</div>
+                <div id="game-theme-display" class="ready-theme-pill">Thème</div>
+            </div>
             
             <div class="play-card-container">
                 <div class="play-card" id="play-card">
@@ -748,7 +643,7 @@
                 </div>
             </div>
 
-            <!-- New Action Buttons -->
+            <!-- Action Buttons -->
             <div class="action-buttons-row">
                 <button class="action-btn no" onclick="handleBtnSwipe(false)"><span class="material-symbols-rounded">close</span></button>
                 <button class="action-btn yes" onclick="handleBtnSwipe(true)"><span class="material-symbols-rounded">check</span></button>
@@ -759,7 +654,7 @@
     <!-- SUMMARY SCREEN -->
     <div id="summary-screen" class="screen">
         <button class="btn-icon-round" onclick="goHome()" style="position: absolute; top: 48px; left: 24px; z-index: 10;"><span class="material-symbols-rounded">home</span></button>
-<div class="summary-header">
+        <div class="summary-header">
             <h2 id="sum-team" style="margin-bottom: 8px;">Equipe</h2>
             
             <div class="summary-score-wrapper">
@@ -771,7 +666,6 @@
             <div class="summary-theme" id="sum-theme">Theme</div>
         </div>
 
-        <!-- NEW WORD CLOUD CONTAINER -->
         <div class="word-cloud-container" id="word-cloud">
             <!-- Pills injected here -->
         </div>
@@ -802,9 +696,9 @@
     let roundItems = [], cardIdx = 0, roundScore = 0, roundHist = [];
     let timeLimit = 0, gameTimerInterval;
     const colors = [
-    '#00D084', '#FFB800', '#9C27B0', '#03A9F4',
-    '#FF5722', '#E91E63', '#3F51B5', '#00BCD4', '#8BC34A'
-];
+        '#00D084', '#3b82f6', '#FFB800', '#9C27B0', '#00bcd4',
+        '#FF5722', '#E91E63', '#3F51B5', '#8BC34A'
+    ];
     
     // Audio (Removed real files for demo, add back your mp3s here if needed)
     const playsound = (type) => { /* console.log('Playing', type); */ };
@@ -829,7 +723,7 @@
     window.onpopstate = (e) => { show(e.state?.screen || 'landing-screen'); };
 
     /* --- SETUP --- */
-function setOpt(type, val, btn) {
+    function setOpt(type, val, btn) {
         btn.parentElement.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
         if (type === 'team') { numTeams = val; renderTeams(); }
@@ -837,7 +731,7 @@ function setOpt(type, val, btn) {
         if (type === 'time') timeLimit = val;
     }
 
-function renderTeams() {
+    function renderTeams() {
         const cont = document.getElementById('teams-container');
         
         // 1. On sauvegarde l'état actuel (noms et couleurs)
@@ -939,9 +833,8 @@ function renderTeams() {
         };
 
         cats.forEach(c => {
-            selectedCats.add(c); // Toutes sélectionnées par défaut[cite: 1]
+            selectedCats.add(c);
             
-            // Recherche d'une icône correspondante (insensible à la casse/accents)
             let iconName = 'category';
             const lowerCat = c.toLowerCase();
             for (const [key, icon] of Object.entries(iconMap)) {
@@ -959,11 +852,9 @@ function renderTeams() {
                 if (selectedCats.has(c)) { selectedCats.delete(c); pill.classList.remove('selected'); }
                 else { selectedCats.add(c); pill.classList.add('selected'); }
                 
-                // Mise à jour de l'UI
                 document.getElementById('cat-count-val').innerText = selectedCats.size;
                 const startBtn = document.getElementById('start-btn');
                 
-                // Désactivation robuste
                 if (selectedCats.size === 0) {
                     startBtn.disabled = true;
                     startBtn.style.opacity = "0.5";
@@ -978,7 +869,6 @@ function renderTeams() {
         });
         document.getElementById('cat-count-val').innerText = selectedCats.size;
         
-        // Sécurité au chargement
         const startBtn = document.getElementById('start-btn');
         startBtn.disabled = (selectedCats.size === 0);
         startBtn.style.opacity = (selectedCats.size === 0) ? "0.5" : "1";
@@ -987,7 +877,7 @@ function renderTeams() {
 
     /* --- GAME LOOP --- */
     function startGame() {
-        if(selectedCats.size === 0) return; // Sécurité supplémentaire
+        if(selectedCats.size === 0) return;
         playableData = fullData.filter(d => selectedCats.has(d.category)).sort(() => Math.random() - 0.5);
         curTeam = 0; curTheme = 0; prepareRound();
     }
@@ -1002,44 +892,33 @@ function renderTeams() {
         const tname = document.getElementById('ready-team');
         tname.innerText = tm.name; tname.style.color = tm.color;
         
-document.getElementById('ready-cat').innerText = th.category;
+        document.getElementById('ready-cat').innerText = th.category;
         document.getElementById('ready-theme').innerText = th.theme;
 
-        // Dictionnaire d'icônes
         const iconMap = {
-            'histoire': 'history_edu', 
-            'sport': 'sports_soccer', 
-            'cinema': 'movie',
-            'musique': 'music_note', 
-            'geographie': 'public', 
-            'science': 'science',
-            'animaux': 'pets', 
-            'nourriture': 'restaurant', 
-            'art': 'palette',
-            'technologie': 'devices', 
-            'jeux': 'sports_esports'
+            'histoire': 'history_edu', 'sport': 'sports_soccer', 'cinema': 'movie',
+            'musique': 'music_note', 'geographie': 'globe', 'science': 'science',
+            'animaux': 'pets', 'nourriture': 'restaurant', 'art': 'palette',
+            'technologie': 'devices', 'jeux': 'sports_esports'
         };
 
-        // Détection de l'icône
         let readyIconName = 'category';
         const lowerCat = th.category.toLowerCase();
         for (const [key, icon] of Object.entries(iconMap)) {
-            if (lowerCat.includes(key)) {
-                readyIconName = icon;
-                break;
-            }
+            if (lowerCat.includes(key)) { readyIconName = icon; break; }
         }
 
-        // Mise à jour de l'élément HTML sur l'écran Ready
         document.getElementById('ready-icon').innerText = readyIconName;
-
         document.getElementById('tut-yes-text').innerText = th.theme;
-document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
+        document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
         
+        // On nettoie le texte en cachette pour éviter tout résidu visuel de la manche précédente
+        document.getElementById('play-card-text').innerText = "";
+
         transitionTo('ready-screen');
     }
 
-function startGameplay() {
+    function startGameplay() {
         const overlay = document.getElementById('countdown-overlay');
         const num = document.getElementById('countdown-number');
         overlay.classList.remove('hidden');
@@ -1047,7 +926,6 @@ function startGameplay() {
         let c = 3;
         const tick = () => {
             if(c > 0) {
-                // Son du cochon pour 3, 2, 1
                 sndTick.currentTime = 0;
                 sndTick.play().catch(e => console.error("Erreur Tick :", e));
 
@@ -1056,10 +934,8 @@ function startGameplay() {
                 void num.offsetWidth; 
                 num.classList.add('animate-pop');
                 
-                c--; 
-                setTimeout(tick, 1000);
+                c--; setTimeout(tick, 1000);
             } else {
-                // Son final pour le GO !
                 sndGo.currentTime = 0;
                 sndGo.play().catch(e => console.error("Erreur Go :", e));
 
@@ -1074,19 +950,30 @@ function startGameplay() {
         tick();
     }
 
-function startRealGame() {
-        document.getElementById('countdown-overlay').classList.add('hidden');
-        transitionTo('game-screen');
+    function startRealGame() {
+        drag = false; // Sécurité : annule tout glissement en cours du joueur précédent
         
         const th = playableData[curTheme % playableData.length];
+        
+        // 1. On regénère le paquet EXACTEMENT au moment de jouer
         const poolT = th.items.filter(i=>i.isRelated), poolF = th.items.filter(i=>!i.isRelated);
         roundItems = [...poolT.slice(0,5), ...poolF.slice(0,5)].sort(()=>Math.random()-0.5); 
         
         cardIdx = 0; roundScore = 0; roundHist = [];
         
+        // 2. On précharge le texte en cachette pour éviter le glitch "Mot à deviner"
+        if(roundItems.length > 0) {
+            document.getElementById('play-card-text').innerText = roundItems[0].text;
+        }
+
+        // 3. Une fois que tout est prêt, on affiche l'écran de jeu
+        document.getElementById('countdown-overlay').classList.add('hidden');
+        transitionTo('game-screen');
+        
         const tm = teams[curTeam];
         document.getElementById('game-team-badge').innerText = tm.name;
         document.getElementById('game-theme-display').innerText = th.theme;
+        document.getElementById('game-cat').innerText = th.category;
         
         const tBadge = document.getElementById('game-timer');
         clearInterval(gameTimerInterval);
@@ -1114,19 +1001,20 @@ function startRealGame() {
         document.getElementById('game-progress').innerText = `${cardIdx+1}/${roundItems.length}`;
         const card = document.getElementById('play-card');
         
-        // Reset card state
-        card.style.transition = 'none'; card.style.transform = 'translate(0,0) rotate(0)'; card.style.opacity = '0';
-        card.style.boxShadow = '0 16px 32px rgba(45, 35, 66, 0.15)'; // Reset de l'ombre
-        card.querySelector('.yes').style.opacity = '0'; card.querySelector('.no').style.opacity = '0';
+        // Reset card state PROPREMENT
+        card.style.transition = 'none'; 
+        card.style.transform = 'translate(0px, 0px) rotate(0deg)'; 
+        card.style.opacity = '0';
+        card.style.boxShadow = ''; // Retire le style en ligne pour laisser l'effet pile du CSS
+        card.querySelector('.yes').style.opacity = '0'; 
+        card.querySelector('.no').style.opacity = '0';
         
         const cardTextEl = document.getElementById('play-card-text');
         const cardText = roundItems[cardIdx].text;
         
-        // Détection du mot le plus long dans la phrase
         const words = cardText.split(/\s+/);
         const longestWordLength = Math.max(...words.map(w => w.length));
 
-        // Adaptation de la taille de police selon la longueur
         if (longestWordLength > 12) {
             cardTextEl.style.fontSize = '24px';
         } else if (longestWordLength > 9) {
@@ -1152,24 +1040,19 @@ function startRealGame() {
         
         card.querySelector(isRight ? '.yes' : '.no').style.opacity = '1';
         
-        // 1. Sober Card Physics (Glisse proprement vers le choix de l'utilisateur)
+        // 1. Sober Card Physics (Correction du décalage qui cassait le centrage)
         card.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.3s, box-shadow 0.2s';
-        card.style.transform = `translate(calc(-50% + ${isRight ? 200 : -200}px), 50px) rotate(${isRight ? 20 : -20}deg)`;
+        card.style.transform = `translate(${isRight ? 200 : -200}px, 50px) rotate(${isRight ? 20 : -20}deg)`;
         card.style.opacity = '0';
 
-        // 2. Feedback visuel subtil (Léger halo de couleur sur la carte avant de disparaitre)
         card.style.boxShadow = correct ? '0 0 40px rgba(0, 208, 132, 0.8)' : '0 0 40px rgba(255, 77, 77, 0.8)';
 
-        // --- NOUVEAU : Apparition furtive du +1 ou de la croix ---
         const pop = document.createElement('div');
         pop.className = `feedback-pop ${correct ? 'correct' : 'wrong'}`;
         pop.innerHTML = correct ? '+1' : '<span class="material-symbols-rounded" style="font-size: 100px;">close</span>';
         document.querySelector('.game-area-centered').appendChild(pop);
-        setTimeout(() => pop.remove(), 600); // Nettoyage propre après l'animation
+        setTimeout(() => pop.remove(), 600);
 
-        // 3. Audio & Score
-        // 3. Calcul & Son
-        console.log("Swipe validé. Réponse correcte ?", correct);
         if (correct) {
             roundScore++;
             playSound('correct');
@@ -1177,14 +1060,12 @@ function startRealGame() {
             playSound('wrong');
         }
         
-        // Sauvegarde de l'historique ET de la vérité (isRelated)
         roundHist.push({ text: item.text, correct: correct, isRelated: item.isRelated });
         cardIdx++;
         
         setTimeout(loadCard, 350);
     }
 
-    // Touch Drag Physics (Simplified wrapper for buttons)
     let sx = 0, drag = false, cardEl = document.getElementById('play-card');
     const startDrag = (x) => { sx = x; drag = true; cardEl.style.transition = 'none'; };
     const moveDrag = (x) => {
@@ -1197,12 +1078,13 @@ function startRealGame() {
         if(!drag) return; drag = false; const dx = x - sx;
         if(Math.abs(dx) > 80) handleBtnSwipe(dx > 0);
         else {
-            cardEl.style.transition = 'transform 0.4s var(--bounce)'; cardEl.style.transform = 'translate(0,0) rotate(0)';
-            cardEl.querySelector('.yes').style.opacity = 0; cardEl.querySelector('.no').style.opacity = 0;
+            cardEl.style.transition = 'transform 0.4s var(--bounce)'; 
+            cardEl.style.transform = 'translate(0px, 0px) rotate(0deg)';
+            cardEl.querySelector('.yes').style.opacity = 0; 
+            cardEl.querySelector('.no').style.opacity = 0;
         }
     };
     
-    // Attach touch to card container
     const cCont = document.querySelector('.play-card-container');
     cCont.addEventListener('touchstart', e => startDrag(e.touches[0].clientX));
     cCont.addEventListener('touchmove', e => moveDrag(e.touches[0].clientX));
@@ -1211,37 +1093,37 @@ function startRealGame() {
     window.addEventListener('mousemove', e => moveDrag(e.clientX));
     window.addEventListener('mouseup', e => endDrag(e.clientX));
 
-// --- 7. ANSWER PROCESSING & SOUNDS ---
-const sndCorrect = new Audio('correct.mp3');
-const sndTick = new Audio('tick.mp3');
-const sndGo = new Audio('go.mp3');
+    // --- 7. ANSWER PROCESSING & SOUNDS ---
+    const sndCorrect = new Audio('correct.mp3');
+    const sndTick = new Audio('tick.mp3');
+    const sndGo = new Audio('go.mp3');
 
-const wrongSoundFiles = ['wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3'];
-const wrongAudios = wrongSoundFiles.map(file => new Audio(file));
-const sndWinner = new Audio('winner.mp3');
-let isConfettiActive = false;
+    const wrongSoundFiles = ['wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3'];
+    const wrongAudios = wrongSoundFiles.map(file => new Audio(file));
+    const sndWinner = new Audio('winner.mp3');
 
-function playSound(type) {
-    console.log("Tentative de lecture du son :", type);
-    try {
-        if (type === 'correct') { 
-            sndCorrect.currentTime = 0; 
-            sndCorrect.play().catch(e => console.error("Erreur de lecture correct.mp3 :", e)); 
+    function playSound(type) {
+        try {
+            if (type === 'correct') { 
+                sndCorrect.currentTime = 0; 
+                sndCorrect.play().catch(e => console.error("Audio block:", e)); 
+            }
+            else if (type === 'wrong') {
+                const randomIndex = Math.floor(Math.random() * wrongAudios.length);
+                const randomSound = wrongAudios[randomIndex];
+                randomSound.currentTime = 0; 
+                randomSound.play().catch(e => console.error("Audio block:", e));
+            }
+        } catch (e) {
+            console.error("Audio error:", e);
         }
-        else if (type === 'wrong') {
-            const randomIndex = Math.floor(Math.random() * wrongAudios.length);
-            const randomSound = wrongAudios[randomIndex];
-            console.log("Fichier wrong sélectionné : wrong" + (randomIndex + 1) + ".mp3");
-            randomSound.currentTime = 0; 
-            randomSound.play().catch(e => console.error("Erreur de lecture wrong.mp3 :", e));
-        }
-    } catch (e) {
-        console.error("Erreur globale audio :", e);
     }
-}
 
-/* --- SUMMARY & END GAME --- */
+    /* --- SUMMARY & END GAME --- */
     function endRound() {
+        // Sécurité anti-crash : empêche la fonction de s'exécuter 2 fois (Timer + Swipe simultanés)
+        if (document.getElementById('summary-screen').classList.contains('active')) return;
+        
         clearInterval(gameTimerInterval);
         teams[curTeam].score += roundScore; teams[curTeam].rounds++;
         transitionTo('summary-screen');
@@ -1249,25 +1131,21 @@ function playSound(type) {
         const tm = teams[curTeam];
         const th = playableData[curTheme % playableData.length];
         
-const sumTeam = document.getElementById('sum-team');
+        const sumTeam = document.getElementById('sum-team');
         sumTeam.innerText = tm.name; 
         sumTeam.style.color = tm.color;
         
-        // Mise à jour du score avec la couleur de l'équipe
         const scoreEl = document.getElementById('sum-score');
         scoreEl.innerText = `+${roundScore}`;
         scoreEl.style.color = tm.color;
         
-        // Gestion de l'unité (pt ou pts) avec la couleur de l'équipe
         const unitEl = document.getElementById('sum-score-unit');
         unitEl.innerText = roundScore <= 1 ? "pt" : "pts";
         unitEl.style.color = tm.color;
         
-        // Mise à jour de la catégorie et du thème
         document.getElementById('sum-category').innerText = th.category;
         document.getElementById('sum-theme').innerText = th.theme;
         
-        // Build Word Cloud avec Badges de Vérité
         const cloud = document.getElementById('word-cloud');
         cloud.innerHTML = '';
         roundHist.forEach((h, i) => {
@@ -1275,7 +1153,6 @@ const sumTeam = document.getElementById('sum-team');
             pill.className = `result-pill ${h.correct ? 'correct' : 'wrong'}`;
             pill.style.animation = `popPill 0.4s var(--bounce) ${i * 0.05}s forwards`;
             
-            // On définit le texte et l'icône de vérité absolue
             const truthIcon = h.isRelated ? 'check' : 'close';
             const truthText = h.isRelated ? 'OUI' : 'NON';
             
@@ -1289,9 +1166,7 @@ const sumTeam = document.getElementById('sum-team');
             cloud.appendChild(pill);
         });
         
-const btn = document.getElementById('sum-next-btn');
-        
-        // On mémorise l'état exact à ce moment précis pour éviter les bugs de navigation
+        const btn = document.getElementById('sum-next-btn');
         const safeTeam = curTeam;
         const safeTheme = curTheme;
         
@@ -1315,21 +1190,19 @@ const btn = document.getElementById('sum-next-btn');
         }
     }
 
-function showLB(final) {
+    function showLB(final) {
         transitionTo('leaderboard-screen');
-        // Les variables curTeam et curTheme sont maintenant sécurisées en amont
         
         const cont = document.getElementById('lb-container');
         cont.innerHTML = '';
         const sort = [...teams].sort((a,b) => b.score - a.score);
         
-// 1. Génération du Podium 3D (Top 1 à 3)
         let podiumHtml = '<div class="podium-container">';
         const top3 = sort.slice(0, 3);
         
         top3.forEach((t, i) => {
             const rank = i + 1;
-            const delay = (3 - rank) * 0.15; // Animation : le 3ème pop, puis le 2ème, puis le 1er
+            const delay = (3 - rank) * 0.15;
             const isFirst = rank === 1;
             
             podiumHtml += `
@@ -1348,7 +1221,6 @@ function showLB(final) {
         podiumHtml += '</div>';
         cont.innerHTML += podiumHtml;
 
-        // 2. Génération de la liste classique (Rangs 4 et +)
         const rest = sort.slice(3);
         rest.forEach((t, i) => {
             const rank = i + 4;
