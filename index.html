@@ -178,37 +178,38 @@
         .app-subtitle { font-size: clamp(16px, 4vw, 20px); color: var(--text-muted); font-weight: 700; }
 
         /* --- 6. CATEGORY SCREEN --- */
-        .category-grid {
-            display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; align-content: flex-start;
-            flex-grow: 1; overflow-y: auto; padding: 12px 0;
-        }
-.cat-pill {
-            /* Catégorie non sélectionnée : Blanc propre et épuré */
-            background: white; 
-            border: 2px solid transparent; 
-            color: var(--text-main);
-            padding: clamp(8px, 2vh, 12px) clamp(16px, 4vw, 20px); 
-            border-radius: var(--radius-pill); 
-            font-weight: 800; 
-            font-size: clamp(12px, 3.5vw, 14px);
-            display: flex; align-items: center; gap: 8px; 
-            cursor: pointer; transition: 0.2s var(--bounce);
-            box-shadow: var(--shadow-soft);
-        }
+.category-grid {
+    display: flex; 
+    flex-wrap: wrap; 
+    gap: 12px; 
+    justify-content: center; 
+    align-items: center; /* Force le centrage horizontal de chaque ligne */
+    align-content: flex-start;
+    width: 100%; /* S'assure de prendre toute la largeur pour centrer correctement */
+    flex-grow: 1; 
+    overflow-y: auto; 
+    padding: 12px 4px 24px 4px;
+    margin-bottom: 8px;
+    -webkit-overflow-scrolling: touch;
+}
         
-        .cat-pill {
-            background: white; 
-            border: 2px solid transparent; 
-            color: var(--text-main);
-            padding: clamp(8px, 2vh, 12px) clamp(16px, 4vw, 20px); 
-            border-radius: var(--radius-pill); 
-            font-weight: 800; 
-            font-size: clamp(12px, 3.5vw, 14px);
-            display: flex; align-items: center; gap: 8px; 
-            cursor: pointer; transition: 0.2s var(--bounce);
-            box-shadow: var(--shadow-soft);
-            opacity: 0.5; /* Grisé quand non sélectionné */
-        }
+.cat-pill {
+    background: white; 
+    border: 1px solid transparent; 
+    color: var(--text-main);
+    padding: 5px 10px;
+    border-radius: var(--radius-pill); 
+    font-weight: 800; 
+    font-size: clamp(12px, 3.5vw, 14px);
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+    cursor: pointer; 
+    transition: 0.2s var(--bounce);
+    box-shadow: var(--shadow-soft);
+    opacity: 0.5;
+    width: auto; /* Taille naturelle selon le texte */
+}
 
         .cat-pill.selected {
             background: white; 
@@ -883,11 +884,11 @@
 function assignCategoryColors() {
         categoryColors = {
             "Histoire": "#3B82F6",
-            "Geographie": "#00BCD4",
-            "Art & Litterature": "#FFB800",
+            "Géographie": "#00BCD4",
+            "Art": "#FFB800",
             "Cinéma & TV": "#9C27B0",
             "Musique": "#EC4899",
-            "Science & Nature": "#F97316",
+            "Science": "#F97316",
             "Pop Culture & Geek": "#6366F1",
             "Gastronomie": "#8B5CF6",
             "Sport": "#14B8A6",
