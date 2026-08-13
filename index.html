@@ -388,97 +388,56 @@
         .animate-pop { animation: count-pop 0.9s ease-out forwards; }
         @keyframes count-pop { 0% { transform: scale(0.5); opacity: 0; } 40% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
 
-/* --- TUTORIAL CAPSULE (Thème Clair) --- */
-.tutorial-zone.capsule-mode {
+/* --- SWIPE TUTORIAL HINT --- */
+.swipe-hint-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: clamp(16px, 6vw, 40px);
+    margin-top: 16px;
     width: 100%;
-    margin-top: 20px;
-    margin-bottom: 20px;
 }
 
-.cap-track {
-    width: 70px;
-    height: 36px;
-    background: #e0e0e0;
-    border-radius: 20px;
-    position: relative;
-    border: 2px solid #d0d0d0;
-    flex-shrink: 0;
-}
-
-.cap-thumb {
-    width: 28px;
-    height: 28px;
-    background: #101828;
-    border-radius: 50%;
-    position: absolute;
-    top: 2px;
-    left: 20px; /* Centré au départ */
+.swipe-label {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    color: #ffffff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    animation: capsule-slide 4s infinite ease-in-out;
-}
-
-.cap-label {
-    font-family: system-ui, -apple-system, sans-serif;
-    font-size: 13px;
-    font-weight: 800;
+    font-size: clamp(11px, 3.5vw, 14px);
+    font-weight: 900;
     text-transform: uppercase;
-    line-height: 1.2;
-    flex: 1;
+    letter-spacing: 1px;
+    gap: 4px;
 }
 
-.cap-label.left {
-    text-align: right;
-    color: #d32f2f;
+.swipe-label.left { color: var(--danger); }
+.swipe-label.right { color: var(--success); }
+
+.swipe-label .material-symbols-rounded {
+    font-size: clamp(24px, 6vw, 32px);
+    background: white;
+    border-radius: 50%;
+    padding: 4px;
+    box-shadow: var(--shadow-soft);
 }
 
-.cap-label.right {
-    text-align: left;
-    color: #2e7d32;
+.swipe-hand-wrapper {
+    color: var(--text-muted);
+    opacity: 0.7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-@keyframes capsule-slide {
-    /* 1. DÉPART : Centre */
-    0% {
-        transform: translateX(0px);
-        background: #101828;
-        color: #ffffff;
-    }
-    
-    /* 2. DROITE : Vers "OUI" (Vert) */
-    25% {
-        transform: translateX(18px);
-        background: #2e7d32;
-        color: #ffffff;
-    }
-    
-    /* 3. RETOUR : Centre */
-    50% {
-        transform: translateX(0px);
-        background: #101828;
-        color: #ffffff;
-    }
-    
-    /* 4. GAUCHE : Vers "NON" (Rouge) */
-    75% {
-        transform: translateX(-18px);
-        background: #d32f2f;
-        color: #ffffff;
-    }
-    
-    /* 5. FIN : Retour au centre */
-    100% {
-        transform: translateX(0px);
-        background: #101828;
-        color: #ffffff;
-    }
+.swipe-hand-icon {
+    font-size: clamp(32px, 8vw, 48px);
+    animation: swipeHandAnim 2.5s infinite ease-in-out;
+}
+
+@keyframes swipeHandAnim {
+    0%, 100% { transform: translateX(0) rotate(0deg); color: var(--text-muted); }
+    25% { transform: translateX(20px) rotate(15deg); color: var(--success); }
+    50% { transform: translateX(0) rotate(0deg); color: var(--text-muted); }
+    75% { transform: translateX(-20px) rotate(-15deg); color: var(--danger); }
 }
 /* --- PODIUM 3D PARTY GAME --- */
 .podium-container {
@@ -628,28 +587,16 @@
     line-height: 1;
 }
 
-.ready-theme-card {
-    background: white;
-    padding: clamp(24px, 5vh, 32px) clamp(16px, 4vw, 24px);
-    border-radius: var(--radius-xl);
-    box-shadow: 0 8px 24px rgba(45, 35, 66, 0.05);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid rgba(45, 35, 66, 0.05);
-}
-
-.ready-theme-card .ready-icon-box {
-    margin-bottom: 16px; /* Rapproche l'icône du texte */
-    box-shadow: 0 4px 12px rgba(45, 35, 66, 0.08); /* Ombre plus douce */
-}
-
-.ready-theme-title {
-    font-size: clamp(24px, 7vw, 36px);
-    color: var(--text-main);
-    line-height: 1.15;
-    margin: 0;
+.ready-theme-pill {
+    background: rgba(45, 35, 66, 0.05); 
+    color: var(--text-main); 
+    font-size: clamp(18px, 6vw, 28px); 
+    font-weight: 800; 
+    padding: clamp(12px, 2vh, 16px) clamp(24px, 6vw, 32px); 
+    border-radius: var(--radius-pill); 
+    border: 1px solid rgba(45, 35, 66, 0.08); 
+    text-align: center;
+    max-width: 100%;
     word-break: normal;
     overflow-wrap: normal;
 }
@@ -736,22 +683,28 @@
         <div class="ready-content-wrapper">
             <h2 id="ready-team" class="ready-team-title">Nom de l'équipe</h2>
             
-            <!-- Nouvelle carte regroupant le contexte du jeu -->
-            <div class="ready-theme-card">
-                <div class="ready-icon-box">
+<!-- Contexte du jeu fluide -->
+            <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+                <div class="ready-icon-box" style="margin-bottom: 16px; box-shadow: 0 4px 12px rgba(45, 35, 66, 0.05);">
                     <span class="material-symbols-rounded" id="ready-icon">category</span>
                 </div>
                 <div class="section-label" id="ready-cat" style="color: var(--text-muted); margin-bottom: 8px;">CATÉGORIE</div>
-                <h1 id="ready-theme" class="ready-theme-title">Nom du Thème</h1>
+                <div id="ready-theme" class="ready-theme-pill">Nom du Thème</div>
             </div>
-<div class="tutorial-zone capsule-mode">
-    <div class="cap-label left" id="tut-no-text">PAS CLASSIQUES</div>
-    <div class="cap-track">
-        <div class="cap-thumb">
-            <span style="font-size: 14px; font-weight: bold; line-height: 1;">⇄</span>
-        </div>
+<div class="swipe-hint-container">
+    <div class="swipe-label left" style="text-align: center;">
+        <span class="material-symbols-rounded">close</span>
+        <span id="tut-no-text">PAS CLASSIQUES</span>
     </div>
-    <div class="cap-label right" id="tut-yes-text">CLASSIQUES</div>
+    
+    <div class="swipe-hand-wrapper">
+        <span class="material-symbols-rounded swipe-hand-icon">swipe</span>
+    </div>
+    
+    <div class="swipe-label right" style="text-align: center;">
+        <span class="material-symbols-rounded">check</span>
+        <span id="tut-yes-text">CLASSIQUES</span>
+    </div>
 </div>
         </div>
 
