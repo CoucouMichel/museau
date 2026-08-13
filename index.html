@@ -391,22 +391,26 @@
 /* --- SWIPE TUTORIAL HINT --- */
 .swipe-hint-container {
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* Aligne les icônes parfaitement en haut */
     justify-content: center;
-    gap: clamp(16px, 6vw, 40px);
-    margin-top: 16px;
+    gap: clamp(8px, 4vw, 24px); /* Équilibre l'espace autour de la main */
+    margin-top: clamp(24px, 5vh, 40px); /* Sépare élégamment la zone de la bulle du thème */
     width: 100%;
+    padding: 0 clamp(12px, 3vw, 24px); /* Empêche le texte de toucher les bords de l'écran */
 }
 
 .swipe-label {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-size: clamp(11px, 3.5vw, 14px);
+    font-size: clamp(10px, 3vw, 12px); /* Taille légèrement réduite pour la lisibilité */
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: 1px;
-    gap: 4px;
+    gap: 8px; /* Laisse respirer l'icône et le texte */
+    flex: 1; /* Force les deux textes à prendre une largeur identique et maximale */
+    text-align: center;
+    word-wrap: break-word;
 }
 
 .swipe-label.left { color: var(--danger); }
@@ -426,6 +430,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex-shrink: 0; /* Protège la main : elle ne sera jamais écrasée par le texte */
+    padding-top: 2px; /* Ajustement optique pour centrer la main avec les cercles X et V */
 }
 
 .swipe-hand-icon {
@@ -550,25 +556,31 @@
     from { opacity: 0; transform: translateX(60px); } 
     to { opacity: 1; transform: translateX(0); } 
 }
-/* --- READY SCREEN CATEGORY ICON --- */
-.ready-icon-box {
-    width: 80px; 
-    height: 80px; 
-    background: white; 
-    border-radius: var(--radius-lg);
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    box-shadow: var(--shadow-soft); 
-    margin-bottom: 24px;
-}
-
-.ready-icon-box .material-symbols-rounded {
-    font-size: 40px;
-    color: var(--secondary);
-    /* Style fin et élégant (non rempli, trait de 400) */
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-}
+/* --- READY SCREEN CATEGORY MINIMALIST GROUP --- */
+        .ready-category-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: clamp(12px, 3vh, 20px);
+        }
+        
+.ready-category-icon {
+            /* Icône agrandie (précédemment entre 48px et 56px) */
+            font-size: clamp(64px, 16vw, 76px);
+            color: #FF3B7C;
+            /* Trait fin et élégant pour conserver la légèreté visuelle */
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .ready-category-label {
+            /* Nom de catégorie agrandi (précédemment entre 12px et 14px) */
+            font-size: clamp(15px, 4vw, 18px);
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
 
 /* --- READY SCREEN HIERARCHY --- */
 .ready-content-wrapper {
@@ -683,13 +695,16 @@
         <div class="ready-content-wrapper">
             <h2 id="ready-team" class="ready-team-title">Nom de l'équipe</h2>
             
-<!-- Contexte du jeu fluide -->
+<!-- Contexte du jeu fluide et minimaliste -->
             <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-                <div class="ready-icon-box" style="margin-bottom: 16px; box-shadow: 0 4px 12px rgba(45, 35, 66, 0.05);">
-                    <span class="material-symbols-rounded" id="ready-icon">category</span>
+                
+                <div class="ready-category-group">
+                    <span class="material-symbols-rounded ready-category-icon" id="ready-icon">category</span>
+                    <div class="ready-category-label" id="ready-cat">CATÉGORIE</div>
                 </div>
-                <div class="section-label" id="ready-cat" style="color: var(--text-muted); margin-bottom: 8px;">CATÉGORIE</div>
+                
                 <div id="ready-theme" class="ready-theme-pill">Nom du Thème</div>
+                
             </div>
 <div class="swipe-hint-container">
     <div class="swipe-label left" style="text-align: center;">
@@ -787,7 +802,7 @@
     let roundItems = [], cardIdx = 0, roundScore = 0, roundHist = [];
     let timeLimit = 0, gameTimerInterval;
     const colors = [
-    '#FF3B7C', '#00D084', '#FFB800', '#9C27B0', '#03A9F4',
+    '#00D084', '#FFB800', '#9C27B0', '#03A9F4',
     '#FF5722', '#E91E63', '#3F51B5', '#00BCD4', '#8BC34A'
 ];
     
@@ -1274,20 +1289,35 @@ const sumTeam = document.getElementById('sum-team');
             cloud.appendChild(pill);
         });
         
-        const btn = document.getElementById('sum-next-btn');
+const btn = document.getElementById('sum-next-btn');
+        
+        // On mémorise l'état exact à ce moment précis pour éviter les bugs de navigation
+        const safeTeam = curTeam;
+        const safeTheme = curTheme;
+        
         if (teams.every(t => t.rounds >= roundsPerTeam)) {
-            btn.innerText = "Terminer"; btn.onclick = () => showLB(true);
-        } else if (curTeam === teams.length - 1) {
-            btn.innerText = "Classement"; btn.onclick = () => showLB(false);
+            btn.innerText = "Terminer"; 
+            btn.onclick = () => showLB(true);
+        } else if (safeTeam === teams.length - 1) {
+            btn.innerText = "Classement"; 
+            btn.onclick = () => { 
+                curTeam = 0; 
+                curTheme = safeTheme + 1; 
+                showLB(false); 
+            };
         } else {
-            btn.innerText = `Suivant : ${teams[(curTeam+1)%teams.length].name}`;
-            btn.onclick = () => { curTeam++; curTheme++; prepareRound(); };
+            btn.innerText = `Suivant : ${teams[(safeTeam + 1) % teams.length].name}`;
+            btn.onclick = () => { 
+                curTeam = safeTeam + 1; 
+                curTheme = safeTheme + 1; 
+                prepareRound(); 
+            };
         }
     }
 
-    function showLB(final) {
+function showLB(final) {
         transitionTo('leaderboard-screen');
-        if(!final) { curTeam = 0; curTheme++; }
+        // Les variables curTeam et curTheme sont maintenant sécurisées en amont
         
         const cont = document.getElementById('lb-container');
         cont.innerHTML = '';
