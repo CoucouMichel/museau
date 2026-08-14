@@ -269,7 +269,7 @@
         }
 
         .btn-ghost {
-            background: transparent;
+            background: var(--bg-color); /* Couleur du fond de l'application (opaque) */
             color: var(--text-main);
             box-shadow: none;
             border: 2px solid rgba(45, 35, 66, 0.12);
@@ -999,7 +999,7 @@
     <div id="setup-screen" class="screen">
         <div class="unified-header">
             <button class="btn-icon-round" onclick="goHome()"><span class="material-symbols-rounded">arrow_back</span></button>
-            <h2>Paramètres</h2>
+            <h2>Configuration</h2>
         </div>
         
         <div style="flex-grow: 1; overflow-y: auto;">
@@ -1363,6 +1363,9 @@ function goHome() {
 
         // 3. Retourne à l'accueil
         transitionTo('landing-screen'); 
+    }
+    function goBack() {
+        transitionTo('landing-screen');
     }
 
 const CATEGORY_ICON_SETS = {
