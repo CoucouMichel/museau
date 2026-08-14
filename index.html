@@ -1277,7 +1277,10 @@
         };
     }
 
+let currentScreen = 'landing-screen'; // Nouvelle variable pour mémoriser l'écran actif
+
     function show(sc) {
+        currentScreen = sc; // On met à jour l'écran actuel dès le début de la transition
         document.querySelectorAll('.screen').forEach(s => {
             s.classList.remove('active');
             setTimeout(() => s.style.display = 'none', 300);
@@ -1293,12 +1296,16 @@
     window.onpopstate = (e) => {
         const targetScreen = e.state?.screen || 'landing-screen';
         
-        // Empêche de revenir sur l'écran de jeu ou le récapitulatif via le bouton retour du téléphone
-        const blockedScreens = ['game-screen', 'summary-screen'];
-        if (blockedScreens.includes(targetScreen)) {
-            replaceScreen('landing-screen');
-            return;
+        // Liste des écrans où le bouton retour du téléphone est totalement verrouillé
+        const lockedScreens = ['ready-screen', 'game-screen', 'summary-screen', 'leaderboard-screen'];
+
+        if (lockedScreens.includes(currentScreen)) {
+            // Le joueur essaie de faire "Retour" pendant une partie.
+            // On annule son action en remettant l'état de l'écran actuel dans l'historique du navigateur.
+            history.pushState({ screen: currentScreen }, "", "#" + currentScreen.split('-')[0]);
+            return; // On stoppe l'exécution ici, le joueur reste sur sa page
         }
+
         show(targetScreen);
     };
 
