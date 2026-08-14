@@ -941,7 +941,7 @@
     <!-- SETUP SCREEN -->
     <div id="setup-screen" class="screen">
         <div class="unified-header">
-            <button class="btn-icon-round" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
+            <button class="btn-icon-round" onclick="goHome()"><span class="material-symbols-rounded">arrow_back</span></button>
             <h2>Paramètres</h2>
         </div>
         
@@ -982,7 +982,7 @@
     <!-- CATEGORY SCREEN -->
     <div id="category-screen" class="screen">
         <div class="unified-header">
-            <button class="btn-icon-round" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
+            <button class="btn-icon-round" onclick="transitionTo('setup-screen')"><span class="material-symbols-rounded">arrow_back</span></button>
             <h2>Catégories</h2>
         </div>
         <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 16px; gap: 12px;">
@@ -1005,7 +1005,7 @@
     <!-- READY SCREEN -->
     <div id="ready-screen" class="screen">
         <div class="unified-header">
-            <button class="btn-icon-round" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
+            <button class="btn-icon-round" onclick="transitionTo('category-screen')"><span class="material-symbols-rounded">arrow_back</span></button>
             <div class="pill-badge" id="ready-round">Manche 1 / 5</div>
         </div>
         
@@ -1256,10 +1256,30 @@
         preloadData(); // Lance le téléchargement silencieux dès l'ouverture de l'app
     };
 
-    function transitionTo(sc) { history.pushState({ screen: sc }, "", "#" + sc.split('-')[0]); show(sc); }
-    function replaceScreen(sc) { history.replaceState({ screen: sc }, "", "#" + sc.split('-')[0]); show(sc); }
-    function goBack() { history.back(); }
-    function goHome() { replaceScreen('landing-screen'); }
+    function transitionTo(sc) { 
+        currentScreen = sc;
+        history.replaceState({ screen: sc }, "", "#" + sc.split('-')[0]); 
+        show(sc); 
+    }
+
+    function replaceScreen(sc) { 
+        currentScreen = sc;
+        history.replaceState({ screen: sc }, "", "#" + sc.split('-')[0]); 
+        show(sc); 
+    }
+
+function goHome() { 
+        // 1. Réinitialise la liste des catégories sélectionnées
+        selectedCats.clear();
+        
+        // 2. Si les catégories ont déjà été générées, on réinitialise l'interface
+        if (fullData.length > 0) {
+            genCats();
+        }
+
+        // 3. Retourne à l'accueil
+        transitionTo('landing-screen'); 
+    }
 
     function assignCategoryColors() {
         categoryColors = {
@@ -1293,17 +1313,15 @@ let currentScreen = 'landing-screen'; // Nouvelle variable pour mémoriser l'éc
         }, 300);
     }
 
-    window.onpopstate = (e) => {
+window.onpopstate = (e) => {
         const targetScreen = e.state?.screen || 'landing-screen';
         
-        // Liste des écrans où le bouton retour du téléphone est totalement verrouillé
-        const lockedScreens = ['ready-screen', 'game-screen', 'summary-screen', 'leaderboard-screen'];
+        // Verrouillage actif UNIQUEMENT pendant le jeu, le résumé et le podium
+        const lockedScreens = ['game-screen', 'summary-screen', 'leaderboard-screen'];
 
         if (lockedScreens.includes(currentScreen)) {
-            // Le joueur essaie de faire "Retour" pendant une partie.
-            // On annule son action en remettant l'état de l'écran actuel dans l'historique du navigateur.
             history.pushState({ screen: currentScreen }, "", "#" + currentScreen.split('-')[0]);
-            return; // On stoppe l'exécution ici, le joueur reste sur sa page
+            return;
         }
 
         show(targetScreen);
@@ -1475,10 +1493,9 @@ let currentScreen = 'landing-screen'; // Nouvelle variable pour mémoriser l'éc
         }
     }
 
-    function genCats() {
+function genCats() {
         const cont = document.getElementById('category-container');
         cont.innerHTML = ''; 
-        selectedCats.clear(); // On s'assure qu'aucune catégorie n'est sélectionnée au départ
         
         const cats = [...new Set(fullData.map(d => d.category))];
         
@@ -1506,11 +1523,12 @@ let currentScreen = 'landing-screen'; // Nouvelle variable pour mémoriser l'éc
                 }
             }
 
+            const isSelected = selectedCats.has(c);
             const catColor = categoryColors[c] || 'var(--primary)';
             const pill = document.createElement('div');
             
-            // Création de la pilule NON sélectionnée par défaut (sans la classe 'selected')
-            pill.className = 'cat-pill'; 
+            // Si la catégorie était déjà sélectionnée, on conserve la classe 'selected'
+            pill.className = isSelected ? 'cat-pill selected' : 'cat-pill'; 
             pill.style.setProperty('--cat-color', catColor);
             
             pill.innerHTML = `
@@ -1527,32 +1545,29 @@ let currentScreen = 'landing-screen'; // Nouvelle variable pour mémoriser l'éc
                     pill.classList.add('selected'); 
                 }
                 
-                const count = selectedCats.size;
-                document.getElementById('cat-count-val').innerText = count;
-                document.getElementById('cat-label').innerText = count <= 1 ? "sélectionnée" : "sélectionnées";
-                
-                const startBtn = document.getElementById('start-btn');
-                if (selectedCats.size === 0) {
-                    startBtn.disabled = true;
-                    startBtn.style.opacity = "0.5";
-                    startBtn.style.pointerEvents = "none";
-                } else {
-                    startBtn.disabled = false;
-                    startBtn.style.opacity = "1";
-                    startBtn.style.pointerEvents = "auto";
-                }
+                updateCatCounter();
             };
             cont.appendChild(pill);
         });
 
-        // Remet le compteur à 0 et bloque le bouton de démarrage au chargement initial
-        document.getElementById('cat-count-val').innerText = 0;
-        document.getElementById('cat-label').innerText = "sélectionnée";
+        updateCatCounter();
+    }
+
+    function updateCatCounter() {
+        const count = selectedCats.size;
+        document.getElementById('cat-count-val').innerText = count;
+        document.getElementById('cat-label').innerText = count <= 1 ? "sélectionnée" : "sélectionnées";
         
         const startBtn = document.getElementById('start-btn');
-        startBtn.disabled = true;
-        startBtn.style.opacity = "0.5";
-        startBtn.style.pointerEvents = "none";
+        if (count === 0) {
+            startBtn.disabled = true;
+            startBtn.style.opacity = "0.5";
+            startBtn.style.pointerEvents = "none";
+        } else {
+            startBtn.disabled = false;
+            startBtn.style.opacity = "1";
+            startBtn.style.pointerEvents = "auto";
+        }
     }
 
     function selectAllCats(select) {
@@ -1587,28 +1602,31 @@ let currentScreen = 'landing-screen'; // Nouvelle variable pour mémoriser l'éc
     }
 
     /* --- GAME LOOP --- */
-    function startGame() {
-        if(selectedCats.size === 0) return;
+function startGame() {
+        if (selectedCats.size === 0) return;
         playableData = fullData.filter(d => selectedCats.has(d.category)).sort(() => Math.random() - 0.5);
-        curTeam = 0; curTheme = 0; prepareRound();
+        curTeam = 0; 
+        curTheme = 0; 
+        prepareRound();
     }
 
     function prepareRound() {
-        if(teams.every(t => t.rounds >= roundsPerTeam)) { showLB(true); return; }
-        if(teams[curTeam].rounds >= roundsPerTeam) { curTeam = (curTeam+1)%teams.length; prepareRound(); return; }
+        if (teams.every(t => t.rounds >= roundsPerTeam)) { showLB(true); return; }
+        if (teams[curTeam].rounds >= roundsPerTeam) { curTeam = (curTeam + 1) % teams.length; prepareRound(); return; }
         
         const tm = teams[curTeam], th = playableData[curTheme % playableData.length];
         
         document.getElementById('ready-round').innerText = `Manche ${tm.rounds + 1} / ${roundsPerTeam}`;
         const tname = document.getElementById('ready-team');
-        tname.innerText = tm.name; tname.style.color = tm.color;
+        tname.innerText = tm.name; 
+        tname.style.color = tm.color;
         
         document.getElementById('ready-cat').innerText = th.category;
         document.getElementById('ready-theme').innerText = th.theme;
 
         const iconMap = {
             'histoire': 'history_edu', 'sport': 'sports_soccer', 'cinema': 'movie',
-            'musique': 'music_note', 'geographie': 'globe', 'science': 'science',
+            'musique': 'music_note', 'géographie': 'globe', 'science': 'science',
             'animaux': 'pets', 'nourriture': 'restaurant', 'art': 'palette',
             'technologie': 'devices', 'jeux': 'sports_esports'
         };
@@ -1626,10 +1644,15 @@ let currentScreen = 'landing-screen'; // Nouvelle variable pour mémoriser l'éc
         document.getElementById('tut-yes-text').innerText = th.theme;
         document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
         
-        // On nettoie le texte en cachette pour éviter tout résidu visuel de la manche précédente
         document.getElementById('play-card-text').innerText = "";
 
-        replaceScreen('ready-screen');
+        // Si on vient de l'écran des catégories, on PUSH pour pouvoir y revenir avec retour
+        if (currentScreen === 'category-screen') {
+            transitionTo('ready-screen');
+        } else {
+            // Entre les manches, on remplace l'écran pour ne pas empiler l'historique
+            replaceScreen('ready-screen');
+        }
     }
 
     function startGameplay() {
