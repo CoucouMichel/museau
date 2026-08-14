@@ -927,13 +927,43 @@
         input:checked + .slider:before {
             transform: translateX(22px);
         }
+
+        /* Conteneur de l'écran d'accueil */
+        #landing-screen {
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Mosaïque plein écran inclinée */
+        .landing-pattern-bg {
+            position: absolute;
+            inset: -100px;
+            display: flex;
+            justify-content: space-around;
+            transform: rotate(-15deg);
+            opacity: 0.04; /* Discret pour ne pas parasiter le logo */
+            color: #2D2342;
+            pointer-events: none;
+            user-select: none;
+            z-index: 1;
+        }
+
+        /* Assure que le contenu passe bien au-dessus */
+        .landing-hero,
+        .landing-menu-grid {
+            position: relative;
+            z-index: 2;
+        }
     </style>
 </head>
 <body>
 
 <div id="app-frame">
-    <!-- LANDING SCREEN -->
+<!-- LANDING SCREEN -->
     <div id="landing-screen" class="screen active">
+        <!-- Fond en mosaïque d'icônes -->
+        <div class="landing-pattern-bg" id="landing-pattern-bg"></div>
+
         <div class="landing-hero">
             <div class="logo-snout-container">
                 <div class="snout-shape"></div>
@@ -959,9 +989,9 @@
                 <span>Règles</span>
             </button>
             <button class="btn-3d btn-ghost btn-grid" onclick="transitionTo('settings-screen')">
-    <span class="material-symbols-rounded">settings</span>
-    <span>Paramètres</span>
-</button>
+                <span class="material-symbols-rounded">settings</span>
+                <span>Paramètres</span>
+            </button>
         </div>
     </div>
 
@@ -1282,7 +1312,8 @@
     window.onload = () => { 
         renderTeams(); 
         history.replaceState({ screen: 'landing-screen' }, "", "#landing"); 
-        preloadData(); // Lance le téléchargement silencieux dès l'ouverture de l'app
+        preloadData();
+        initLandingPattern(); // <-- Ajouté ici
     };
 
     function transitionTo(sc) { 
@@ -1295,6 +1326,30 @@
         currentScreen = sc;
         history.replaceState({ screen: sc }, "", "#" + sc.split('-')[0]); 
         show(sc); 
+    }
+
+    function initLandingPattern() {
+        const landingBg = document.getElementById('landing-pattern-bg');
+        if (!landingBg) return;
+
+        // Récupère toutes les icônes de toutes les catégories sans doublon
+        const allIcons = [...new Set(Object.values(CATEGORY_ICON_SETS).flat())];
+        
+        let html = '';
+        const numCols = 10;
+        const numRows = 22;
+
+        for (let col = 0; col < numCols; col++) {
+            html += `<div class="pattern-column">`;
+            for (let row = 0; row < numRows; row++) {
+                // Décalage en quinconce pour un mélange parfait
+                const iconIndex = (row * 3 + col * 5) % allIcons.length;
+                html += `<span class="material-symbols-rounded">${allIcons[iconIndex]}</span>`;
+            }
+            html += `</div>`;
+        }
+
+        landingBg.innerHTML = html;
     }
 
 function goHome() { 
