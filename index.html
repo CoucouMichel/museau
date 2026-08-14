@@ -1224,8 +1224,9 @@
 
     window.onload = () => { renderTeams(); history.replaceState({ screen: 'landing-screen' }, "", "#landing"); };
     function transitionTo(sc) { history.pushState({ screen: sc }, "", "#" + sc.split('-')[0]); show(sc); }
+    function replaceScreen(sc) { history.replaceState({ screen: sc }, "", "#" + sc.split('-')[0]); show(sc); }
     function goBack() { history.back(); }
-    function goHome() { transitionTo('landing-screen'); }
+    function goHome() { replaceScreen('landing-screen'); }
 
 function toggleSoundSetting(enabled) {
         soundEnabled = enabled;
@@ -1291,7 +1292,18 @@ function playSound(type) {
             next.classList.add('active');
         }, 300);
     }
-    window.onpopstate = (e) => { show(e.state?.screen || 'landing-screen'); };
+    window.onpopstate = (e) => {
+        const targetScreen = e.state?.screen || 'landing-screen';
+        
+        // Empêche de revenir sur l'écran de jeu ou le récapitulatif via le bouton retour du téléphone
+        const blockedScreens = ['game-screen', 'summary-screen'];
+        if (blockedScreens.includes(targetScreen)) {
+            replaceScreen('landing-screen');
+            return;
+        }
+
+        show(targetScreen);
+    };
 
     /* --- SETUP --- */
     function setOpt(type, val, btn) {
@@ -1598,7 +1610,7 @@ function startSoloMode() {
         // On nettoie le texte en cachette pour éviter tout résidu visuel de la manche précédente
         document.getElementById('play-card-text').innerText = "";
 
-        transitionTo('ready-screen');
+        replaceScreen('ready-screen');
     }
 
     function startGameplay() {
@@ -1666,7 +1678,7 @@ function startSoloMode() {
         }
 
         document.getElementById('countdown-overlay').classList.add('hidden');
-        transitionTo('game-screen');
+        replaceScreen('game-screen');
         
         const tm = teams[curTeam];
         document.getElementById('game-team-badge').innerText = tm.name;
@@ -1799,7 +1811,7 @@ function startSoloMode() {
     const sndTick = new Audio('tick.mp3');
     const sndGo = new Audio('go.mp3');
 
-    const wrongSoundFiles = ['wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3', 'wrong6.mp3'];
+    const wrongSoundFiles = ['wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3', 'wrong6.mp3', 'wrong7.mp3'];
     const wrongAudios = wrongSoundFiles.map(file => new Audio(file));
     const sndWinner = new Audio('winner.mp3');
 
@@ -1826,7 +1838,7 @@ function startSoloMode() {
         
         clearInterval(gameTimerInterval);
         teams[curTeam].score += roundScore; teams[curTeam].rounds++;
-        transitionTo('summary-screen');
+        replaceScreen('summary-screen');
         
         const tm = teams[curTeam];
         const th = playableData[curTheme % playableData.length];
@@ -1891,7 +1903,7 @@ function startSoloMode() {
     }
 
     function showLB(final) {
-        transitionTo('leaderboard-screen');
+        replaceScreen('leaderboard-screen');
         
         const cont = document.getElementById('lb-container');
         cont.innerHTML = '';
