@@ -410,19 +410,33 @@
             text-align: center;
             z-index: 2;
             position: relative;
+            overflow: hidden; 
         }
 
-.card-watermark-icon {
+        /* Trame inclinée avec débordement pour couvrir toute la surface */
+        .card-pattern-bg {
             position: absolute;
-            font-size: clamp(120px, 35vw, 160px);
-            color: var(--cat-color);
-            opacity: 0.07;
-            top: 50%; 
-            left: 50%;
-            transform: translate(-50%, -50%) rotate(-8deg);
+            inset: -70px; /* Déborde largement pour qu'aucun coin ne soit vide avec la rotation */
+            display: flex;
+            justify-content: space-around;
+            transform: rotate(-15deg); /* La rotation dynamique */
+            opacity: 0.05;
+            color: #2D2342;
             pointer-events: none;
             user-select: none;
             z-index: 1;
+        }
+
+        .pattern-column {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .pattern-column .material-symbols-rounded {
+            font-size: 36px;
+            font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24;
         }
 
         .card-word { 
@@ -1080,7 +1094,8 @@
         <div class="play-card-container">
             <div class="play-card" id="play-card">
                 <div class="play-card-inner">
-                    <span class="material-symbols-rounded card-watermark-icon" id="card-watermark-icon">category</span>
+                    <!-- Mosaïque de petites icônes en arrière-plan -->
+                    <div class="card-pattern-bg" id="card-pattern-bg"></div>
                     <span class="card-word" id="play-card-text">Mot à deviner</span>
                 </div>
                 <div class="card-overlay yes"><span class="material-symbols-rounded">check</span></div>
@@ -1295,44 +1310,37 @@ function goHome() {
         transitionTo('landing-screen'); 
     }
 
-    function getCategoryIcon(catName) {
-        if (!catName) return 'category';
-        
-        const map = {
-            "Histoire": "history_edu",
-            "Géographie": "public",
-            "Art": "palette",
-            "Cinéma & TV": "movie",
-            "Musique": "music_note",
-            "Science": "science",
-            "Pop Culture & Geek": "sports_esports",
-            "Gastronomie": "restaurant",
-            "Sport": "sports_soccer",
-            "Vie Quotidienne & Société": "local_cafe",
-            "Monde & Langues": "translate",
-            "Littérature": "menu_book",
-            "Animaux & Nature": "pets"
-        };
+const CATEGORY_ICON_SETS = {
+        "Science": ["science", "biotech", "public", "water_drop", "psychology", "electric_bolt", "coronavirus"],
+        "Gastronomie": ["restaurant", "wine_bar", "local_pizza", "bakery_dining", "icecream", "coffee", "ramen_dining"],
+        "Histoire": ["history_edu", "castle", "hourglass_empty", "temple_hindu", "shield", "menu_book", "military_tech"],
+        "Géographie": ["public", "explore", "terrain", "sailing", "flight_takeoff", "map", "location_on"],
+        "Art": ["palette", "brush", "draw", "museum", "color_lens", "theater_comedy", "format_paint"],
+        "Cinéma & TV": ["movie", "tv", "videocam", "theaters", "live_tv", "smart_display", "camera_roll"],
+        "Musique": ["music_note", "headphones", "speaker", "piano", "album", "graphic_eq", "mic"],
+        "Pop Culture & Geek": ["sports_esports", "stadia_controller", "smart_toy", "rocket_launch", "casino", "shield"],
+        "Sport": ["sports_soccer", "sports_basketball", "sports_tennis", "fitness_center", "trophy", "pool", "timer"],
+        "Vie Quotidienne & Société": ["local_cafe", "shopping_cart", "bed", "home", "directions_car", "work", "groups"],
+        "Monde & Langues": ["translate", "language", "chat", "record_voice_over", "travel_explore", "flag"],
+        "Littérature": ["menu_book", "auto_stories", "import_contacts", "history_edu", "book", "ink_pen"],
+        "Animaux & Nature": ["pets", "forest", "cruelty_free", "nest_cam_wired_stand", "psychology_alt", "bug_report"]
+    };
 
-        // Retourne l'icône exacte ou cherche par mot-clé si le libellé varie
-        if (map[catName]) return map[catName];
+    function getCategoryIcons(catName) {
+        if (!catName) return ["category"];
+        if (CATEGORY_ICON_SETS[catName]) return CATEGORY_ICON_SETS[catName];
 
         const clean = catName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-        if (clean.includes("hist")) return "history_edu";
-        if (clean.includes("geo")) return "public";
-        if (clean.includes("art") || clean.includes("litt")) return "palette";
-        if (clean.includes("cin") || clean.includes("tv")) return "movie";
-        if (clean.includes("mus")) return "music_note";
-        if (clean.includes("scien")) return "science";
-        if (clean.includes("pop") || clean.includes("geek") || clean.includes("jeu")) return "sports_esports";
-        if (clean.includes("gastr") || clean.includes("nourr") || clean.includes("cuis")) return "restaurant";
-        if (clean.includes("sport")) return "sports_soccer";
-        if (clean.includes("lang") || clean.includes("mond")) return "translate";
-        if (clean.includes("anim")) return "pets";
-        
-        return "category";
+        for (const [key, icons] of Object.entries(CATEGORY_ICON_SETS)) {
+            const cleanKey = key.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            if (clean.includes(cleanKey) || cleanKey.includes(clean)) return icons;
+        }
+        return ["category"];
     }
 
+    function getCategoryIcon(catName) {
+        return getCategoryIcons(catName)[0];
+    }
     function assignCategoryColors() {
         categoryColors = {
             "Histoire": "#3B82F6",
@@ -1739,9 +1747,25 @@ function startRealGame() {
         document.getElementById('game-theme-display').innerText = th.theme;
         document.getElementById('game-cat').innerText = th.category;
         
-        // Met à jour l'icône de filigrane de la carte
-        const watermarkEl = document.getElementById('card-watermark-icon');
-        if (watermarkEl) watermarkEl.innerText = getCategoryIcon(th.category);
+// Mosaïque inclinée avec distribution en quinconce
+        const patternBg = document.getElementById('card-pattern-bg');
+        if (patternBg) {
+            const icons = getCategoryIcons(th.category);
+            let html = '';
+            const numCols = 8;  // Plus de colonnes pour couvrir l'angle
+            const numRows = 14; // Plus de rangées de haut en bas
+            
+            for (let col = 0; col < numCols; col++) {
+                html += `<div class="pattern-column">`;
+                for (let row = 0; row < numRows; row++) {
+                    // Formule de saut qui casse les lignes diagonales malgré la rotation
+                    const iconIndex = (row * 2 + col * 3) % icons.length;
+                    html += `<span class="material-symbols-rounded">${icons[iconIndex]}</span>`;
+                }
+                html += `</div>`;
+            }
+            patternBg.innerHTML = html;
+        }
         
         const tBadge = document.getElementById('game-timer');
         clearInterval(gameTimerInterval);
