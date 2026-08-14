@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Museau</title>
+    <title>Museau Party</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -751,17 +751,20 @@
             border-radius: var(--radius-pill); border: 1px solid rgba(45, 35, 66, 0.08); 
             text-align: center; max-width: 100%; word-break: normal; overflow-wrap: normal;
         }
-        .action-pill-btn {
+.action-pill-btn {
+            flex: 1; /* Chaque bouton prend exactement 50% de la largeur disponible */
             background: white;
             border: 1px solid rgba(45, 35, 66, 0.08);
             color: var(--text-main);
             font-family: 'Nunito', sans-serif;
             font-weight: 800;
-            font-size: 12px;
-            padding: 8px 16px;
+            font-size: 13px;
+            padding: 10px 8px;
             border-radius: var(--radius-pill);
             box-shadow: var(--shadow-soft);
             cursor: pointer;
+            text-align: center;
+            white-space: nowrap;
             transition: all 0.2s var(--bounce);
         }
         .action-pill-btn:active {
@@ -1037,23 +1040,26 @@
     </div>
 
     <!-- CATEGORY SCREEN -->
-    <div id="category-screen" class="screen">
+<div id="category-screen" class="screen">
         <div class="unified-header">
             <button class="btn-icon-round" onclick="transitionTo('setup-screen')"><span class="material-symbols-rounded">arrow_back</span></button>
             <h2>Catégories</h2>
         </div>
-        <div style="display: flex; flex-direction: column; align-items: center; margin-bottom: 16px; gap: 12px;">
+        
+        <div style="display: flex; justify-content: center; margin-bottom: 12px;">
             <div class="category-counter">
                 <span id="cat-count-val">0</span> <span id="cat-label">sélectionnées</span>
-            </div>
-            <div style="display: flex; gap: 8px;">
-                <button class="action-pill-btn" onclick="selectAllCats(true)">Tout sélectionner</button>
-                <button class="action-pill-btn" onclick="selectAllCats(false)">Tout désélectionner</button>
             </div>
         </div>
         
         <div class="category-grid" id="category-container">
             <!-- Injected via JS -->
+        </div>
+
+        <!-- Actions de sélection déplacées en bas pour l'accessibilité -->
+        <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px; flex-shrink: 0;">
+            <button class="action-pill-btn" onclick="selectAllCats(true)">Tout sélectionner</button>
+            <button class="action-pill-btn" onclick="selectAllCats(false)">Tout désélectionner</button>
         </div>
 
         <button id="start-btn" class="btn-3d btn-primary" onclick="startGame()" disabled style="opacity: 0.5;">C'est parti !</button>
