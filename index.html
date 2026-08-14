@@ -1219,26 +1219,12 @@
         '#FF5722', '#E91E63', '#3F51B5', '#8BC34A'
     ];
     
-    // Audio (Removed real files for demo, add back your mp3s here if needed)
-    const playsound = (type) => { /* console.log('Playing', type); */ };
+// Paramètres audio et vibration
+    function toggleSoundSetting(enabled) { soundEnabled = enabled; }
+    function toggleVibeSetting(enabled) { vibeEnabled = enabled; }
 
-    window.onload = () => { renderTeams(); history.replaceState({ screen: 'landing-screen' }, "", "#landing"); };
-    function transitionTo(sc) { history.pushState({ screen: sc }, "", "#" + sc.split('-')[0]); show(sc); }
-    function replaceScreen(sc) { history.replaceState({ screen: sc }, "", "#" + sc.split('-')[0]); show(sc); }
-    function goBack() { history.back(); }
-    function goHome() { replaceScreen('landing-screen'); }
-
-function toggleSoundSetting(enabled) {
-        soundEnabled = enabled;
-    }
-
-    function toggleVibeSetting(enabled) {
-        vibeEnabled = enabled;
-    }
-
-function playSound(type) {
+    function playSound(type) {
         if (!soundEnabled) return; // Bloque le son si l'option est désactivée
-        
         try {
             if (type === 'correct') { 
                 sndCorrect.currentTime = 0; 
@@ -1261,8 +1247,19 @@ function playSound(type) {
         }
     }
 
-    // Exemple dans handleBtnSwipe :
-    // triggerVibration(50); // Petite vibration de 50ms
+    // Préchargement des données en arrière-plan
+    let isDataLoading = false;
+
+    window.onload = () => { 
+        renderTeams(); 
+        history.replaceState({ screen: 'landing-screen' }, "", "#landing"); 
+        preloadData(); // Lance le téléchargement silencieux dès l'ouverture de l'app
+    };
+
+    function transitionTo(sc) { history.pushState({ screen: sc }, "", "#" + sc.split('-')[0]); show(sc); }
+    function replaceScreen(sc) { history.replaceState({ screen: sc }, "", "#" + sc.split('-')[0]); show(sc); }
+    function goBack() { history.back(); }
+    function goHome() { replaceScreen('landing-screen'); }
 
     function assignCategoryColors() {
         categoryColors = {
@@ -1292,6 +1289,7 @@ function playSound(type) {
             next.classList.add('active');
         }, 300);
     }
+
     window.onpopstate = (e) => {
         const targetScreen = e.state?.screen || 'landing-screen';
         
@@ -1301,7 +1299,6 @@ function playSound(type) {
             replaceScreen('landing-screen');
             return;
         }
-
         show(targetScreen);
     };
 
@@ -1309,17 +1306,21 @@ function playSound(type) {
     function setOpt(type, val, btn) {
         btn.parentElement.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
-        if (type === 'team') { numTeams = val; renderTeams(); }
+        if (type === 'team') { 
+            numTeams = val; 
+            const label = document.getElementById('teams-label');
+            if (label) label.innerText = (val === 1) ? "Nom & Couleur" : "Noms & Couleurs";
+            renderTeams(); 
+        }
         if (type === 'round') roundsPerTeam = val;
         if (type === 'time') timeLimit = val;
     }
     
-function startSoloMode() {
+    function startSoloMode() {
         numTeams = 1;
         const wrapper = document.getElementById('team-select-wrapper');
         if (wrapper) wrapper.style.display = 'none';
         
-        // Passe l'intitulé au singulier
         const label = document.getElementById('teams-label');
         if (label) label.innerText = "Nom & Couleur";
 
@@ -1332,7 +1333,6 @@ function startSoloMode() {
         const wrapper = document.getElementById('team-select-wrapper');
         if (wrapper) wrapper.style.display = 'block';
 
-        // Remet l'intitulé au pluriel
         const label = document.getElementById('teams-label');
         if (label) label.innerText = "Noms & Couleurs";
 
@@ -1349,7 +1349,6 @@ function startSoloMode() {
     function renderTeams() {
         const cont = document.getElementById('teams-container');
         
-        // 1. On sauvegarde l'état actuel (noms et couleurs)
         const savedData = [];
         cont.querySelectorAll('.input-row').forEach(row => {
             savedData.push({
@@ -1361,7 +1360,6 @@ function startSoloMode() {
         cont.innerHTML = '';
         let usedColors = [];
 
-        // On enregistre les couleurs déjà attribuées aux équipes conservées
         for (let i = 0; i < Math.min(numTeams, savedData.length); i++) {
             usedColors.push(savedData[i].color);
         }
@@ -1370,11 +1368,9 @@ function startSoloMode() {
             let name, color;
 
             if (i < savedData.length) {
-                // Si l'équipe existait déjà, on réutilise son nom et sa couleur
                 name = savedData[i].name;
                 color = savedData[i].color;
             } else {
-                // Pour une nouvelle équipe, on prend un nom par défaut et la première couleur libre
                 name = `Équipe ${i+1}`;
                 color = colors.find(c => !usedColors.includes(c)) || colors[i % colors.length];
                 usedColors.push(color);
@@ -1411,48 +1407,64 @@ function startSoloMode() {
         }
     }
 
+    // Fonction qui télécharge le Gist silencieusement
+    async function preloadData() {
+        if (fullData.length > 0 || isDataLoading) return;
+        isDataLoading = true;
+
+        try {
+            const res = await fetch(DATA_URL);
+            const rawData = await res.json();
+            
+            if (Array.isArray(rawData) && rawData[0]?.category && rawData[0]?.text) {
+                const groupedMap = {};
+                rawData.forEach(row => {
+                    const cat = row.category;
+                    const thm = row.theme;
+                    if (!groupedMap[cat]) groupedMap[cat] = {};
+                    if (!groupedMap[cat][thm]) groupedMap[cat][thm] = [];
+                    groupedMap[cat][thm].push({
+                        text: row.text,
+                        isRelated: row.isRelated === "TRUE" || row.isRelated === true
+                    });
+                });
+
+                fullData = [];
+                for (const [cat, themes] of Object.entries(groupedMap)) {
+                    for (const [thm, items] of Object.entries(themes)) {
+                        fullData.push({ category: cat, theme: thm, items: items });
+                    }
+                }
+            } else {
+                fullData = rawData;
+            }
+        } catch (e) {
+            console.error("Erreur chargement Gist :", e);
+        } finally {
+            isDataLoading = false;
+        }
+    }
+
+    // Fonction exécutée quand on clique sur Continuer
     async function fetchData() {
         teams = [];
-        document.querySelectorAll('.input-row').forEach((row, i) => {
+        document.querySelectorAll('.input-row').forEach((row) => {
             const name = row.querySelector('.team-input').value;
             const color = row.querySelector('.color-picker').dataset.color;
             teams.push({ name: name, color: color, score: 0, rounds: 0 });
         });
-        
-        try {
-            // 1. On va chercher les données plates depuis ton API SheetDB
-            const res = await fetch("https://sheetdb.io/api/v1/yaa8qntqjl8t3" + "?t=" + Date.now());
-            const flatData = await res.json();
-            
-            // 2. On regroupe les lignes par Catégorie et par Thème
-            const groupedMap = {};
-            flatData.forEach(row => {
-                const cat = row.category;
-                const thm = row.theme;
-                
-                if (!groupedMap[cat]) groupedMap[cat] = {};
-                if (!groupedMap[cat][thm]) groupedMap[cat][thm] = [];
-                
-                groupedMap[cat][thm].push({
-                    text: row.text,
-                    isRelated: row.isRelated === "TRUE" || row.isRelated === true
-                });
-            });
-            
-            // 3. On reformate le tout pour recréer la structure exacte qu'attend ton jeu
-            fullData = [];
-            for (const [cat, themes] of Object.entries(groupedMap)) {
-                for (const [thm, items] of Object.entries(themes)) {
-                    fullData.push({ category: cat, theme: thm, items: items });
-                }
-            }
 
+        // Si on clique trop vite et que le Gist charge encore, on attend sagement
+        if (fullData.length === 0) {
+            await preloadData();
+        }
+
+        if (fullData.length > 0) {
             assignCategoryColors();    
             genCats();
             transitionTo('category-screen');
-        } catch(e) { 
-            console.error(e);
-            alert("Erreur de chargement depuis Google Sheets"); 
+        } else {
+            alert("Erreur de chargement des données depuis Gist.");
         }
     }
 
