@@ -412,18 +412,31 @@
             position: relative;
         }
 
-        .play-card-inner::after {
-            content: 'pets';
-            font-family: 'Material Symbols Rounded';
+.card-watermark-icon {
             position: absolute;
-            font-size: 140px;
+            font-size: clamp(120px, 35vw, 160px);
             color: var(--cat-color);
-            opacity: 0.06;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%) rotate(-10deg);
+            opacity: 0.07;
+            top: 50%; 
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-8deg);
             pointer-events: none;
+            user-select: none;
+            z-index: 1;
         }
 
+        .card-word { 
+            position: relative;
+            z-index: 2; /* S'assure que le texte reste bien net au-dessus de l'icône */
+            font-size: 34px;
+            font-weight: 900; 
+            color: var(--text-main); 
+            line-height: 1.2; 
+            word-break: normal; 
+            overflow-wrap: normal;
+            transition: font-size 0.2s ease;
+            text-shadow: 0 2px 4px rgba(45, 35, 66, 0.05);
+        }
         .cat-color-dot {
             width: 10px;
             height: 10px;
@@ -1067,6 +1080,7 @@
         <div class="play-card-container">
             <div class="play-card" id="play-card">
                 <div class="play-card-inner">
+                    <span class="material-symbols-rounded card-watermark-icon" id="card-watermark-icon">category</span>
                     <span class="card-word" id="play-card-text">Mot à deviner</span>
                 </div>
                 <div class="card-overlay yes"><span class="material-symbols-rounded">check</span></div>
@@ -1279,6 +1293,44 @@ function goHome() {
 
         // 3. Retourne à l'accueil
         transitionTo('landing-screen'); 
+    }
+
+    function getCategoryIcon(catName) {
+        if (!catName) return 'category';
+        
+        const map = {
+            "Histoire": "history_edu",
+            "Géographie": "public",
+            "Art": "palette",
+            "Cinéma & TV": "movie",
+            "Musique": "music_note",
+            "Science": "science",
+            "Pop Culture & Geek": "sports_esports",
+            "Gastronomie": "restaurant",
+            "Sport": "sports_soccer",
+            "Vie Quotidienne & Société": "local_cafe",
+            "Monde & Langues": "translate",
+            "Littérature": "menu_book",
+            "Animaux & Nature": "pets"
+        };
+
+        // Retourne l'icône exacte ou cherche par mot-clé si le libellé varie
+        if (map[catName]) return map[catName];
+
+        const clean = catName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        if (clean.includes("hist")) return "history_edu";
+        if (clean.includes("geo")) return "public";
+        if (clean.includes("art") || clean.includes("litt")) return "palette";
+        if (clean.includes("cin") || clean.includes("tv")) return "movie";
+        if (clean.includes("mus")) return "music_note";
+        if (clean.includes("scien")) return "science";
+        if (clean.includes("pop") || clean.includes("geek") || clean.includes("jeu")) return "sports_esports";
+        if (clean.includes("gastr") || clean.includes("nourr") || clean.includes("cuis")) return "restaurant";
+        if (clean.includes("sport")) return "sports_soccer";
+        if (clean.includes("lang") || clean.includes("mond")) return "translate";
+        if (clean.includes("anim")) return "pets";
+        
+        return "category";
     }
 
     function assignCategoryColors() {
@@ -1498,36 +1550,13 @@ function genCats() {
         cont.innerHTML = ''; 
         
         const cats = [...new Set(fullData.map(d => d.category))];
-        
-        const iconMap = {
-            'histoire': 'history_edu',
-            'sport': 'sports_soccer',
-            'cinema': 'movie',
-            'musique': 'music_note',
-            'géographie': 'globe',
-            'science': 'science',
-            'animaux': 'pets',
-            'nourriture': 'restaurant',
-            'art': 'palette',
-            'technologie': 'devices',
-            'jeux': 'sports_esports'
-        };
 
         cats.forEach(c => {
-            let iconName = 'category';
-            const lowerCat = c.toLowerCase();
-            for (const [key, icon] of Object.entries(iconMap)) {
-                if (lowerCat.includes(key)) {
-                    iconName = icon;
-                    break;
-                }
-            }
-
+            const iconName = getCategoryIcon(c);
             const isSelected = selectedCats.has(c);
             const catColor = categoryColors[c] || 'var(--primary)';
             const pill = document.createElement('div');
             
-            // Si la catégorie était déjà sélectionnée, on conserve la classe 'selected'
             pill.className = isSelected ? 'cat-pill selected' : 'cat-pill'; 
             pill.style.setProperty('--cat-color', catColor);
             
@@ -1610,7 +1639,7 @@ function startGame() {
         prepareRound();
     }
 
-    function prepareRound() {
+function prepareRound() {
         if (teams.every(t => t.rounds >= roundsPerTeam)) { showLB(true); return; }
         if (teams[curTeam].rounds >= roundsPerTeam) { curTeam = (curTeam + 1) % teams.length; prepareRound(); return; }
         
@@ -1624,33 +1653,19 @@ function startGame() {
         document.getElementById('ready-cat').innerText = th.category;
         document.getElementById('ready-theme').innerText = th.theme;
 
-        const iconMap = {
-            'histoire': 'history_edu', 'sport': 'sports_soccer', 'cinema': 'movie',
-            'musique': 'music_note', 'géographie': 'globe', 'science': 'science',
-            'animaux': 'pets', 'nourriture': 'restaurant', 'art': 'palette',
-            'technologie': 'devices', 'jeux': 'sports_esports'
-        };
-
-        let readyIconName = 'category';
-        const lowerCat = th.category.toLowerCase();
-        for (const [key, icon] of Object.entries(iconMap)) {
-            if (lowerCat.includes(key)) { readyIconName = icon; break; }
-        }
-
         const catColor = categoryColors[th.category] || 'var(--primary)';
         const readyIcon = document.getElementById('ready-icon');
-        readyIcon.innerText = readyIconName;
+        readyIcon.innerText = getCategoryIcon(th.category);
         readyIcon.style.color = catColor;
+        
         document.getElementById('tut-yes-text').innerText = th.theme;
         document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
         
         document.getElementById('play-card-text').innerText = "";
 
-        // Si on vient de l'écran des catégories, on PUSH pour pouvoir y revenir avec retour
         if (currentScreen === 'category-screen') {
             transitionTo('ready-screen');
         } else {
-            // Entre les manches, on remplace l'écran pour ne pas empiler l'historique
             replaceScreen('ready-screen');
         }
     }
@@ -1687,7 +1702,7 @@ function startGame() {
         tick();
     }
 
-    function startRealGame() {
+function startRealGame() {
         drag = false; 
         
         const th = playableData[curTheme % playableData.length];
@@ -1695,27 +1710,24 @@ function startGame() {
         const catColor = categoryColors[th.category] || 'var(--primary)';
         document.getElementById('play-card').style.setProperty('--cat-color', catColor);
         
-        // 1. On sépare et on mélange tout le catalogue du thème de façon aléatoire
+        // 1. Sépare et mélange les éléments
         const poolT = th.items.filter(i => i.isRelated).sort(() => Math.random() - 0.5);
         const poolF = th.items.filter(i => !i.isRelated).sort(() => Math.random() - 0.5);
         
-        // 2. On garantit d'office un minimum de 2 bonnes et 2 mauvaises réponses
+        // 2. Garantit au moins 2 vrais et 2 faux
         const guaranteedT = poolT.slice(0, 2);
         const guaranteedF = poolF.slice(0, 2);
         
-        // 3. On prend le reste des éléments disponibles (le surplus de poolT et poolF)
+        // 3. Complète à 10 cartes au total
         const remainingPool = [...poolT.slice(2), ...poolF.slice(2)].sort(() => Math.random() - 0.5);
-        
-        // 4. On complète pour atteindre exactement 10 cartes au total
         const remainingNeeded = 10 - (guaranteedT.length + guaranteedF.length);
         const selectedRemaining = remainingPool.slice(0, Math.max(0, remainingNeeded));
         
-        // 5. On assemble le tout et on mélange définitivement l'ordre d'affichage
         roundItems = [...guaranteedT, ...guaranteedF, ...selectedRemaining].sort(() => Math.random() - 0.5);
         
         cardIdx = 0; roundScore = 0; roundHist = [];
         
-        if(roundItems.length > 0) {
+        if (roundItems.length > 0) {
             document.getElementById('play-card-text').innerText = roundItems[0].text;
         }
 
@@ -1726,6 +1738,10 @@ function startGame() {
         document.getElementById('game-team-badge').innerText = tm.name;
         document.getElementById('game-theme-display').innerText = th.theme;
         document.getElementById('game-cat').innerText = th.category;
+        
+        // Met à jour l'icône de filigrane de la carte
+        const watermarkEl = document.getElementById('card-watermark-icon');
+        if (watermarkEl) watermarkEl.innerText = getCategoryIcon(th.category);
         
         const tBadge = document.getElementById('game-timer');
         clearInterval(gameTimerInterval);
