@@ -1056,10 +1056,10 @@
             <!-- Injected via JS -->
         </div>
 
-        <!-- Actions de sélection déplacées en bas pour l'accessibilité -->
-        <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 12px; flex-shrink: 0;">
-            <button class="action-pill-btn" onclick="selectAllCats(true)">Tout sélectionner</button>
+        <!-- Actions occupant exactement 100% de la largeur -->
+        <div style="display: flex; width: 100%; gap: 12px; margin-bottom: 12px; flex-shrink: 0;">
             <button class="action-pill-btn" onclick="selectAllCats(false)">Tout désélectionner</button>
+            <button class="action-pill-btn" onclick="selectAllCats(true)">Tout sélectionner</button>
         </div>
 
         <button id="start-btn" class="btn-3d btn-primary" onclick="startGame()" disabled style="opacity: 0.5;">C'est parti !</button>
@@ -1382,12 +1382,11 @@ const CATEGORY_ICON_SETS = {
         "Art": ["palette", "brush", "draw", "museum", "color_lens", "theater_comedy", "format_paint"],
         "Cinéma & TV": ["movie", "tv", "videocam", "theaters", "live_tv", "smart_display", "camera_roll"],
         "Musique": ["music_note", "headphones", "speaker", "piano", "album", "graphic_eq", "mic"],
-        "Pop Culture & Geek": ["sports_esports", "stadia_controller", "smart_toy", "rocket_launch", "casino", "shield"],
+        "Pop Culture": ["sports_esports", "stadia_controller", "smart_toy", "rocket_launch", "casino", "shield"],
         "Sport": ["sports_soccer", "sports_basketball", "sports_tennis", "fitness_center", "trophy", "pool", "timer"],
         "Vie Quotidienne & Société": ["local_cafe", "shopping_cart", "bed", "home", "directions_car", "work", "groups"],
-        "Monde & Langues": ["translate", "language", "chat", "record_voice_over", "travel_explore", "flag"],
         "Littérature": ["menu_book", "auto_stories", "import_contacts", "history_edu", "book", "ink_pen"],
-        "Animaux & Nature": ["pets", "forest", "cruelty_free", "nest_cam_wired_stand", "psychology_alt", "bug_report"],
+        "Nature": ["pets", "forest", "cruelty_free", "nest_cam_wired_stand", "psychology_alt", "bug_report"],
         "Décalé": ["toys", "sentiment_very_satisfied", "pest_control", "wb_shade", "local_fire_department", "celebration", "psychology_alt"]
     };
 
@@ -1408,18 +1407,19 @@ const CATEGORY_ICON_SETS = {
     }
     function assignCategoryColors() {
         categoryColors = {
-            "Histoire": "#3B82F6",
-            "Géographie": "#00BCD4",
-            "Art": "#FFB800",
-            "Cinéma & TV": "#9C27B0",
-            "Musique": "#EC4899",
-            "Science": "#F97316",
-            "Pop Culture & Geek": "#6366F1",
-            "Gastronomie": "#8B5CF6",
-            "Sport": "#14B8A6",
-            "Vie Quotidienne & Société": "#D97706",
-            "Décalé": "#E11D48",
-            "Monde & Langues": "#0284C7"
+            "Art": "#F59E0B",                      // Ambre doré chaleureux
+            "Cinéma & TV": "#8B5CF6",              // Violet lilas / cinéma
+            "Décalé": "#D946EF",                   // Fuchsia / magenta électrique distinct du rose corail
+            "Gastronomie": "#7C3AED",              // Violet profond
+            "Géographie": "#0284C7",               // Bleu lagon / ciel
+            "Histoire": "#2563EB",                 // Bleu roi classique
+            "Littérature": "#9333EA",              // Pourpre noble
+            "Musique": "#6366F1",                  // Indigo électrique
+            "Nature": "#14B8A6",                   // Sarcelle / Turquoise minéral (distinct du vert menthe #00D084)
+            "Pop Culture": "#4F46E5",       // Bleu nuit / néon
+            "Science": "#EA580C",                  // Orange dynamique
+            "Sport": "#0EA5E9",                    // Bleu azur vif
+            "Vie Quotidienne & Société": "#D97706" // Ocre cuivré
         };
     }
 
@@ -1623,7 +1623,7 @@ function genCats() {
         const cont = document.getElementById('category-container');
         cont.innerHTML = ''; 
         
-        const cats = [...new Set(fullData.map(d => d.category))];
+        const cats = [...new Set(fullData.map(d => d.category))].sort((a, b) => a.localeCompare(b, 'fr'));
 
         cats.forEach(c => {
             const iconName = getCategoryIcon(c);
@@ -1707,7 +1707,43 @@ function genCats() {
     /* --- GAME LOOP --- */
 function startGame() {
         if (selectedCats.size === 0) return;
-        playableData = fullData.filter(d => selectedCats.has(d.category)).sort(() => Math.random() - 0.5);
+
+        // 1. Regroupe et mélange les thèmes par catégorie sélectionnée
+        const themesByCat = {};
+        selectedCats.forEach(cat => {
+            themesByCat[cat] = fullData
+                .filter(d => d.category === cat)
+                .sort(() => Math.random() - 0.5);
+        });
+
+        // 2. Calcule le nombre total de manches à jouer dans la partie
+        const totalRoundsNeeded = teams.length * roundsPerTeam;
+        playableData = [];
+
+        // 3. Tirage : d'abord la catégorie au hasard, puis un thème sans doublon
+        for (let i = 0; i < totalRoundsNeeded; i++) {
+            // Catégories qui possèdent encore au moins un thème non joué
+            const availableCats = Object.keys(themesByCat).filter(cat => themesByCat[cat].length > 0);
+
+            // Si tous les thèmes ont été épuisés, on réinitialise les réserves
+            if (availableCats.length === 0) {
+                selectedCats.forEach(cat => {
+                    themesByCat[cat] = fullData
+                        .filter(d => d.category === cat)
+                        .sort(() => Math.random() - 0.5);
+                });
+            }
+
+            const activeCats = Object.keys(themesByCat).filter(cat => themesByCat[cat].length > 0);
+            
+            // Étape 1 : Choix aléatoire d'une catégorie équitable
+            const randomCat = activeCats[Math.floor(Math.random() * activeCats.length)];
+            
+            // Étape 2 : Extraction du thème (pop évite tout doublon)
+            const pickedTheme = themesByCat[randomCat].pop();
+            playableData.push(pickedTheme);
+        }
+
         curTeam = 0; 
         curTheme = 0; 
         prepareRound();
