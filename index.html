@@ -463,17 +463,6 @@
         .cat-pill.selected .cat-color-dot {
             box-shadow: 0 0 0 2px white;
         }
-
-        .card-word { 
-            font-size: 34px;
-            font-weight: 900; 
-            color: var(--text-main); 
-            line-height: 1.2; 
-            word-break: normal; 
-            overflow-wrap: normal;
-            transition: font-size 0.2s ease;
-            text-shadow: 0 2px 4px rgba(45, 35, 66, 0.05);
-        }
         
         .card-overlay {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: calc(var(--radius-xl) - 4px);
@@ -751,8 +740,8 @@
             border-radius: var(--radius-pill); border: 1px solid rgba(45, 35, 66, 0.08); 
             text-align: center; max-width: 100%; word-break: normal; overflow-wrap: normal;
         }
-.action-pill-btn {
-            flex: 1; /* Chaque bouton prend exactement 50% de la largeur disponible */
+        .action-pill-btn {
+            flex: 1; 
             background: white;
             border: 1px solid rgba(45, 35, 66, 0.08);
             color: var(--text-main);
@@ -944,18 +933,156 @@
             display: flex;
             justify-content: space-around;
             transform: rotate(-15deg);
-            opacity: 0.04; /* Discret pour ne pas parasiter le logo */
+            opacity: 0.04; 
             color: #2D2342;
             pointer-events: none;
             user-select: none;
             z-index: 1;
         }
 
-        /* Assure que le contenu passe bien au-dessus */
         .landing-hero,
         .landing-menu-grid {
             position: relative;
             z-index: 2;
+        }
+
+        /* --- PROFILES & STATS STYLES --- */
+        .profile-bubble {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: var(--radius-pill);
+            background: white;
+            color: var(--text-main);
+            font-size: 15px;
+            font-weight: 800;
+            cursor: pointer;
+            box-shadow: var(--shadow-soft);
+            border: 2px solid transparent;
+            transition: all 0.2s var(--bounce);
+            user-select: none;
+        }
+
+        .profile-bubble:active {
+            transform: scale(0.95);
+        }
+
+        .profile-bubble.selected {
+            border-color: var(--profile-color);
+            background: white;
+            box-shadow: 0 4px 12px rgba(45, 35, 66, 0.1);
+        }
+
+        .profile-bubble-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--profile-color);
+            flex-shrink: 0;
+        }
+
+        .profile-bubble-add {
+            background: rgba(45, 35, 66, 0.06);
+            color: var(--text-muted);
+            border: 2px dashed rgba(45, 35, 66, 0.15);
+            box-shadow: none;
+        }
+
+        .profile-bubble-add:active {
+            background: rgba(45, 35, 66, 0.1);
+        }
+
+        .player-card-item {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: var(--shadow-soft);
+            cursor: pointer;
+            border-left: 6px solid var(--primary);
+            transition: transform 0.2s;
+        }
+        .player-card-item:active { transform: scale(0.98); }
+        
+        .stat-badge-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .stat-badge {
+            flex: 1;
+            background: white;
+            padding: 12px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+        }
+        .stat-badge-val { font-size: 20px; font-weight: 900; color: var(--text-main); }
+        .stat-badge-lbl { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; }
+
+        .cat-stat-row {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 12px 16px;
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .cat-stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 800;
+            font-size: 14px;
+        }
+        .cat-progress-bar-bg {
+            width: 100%;
+            height: 8px;
+            background: rgba(45, 35, 66, 0.08);
+            border-radius: var(--radius-pill);
+            overflow: hidden;
+        }
+        .cat-progress-bar-fill {
+            height: 100%;
+            border-radius: var(--radius-pill);
+            transition: width 0.6s var(--bounce);
+        }
+
+        /* Modal popup création de joueur */
+        .modal-backdrop {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(45, 35, 66, 0.4); backdrop-filter: blur(4px);
+            display: none; align-items: center; justify-content: center;
+            z-index: 3000; padding: 20px;
+            opacity: 0; transition: opacity 0.2s ease;
+        }
+        .modal-backdrop.active { display: flex; opacity: 1; }
+
+        .modal-card {
+            background: white; border-radius: var(--radius-xl);
+            padding: 24px; width: 100%; max-width: 380px;
+            box-shadow: 0 20px 40px rgba(45, 35, 66, 0.2);
+            display: flex; flex-direction: column; gap: 20px;
+            transform: scale(0.9); transition: transform 0.2s var(--bounce);
+        }
+        .modal-backdrop.active .modal-card { transform: scale(1); }
+
+        .color-palette-row {
+            display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+        }
+        .modal-color-dot {
+            width: 36px; height: 36px; border-radius: 50%;
+            cursor: pointer; transition: transform 0.2s;
+            box-shadow: inset 0 -3px 0 rgba(0,0,0,0.15);
+        }
+        .modal-color-dot:active { transform: scale(0.9); }
+        .modal-color-dot.selected {
+            transform: scale(1.15);
+            box-shadow: 0 0 0 3px white, 0 0 0 5px var(--primary);
         }
     </style>
 </head>
@@ -977,7 +1104,7 @@
             </div>
         </div>
         
-        <!-- Menu principal 2x2 propre -->
+        <!-- Menu principal -->
         <div class="landing-menu-grid">
             <button class="btn-3d btn-primary btn-grid" onclick="startSoloMode()">
                 <span class="material-symbols-rounded">person</span>
@@ -986,6 +1113,10 @@
             <button class="btn-3d btn-primary btn-grid" onclick="startMultiMode()">
                 <span class="material-symbols-rounded">groups</span>
                 <span>Multi</span>
+            </button>
+            <button class="btn-3d btn-secondary btn-grid" onclick="openProfilesScreen()" style="grid-column: span 2;">
+                <span class="material-symbols-rounded">leaderboard</span>
+                <span>Statistiques</span>
             </button>
             <button class="btn-3d btn-ghost btn-grid" onclick="transitionTo('rules-screen')">
                 <span class="material-symbols-rounded">menu_book</span>
@@ -1016,13 +1147,20 @@
                 </div>
             </div>
 
-            <span class="section-label" id="teams-label">Noms & Couleurs</span>
-            <div id="teams-container">
-                <!-- Injected via JS -->
+            <div style="margin-bottom: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span class="section-label" style="margin-bottom: 0;">Sélection des joueurs</span>
+                    <span id="player-select-hint" style="font-size: 13px; font-weight: 800; color: var(--primary);">0 / 2 choisis</span>
+                </div>
+                <div id="profiles-selection-grid" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center; padding: 4px 2px;">
+                    <!-- Injecté en JS -->
+                </div>
             </div>
 
             <span class="section-label" style="margin-top: 24px;">Manches par équipe</span>
             <div class="toggle-group" id="round-count">
+                <button class="toggle-btn" onclick="setOpt('round', 1, this)">1</button>
+                <button class="toggle-btn" onclick="setOpt('round', 3, this)">3</button>
                 <button class="toggle-btn selected" onclick="setOpt('round', 5, this)">5</button>
                 <button class="toggle-btn" onclick="setOpt('round', 10, this)">10</button>
                 <button class="toggle-btn" onclick="setOpt('round', 15, this)">15</button>
@@ -1040,7 +1178,7 @@
     </div>
 
     <!-- CATEGORY SCREEN -->
-<div id="category-screen" class="screen">
+    <div id="category-screen" class="screen">
         <div class="unified-header">
             <button class="btn-icon-round" onclick="transitionTo('setup-screen')"><span class="material-symbols-rounded">arrow_back</span></button>
             <h2>Catégories</h2>
@@ -1222,9 +1360,8 @@
 
         <button class="btn-3d btn-primary" onclick="goBack()" style="margin-top: 16px;">J'ai compris !</button>
     </div>
-</div>
 
-<!-- SETTINGS SCREEN -->
+    <!-- SETTINGS SCREEN -->
     <div id="settings-screen" class="screen">
         <div class="unified-header">
             <button class="btn-icon-round" onclick="goBack()"><span class="material-symbols-rounded">arrow_back</span></button>
@@ -1266,6 +1403,47 @@
         <button class="btn-3d btn-primary" onclick="goBack()" style="margin-top: 16px;">Enregistrer</button>
     </div>
 
+    <!-- PROFILES & STATS SCREEN -->
+    <div id="profiles-screen" class="screen">
+        <div class="unified-header">
+            <button class="btn-icon-round" onclick="goHome()"><span class="material-symbols-rounded">arrow_back</span></button>
+            <h2>Statistiques</h2>
+        </div>
+
+        <div id="profiles-view-list" style="flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 8px 4px;">
+            <!-- Liste des joueurs injectée en JS -->
+        </div>
+
+        <!-- Vue détaillée du profil sélectionné -->
+        <div id="profile-detail-view" style="display: none; flex-grow: 1; overflow-y: auto; flex-direction: column; gap: 16px; padding: 8px 4px;">
+            <!-- Fiche détaillée injectée en JS -->
+        </div>
+    </div>
+
+</div>
+
+<!-- POPUP MODAL CRÉATION DE JOUEUR -->
+<div id="new-profile-modal" class="modal-backdrop">
+    <div class="modal-card">
+        <h3 style="text-align: center; font-size: 20px; color: var(--text-main);">Nouveau joueur</h3>
+        
+        <div>
+            <span class="section-label">Pseudo</span>
+            <input type="text" id="modal-player-name" class="team-input" style="width: 100%;" placeholder="Ex: Chloé" maxlength="15">
+        </div>
+
+        <div>
+            <span class="section-label">Couleur fétiche</span>
+            <div class="color-palette-row" id="modal-color-palette"></div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 8px;">
+            <button class="action-pill-btn" onclick="closeNewProfileModal()">Annuler</button>
+            <button class="btn-3d btn-primary" style="flex: 1; height: 48px; margin-bottom: 0; font-size: 14px;" onclick="confirmNewProfile()">Créer</button>
+        </div>
+    </div>
+</div>
+
 <!-- COUNTDOWN OVERLAY -->
 <div id="countdown-overlay" class="hidden"><div id="countdown-number">3</div></div>
 
@@ -1284,12 +1462,57 @@
         '#FF5722', '#E91E63', '#3F51B5', '#8BC34A'
     ];
     
-// Paramètres audio et vibration
+    /* --- GESTION DES PROFILS & STATISTIQUES --- */
+    const STORAGE_KEY_PROFILES = 'museau_player_profiles';
+    let selectedProfileIds = []; 
+    let modalSelectedColor = colors[0];
+
+    function loadProfiles() {
+        try {
+            return JSON.parse(localStorage.getItem(STORAGE_KEY_PROFILES)) || [];
+        } catch (e) {
+            console.error("Erreur lecture profils:", e);
+            return [];
+        }
+    }
+
+    function saveProfiles(profiles) {
+        try {
+            localStorage.setItem(STORAGE_KEY_PROFILES, JSON.stringify(profiles));
+        } catch (e) {
+            console.error("Erreur écriture profils:", e);
+        }
+    }
+
+    function getOrCreateProfile(name, defaultColor) {
+        const trimmedName = name.trim();
+        if (!trimmedName) return null;
+        
+        let profiles = loadProfiles();
+        let profile = profiles.find(p => p.name.toLowerCase() === trimmedName.toLowerCase());
+        
+        if (!profile) {
+            profile = {
+                id: 'p_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                name: trimmedName,
+                color: defaultColor || colors[0],
+                gamesPlayed: 0,
+                gamesWon: 0,
+                totalGroins: 0,
+                statsByCategory: {} 
+            };
+            profiles.push(profile);
+            saveProfiles(profiles);
+        }
+        return profile;
+    }
+
+    // Paramètres audio et vibration
     function toggleSoundSetting(enabled) { soundEnabled = enabled; }
     function toggleVibeSetting(enabled) { vibeEnabled = enabled; }
 
     function playSound(type) {
-        if (!soundEnabled) return; // Bloque le son si l'option est désactivée
+        if (!soundEnabled) return;
         try {
             if (type === 'correct') { 
                 sndCorrect.currentTime = 0; 
@@ -1319,7 +1542,7 @@
         renderTeams(); 
         history.replaceState({ screen: 'landing-screen' }, "", "#landing"); 
         preloadData();
-        initLandingPattern(); // <-- Ajouté ici
+        initLandingPattern();
     };
 
     function transitionTo(sc) { 
@@ -1338,9 +1561,7 @@
         const landingBg = document.getElementById('landing-pattern-bg');
         if (!landingBg) return;
 
-        // Récupère toutes les icônes de toutes les catégories sans doublon
         const allIcons = [...new Set(Object.values(CATEGORY_ICON_SETS).flat())];
-        
         let html = '';
         const numCols = 10;
         const numRows = 22;
@@ -1348,7 +1569,6 @@
         for (let col = 0; col < numCols; col++) {
             html += `<div class="pattern-column">`;
             for (let row = 0; row < numRows; row++) {
-                // Décalage en quinconce pour un mélange parfait
                 const iconIndex = (row * 3 + col * 5) % allIcons.length;
                 html += `<span class="material-symbols-rounded">${allIcons[iconIndex]}</span>`;
             }
@@ -1358,23 +1578,16 @@
         landingBg.innerHTML = html;
     }
 
-function goHome() { 
-        // 1. Réinitialise la liste des catégories sélectionnées
+    function goHome() { 
         selectedCats.clear();
-        
-        // 2. Si les catégories ont déjà été générées, on réinitialise l'interface
-        if (fullData.length > 0) {
-            genCats();
-        }
-
-        // 3. Retourne à l'accueil
+        if (fullData.length > 0) { genCats(); }
         transitionTo('landing-screen'); 
     }
     function goBack() {
         transitionTo('landing-screen');
     }
 
-const CATEGORY_ICON_SETS = {
+    const CATEGORY_ICON_SETS = {
         "Science": ["science", "biotech", "public", "water_drop", "psychology", "electric_bolt", "coronavirus"],
         "Gastronomie": ["restaurant", "wine_bar", "local_pizza", "bakery_dining", "icecream", "coffee", "ramen_dining"],
         "Histoire": ["history_edu", "castle", "hourglass_empty", "temple_hindu", "shield", "menu_book", "military_tech"],
@@ -1384,7 +1597,6 @@ const CATEGORY_ICON_SETS = {
         "Musique": ["music_note", "headphones", "speaker", "piano", "album", "graphic_eq", "mic"],
         "Pop Culture": ["sports_esports", "stadia_controller", "smart_toy", "rocket_launch", "casino", "shield"],
         "Sport": ["sports_soccer", "sports_basketball", "sports_tennis", "fitness_center", "trophy", "pool", "timer"],
-        "Vie Quotidienne & Société": ["local_cafe", "shopping_cart", "bed", "home", "directions_car", "work", "groups"],
         "Littérature": ["menu_book", "auto_stories", "import_contacts", "history_edu", "book", "ink_pen"],
         "Nature": ["pets", "forest", "cruelty_free", "nest_cam_wired_stand", "psychology_alt", "bug_report"],
         "Décalé": ["toys", "sentiment_very_satisfied", "pest_control", "wb_shade", "local_fire_department", "celebration", "psychology_alt"]
@@ -1405,28 +1617,28 @@ const CATEGORY_ICON_SETS = {
     function getCategoryIcon(catName) {
         return getCategoryIcons(catName)[0];
     }
+    
     function assignCategoryColors() {
         categoryColors = {
-            "Art": "#F59E0B",                      // Ambre doré chaleureux
-            "Cinéma & TV": "#8B5CF6",              // Violet lilas / cinéma
-            "Décalé": "#D946EF",                   // Fuchsia / magenta électrique distinct du rose corail
-            "Gastronomie": "#7C3AED",              // Violet profond
-            "Géographie": "#0284C7",               // Bleu lagon / ciel
-            "Histoire": "#2563EB",                 // Bleu roi classique
-            "Littérature": "#9333EA",              // Pourpre noble
-            "Musique": "#6366F1",                  // Indigo électrique
-            "Nature": "#14B8A6",                   // Sarcelle / Turquoise minéral (distinct du vert menthe #00D084)
-            "Pop Culture": "#4F46E5",       // Bleu nuit / néon
-            "Science": "#EA580C",                  // Orange dynamique
-            "Sport": "#0EA5E9",                    // Bleu azur vif
-            "Vie Quotidienne & Société": "#D97706" // Ocre cuivré
+            "Art": "#F59E0B",                      
+            "Cinéma & TV": "#8B5CF6",              
+            "Décalé": "#D946EF",                   
+            "Gastronomie": "#7C3AED",              
+            "Géographie": "#0284C7",               
+            "Histoire": "#2563EB",                 
+            "Littérature": "#9333EA",              
+            "Musique": "#6366F1",                  
+            "Nature": "#14B8A6",                   
+            "Pop Culture": "#4F46E5",       
+            "Science": "#EA580C",                  
+            "Sport": "#0EA5E9"                    
         };
     }
 
-let currentScreen = 'landing-screen'; // Nouvelle variable pour mémoriser l'écran actif
+    let currentScreen = 'landing-screen'; 
 
     function show(sc) {
-        currentScreen = sc; // On met à jour l'écran actuel dès le début de la transition
+        currentScreen = sc; 
         document.querySelectorAll('.screen').forEach(s => {
             s.classList.remove('active');
             setTimeout(() => s.style.display = 'none', 300);
@@ -1439,10 +1651,8 @@ let currentScreen = 'landing-screen'; // Nouvelle variable pour mémoriser l'éc
         }, 300);
     }
 
-window.onpopstate = (e) => {
+    window.onpopstate = (e) => {
         const targetScreen = e.state?.screen || 'landing-screen';
-        
-        // Verrouillage actif UNIQUEMENT pendant le jeu, le résumé et le podium
         const lockedScreens = ['game-screen', 'summary-screen', 'leaderboard-screen'];
 
         if (lockedScreens.includes(currentScreen)) {
@@ -1459,21 +1669,24 @@ window.onpopstate = (e) => {
         btn.classList.add('selected');
         if (type === 'team') { 
             numTeams = val; 
-            const label = document.getElementById('teams-label');
-            if (label) label.innerText = (val === 1) ? "Nom & Couleur" : "Noms & Couleurs";
+            if (selectedProfileIds.length > numTeams) {
+                selectedProfileIds = selectedProfileIds.slice(0, numTeams);
+            }
             renderTeams(); 
         }
         if (type === 'round') roundsPerTeam = val;
         if (type === 'time') timeLimit = val;
     }
-    
+
     function startSoloMode() {
         numTeams = 1;
         const wrapper = document.getElementById('team-select-wrapper');
         if (wrapper) wrapper.style.display = 'none';
-        
-        const label = document.getElementById('teams-label');
-        if (label) label.innerText = "Nom & Couleur";
+
+        // Garde uniquement le premier profil si plusieurs étaient sélectionnés
+        if (selectedProfileIds.length > 1) {
+            selectedProfileIds = selectedProfileIds.slice(0, 1);
+        }
 
         renderTeams();
         transitionTo('setup-screen');
@@ -1484,9 +1697,6 @@ window.onpopstate = (e) => {
         const wrapper = document.getElementById('team-select-wrapper');
         if (wrapper) wrapper.style.display = 'block';
 
-        const label = document.getElementById('teams-label');
-        if (label) label.innerText = "Noms & Couleurs";
-
         const teamGroup = document.getElementById('team-count');
         if (teamGroup) {
             teamGroup.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('selected'));
@@ -1496,69 +1706,146 @@ window.onpopstate = (e) => {
         renderTeams();
         transitionTo('setup-screen');
     }
-    
+
+    let showAllProfiles = false;
+
     function renderTeams() {
-        const cont = document.getElementById('teams-container');
-        
-        const savedData = [];
-        cont.querySelectorAll('.input-row').forEach(row => {
-            savedData.push({
-                name: row.querySelector('.team-input').value,
-                color: row.querySelector('.color-picker').dataset.color
-            });
+        const grid = document.getElementById('profiles-selection-grid');
+        if (!grid) return;
+
+        let profiles = loadProfiles();
+
+        // Trie les profils : les plus récemment joués en premier
+        profiles.sort((a, b) => (b.lastPlayed || 0) - (a.lastPlayed || 0));
+
+        if (selectedProfileIds.length === 0) {
+            selectedProfileIds = profiles.slice(0, numTeams).map(p => p.id);
+        } else if (selectedProfileIds.length > numTeams) {
+            selectedProfileIds = selectedProfileIds.slice(0, numTeams);
+        }
+
+        grid.innerHTML = '';
+
+        // Affichage des 5 premiers (ou de tous si étendu / moins de 7 profils)
+        const displayProfiles = (showAllProfiles || profiles.length <= 6) ? profiles : profiles.slice(0, 5);
+
+        displayProfiles.forEach(p => {
+            const isSelected = selectedProfileIds.includes(p.id);
+            const btn = document.createElement('div');
+            btn.className = `profile-bubble ${isSelected ? 'selected' : ''}`;
+            btn.style.setProperty('--profile-color', p.color);
+            
+            btn.innerHTML = `
+                <span class="profile-bubble-dot"></span>
+                <span>${p.name}</span>
+                ${isSelected ? '<span class="material-symbols-rounded" style="font-size: 18px; color: var(--profile-color);">check</span>' : ''}
+            `;
+
+            btn.onclick = () => toggleSelectProfile(p.id);
+            grid.appendChild(btn);
         });
 
-        cont.innerHTML = '';
-        let usedColors = [];
-
-        for (let i = 0; i < Math.min(numTeams, savedData.length); i++) {
-            usedColors.push(savedData[i].color);
-        }
-
-        for (let i = 0; i < numTeams; i++) {
-            let name, color;
-
-            if (i < savedData.length) {
-                name = savedData[i].name;
-                color = savedData[i].color;
-            } else {
-                name = `Équipe ${i+1}`;
-                color = colors.find(c => !usedColors.includes(c)) || colors[i % colors.length];
-                usedColors.push(color);
-            }
-
-            const div = document.createElement('div');
-            div.className = 'input-row';
-            div.innerHTML = `
-                <div class="color-picker" style="background:${color}" data-color="${color}" onclick="cycleTeamColor(this)"></div>
-                <input type="text" class="team-input" value="${name}">
+        // Bouton pour afficher plus / moins de joueurs
+        if (profiles.length > 6) {
+            const moreBtn = document.createElement('div');
+            moreBtn.className = 'profile-bubble profile-bubble-add';
+            moreBtn.innerHTML = `
+                <span class="material-symbols-rounded" style="font-size: 20px;">${showAllProfiles ? 'expand_less' : 'more_horiz'}</span>
+                <span>${showAllProfiles ? 'Moins' : 'Plus de joueurs'}</span>
             `;
-            cont.appendChild(div);
+            moreBtn.onclick = () => {
+                showAllProfiles = !showAllProfiles;
+                renderTeams();
+            };
+            grid.appendChild(moreBtn);
         }
+
+        // Bouton "+ Nouveau"
+        const addBtn = document.createElement('div');
+        addBtn.className = 'profile-bubble profile-bubble-add';
+        addBtn.innerHTML = `
+            <span class="material-symbols-rounded" style="font-size: 20px;">add</span>
+            <span>Nouveau</span>
+        `;
+        addBtn.onclick = promptNewProfile;
+        grid.appendChild(addBtn);
+
+        updateProfileSelectHint();
     }
 
-    function cycleTeamColor(pickerEl) {
-        const currentColor = pickerEl.dataset.color;
-        const allPickers = Array.from(document.querySelectorAll('.color-picker'));
-        const takenColors = allPickers.filter(p => p !== pickerEl).map(p => p.dataset.color);
-        
-        let currentIndex = colors.indexOf(currentColor);
-        let found = false;
-        let attempts = 0;
-        
-        while (!found && attempts < colors.length) {
-            currentIndex = (currentIndex + 1) % colors.length;
-            const candidateColor = colors[currentIndex];
-            if (!takenColors.includes(candidateColor)) {
-                pickerEl.style.background = candidateColor;
-                pickerEl.dataset.color = candidateColor;
-                found = true;
+    function toggleSelectProfile(profileId) {
+        if (numTeams === 1) {
+            selectedProfileIds = [profileId];
+        } else {
+            if (selectedProfileIds.includes(profileId)) {
+                selectedProfileIds = selectedProfileIds.filter(id => id !== profileId);
+            } else {
+                // Bloque la sélection si le quota d'équipes est déjà atteint
+                if (selectedProfileIds.length < numTeams) {
+                    selectedProfileIds.push(profileId);
+                }
             }
-            attempts++;
+        }
+        renderTeams();
+    }
+
+    function updateProfileSelectHint() {
+        const hint = document.getElementById('player-select-hint');
+        if (hint) {
+            hint.innerText = `${selectedProfileIds.length} / ${numTeams} choisi${selectedProfileIds.length > 1 ? 's' : ''}`;
+            hint.style.color = (selectedProfileIds.length === numTeams) ? "var(--success)" : "var(--primary)";
         }
     }
 
-    // Fonction qui télécharge le Gist silencieusement
+    function promptNewProfile() {
+        const modal = document.getElementById('new-profile-modal');
+        const input = document.getElementById('modal-player-name');
+        const palette = document.getElementById('modal-color-palette');
+        const profiles = loadProfiles();
+
+        input.value = '';
+
+        const availableColor = colors.find(c => !profiles.some(p => p.color === c)) || colors[0];
+        modalSelectedColor = availableColor;
+
+        palette.innerHTML = colors.map(c => `
+            <div class="modal-color-dot ${c === modalSelectedColor ? 'selected' : ''}" 
+                 style="background: ${c};" 
+                 onclick="selectModalColor('${c}', this)">
+            </div>
+        `).join('');
+
+        modal.classList.add('active');
+        setTimeout(() => input.focus(), 150);
+    }
+
+    function selectModalColor(color, el) {
+        modalSelectedColor = color;
+        document.querySelectorAll('.modal-color-dot').forEach(d => d.classList.remove('selected'));
+        el.classList.add('selected');
+    }
+
+    function closeNewProfileModal() {
+        document.getElementById('new-profile-modal').classList.remove('active');
+    }
+
+    function confirmNewProfile() {
+        const input = document.getElementById('modal-player-name');
+        const name = input.value.trim();
+
+        if (!name) {
+            input.focus();
+            return;
+        }
+
+        const newProf = getOrCreateProfile(name, modalSelectedColor);
+        closeNewProfileModal();
+
+        if (newProf) {
+            toggleSelectProfile(newProf.id);
+        }
+    }
+
     async function preloadData() {
         if (fullData.length > 0 || isDataLoading) return;
         isDataLoading = true;
@@ -1596,16 +1883,25 @@ window.onpopstate = (e) => {
         }
     }
 
-    // Fonction exécutée quand on clique sur Continuer
     async function fetchData() {
-        teams = [];
-        document.querySelectorAll('.input-row').forEach((row) => {
-            const name = row.querySelector('.team-input').value;
-            const color = row.querySelector('.color-picker').dataset.color;
-            teams.push({ name: name, color: color, score: 0, rounds: 0 });
+        if (selectedProfileIds.length !== numTeams) {
+            alert(`Veuillez sélectionner exactement ${numTeams} joueur${numTeams > 1 ? 's' : ''} pour lancer la partie.`);
+            return;
+        }
+
+        const profiles = loadProfiles();
+        teams = selectedProfileIds.map(id => {
+            const p = profiles.find(prof => prof.id === id);
+            return {
+                profileId: p.id,
+                name: p.name,
+                color: p.color,
+                score: 0,
+                rounds: 0,
+                categoryStats: {}
+            };
         });
 
-        // Si on clique trop vite et que le Gist charge encore, on attend sagement
         if (fullData.length === 0) {
             await preloadData();
         }
@@ -1619,7 +1915,7 @@ window.onpopstate = (e) => {
         }
     }
 
-function genCats() {
+    function genCats() {
         const cont = document.getElementById('category-container');
         cont.innerHTML = ''; 
         
@@ -1705,10 +2001,9 @@ function genCats() {
     }
 
     /* --- GAME LOOP --- */
-function startGame() {
+    function startGame() {
         if (selectedCats.size === 0) return;
 
-        // 1. Regroupe et mélange les thèmes par catégorie sélectionnée
         const themesByCat = {};
         selectedCats.forEach(cat => {
             themesByCat[cat] = fullData
@@ -1716,16 +2011,12 @@ function startGame() {
                 .sort(() => Math.random() - 0.5);
         });
 
-        // 2. Calcule le nombre total de manches à jouer dans la partie
         const totalRoundsNeeded = teams.length * roundsPerTeam;
         playableData = [];
 
-        // 3. Tirage : d'abord la catégorie au hasard, puis un thème sans doublon
         for (let i = 0; i < totalRoundsNeeded; i++) {
-            // Catégories qui possèdent encore au moins un thème non joué
             const availableCats = Object.keys(themesByCat).filter(cat => themesByCat[cat].length > 0);
 
-            // Si tous les thèmes ont été épuisés, on réinitialise les réserves
             if (availableCats.length === 0) {
                 selectedCats.forEach(cat => {
                     themesByCat[cat] = fullData
@@ -1735,11 +2026,7 @@ function startGame() {
             }
 
             const activeCats = Object.keys(themesByCat).filter(cat => themesByCat[cat].length > 0);
-            
-            // Étape 1 : Choix aléatoire d'une catégorie équitable
             const randomCat = activeCats[Math.floor(Math.random() * activeCats.length)];
-            
-            // Étape 2 : Extraction du thème (pop évite tout doublon)
             const pickedTheme = themesByCat[randomCat].pop();
             playableData.push(pickedTheme);
         }
@@ -1749,7 +2036,7 @@ function startGame() {
         prepareRound();
     }
 
-function prepareRound() {
+    function prepareRound() {
         if (teams.every(t => t.rounds >= roundsPerTeam)) { showLB(true); return; }
         if (teams[curTeam].rounds >= roundsPerTeam) { curTeam = (curTeam + 1) % teams.length; prepareRound(); return; }
         
@@ -1812,7 +2099,7 @@ function prepareRound() {
         tick();
     }
 
-function startRealGame() {
+    function startRealGame() {
         drag = false; 
         
         const th = playableData[curTheme % playableData.length];
@@ -1820,15 +2107,12 @@ function startRealGame() {
         const catColor = categoryColors[th.category] || 'var(--primary)';
         document.getElementById('play-card').style.setProperty('--cat-color', catColor);
         
-        // 1. Sépare et mélange les éléments
         const poolT = th.items.filter(i => i.isRelated).sort(() => Math.random() - 0.5);
         const poolF = th.items.filter(i => !i.isRelated).sort(() => Math.random() - 0.5);
         
-        // 2. Garantit au moins 2 vrais et 2 faux
         const guaranteedT = poolT.slice(0, 2);
         const guaranteedF = poolF.slice(0, 2);
         
-        // 3. Complète à 10 cartes au total
         const remainingPool = [...poolT.slice(2), ...poolF.slice(2)].sort(() => Math.random() - 0.5);
         const remainingNeeded = 10 - (guaranteedT.length + guaranteedF.length);
         const selectedRemaining = remainingPool.slice(0, Math.max(0, remainingNeeded));
@@ -1849,18 +2133,16 @@ function startRealGame() {
         document.getElementById('game-theme-display').innerText = th.theme;
         document.getElementById('game-cat').innerText = th.category;
         
-// Mosaïque inclinée avec distribution en quinconce
         const patternBg = document.getElementById('card-pattern-bg');
         if (patternBg) {
             const icons = getCategoryIcons(th.category);
             let html = '';
-            const numCols = 8;  // Plus de colonnes pour couvrir l'angle
-            const numRows = 14; // Plus de rangées de haut en bas
+            const numCols = 8; 
+            const numRows = 14;
             
             for (let col = 0; col < numCols; col++) {
                 html += `<div class="pattern-column">`;
                 for (let row = 0; row < numRows; row++) {
-                    // Formule de saut qui casse les lignes diagonales malgré la rotation
                     const iconIndex = (row * 2 + col * 3) % icons.length;
                     html += `<span class="material-symbols-rounded">${icons[iconIndex]}</span>`;
                 }
@@ -1931,8 +2213,8 @@ function startRealGame() {
         const card = document.getElementById('play-card');
         
         if (card.style.opacity === '0') return; 
-        
         if(cardIdx >= roundItems.length) return;
+        
         const item = roundItems[cardIdx];
         const correct = (isRight === item.isRelated);
         
@@ -1957,6 +2239,16 @@ function startRealGame() {
             playSound('wrong');
         }
         
+        const th = playableData[curTheme % playableData.length];
+        const tm = teams[curTeam];
+        if (!tm.categoryStats[th.category]) {
+            tm.categoryStats[th.category] = { correct: 0, total: 0 };
+        }
+        tm.categoryStats[th.category].total++;
+        if (correct) {
+            tm.categoryStats[th.category].correct++;
+        }
+
         roundHist.push({ text: item.text, correct: correct, isRelated: item.isRelated });
         cardIdx++;
         
@@ -1994,27 +2286,9 @@ function startRealGame() {
     const sndCorrect = new Audio('correct.mp3');
     const sndTick = new Audio('tick.mp3');
     const sndGo = new Audio('go.mp3');
-
     const wrongSoundFiles = ['wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3', 'wrong6.mp3', 'wrong7.mp3'];
     const wrongAudios = wrongSoundFiles.map(file => new Audio(file));
     const sndWinner = new Audio('winner.mp3');
-
-    function playSound(type) {
-        try {
-            if (type === 'correct') { 
-                sndCorrect.currentTime = 0; 
-                sndCorrect.play().catch(e => console.error("Audio block:", e)); 
-            }
-            else if (type === 'wrong') {
-                const randomIndex = Math.floor(Math.random() * wrongAudios.length);
-                const randomSound = wrongAudios[randomIndex];
-                randomSound.currentTime = 0; 
-                randomSound.play().catch(e => console.error("Audio block:", e));
-            }
-        } catch (e) {
-            console.error("Audio error:", e);
-        }
-    }
 
     /* --- SUMMARY & END GAME --- */
     function endRound() {
@@ -2086,7 +2360,45 @@ function startRealGame() {
         }
     }
 
+    function recordGameStats() {
+        let profiles = loadProfiles();
+        const maxScore = Math.max(...teams.map(t => t.score));
+        
+        teams.forEach(t => {
+            let p = profiles.find(prof => prof.id === t.profileId || prof.name.toLowerCase() === t.name.toLowerCase());
+            if (!p) {
+                p = getOrCreateProfile(t.name, t.color);
+                profiles = loadProfiles();
+                p = profiles.find(prof => prof.id === t.profileId || prof.name.toLowerCase() === t.name.toLowerCase());
+            }
+            if (p) {
+                p.gamesPlayed = (p.gamesPlayed || 0) + 1;
+                p.totalGroins = (p.totalGroins || 0) + t.score;
+                p.color = t.color; 
+                if (t.score === maxScore && teams.length > 1) {
+                    p.gamesWon = (p.gamesWon || 0) + 1;
+                }
+                
+                if (!p.statsByCategory) p.statsByCategory = {};
+                if (t.categoryStats) {
+                    for (const [cat, stats] of Object.entries(t.categoryStats)) {
+                        if (!p.statsByCategory[cat]) {
+                            p.statsByCategory[cat] = { correct: 0, total: 0 };
+                        }
+                        p.statsByCategory[cat].correct += stats.correct;
+                        p.statsByCategory[cat].total += stats.total;
+                    }
+                }
+            }
+        });
+        saveProfiles(profiles);
+    }
+
     function showLB(final) {
+        if (final) {
+            recordGameStats();
+        }
+        
         replaceScreen('leaderboard-screen');
         
         const cont = document.getElementById('lb-container');
@@ -2134,6 +2446,153 @@ function startRealGame() {
         const btn = document.querySelector('#leaderboard-screen .btn-primary');
         if(final) { btn.innerText = "Rejouer"; btn.onclick = () => location.reload(); }
         else { btn.innerText = "Manche Suivante"; btn.onclick = () => prepareRound(); }
+    }
+
+    // --- PROFILES RENDERING LOGIC ---
+    function openProfilesScreen() {
+        assignCategoryColors();
+        showProfilesList();
+        transitionTo('profiles-screen');
+    }
+
+    function showProfilesList() {
+        const listCont = document.getElementById('profiles-view-list');
+        const detailCont = document.getElementById('profile-detail-view');
+        listCont.style.display = 'flex';
+        detailCont.style.display = 'none';
+        
+        const profiles = loadProfiles();
+        if (profiles.length === 0) {
+            listCont.innerHTML = `
+                <div style="text-align: center; padding: 48px 16px; color: var(--text-muted);">
+                    <span class="material-symbols-rounded" style="font-size: 48px; opacity: 0.5;">person_off</span>
+                    <p style="font-weight: 700; margin-top: 12px;">Aucun joueur enregistré pour le moment.<br>Faites une partie pour voir vos stats ici !</p>
+                </div>
+            `;
+            return;
+        }
+
+        listCont.innerHTML = profiles.map(p => {
+            const winRate = p.gamesPlayed > 0 ? Math.round((p.gamesWon / p.gamesPlayed) * 100) : 0;
+            return `
+                <div class="player-card-item" style="border-left-color: ${p.color};" onclick="showProfileDetail('${p.id}')">
+                    <div>
+                        <h3 style="font-size: 18px; font-weight: 900; margin-bottom: 2px;">${p.name}</h3>
+                        <span style="font-size: 13px; color: var(--text-muted); font-weight: 700;">${p.gamesPlayed} partie${p.gamesPlayed > 1 ? 's' : ''} • ${p.totalGroins} groins</span>
+                    </div>
+                    <div style="text-align: right;">
+                        <span style="font-size: 16px; font-weight: 900; color: var(--primary);">${winRate}%</span>
+                        <div style="font-size: 10px; color: var(--text-muted); font-weight: 800; text-transform: uppercase;">Victoires</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+
+function showProfileDetail(profileId) {
+        const profiles = loadProfiles();
+        const p = profiles.find(prof => prof.id === profileId);
+        if (!p) return;
+
+        const listCont = document.getElementById('profiles-view-list');
+        const detailCont = document.getElementById('profile-detail-view');
+        listCont.style.display = 'none';
+        detailCont.style.display = 'flex';
+
+        assignCategoryColors();
+        let totalCards = 0, totalCorrect = 0;
+        const catRows = [];
+
+        const allCategories = Object.keys(categoryColors);
+        
+        allCategories.forEach(cat => {
+            const data = (p.statsByCategory && p.statsByCategory[cat]) ? p.statsByCategory[cat] : { correct: 0, total: 0 };
+            totalCards += data.total;
+            totalCorrect += data.correct;
+            const pct = data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
+            const color = categoryColors[cat] || 'var(--primary)';
+            const icon = getCategoryIcon(cat);
+
+            catRows.push({
+                cat,
+                icon,
+                color,
+                correct: data.correct,
+                total: data.total,
+                pct: pct
+            });
+        });
+
+        catRows.sort((a, b) => b.pct - a.pct || b.total - a.total);
+
+        const overallPct = totalCards > 0 ? Math.round((totalCorrect / totalCards) * 100) : 0;
+
+        detailCont.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <button class="action-pill-btn" style="flex: none; padding: 8px 16px;" onclick="showProfilesList()">
+                    ← Retour
+                </button>
+                <button class="action-pill-btn" style="flex: none; padding: 8px 14px; color: var(--danger); border-color: rgba(255, 77, 77, 0.3);" onclick="deleteProfile('${p.id}')">
+                    <span class="material-symbols-rounded" style="font-size: 18px; vertical-align: middle;">delete</span>
+                    <span>Supprimer</span>
+                </button>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 8px;">
+                <h2 style="font-size: 28px; color: ${p.color};">${p.name}</h2>
+            </div>
+
+            <div class="stat-badge-group">
+                <div class="stat-badge">
+                    <div class="stat-badge-val">${p.gamesPlayed}</div>
+                    <div class="stat-badge-lbl">Parties</div>
+                </div>
+                <div class="stat-badge">
+                    <div class="stat-badge-val">${p.totalGroins}</div>
+                    <div class="stat-badge-lbl">Groins</div>
+                </div>
+                <div class="stat-badge">
+                    <div class="stat-badge-val">${overallPct}%</div>
+                    <div class="stat-badge-lbl">Précision</div>
+                </div>
+            </div>
+
+            <span class="section-label">Réussite par catégorie</span>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+                ${catRows.map(r => `
+                    <div class="cat-stat-row">
+                        <div class="cat-stat-header">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <span class="material-symbols-rounded" style="font-size: 20px; color: ${r.color};">${r.icon}</span>
+                                <span>${r.cat}</span>
+                            </div>
+                            <div>
+                                <span style="font-weight: 900; color: ${r.color};">${r.total > 0 ? r.pct + '%' : '--'}</span>
+                                <span style="font-size: 11px; color: var(--text-muted); margin-left: 4px;">(${r.correct}/${r.total})</span>
+                            </div>
+                        </div>
+                        <div class="cat-progress-bar-bg">
+                            <div class="cat-progress-bar-fill" style="width: ${r.pct}%; background: ${r.color};"></div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    function deleteProfile(profileId) {
+        let profiles = loadProfiles();
+        const profile = profiles.find(p => p.id === profileId);
+        if (!profile) return;
+
+        if (confirm(`Voulez-vous vraiment supprimer le profil de ${profile.name} et toutes ses statistiques ?`)) {
+            profiles = profiles.filter(p => p.id !== profileId);
+            saveProfiles(profiles);
+            
+            selectedProfileIds = selectedProfileIds.filter(id => id !== profileId);
+            
+            showProfilesList();
+        }
     }
 </script>
 </body>
