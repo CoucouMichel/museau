@@ -2110,10 +2110,12 @@
         const poolT = th.items.filter(i => i.isRelated).sort(() => Math.random() - 0.5);
         const poolF = th.items.filter(i => !i.isRelated).sort(() => Math.random() - 0.5);
         
-        const guaranteedT = poolT.slice(0, 2);
-        const guaranteedF = poolF.slice(0, 2);
+        // 2. Garantit au moins 1 vrai et 1 faux (minimum requis)
+        const guaranteedT = poolT.slice(0, 1);
+        const guaranteedF = poolF.slice(0, 1);
         
-        const remainingPool = [...poolT.slice(2), ...poolF.slice(2)].sort(() => Math.random() - 0.5);
+        // 3. Complète à 10 cartes au total avec le reste du pool
+        const remainingPool = [...poolT.slice(1), ...poolF.slice(1)].sort(() => Math.random() - 0.5);
         const remainingNeeded = 10 - (guaranteedT.length + guaranteedF.length);
         const selectedRemaining = remainingPool.slice(0, Math.max(0, remainingNeeded));
         
