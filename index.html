@@ -442,6 +442,30 @@
             font-size: 14px;
         }
 
+        /* Conteneur des groins en temps réel sous le header */
+        .game-score-pills {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 16px;
+            margin-top: 2px;
+        }
+
+        .score-pill-dot {
+            font-size: 22px;
+            animation: popScorePill 0.35s var(--bounce) forwards;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+            line-height: 1;
+            margin: 0 1px;
+        }
+
+        @keyframes popScorePill {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
         .game-timer-badge {
             display: inline-flex;
             align-items: center;
@@ -1585,6 +1609,9 @@
                     <span class="meta-dot">•</span>
                     Carte <span id="game-progress">1/10</span>
                 </div>
+                <div class="game-score-pills" id="game-score-pills">
+                    <!-- Les groins s'ajoutent ici au fil des bonnes réponses -->
+                </div>
             </div>
             
             <div class="top-bar-right">
@@ -2580,6 +2607,18 @@ function transitionTo(sc) {
         tick();
     }
 
+    function updateGameScorePills() {
+        const cont = document.getElementById('game-score-pills');
+        if (!cont) return;
+        
+        // Génère un emoji de groin (ou un point coloré) pour chaque point marqué dans la manche
+        let html = '';
+        for (let i = 0; i < roundScore; i++) {
+            html += `<span class="score-pill-dot">🐽</span>`;
+        }
+        cont.innerHTML = html;
+    }
+
     function startRealGame() {
         drag = false; 
         
@@ -2616,6 +2655,7 @@ function transitionTo(sc) {
         cardIdx = 0; 
         roundScore = 0; 
         roundHist = [];
+        updateGameScorePills(); // Réinitialise l'affichage des groins à 0 au début
         
         if (roundItems.length > 0) {
             const cardTextEl = document.getElementById('play-card-text');
@@ -2840,6 +2880,7 @@ function transitionTo(sc) {
         if (correct) {
             roundScore++;
             playSound('correct');
+            updateGameScorePills(); // Ajoute un groin instantanément au centre avec une animation fun
         } else {
             playSound('wrong');
         }
