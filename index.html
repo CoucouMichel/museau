@@ -427,26 +427,26 @@
         /* --- CARTE DE JEU STYLE PRO DYNAMIQUE --- */
         .play-card {
             --cat-color: var(--primary);
-            background: var(--cat-color); 
-            border-radius: var(--radius-xl);
+            background: #FFFFFF; 
+            border-radius: 26px;
             box-shadow: 
-                0 20px 40px rgba(45, 35, 66, 0.15), 
-                0 4px 12px rgba(45, 35, 66, 0.08);
-            border: none;
+                0 16px 36px rgba(45, 35, 66, 0.12), 
+                0 2px 8px rgba(45, 35, 66, 0.04);
+            border: 1px solid rgba(45, 35, 66, 0.06);
             width: 100%; 
             height: 100%;
             display: flex; 
             align-items: center; 
             justify-content: center;
             text-align: center; 
-            padding: 16px; 
+            padding: 12px; 
             position: absolute; 
             top: 0;
             left: 0;
             user-select: none; 
             touch-action: pan-y;
             overflow: hidden;
-            transition: background 0.3s ease;
+            box-sizing: border-box;
         }
 
         .play-card.current-card {
@@ -457,7 +457,7 @@
             z-index: 5;
             transform: scale(0.95) translateY(12px);
             opacity: 0.85;
-            box-shadow: 0 10px 25px rgba(45, 35, 66, 0.08);
+            box-shadow: 0 8px 20px rgba(45, 35, 66, 0.08);
         }
 
         .card-word-blur {
@@ -471,16 +471,20 @@
             flex-grow: 1; 
             width: 100%;
             height: 100%;
-            background: linear-gradient(145deg, #FFFFFF 0%, #F9F7FC 100%);
-            border-radius: calc(var(--radius-xl) - 8px);
+            background: #FFFFFF;
+            border-radius: 16px;
+            border: 2.5px solid var(--cat-color);
             display: flex; 
+            flex-direction: column;
             align-items: center; 
             justify-content: center; 
-            padding: 16px; 
+            padding: 24px 16px 16px 16px; 
             text-align: center;
             z-index: 2;
             position: relative;
             overflow: hidden; 
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
         }
 
         /* Trame inclinée avec débordement pour couvrir toute la surface */
@@ -513,12 +517,56 @@
             position: relative;
             z-index: 2;
             font-size: 32px;
-            font-weight: 900; 
+            font-weight: 800; 
             color: var(--text-main); 
             line-height: 1.25; 
             word-break: normal; 
             overflow-wrap: normal;
-            text-shadow: 0 2px 4px rgba(45, 35, 66, 0.05);
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        /* Badge de catégorie en haut de la carte */
+        .card-header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: var(--radius-pill);
+            background: var(--cat-color);
+            color: #FFFFFF;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 10px rgba(45, 35, 66, 0.08);
+            z-index: 2;
+            margin-bottom: auto;
+            user-select: none;
+            transition: background 0.3s ease;
+        }
+
+        .card-header-badge .material-symbols-rounded {
+            font-size: 16px;
+            font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .card-footer-category {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--cat-color);
+            opacity: 0.9;
+            margin-top: auto;
+            z-index: 2;
+            white-space: nowrap;
+            display: block;
+            width: 100%;
+            text-align: center;
+            line-height: 1.2;
+            user-select: none;
         }
         .cat-color-dot {
             width: 10px;
@@ -1071,10 +1119,24 @@
             justify-content: space-between;
             box-shadow: var(--shadow-soft);
             cursor: pointer;
-            border-left: 6px solid var(--primary);
+            border: 1px solid rgba(45, 35, 66, 0.05);
             transition: transform 0.2s;
         }
         .player-card-item:active { transform: scale(0.98); }
+
+        .player-card-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .player-card-avatar .material-symbols-rounded {
+            font-size: 24px;
+            font-variation-settings: 'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
         
         .stat-badge-group {
             display: flex;
@@ -1366,17 +1428,17 @@
         </div>
         
         <!-- Catégorie + Thème Uniformisés -->
-        <div style="display: flex; flex-direction: column; align-items: center; width: 100%; margin-bottom: clamp(16px, 4vh, 24px);">
-            <div class="summary-category" id="game-cat">CATÉGORIE</div>
-            <div id="game-theme-display" class="summary-theme">Thème</div>
-        </div>
-        
         <div class="play-card-container">
             <!-- Carte du dessous (suivante) -->
             <div class="play-card next-card" id="next-card">
                 <div class="play-card-inner">
                     <div class="card-pattern-bg" id="next-card-pattern-bg"></div>
+                    <div class="card-header-badge" id="next-card-badge">
+                        <span class="material-symbols-rounded" id="next-card-badge-icon">category</span>
+                        <span id="next-card-badge-text">Catégorie</span>
+                    </div>
                     <span class="card-word card-word-blur" id="next-card-text"></span>
+                    <span class="card-footer-category" id="next-card-footer-cat"></span>
                 </div>
             </div>
 
@@ -1384,7 +1446,12 @@
             <div class="play-card current-card" id="play-card">
                 <div class="play-card-inner">
                     <div class="card-pattern-bg" id="card-pattern-bg"></div>
+                    <div class="card-header-badge" id="card-badge">
+                        <span class="material-symbols-rounded" id="card-badge-icon">category</span>
+                        <span id="card-badge-text">Catégorie</span>
+                    </div>
                     <span class="card-word" id="play-card-text">Mot à deviner</span>
+                    <span class="card-footer-category" id="card-footer-cat"></span>
                 </div>
                 <div class="card-overlay yes"><span class="material-symbols-rounded">check</span></div>
                 <div class="card-overlay no"><span class="material-symbols-rounded">close</span></div>
@@ -2276,28 +2343,42 @@ function transitionTo(sc) {
         drag = false; 
         
         const th = playableData[curTheme % playableData.length];
-
         const catColor = CATEGORY_COLORS[th.category] || 'var(--primary)';
-        document.getElementById('play-card').style.setProperty('--cat-color', catColor);
+        
+        // Application de la couleur de catégorie sur les deux cartes
+        const playCard = document.getElementById('play-card');
+        const nextCard = document.getElementById('next-card');
+        if (playCard) playCard.style.setProperty('--cat-color', catColor);
+        if (nextCard) nextCard.style.setProperty('--cat-color', catColor);
+        
+        // Nom du thème ajusté dynamiquement en bas de carte
+        const footerCat = document.getElementById('card-footer-cat');
+        formatCardTheme(footerCat, th.theme);
+        
+        const nextFooterCat = document.getElementById('next-card-footer-cat');
+        formatCardTheme(nextFooterCat, th.theme);
         
         const poolT = th.items.filter(i => i.isRelated).sort(() => Math.random() - 0.5);
         const poolF = th.items.filter(i => !i.isRelated).sort(() => Math.random() - 0.5);
         
-        // 2. Garantit au moins 1 vrai et 1 faux (minimum requis)
+        // Garantit au moins 1 bonne réponse et 1 intrus
         const guaranteedT = poolT.slice(0, 1);
         const guaranteedF = poolF.slice(0, 1);
         
-        // 3. Complète à 10 cartes au total avec le reste du pool
+        // Complète à 10 cartes au total avec le reste
         const remainingPool = [...poolT.slice(1), ...poolF.slice(1)].sort(() => Math.random() - 0.5);
         const remainingNeeded = 10 - (guaranteedT.length + guaranteedF.length);
         const selectedRemaining = remainingPool.slice(0, Math.max(0, remainingNeeded));
         
         roundItems = [...guaranteedT, ...guaranteedF, ...selectedRemaining].sort(() => Math.random() - 0.5);
         
-        cardIdx = 0; roundScore = 0; roundHist = [];
+        cardIdx = 0; 
+        roundScore = 0; 
+        roundHist = [];
         
         if (roundItems.length > 0) {
-            document.getElementById('play-card-text').innerText = roundItems[0].text;
+            const cardTextEl = document.getElementById('play-card-text');
+            if (cardTextEl) formatCardText(cardTextEl, roundItems[0].text);
         }
 
         document.getElementById('countdown-overlay').classList.add('hidden');
@@ -2305,9 +2386,20 @@ function transitionTo(sc) {
         
         const tm = teams[curTeam];
         document.getElementById('game-team-badge').innerText = tm.name;
-        document.getElementById('game-theme-display').innerText = th.theme;
-        document.getElementById('game-cat').innerText = th.category;
+
+        // Mise à jour de la bulle de catégorie
+        const catIcon = getCategoryIcon(th.category);
+        const cardBadgeText = document.getElementById('card-badge-text');
+        const cardBadgeIcon = document.getElementById('card-badge-icon');
+        if (cardBadgeText) cardBadgeText.innerText = th.category;
+        if (cardBadgeIcon) cardBadgeIcon.innerText = catIcon;
+
+        const nextCardBadgeText = document.getElementById('next-card-badge-text');
+        const nextCardBadgeIcon = document.getElementById('next-card-badge-icon');
+        if (nextCardBadgeText) nextCardBadgeText.innerText = th.category;
+        if (nextCardBadgeIcon) nextCardBadgeIcon.innerText = catIcon;
         
+        // Génération du motif de fond pour les deux cartes
         const icons = getCategoryIcons(th.category);
         let patternHtml = '';
         const numCols = 8; 
@@ -2327,10 +2419,8 @@ function transitionTo(sc) {
 
         const nextPatternBg = document.getElementById('next-card-pattern-bg');
         if (nextPatternBg) nextPatternBg.innerHTML = patternHtml;
-
-        const nextCard = document.getElementById('next-card');
-        if (nextCard) nextCard.style.setProperty('--cat-color', catColor);
         
+        // Gestion du timer
         const tBadge = document.getElementById('game-timer');
         clearInterval(gameTimerInterval);
         if (timeLimit > 0) {
@@ -2369,33 +2459,74 @@ function transitionTo(sc) {
         element.innerText = text;
     }
 
+    function formatCardTheme(element, themeText) {
+        if (!element) return;
+        const len = themeText.length;
+        if (len > 34) {
+            element.style.fontSize = '9px';
+            element.style.letterSpacing = '0.3px';
+        } else if (len > 26) {
+            element.style.fontSize = '10px';
+            element.style.letterSpacing = '0.5px';
+        } else if (len > 18) {
+            element.style.fontSize = '11px';
+            element.style.letterSpacing = '0.8px';
+        } else {
+            element.style.fontSize = '12px';
+            element.style.letterSpacing = '1px';
+        }
+        element.innerText = themeText;
+    }
+
     function loadCard() {
         if (cardIdx >= roundItems.length) { endRound(); return; }
         document.getElementById('game-progress').innerText = `${cardIdx+1}/${roundItems.length}`;
         
+        const th = playableData[curTheme % playableData.length];
         const card = document.getElementById('play-card');
         const nextCard = document.getElementById('next-card');
         const cardTextEl = document.getElementById('play-card-text');
         const nextCardTextEl = document.getElementById('next-card-text');
+        const footerCat = document.getElementById('card-footer-cat');
+        const nextFooterCat = document.getElementById('next-card-footer-cat');
 
-        // 1. Réinitialisation de la carte active
+        // 1. Réinitialisation instantanée de la carte active
         card.style.transition = 'none'; 
         card.style.transform = 'translate(0px, 0px) rotate(0deg)'; 
+        card.style.boxShadow = 'none'; 
+        
+        const overlayYes = card.querySelector('.yes');
+        const overlayNo = card.querySelector('.no');
+        if (overlayYes) { overlayYes.style.transition = 'none'; overlayYes.style.opacity = '0'; }
+        if (overlayNo) { overlayNo.style.transition = 'none'; overlayNo.style.opacity = '0'; }
+        
         card.style.opacity = '1';
-        card.style.boxShadow = ''; 
-        card.querySelector('.yes').style.opacity = '0'; 
-        card.querySelector('.no').style.opacity = '0';
 
         formatCardText(cardTextEl, roundItems[cardIdx].text);
+        formatCardTheme(footerCat, th.theme);
+
+        const catIcon = getCategoryIcon(th.category);
+        const cardBadgeText = document.getElementById('card-badge-text');
+        const cardBadgeIcon = document.getElementById('card-badge-icon');
+        if (cardBadgeText) cardBadgeText.innerText = th.category;
+        if (cardBadgeIcon) cardBadgeIcon.innerText = catIcon;
 
         // 2. Préparation de la carte du dessous
         if (cardIdx + 1 < roundItems.length) {
             nextCard.style.display = 'flex';
             nextCard.style.transition = 'none';
-            nextCard.style.transform = 'scale(0.95) translateY(12px)';
+            nextCard.style.transform = 'scale(0.96) translateY(8px)';
             nextCard.style.opacity = '0.85';
             
             formatCardText(nextCardTextEl, roundItems[cardIdx + 1].text);
+            formatCardTheme(nextFooterCat, th.theme);
+
+            const nextCardBadgeText = document.getElementById('next-card-badge-text');
+            const nextCardBadgeIcon = document.getElementById('next-card-badge-icon');
+            if (nextCardBadgeText) nextCardBadgeText.innerText = th.category;
+            if (nextCardBadgeIcon) nextCardBadgeIcon.innerText = catIcon;
+            
+            nextCardTextEl.style.transition = 'none';
             nextCardTextEl.style.filter = 'blur(6px)';
             nextCardTextEl.style.opacity = '0.7';
         } else {
@@ -2426,9 +2557,9 @@ function transitionTo(sc) {
         card.style.boxShadow = correct ? '0 0 40px rgba(0, 208, 132, 0.8)' : '0 0 40px rgba(255, 77, 77, 0.8)';
 
         // Révélation nette et montée de la carte suivante uniquement à la validation
+        // Révélation du flou sans déplacement vertical parasite
         if (nextCard && cardIdx + 1 < roundItems.length) {
-            nextCard.style.transition = 'transform 0.3s var(--bounce), opacity 0.25s';
-            nextCard.style.transform = 'scale(1) translateY(0px)';
+            nextCard.style.transition = 'opacity 0.2s ease';
             nextCard.style.opacity = '1';
 
             if (nextCardText) {
@@ -2464,7 +2595,12 @@ function transitionTo(sc) {
         roundHist.push({ text: item.text, correct: correct, isRelated: item.isRelated });
         cardIdx++;
         
-        setTimeout(loadCard, 300);
+        setTimeout(() => {
+            card.querySelector('.yes').style.opacity = '0';
+            card.querySelector('.no').style.opacity = '0';
+            card.style.boxShadow = 'none';
+            loadCard();
+        }, 300);
     }
 
     let sx = 0, drag = false;
@@ -2577,7 +2713,18 @@ function transitionTo(sc) {
         if (document.getElementById('summary-screen').classList.contains('active')) return;
         
         clearInterval(gameTimerInterval);
-        teams[curTeam].score += roundScore; teams[curTeam].rounds++;
+        teams[curTeam].score += roundScore; 
+        teams[curTeam].rounds++;
+
+        // Enregistre immédiatement les scores et les catégories de la manche terminée
+        recordRoundStats(curTeam, roundScore, teams[curTeam].categoryStats);
+        teams[curTeam].categoryStats = {}; // Réinitialise pour les manches suivantes
+
+        // Si toute la partie est finie, on valide le gagnant
+        if (teams.every(t => t.rounds >= roundsPerTeam)) {
+            recordFinalGameWin();
+        }
+
         replaceScreen('summary-screen');
         
         const tm = teams[curTeam];
@@ -2642,34 +2789,54 @@ function transitionTo(sc) {
         }
     }
 
-    function recordGameStats() {
+    // Sauvegarde immédiate à la fin de la manche (groins + stats de catégories)
+    function recordRoundStats(teamIndex, roundScoreGained, roundCategoryStats) {
+        let profiles = loadProfiles();
+        const t = teams[teamIndex];
+        if (!t) return;
+
+        let p = profiles.find(prof => prof.id === t.profileId || prof.name.toLowerCase() === t.name.toLowerCase());
+        if (!p) {
+            p = getOrCreateProfile(t.name, t.color);
+            profiles = loadProfiles();
+            p = profiles.find(prof => prof.id === t.profileId || prof.name.toLowerCase() === t.name.toLowerCase());
+        }
+
+        if (p) {
+            // Incrémente la partie jouée lors de la première manche de l'équipe
+            if (t.rounds === 1) {
+                p.gamesPlayed = (p.gamesPlayed || 0) + 1;
+            }
+
+            p.totalGroins = (p.totalGroins || 0) + roundScoreGained;
+            p.color = t.color;
+            p.lastPlayed = Date.now();
+
+            if (!p.statsByCategory) p.statsByCategory = {};
+            if (roundCategoryStats) {
+                for (const [cat, stats] of Object.entries(roundCategoryStats)) {
+                    if (!p.statsByCategory[cat]) {
+                        p.statsByCategory[cat] = { correct: 0, total: 0 };
+                    }
+                    p.statsByCategory[cat].correct += stats.correct;
+                    p.statsByCategory[cat].total += stats.total;
+                }
+            }
+            saveProfiles(profiles);
+        }
+    }
+
+    // Enregistre la victoire si la partie est terminée
+    function recordFinalGameWin() {
+        if (teams.length <= 1) return;
         let profiles = loadProfiles();
         const maxScore = Math.max(...teams.map(t => t.score));
         
         teams.forEach(t => {
-            let p = profiles.find(prof => prof.id === t.profileId || prof.name.toLowerCase() === t.name.toLowerCase());
-            if (!p) {
-                p = getOrCreateProfile(t.name, t.color);
-                profiles = loadProfiles();
-                p = profiles.find(prof => prof.id === t.profileId || prof.name.toLowerCase() === t.name.toLowerCase());
-            }
-            if (p) {
-                p.gamesPlayed = (p.gamesPlayed || 0) + 1;
-                p.totalGroins = (p.totalGroins || 0) + t.score;
-                p.color = t.color; 
-                if (t.score === maxScore && teams.length > 1) {
+            if (t.score === maxScore) {
+                let p = profiles.find(prof => prof.id === t.profileId || prof.name.toLowerCase() === t.name.toLowerCase());
+                if (p) {
                     p.gamesWon = (p.gamesWon || 0) + 1;
-                }
-                
-                if (!p.statsByCategory) p.statsByCategory = {};
-                if (t.categoryStats) {
-                    for (const [cat, stats] of Object.entries(t.categoryStats)) {
-                        if (!p.statsByCategory[cat]) {
-                            p.statsByCategory[cat] = { correct: 0, total: 0 };
-                        }
-                        p.statsByCategory[cat].correct += stats.correct;
-                        p.statsByCategory[cat].total += stats.total;
-                    }
                 }
             }
         });
@@ -2677,10 +2844,6 @@ function transitionTo(sc) {
     }
 
     function showLB(final) {
-        if (final) {
-            recordGameStats();
-        }
-        
         replaceScreen('leaderboard-screen');
         
         const cont = document.getElementById('lb-container');
@@ -2754,16 +2917,30 @@ function transitionTo(sc) {
         }
 
         listCont.innerHTML = profiles.map(p => {
-            const winRate = p.gamesPlayed > 0 ? Math.round((p.gamesWon / p.gamesPlayed) * 100) : 0;
+            // Calcul de la précision globale (bonnes réponses / total des cartes jouées)
+            let totalCards = 0, totalCorrect = 0;
+            if (p.statsByCategory) {
+                Object.values(p.statsByCategory).forEach(st => {
+                    totalCards += (st.total || 0);
+                    totalCorrect += (st.correct || 0);
+                });
+            }
+            const accuracy = totalCards > 0 ? Math.round((totalCorrect / totalCards) * 100) : 0;
+
             return `
-                <div class="player-card-item" style="border-left-color: ${p.color};" onclick="showProfileDetail('${p.id}')">
-                    <div>
-                        <h3 style="font-size: 18px; font-weight: 900; margin-bottom: 2px;">${p.name}</h3>
-                        <span style="font-size: 13px; color: var(--text-muted); font-weight: 700;">${p.gamesPlayed} partie${p.gamesPlayed > 1 ? 's' : ''} • ${p.totalGroins} groins</span>
+                <div class="player-card-item" onclick="showProfileDetail('${p.id}')">
+                    <div style="display: flex; align-items: center; gap: 14px;">
+                        <div class="player-card-avatar" style="background: ${p.color}1A; color: ${p.color};">
+                            <span class="material-symbols-rounded">person</span>
+                        </div>
+                        <div>
+                            <h3 style="font-size: 17px; font-weight: 900; color: var(--text-main); margin-bottom: 2px;">${p.name}</h3>
+                            <span style="font-size: 13px; color: var(--text-muted); font-weight: 700;">${p.gamesPlayed} partie${p.gamesPlayed > 1 ? 's' : ''} • ${p.totalGroins} groin${p.totalGroins > 1 ? 's' : ''}</span>
+                        </div>
                     </div>
                     <div style="text-align: right;">
-                        <span style="font-size: 16px; font-weight: 900; color: var(--primary);">${winRate}%</span>
-                        <div style="font-size: 10px; color: var(--text-muted); font-weight: 800; text-transform: uppercase;">Victoires</div>
+                        <span style="font-size: 16px; font-weight: 900; color: var(--primary);">${accuracy}%</span>
+                        <div style="font-size: 10px; color: var(--text-muted); font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">Précision</div>
                     </div>
                 </div>
             `;
