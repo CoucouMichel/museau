@@ -177,25 +177,69 @@
         }
 
         /* Grille 2x2 rééquilibrée */
-        .landing-menu-grid {
+        /* Barre supérieure d'accueil (Top Bar) */
+        .landing-top-bar {
             width: 100%;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: clamp(12px, 3vh, 24px);
+            z-index: 10;
         }
 
-        .btn-grid {
-            height: 68px; 
-            border-radius: var(--radius-lg); 
-            flex-direction: row;
-            justify-content: center;
+        .btn-top-round {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: white;
+            color: var(--text-main);
+            border: none;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 14px rgba(45, 35, 66, 0.08);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .btn-top-round:active {
+            transform: translateY(2px) scale(0.95);
+        }
+        .btn-top-round .material-symbols-rounded {
+            font-size: 24px;
+        }
+
+        /* Layout menu principal */
+        .landing-actions-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
             gap: 12px;
-            font-size: 16px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            padding: 0 16px;
+            z-index: 10;
+        }
+
+        .landing-modes-row {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .btn-mode-card {
+            flex: 1;
+            height: 60px;
+            border-radius: var(--radius-pill);
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 700;
             text-transform: none;
+            letter-spacing: 0.3px;
+        }
+        .btn-mode-card .material-symbols-rounded {
+            font-size: 22px;
+            font-variation-settings: 'FILL' 1, 'wght' 200, 'GRAD' 0, 'opsz' 24;
         }
 
         .btn-grid .material-symbols-rounded {
@@ -1084,6 +1128,39 @@
             transform: scale(1.15);
             box-shadow: 0 0 0 3px white, 0 0 0 5px var(--primary);
         }
+        /* Grille des thèmes dans les règles */
+        .category-rule-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 16px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(45, 35, 66, 0.06);
+        }
+
+        .category-rule-icon {
+            font-size: 24px;
+            padding: 8px;
+            border-radius: 50%;
+            background: var(--bg-color);
+            flex-shrink: 0;
+        }
+
+        .category-rule-text h3 {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 3px;
+        }
+
+        .category-rule-text p {
+            margin: 0;
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.35;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -1091,9 +1168,19 @@
 <div id="app-frame">
 <!-- LANDING SCREEN -->
     <div id="landing-screen" class="screen active">
-        <!-- Fond en mosaïque d'icônes -->
         <div class="landing-pattern-bg" id="landing-pattern-bg"></div>
 
+        <!-- Top Bar épurée -->
+        <div class="landing-top-bar">
+            <button class="btn-top-round" onclick="transitionTo('settings-screen')" title="Paramètres">
+                <span class="material-symbols-rounded" style="color: var(--text-muted);">settings</span>
+            </button>
+            <button class="btn-top-round" onclick="openProfilesScreen()" title="Statistiques">
+                <span class="material-symbols-rounded" style="color: #FFB800;">emoji_events</span>
+            </button>
+        </div>
+
+        <!-- Hero central -->
         <div class="landing-hero">
             <div class="logo-snout-container">
                 <div class="snout-shape"></div>
@@ -1104,27 +1191,21 @@
             </div>
         </div>
         
-        <!-- Menu principal -->
-        <div class="landing-menu-grid">
-            <button class="btn-3d btn-primary btn-grid" onclick="startSoloMode()">
-                <span class="material-symbols-rounded">person</span>
-                <span>Solo</span>
-            </button>
-            <button class="btn-3d btn-primary btn-grid" onclick="startMultiMode()">
-                <span class="material-symbols-rounded">groups</span>
-                <span>Multi</span>
-            </button>
-            <button class="btn-3d btn-secondary btn-grid" onclick="openProfilesScreen()" style="grid-column: span 2;">
-                <span class="material-symbols-rounded">leaderboard</span>
-                <span>Statistiques</span>
-            </button>
-            <button class="btn-3d btn-ghost btn-grid" onclick="transitionTo('rules-screen')">
-                <span class="material-symbols-rounded">menu_book</span>
-                <span>Règles</span>
-            </button>
-            <button class="btn-3d btn-ghost btn-grid" onclick="transitionTo('settings-screen')">
-                <span class="material-symbols-rounded">settings</span>
-                <span>Paramètres</span>
+        <!-- Actions principales en bas -->
+        <div class="landing-actions-container">
+            <div class="landing-modes-row">
+                <button class="btn-3d btn-primary btn-mode-card" onclick="startSoloMode()">
+                    <span class="material-symbols-rounded">person</span>
+                    <span>Solo</span>
+                </button>
+                <button class="btn-3d btn-primary btn-mode-card" onclick="startMultiMode()">
+                    <span class="material-symbols-rounded">swords</span>
+                    <span>Duel</span>
+                </button>
+            </div>
+            <button class="btn-3d btn-ghost" style="height: 48px; font-size: 14px;" onclick="transitionTo('rules-screen')">
+                <span class="material-symbols-rounded" style="font-size: 20px;">menu_book</span>
+                <span>Règles du jeu</span>
             </button>
         </div>
     </div>
@@ -1356,6 +1437,9 @@
                     <p>Chaque bonne décision te rapporte <strong>1 groin</strong>. L'équipe avec le plus de groins à la fin de la partie l'emporte !</p>
                 </div>
             </div>
+
+            <span class="section-label" style="margin-top: 12px;">Catégories & Thèmes</span>
+            <div id="rules-categories-list" style="display: flex; flex-direction: column; gap: 12px;"></div>
         </div>
 
         <button class="btn-3d btn-primary" onclick="goBack()" style="margin-top: 16px;">J'ai compris !</button>
@@ -1451,7 +1535,35 @@
     /* --- JS LOGIC & STATE --- */
     const DATA_URL = "https://gist.githubusercontent.com/CoucouMichel/1a8f14455a4ad686716af94e8408a18d/raw/data.json";
     let fullData = [], playableData = [], teams = [], selectedCats = new Set();
-    let categoryColors = {};
+    const CATEGORY_COLORS = {
+        "Art": "#F59E0B",
+        "Cinéma & TV": "#8B5CF6",
+        "Décalé": "#D946EF",
+        "Gastronomie": "#7C3AED",
+        "Geek": "#4F46E5",
+        "Géographie": "#0284C7",
+        "Histoire": "#2563EB",
+        "Littérature": "#9333EA",
+        "Musique": "#6366F1",
+        "Nature": "#14B8A6",
+        "Science": "#EA580C",
+        "Sport": "#0EA5E9"
+    };
+
+    const CATEGORY_DESCRIPTIONS = {
+        "Art": "Peinture, sculpture, œuvres de maîtres et mouvements artistiques.",
+        "Cinéma & TV": "Filmographies d'acteurs, réalisateurs, séries cultes et cérémonies.",
+        "Décalé": "Critères transversaux, caractéristiques surprenantes et objets du quotidien.",
+        "Gastronomie": "Plats régionaux, ingrédients phares, vins, spiritueux et cocktails.",
+        "Geek": "Jeux vidéo, comics, mangas, univers de science-fiction, fantasy et mascottes.",
+        "Géographie": "Capitales, frontières, fleuves, monuments mondiaux et réseaux de transports.",
+        "Histoire": "Grandes périodes, dirigeants, conflits majeurs, héros et mythes antiques.",
+        "Littérature": "Romans classiques, bande dessinée franco-belge, théâtre et poésie.",
+        "Musique": "Discographies d'artistes, groupes mythiques, titres cultes et courants musicaux.",
+        "Nature": "Faune, flore, races animales, botanique et habitats naturels.",
+        "Science": "Astronomie, chimie, physique, médecine et grandes inventions.",
+        "Sport": "Palmarès internationaux, tournois majeurs, athlètes de légende et records."
+        };
     let numTeams = 2, roundsPerTeam = 5, curTeam = 0, curTheme = 0;
     let roundItems = [], cardIdx = 0, roundScore = 0, roundHist = [];
     let timeLimit = 0, gameTimerInterval;
@@ -1540,6 +1652,7 @@
 
     window.onload = () => { 
         renderTeams(); 
+        renderRulesCategories();
         history.replaceState({ screen: 'landing-screen' }, "", "#landing"); 
         preloadData();
         initLandingPattern();
@@ -1547,6 +1660,9 @@
 
     function transitionTo(sc) { 
         currentScreen = sc;
+        if (sc === 'rules-screen') {
+            renderRulesCategories();
+        }
         history.replaceState({ screen: sc }, "", "#" + sc.split('-')[0]); 
         show(sc); 
     }
@@ -1618,21 +1734,25 @@
         return getCategoryIcons(catName)[0];
     }
     
-    function assignCategoryColors() {
-        categoryColors = {
-            "Art": "#F59E0B",                      
-            "Cinéma & TV": "#8B5CF6",              
-            "Décalé": "#D946EF",                   
-            "Gastronomie": "#7C3AED",              
-            "Géographie": "#0284C7",               
-            "Histoire": "#2563EB",                 
-            "Littérature": "#9333EA",              
-            "Musique": "#6366F1",                  
-            "Nature": "#14B8A6",                   
-            "Geek": "#4F46E5",       
-            "Science": "#EA580C",                  
-            "Sport": "#0EA5E9"                    
-        };
+    function renderRulesCategories() {
+        const cont = document.getElementById('rules-categories-list');
+        if (!cont) return;
+
+        const cats = Object.keys(CATEGORY_COLORS).sort((a, b) => a.localeCompare(b, 'fr'));
+        cont.innerHTML = cats.map(cat => {
+            const color = CATEGORY_COLORS[cat];
+            const icon = getCategoryIcon(cat);
+            const desc = CATEGORY_DESCRIPTIONS[cat] || '';
+            return `
+                <div class="category-rule-card">
+                    <span class="material-symbols-rounded category-rule-icon" style="color: ${color}; background: ${color}1A;">${icon}</span>
+                    <div class="category-rule-text">
+                        <h3 style="color: ${color};">${cat}</h3>
+                        <p>${desc}</p>
+                    </div>
+                </div>
+            `;
+        }).join('');
     }
 
     let currentScreen = 'landing-screen'; 
@@ -1907,10 +2027,9 @@
         }
 
         if (fullData.length > 0) {
-            assignCategoryColors();    
             genCats();
             transitionTo('category-screen');
-        } else {
+        }else {
             alert("Erreur de chargement des données depuis Gist.");
         }
     }
@@ -1924,7 +2043,7 @@
         cats.forEach(c => {
             const iconName = getCategoryIcon(c);
             const isSelected = selectedCats.has(c);
-            const catColor = categoryColors[c] || 'var(--primary)';
+            const catColor = CATEGORY_COLORS[c] || 'var(--primary)';
             const pill = document.createElement('div');
             
             pill.className = isSelected ? 'cat-pill selected' : 'cat-pill'; 
@@ -2050,7 +2169,7 @@
         document.getElementById('ready-cat').innerText = th.category;
         document.getElementById('ready-theme').innerText = th.theme;
 
-        const catColor = categoryColors[th.category] || 'var(--primary)';
+        const catColor = CATEGORY_COLORS[th.category] || 'var(--primary)';
         const readyIcon = document.getElementById('ready-icon');
         readyIcon.innerText = getCategoryIcon(th.category);
         readyIcon.style.color = catColor;
@@ -2104,7 +2223,7 @@
         
         const th = playableData[curTheme % playableData.length];
 
-        const catColor = categoryColors[th.category] || 'var(--primary)';
+        const catColor = CATEGORY_COLORS[th.category] || 'var(--primary)';
         document.getElementById('play-card').style.setProperty('--cat-color', catColor);
         
         const poolT = th.items.filter(i => i.isRelated).sort(() => Math.random() - 0.5);
@@ -2452,7 +2571,6 @@
 
     // --- PROFILES RENDERING LOGIC ---
     function openProfilesScreen() {
-        assignCategoryColors();
         showProfilesList();
         transitionTo('profiles-screen');
     }
@@ -2501,18 +2619,17 @@ function showProfileDetail(profileId) {
         listCont.style.display = 'none';
         detailCont.style.display = 'flex';
 
-        assignCategoryColors();
         let totalCards = 0, totalCorrect = 0;
         const catRows = [];
 
-        const allCategories = Object.keys(categoryColors);
+        const allCategories = Object.keys(CATEGORY_COLORS);
         
         allCategories.forEach(cat => {
             const data = (p.statsByCategory && p.statsByCategory[cat]) ? p.statsByCategory[cat] : { correct: 0, total: 0 };
             totalCards += data.total;
             totalCorrect += data.correct;
             const pct = data.total > 0 ? Math.round((data.correct / data.total) * 100) : 0;
-            const color = categoryColors[cat] || 'var(--primary)';
+            const color = CATEGORY_COLORS[cat] || 'var(--primary)';
             const icon = getCategoryIcon(cat);
 
             catRows.push({
