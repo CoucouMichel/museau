@@ -426,19 +426,37 @@
                 0 4px 12px rgba(45, 35, 66, 0.08);
             border: none;
             width: 100%; 
-            max-width: 320px; 
-            aspect-ratio: 3/4;
+            height: 100%;
             display: flex; 
             align-items: center; 
             justify-content: center;
             text-align: center; 
             padding: 16px; 
-            position: relative; 
-            z-index: 10;
+            position: absolute; 
+            top: 0;
+            left: 0;
             user-select: none; 
             touch-action: pan-y;
             overflow: hidden;
             transition: background 0.3s ease;
+        }
+
+        .play-card.current-card {
+            z-index: 10;
+        }
+
+        .play-card.next-card {
+            z-index: 5;
+            transform: scale(0.95) translateY(12px);
+            opacity: 0.85;
+            box-shadow: 0 10px 25px rgba(45, 35, 66, 0.08);
+        }
+
+        .card-word-blur {
+            filter: blur(10px);
+            opacity: 0.4;
+            will-change: filter, opacity;
+            transform: translateZ(0);
         }
 
         .play-card-inner { 
@@ -485,14 +503,13 @@
 
         .card-word { 
             position: relative;
-            z-index: 2; /* S'assure que le texte reste bien net au-dessus de l'icône */
-            font-size: 34px;
+            z-index: 2;
+            font-size: 32px;
             font-weight: 900; 
             color: var(--text-main); 
-            line-height: 1.2; 
+            line-height: 1.25; 
             word-break: normal; 
             overflow-wrap: normal;
-            transition: font-size 0.2s ease;
             text-shadow: 0 2px 4px rgba(45, 35, 66, 0.05);
         }
         .cat-color-dot {
@@ -1347,9 +1364,17 @@
         </div>
         
         <div class="play-card-container">
-            <div class="play-card" id="play-card">
+            <!-- Carte du dessous (suivante) -->
+            <div class="play-card next-card" id="next-card">
                 <div class="play-card-inner">
-                    <!-- Mosaïque de petites icônes en arrière-plan -->
+                    <div class="card-pattern-bg" id="next-card-pattern-bg"></div>
+                    <span class="card-word card-word-blur" id="next-card-text"></span>
+                </div>
+            </div>
+
+            <!-- Carte du dessus (active) -->
+            <div class="play-card current-card" id="play-card">
+                <div class="play-card-inner">
                     <div class="card-pattern-bg" id="card-pattern-bg"></div>
                     <span class="card-word" id="play-card-text">Mot à deviner</span>
                 </div>
@@ -2274,23 +2299,28 @@ function transitionTo(sc) {
         document.getElementById('game-theme-display').innerText = th.theme;
         document.getElementById('game-cat').innerText = th.category;
         
-        const patternBg = document.getElementById('card-pattern-bg');
-        if (patternBg) {
-            const icons = getCategoryIcons(th.category);
-            let html = '';
-            const numCols = 8; 
-            const numRows = 14;
-            
-            for (let col = 0; col < numCols; col++) {
-                html += `<div class="pattern-column">`;
-                for (let row = 0; row < numRows; row++) {
-                    const iconIndex = (row * 2 + col * 3) % icons.length;
-                    html += `<span class="material-symbols-rounded">${icons[iconIndex]}</span>`;
-                }
-                html += `</div>`;
+        const icons = getCategoryIcons(th.category);
+        let patternHtml = '';
+        const numCols = 8; 
+        const numRows = 14;
+        
+        for (let col = 0; col < numCols; col++) {
+            patternHtml += `<div class="pattern-column">`;
+            for (let row = 0; row < numRows; row++) {
+                const iconIndex = (row * 2 + col * 3) % icons.length;
+                patternHtml += `<span class="material-symbols-rounded">${icons[iconIndex]}</span>`;
             }
-            patternBg.innerHTML = html;
+            patternHtml += `</div>`;
         }
+
+        const patternBg = document.getElementById('card-pattern-bg');
+        if (patternBg) patternBg.innerHTML = patternHtml;
+
+        const nextPatternBg = document.getElementById('next-card-pattern-bg');
+        if (nextPatternBg) nextPatternBg.innerHTML = patternHtml;
+
+        const nextCard = document.getElementById('next-card');
+        if (nextCard) nextCard.style.setProperty('--cat-color', catColor);
         
         const tBadge = document.getElementById('game-timer');
         clearInterval(gameTimerInterval);
@@ -2313,59 +2343,91 @@ function transitionTo(sc) {
         loadCard();
     }
 
+    function formatCardText(element, text) {
+        const words = text.split(/\s+/);
+        const longestWordLength = Math.max(...words.map(w => w.length));
+        const totalLength = text.length;
+
+        if (longestWordLength > 14 || totalLength > 32) {
+            element.style.fontSize = '22px';
+        } else if (longestWordLength > 11 || totalLength > 24) {
+            element.style.fontSize = '26px';
+        } else if (longestWordLength > 8 || totalLength > 16) {
+            element.style.fontSize = '30px';
+        } else {
+            element.style.fontSize = '34px';
+        }
+        element.innerText = text;
+    }
+
     function loadCard() {
-        if(cardIdx >= roundItems.length) { endRound(); return; }
+        if (cardIdx >= roundItems.length) { endRound(); return; }
         document.getElementById('game-progress').innerText = `${cardIdx+1}/${roundItems.length}`;
-        const card = document.getElementById('play-card');
         
+        const card = document.getElementById('play-card');
+        const nextCard = document.getElementById('next-card');
+        const cardTextEl = document.getElementById('play-card-text');
+        const nextCardTextEl = document.getElementById('next-card-text');
+
+        // 1. Réinitialisation de la carte active
         card.style.transition = 'none'; 
         card.style.transform = 'translate(0px, 0px) rotate(0deg)'; 
-        card.style.opacity = '0';
+        card.style.opacity = '1';
         card.style.boxShadow = ''; 
         card.querySelector('.yes').style.opacity = '0'; 
         card.querySelector('.no').style.opacity = '0';
-        
-        const cardTextEl = document.getElementById('play-card-text');
-        const cardText = roundItems[cardIdx].text;
-        
-        const words = cardText.split(/\s+/);
-        const longestWordLength = Math.max(...words.map(w => w.length));
 
-        if (longestWordLength > 12) {
-            cardTextEl.style.fontSize = '24px';
-        } else if (longestWordLength > 9) {
-            cardTextEl.style.fontSize = '28px';
+        formatCardText(cardTextEl, roundItems[cardIdx].text);
+
+        // 2. Préparation de la carte du dessous
+        if (cardIdx + 1 < roundItems.length) {
+            nextCard.style.display = 'flex';
+            nextCard.style.transition = 'none';
+            nextCard.style.transform = 'scale(0.95) translateY(12px)';
+            nextCard.style.opacity = '0.85';
+            
+            formatCardText(nextCardTextEl, roundItems[cardIdx + 1].text);
+            nextCardTextEl.style.filter = 'blur(10px)';
+            nextCardTextEl.style.opacity = '0.4';
         } else {
-            cardTextEl.style.fontSize = '34px';
+            nextCard.style.display = 'none';
         }
 
-        cardTextEl.innerText = cardText;
-        
-        void card.offsetWidth; 
-        
-        requestAnimationFrame(() => {
-            card.style.transition = 'transform 0.4s var(--bounce), opacity 0.3s';
-            card.style.opacity = '1';
-        });
+        void card.offsetWidth;
     }
 
     /* --- BUTTONS & SOBER PHYSICS --- */
     function handleBtnSwipe(isRight) {
         const card = document.getElementById('play-card');
+        const nextCard = document.getElementById('next-card');
+        const nextCardText = document.getElementById('next-card-text');
         
         if (card.style.opacity === '0') return; 
-        if(cardIdx >= roundItems.length) return;
+        if (cardIdx >= roundItems.length) return;
         
         const item = roundItems[cardIdx];
         const correct = (isRight === item.isRelated);
         
         card.querySelector(isRight ? '.yes' : '.no').style.opacity = '1';
         
-        card.style.transition = 'transform 0.4s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.3s, box-shadow 0.2s';
-        card.style.transform = `translate(${isRight ? 200 : -200}px, 50px) rotate(${isRight ? 20 : -20}deg)`;
+        // Animation de sortie de la carte du dessus
+        card.style.transition = 'transform 0.35s cubic-bezier(0.4, 0.0, 0.2, 1), opacity 0.25s, box-shadow 0.2s';
+        card.style.transform = `translate(${isRight ? 260 : -260}px, 50px) rotate(${isRight ? 22 : -22}deg)`;
         card.style.opacity = '0';
-
         card.style.boxShadow = correct ? '0 0 40px rgba(0, 208, 132, 0.8)' : '0 0 40px rgba(255, 77, 77, 0.8)';
+
+        // Révélation nette et montée de la carte suivante
+        if (nextCard && cardIdx + 1 < roundItems.length) {
+            nextCard.style.transition = 'transform 0.3s var(--bounce), opacity 0.25s';
+            nextCard.style.transform = 'scale(1) translateY(0px)';
+            nextCard.style.opacity = '1';
+
+            if (nextCardText) {
+                nextCardText.style.transition = 'filter 0.25s ease, opacity 0.25s ease';
+                nextCardText.style.filter = 'blur(0px)';
+                nextCardText.style.opacity = '1';
+            }
+        }
 
         const pop = document.createElement('div');
         pop.className = `feedback-pop ${correct ? 'correct' : 'wrong'}`;
@@ -2393,25 +2455,74 @@ function transitionTo(sc) {
         roundHist.push({ text: item.text, correct: correct, isRelated: item.isRelated });
         cardIdx++;
         
-        setTimeout(loadCard, 350);
+        setTimeout(loadCard, 300);
     }
 
     let sx = 0, drag = false, cardEl = document.getElementById('play-card');
-    const startDrag = (x) => { sx = x; drag = true; cardEl.style.transition = 'none'; };
-    const moveDrag = (x) => {
-        if(!drag) return; const dx = x - sx;
-        cardEl.style.transform = `translate(${dx}px, ${Math.abs(dx)/10}px) rotate(${dx*0.05}deg)`;
-        cardEl.querySelector('.yes').style.opacity = dx>0 ? Math.min(dx/100,1) : 0;
-        cardEl.querySelector('.no').style.opacity = dx<0 ? Math.min(-dx/100,1) : 0;
+    const startDrag = (x) => { 
+        sx = x; 
+        drag = true; 
+        cardEl.style.transition = 'none'; 
+        const nextCard = document.getElementById('next-card');
+        if (nextCard) nextCard.style.transition = 'none';
+        const nextCardText = document.getElementById('next-card-text');
+        if (nextCardText) nextCardText.style.transition = 'none';
     };
+
+    const moveDrag = (x) => {
+        if (!drag) return; 
+        const dx = x - sx;
+        cardEl.style.transform = `translate(${dx}px, ${Math.abs(dx)/10}px) rotate(${dx*0.05}deg)`;
+        cardEl.querySelector('.yes').style.opacity = dx > 0 ? Math.min(dx/100, 1) : 0;
+        cardEl.querySelector('.no').style.opacity = dx < 0 ? Math.min(-dx/100, 1) : 0;
+
+        // Ratio de progression du glissement (0 à 1)
+        const progress = Math.min(Math.abs(dx) / 120, 1);
+
+        const nextCard = document.getElementById('next-card');
+        const nextCardText = document.getElementById('next-card-text');
+
+        if (nextCard && cardIdx + 1 < roundItems.length) {
+            const scale = 0.95 + (progress * 0.05);
+            const translateY = 12 - (progress * 12);
+            const opacity = 0.85 + (progress * 0.15);
+            nextCard.style.transform = `scale(${scale}) translateY(${translateY}px)`;
+            nextCard.style.opacity = opacity;
+
+            if (nextCardText) {
+                const blurVal = (10 * (1 - progress)).toFixed(1);
+                const textOpacity = (0.4 + (progress * 0.6)).toFixed(2);
+                nextCardText.style.filter = `blur(${blurVal}px)`;
+                nextCardText.style.opacity = textOpacity;
+            }
+        }
+    };
+
     const endDrag = (x) => {
-        if(!drag) return; drag = false; const dx = x - sx;
-        if(Math.abs(dx) > 80) handleBtnSwipe(dx > 0);
-        else {
-            cardEl.style.transition = 'transform 0.4s var(--bounce)'; 
+        if (!drag) return; 
+        drag = false; 
+        const dx = x - sx;
+        if (Math.abs(dx) > 80) {
+            handleBtnSwipe(dx > 0);
+        } else {
+            cardEl.style.transition = 'transform 0.35s var(--bounce)'; 
             cardEl.style.transform = 'translate(0px, 0px) rotate(0deg)';
             cardEl.querySelector('.yes').style.opacity = 0; 
             cardEl.querySelector('.no').style.opacity = 0;
+
+            const nextCard = document.getElementById('next-card');
+            const nextCardText = document.getElementById('next-card-text');
+            if (nextCard && cardIdx + 1 < roundItems.length) {
+                nextCard.style.transition = 'transform 0.35s var(--bounce), opacity 0.35s';
+                nextCard.style.transform = 'scale(0.95) translateY(12px)';
+                nextCard.style.opacity = '0.85';
+
+                if (nextCardText) {
+                    nextCardText.style.transition = 'filter 0.35s ease, opacity 0.35s ease';
+                    nextCardText.style.filter = 'blur(10px)';
+                    nextCardText.style.opacity = '0.4';
+                }
+            }
         }
     };
     
