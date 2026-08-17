@@ -717,59 +717,107 @@
             font-size: clamp(24px, 6vw, 28px);
         }
 
-        /* --- 8. SUMMARY SCREEN (WORD CLOUD) --- */
-        .summary-header { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            margin-bottom: clamp(12px, 3vh, 24px); 
-        }
-        
-        #sum-team {
-            font-size: clamp(22px, 6vw, 32px);
-            margin-bottom: clamp(4px, 1vh, 8px) !important;
-        }
-        
-        .summary-score-wrapper { 
-            display: flex; 
-            align-items: baseline; 
-            justify-content: center; 
-            gap: 4px; 
-            margin-bottom: clamp(8px, 2vh, 16px); 
-        }
-        
-        .summary-score { 
-            font-size: clamp(48px, 15vw, 72px); 
-            font-weight: 900; 
-            line-height: 1; 
-        }
-        
-        .summary-score-unit { 
-            font-size: clamp(18px, 5vw, 26px); 
-            font-weight: 800; 
-            opacity: 0.8; 
-        }
-        
-        .summary-category { 
-            font-size: clamp(11px, 3vw, 14px); 
-            font-weight: 800; 
-            color: var(--text-muted); 
-            text-transform: uppercase; 
-            letter-spacing: 1px; 
-            margin-bottom: clamp(4px, 1vh, 8px); 
-        }
-        
-        .summary-theme { 
-            background: rgba(45, 35, 66, 0.05); 
-            color: var(--text-main); 
-            font-size: clamp(14px, 4vw, 18px); 
-            font-weight: 800; 
-            padding: clamp(6px, 1.5vh, 10px) clamp(12px, 4vw, 20px); 
-            border-radius: var(--radius-pill); 
-            border: 1px solid rgba(45, 35, 66, 0.08); 
-            text-align: center;
+        /* --- 8. SUMMARY SCREEN (STRUCTURE PRO) --- */
+        .summary-card-hero {
+            background: var(--surface-color);
+            border-radius: var(--radius-xl);
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-lighter);
+            margin-bottom: 16px;
+            width: 100%;
         }
 
+        .summary-theme-tag {
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 90%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .summary-score-display {
+            display: flex;
+            align-items: baseline;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .summary-score {
+            font-size: 44px;
+            font-weight: 900;
+            line-height: 1;
+            opacity: 0;
+            transform: scale(0.6);
+            transition: all 0.4s var(--bounce);
+        }
+
+        .summary-score.revealed {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .summary-score-unit {
+            font-size: 18px;
+            font-weight: 800;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .summary-groins-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            min-height: 28px;
+            padding: 4px 10px;
+            background: var(--pill-bg);
+            border-radius: var(--radius-pill);
+        }
+
+        .summary-groin-item {
+            font-size: 20px;
+            line-height: 1;
+            opacity: 0;
+            transform: scale(0);
+            animation: popSummaryGroin 0.35s var(--bounce) forwards;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        @keyframes popSummaryGroin {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.25); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .pill-badge {
+            background: white; 
+            color: var(--text-main); 
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800; 
+            font-size: 14px;
+            padding: 8px 16px; 
+            border-radius: var(--radius-pill); 
+            box-shadow: 0 4px 12px rgba(45, 35, 66, 0.08);
+            border: 1px solid rgba(45, 35, 66, 0.04);
+            display: inline-flex; 
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            z-index: 5;
+        }
+
+        /* --- RETOUR DE L'ANCIEN NUAGE DE RÉPONSES --- */
         .word-cloud-container {
             flex-grow: 1; 
             width: 100%; 
@@ -1661,7 +1709,6 @@
     </div>
 
     <!-- SUMMARY SCREEN -->
-    <!-- SUMMARY SCREEN -->
     <div id="summary-screen" class="screen">
         <div class="game-top-bar-modern">
             <div class="top-bar-left">
@@ -1680,21 +1727,24 @@
             <div class="top-bar-right"></div>
         </div>
 
-        <div class="summary-header" style="margin-top: 12px;">
-            <div class="summary-score-wrapper">
+        <!-- Carte centrale épurée -->
+        <div class="summary-card-hero">
+            <div class="summary-theme-tag" id="sum-theme">Thème</div>
+
+            <div class="summary-score-display">
                 <div class="summary-score" id="sum-score">+0</div>
                 <div class="summary-score-unit" id="sum-score-unit">groins</div>
             </div>
-            
-            <div class="summary-category" id="sum-category">Catégorie</div>
-            <div class="summary-theme" id="sum-theme">Theme</div>
+
+            <div class="summary-groins-row" id="summary-groins-row"></div>
         </div>
 
+        <!-- Nuage de réponses d'origine -->
         <div class="word-cloud-container" id="word-cloud">
-            <!-- Pills injected here -->
+            <!-- Injecté en JS -->
         </div>
 
-        <button class="btn-3d btn-primary" id="sum-next-btn">Suivant</button>
+        <button class="btn-3d btn-primary" id="sum-next-btn" style="margin-top: 8px;">Suivant</button>
     </div>
     
     <!-- LEADERBOARD SCREEN -->
@@ -3038,35 +3088,71 @@ function transitionTo(sc) {
         sumTeam.style.color = tm.color;
         
         const scoreEl = document.getElementById('sum-score');
+        const unitEl = document.getElementById('sum-score-unit');
+        const groinsRow = document.getElementById('summary-groins-row');
+
         scoreEl.innerText = `+${roundScore}`;
         scoreEl.style.color = tm.color;
-        
-        const unitEl = document.getElementById('sum-score-unit');
         unitEl.innerText = roundScore <= 1 ? "groin" : "groins";
         unitEl.style.color = tm.color;
         
-        document.getElementById('sum-category').innerText = th.category;
-        document.getElementById('sum-theme').innerText = th.theme;
+        // Séquence d'animation fun
+        groinsRow.innerHTML = '';
+        scoreEl.classList.remove('revealed');
+        unitEl.style.opacity = '0';
+
+        if (roundScore > 0) {
+            // Affiche chaque groin un par un avec un léger délai en cascade
+            for (let i = 0; i < roundScore; i++) {
+                setTimeout(() => {
+                    const groinSpan = document.createElement('span');
+                    groinSpan.className = 'summary-groin-item';
+                    groinSpan.innerText = '🐽';
+                    groinsRow.appendChild(groinSpan);
+                    
+                    // Joue un petit son optionnel de tick si souhaité
+                }, i * 150);
+            }
+
+            // Une fois que tous les groins sont apparus, on révèle le texte du score en gros
+            const totalDuration = (roundScore * 150) + 300;
+            setTimeout(() => {
+                scoreEl.classList.add('revealed');
+                unitEl.style.opacity = '1';
+            }, totalDuration);
+        } else {
+            // Si 0 point, on révèle directement
+            scoreEl.classList.add('revealed');
+            unitEl.style.opacity = '1';
+        }
+        
+        const sumTheme = document.getElementById('sum-theme');
+        if (sumTheme) sumTheme.innerText = th.theme;
+        
+        const sumCategory = document.getElementById('sum-category');
+        if (sumCategory) sumCategory.innerText = th.category;
         
         const cloud = document.getElementById('word-cloud');
-        cloud.innerHTML = '';
-        roundHist.forEach((h, i) => {
-            const pill = document.createElement('div');
-            pill.className = `result-pill ${h.correct ? 'correct' : 'wrong'}`;
-            pill.style.animation = `popPill 0.4s var(--bounce) ${i * 0.05}s forwards`;
-            
-            const truthIcon = h.isRelated ? 'check' : 'close';
-            const truthText = h.isRelated ? 'OUI' : 'NON';
-            
-            pill.innerHTML = `
-                <div class="truth-badge">
-                    <span class="material-symbols-rounded">${truthIcon}</span>
-                    <span>${truthText}</span>
-                </div>
-                <span>${h.text}</span>
-            `;
-            cloud.appendChild(pill);
-        });
+        if (cloud) {
+            cloud.innerHTML = '';
+            roundHist.forEach((h, i) => {
+                const pill = document.createElement('div');
+                pill.className = `result-pill ${h.correct ? 'correct' : 'wrong'}`;
+                pill.style.animation = `popPill 0.4s var(--bounce) ${i * 0.05}s forwards`;
+                
+                const truthIcon = h.isRelated ? 'check' : 'close';
+                const truthText = h.isRelated ? 'OUI' : 'NON';
+                
+                pill.innerHTML = `
+                    <div class="truth-badge">
+                        <span class="material-symbols-rounded">${truthIcon}</span>
+                        <span>${truthText}</span>
+                    </div>
+                    <span>${h.text}</span>
+                `;
+                cloud.appendChild(pill);
+            });
+        }
         
         const btn = document.getElementById('sum-next-btn');
         const safeTeam = curTeam;
