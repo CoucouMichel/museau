@@ -36,7 +36,7 @@
             --danger-shadow: #D63333;
             --danger-bg: #FFE5E5;
 
-            /* Utilities */
+            /* Utilities & Dynamics */
             --radius-xl: 32px;
             --radius-lg: 24px;
             --radius-md: 16px;
@@ -44,6 +44,28 @@
             --bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
             --shadow-soft: 0 8px 24px rgba(45, 35, 66, 0.08);
             --shadow-hard: 0 4px 0 rgba(45, 35, 66, 0.1);
+            
+            --border-light: rgba(45, 35, 66, 0.08);
+            --border-lighter: rgba(45, 35, 66, 0.04);
+            --pill-bg: rgba(45, 35, 66, 0.05);
+            --overlay-bg: rgba(244, 240, 250, 0.9);
+            --pattern-color: #2D2342;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #12101A;
+            --surface-color: #1E1A2B;
+            --text-main: #FFFFFF;
+            --text-muted: #9E97B0;
+            --shadow-soft: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --shadow-hard: 0 4px 0 rgba(0, 0, 0, 0.5);
+            --border-light: rgba(255, 255, 255, 0.1);
+            --border-lighter: rgba(255, 255, 255, 0.05);
+            --pill-bg: rgba(255, 255, 255, 0.08);
+            --overlay-bg: rgba(18, 16, 26, 0.9);
+            --success-bg: rgba(0, 208, 132, 0.15);
+            --danger-bg: rgba(255, 77, 77, 0.15);
+            --pattern-color: #FFFFFF;
         }
 
         body {
@@ -1248,6 +1270,90 @@
             line-height: 1.35;
             font-weight: 600;
         }
+
+        /* --- DARK MODE OVERRIDES --- */
+        [data-theme="dark"] .btn-secondary,
+        [data-theme="dark"] .btn-icon-round,
+        [data-theme="dark"] .toggle-group,
+        [data-theme="dark"] .team-input,
+        [data-theme="dark"] .btn-top-round,
+        [data-theme="dark"] .logo-snout-container,
+        [data-theme="dark"] .cat-pill,
+        [data-theme="dark"] .pill-badge,
+        [data-theme="dark"] .play-card,
+        [data-theme="dark"] .play-card-inner,
+        [data-theme="dark"] .rule-card,
+        [data-theme="dark"] .setting-card,
+        [data-theme="dark"] .profile-bubble,
+        [data-theme="dark"] .player-card-item,
+        [data-theme="dark"] .stat-badge,
+        [data-theme="dark"] .cat-stat-row,
+        [data-theme="dark"] .modal-card,
+        [data-theme="dark"] .lb-list-item,
+        [data-theme="dark"] .action-pill-btn,
+        [data-theme="dark"] .swipe-label .material-symbols-rounded,
+        [data-theme="dark"] .podium-info,
+        [data-theme="dark"] .category-rule-card {
+            background: var(--surface-color);
+        }
+
+        [data-theme="dark"] .play-card,
+        [data-theme="dark"] .rule-card,
+        [data-theme="dark"] .setting-card,
+        [data-theme="dark"] .player-card-item,
+        [data-theme="dark"] .action-pill-btn,
+        [data-theme="dark"] .category-rule-card {
+            border-color: var(--border-lighter);
+        }
+
+        [data-theme="dark"] .play-card {
+            box-shadow: 0 16px 36px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+        [data-theme="dark"] .play-card.next-card {
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        [data-theme="dark"] .landing-pattern-bg,
+        [data-theme="dark"] .card-pattern-bg {
+            color: var(--pattern-color);
+            opacity: 0.04;
+        }
+
+        [data-theme="dark"] #countdown-overlay {
+            background: var(--overlay-bg);
+        }
+        
+        [data-theme="dark"] .modal-backdrop {
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        [data-theme="dark"] .ready-theme-pill,
+        [data-theme="dark"] .summary-theme,
+        [data-theme="dark"] .rule-icon-box,
+        [data-theme="dark"] .category-rule-icon,
+        [data-theme="dark"] .profile-bubble-add {
+            background: var(--pill-bg);
+            border-color: var(--border-light);
+        }
+
+        [data-theme="dark"] .btn-ghost {
+            background: var(--bg-color);
+            border-color: var(--border-light);
+        }
+
+        [data-theme="dark"] .team-input {
+            color: var(--text-main);
+        }
+        [data-theme="dark"] .team-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        [data-theme="dark"] .cat-pill.selected .cat-color-dot {
+            box-shadow: 0 0 0 2px var(--surface-color);
+        }
+        [data-theme="dark"] .modal-color-dot.selected {
+            box-shadow: 0 0 0 3px var(--surface-color), 0 0 0 5px var(--primary);
+        }
     </style>
 </head>
 <body>
@@ -1582,6 +1688,21 @@
                     <span class="slider"></span>
                 </label>
             </div>
+
+            <!-- Option 3 : Thème sombre -->
+            <div class="setting-card">
+                <div class="setting-info">
+                    <span class="material-symbols-rounded">dark_mode</span>
+                    <div>
+                        <h3>Thème sombre</h3>
+                        <p>Affichage adapté pour les environnements peu lumineux</p>
+                    </div>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="toggle-darkmode" onchange="toggleDarkMode(this.checked)">
+                    <span class="slider"></span>
+                </label>
+            </div>
         </div>
 
         <button class="btn-3d btn-primary" onclick="goBack()" style="margin-top: 16px;">Enregistrer</button>
@@ -1669,6 +1790,7 @@
     let timeLimit = 0, gameTimerInterval;
     let soundEnabled = true;
     let vibeEnabled = true;
+    let darkModeEnabled = false;
     const colors = [
         '#00D084', '#3b82f6', '#FFB800', '#9C27B0', '#00bcd4',
         '#FF5722', '#E91E63', '#3F51B5', '#8BC34A'
@@ -1719,9 +1841,15 @@
         return profile;
     }
 
-    // Paramètres audio et vibration
+    // Paramètres système
     function toggleSoundSetting(enabled) { soundEnabled = enabled; }
     function toggleVibeSetting(enabled) { vibeEnabled = enabled; }
+    
+    function toggleDarkMode(enabled) { 
+        darkModeEnabled = enabled; 
+        document.documentElement.setAttribute('data-theme', enabled ? 'dark' : 'light');
+        localStorage.setItem('museau_dark_mode', enabled);
+    }
 
     function playSound(type) {
         if (!soundEnabled) return;
@@ -1751,6 +1879,14 @@
     let isDataLoading = false;
 
     window.onload = () => { 
+        // Initialisation du thème sombre depuis la sauvegarde
+        const savedTheme = localStorage.getItem('museau_dark_mode');
+        if (savedTheme === 'true') {
+            toggleDarkMode(true);
+            const themeToggle = document.getElementById('toggle-darkmode');
+            if (themeToggle) themeToggle.checked = true;
+        }
+
         renderTeams(); 
         renderRulesCategories();
         history.replaceState({ screen: 'landing-screen' }, "", "#landing"); 
