@@ -719,7 +719,7 @@
             font-size: clamp(24px, 6vw, 28px);
         }
 
-        /* --- 8. SUMMARY SCREEN (STRUCTURE PARFAITEMENT CALIBRÉE) --- */
+       /* --- 8. SUMMARY SCREEN (STRUCTURE PARFAITEMENT CALIBRÉE) --- */
         .summary-card-hero {
             background: var(--surface-color);
             border-radius: var(--radius-lg);
@@ -800,7 +800,8 @@
             justify-content: center; 
             align-items: center;
             align-content: center;
-            gap: 5px; 
+            row-gap: 6px;
+            column-gap: 10px; 
             padding: 4px 0; 
             overflow: hidden;
         }
@@ -808,13 +809,13 @@
         .result-pill {
             display: flex; 
             align-items: center; 
-            padding: 4px 12px 4px 5px;
+            padding: 5px 14px 5px 6px;
             border-radius: var(--radius-pill); 
             font-weight: 800; 
-            font-size: 13px;
+            font-size: 13.5px;
             color: #FFFFFF; 
-            gap: 6px;
-            box-shadow: 0 2px 6px rgba(45, 35, 66, 0.08);
+            gap: 8px;
+            box-shadow: 0 3px 8px rgba(45, 35, 66, 0.08);
             opacity: 0;
             animation: popInPill 0.35s var(--bounce) forwards;
             max-width: 100%;
@@ -834,12 +835,12 @@
             border-radius: var(--radius-pill);
             display: inline-flex; 
             align-items: center; 
-            padding: 2px 5px; 
-            gap: 2px;
+            padding: 3px 6px; 
+            gap: 3px;
             flex-shrink: 0;
         }
-        .truth-badge .material-symbols-rounded { font-size: 12px; }
-        .truth-badge span { font-size: 9px; font-weight: 900; letter-spacing: 0.4px; }
+        .truth-badge .material-symbols-rounded { font-size: 14px; }
+        .truth-badge span { font-size: 10px; font-weight: 900; letter-spacing: 0.5px; }
 
         /* --- 9. ANIMATIONS & DRAMATIC EFFECTS --- */
         @keyframes popPill { to { opacity: 1; transform: scale(1); } }
