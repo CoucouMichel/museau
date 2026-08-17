@@ -727,14 +727,15 @@
         .summary-card-hero {
             background: var(--surface-color);
             border-radius: var(--radius-lg);
-            padding: 10px 14px;
+            padding: 8px 14px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             box-shadow: var(--shadow-soft);
             border: 1px solid var(--border-lighter);
-            margin-bottom: 8px;
+            margin-top: -10px;
+            margin-bottom: 6px;
             width: 100%;
             flex-shrink: 0;
         }
@@ -1739,7 +1740,10 @@
             <h2>Classement</h2>
         </div>
         <div id="lb-container" style="flex-grow:1; overflow-y:auto; display:flex; flex-direction:column; gap:16px;"></div>
-        <button class="btn-3d btn-primary" onclick="prepareRound()">Continuer</button>
+        <div id="lb-actions" style="display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: auto; flex-shrink: 0;">
+            <button class="btn-3d btn-primary" id="lb-btn-primary" onclick="prepareRound()">Continuer</button>
+            <button class="btn-3d btn-ghost" id="lb-btn-home" style="display: none; height: 48px; font-size: 14px;" onclick="goHome()">Menu Principal</button>
+        </div>
     </div>
 
     <!-- RULES SCREEN -->
@@ -3248,9 +3252,28 @@ function transitionTo(sc) {
             `;
         });
         
-        const btn = document.querySelector('#leaderboard-screen .btn-primary');
-        if(final) { btn.innerText = "Rejouer"; btn.onclick = () => location.reload(); }
-        else { btn.innerText = "Manche Suivante"; btn.onclick = () => prepareRound(); }
+        const primaryBtn = document.getElementById('lb-btn-primary');
+        const homeBtn = document.getElementById('lb-btn-home');
+        
+        if (final) { 
+            primaryBtn.innerText = "Rejouer"; 
+            primaryBtn.onclick = replayGame; 
+            if (homeBtn) homeBtn.style.display = 'flex';
+        } else { 
+            primaryBtn.innerText = "Manche Suivante"; 
+            primaryBtn.onclick = () => prepareRound(); 
+            if (homeBtn) homeBtn.style.display = 'none';
+        }
+    }
+
+    function replayGame() {
+        teams.forEach(t => {
+            t.score = 0;
+            t.rounds = 0;
+            t.categoryStats = {};
+        });
+        genCats();
+        transitionTo('category-screen');
     }
 
     // --- PROFILES RENDERING LOGIC ---
