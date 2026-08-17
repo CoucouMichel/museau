@@ -1658,21 +1658,6 @@
         initLandingPattern();
     };
 
-    function transitionTo(sc) { 
-        currentScreen = sc;
-        if (sc === 'rules-screen') {
-            renderRulesCategories();
-        }
-        history.replaceState({ screen: sc }, "", "#" + sc.split('-')[0]); 
-        show(sc); 
-    }
-
-    function replaceScreen(sc) { 
-        currentScreen = sc;
-        history.replaceState({ screen: sc }, "", "#" + sc.split('-')[0]); 
-        show(sc); 
-    }
-
     function initLandingPattern() {
         const landingBg = document.getElementById('landing-pattern-bg');
         if (!landingBg) return;
@@ -1698,9 +1683,6 @@
         selectedCats.clear();
         if (fullData.length > 0) { genCats(); }
         transitionTo('landing-screen'); 
-    }
-    function goBack() {
-        transitionTo('landing-screen');
     }
 
     const CATEGORY_ICON_SETS = {
@@ -1771,13 +1753,51 @@
         }, 300);
     }
 
+function transitionTo(sc) { 
+        currentScreen = sc;
+        if (sc === 'rules-screen') {
+            renderRulesCategories();
+        }
+        history.pushState({ screen: sc }, "", "#" + sc.split('-')[0]); 
+        show(sc); 
+    }
+
+    function replaceScreen(sc) { 
+        currentScreen = sc;
+        history.replaceState({ screen: sc }, "", "#" + sc.split('-')[0]); 
+        show(sc); 
+    }
+
+    function goBack() {
+        history.back();
+    }
+
     window.onpopstate = (e) => {
         const targetScreen = e.state?.screen || 'landing-screen';
         const lockedScreens = ['game-screen', 'summary-screen', 'leaderboard-screen'];
 
+        // Empêche le retour physique en arrière pendant une manche de jeu ou le résumé
         if (lockedScreens.includes(currentScreen)) {
             history.pushState({ screen: currentScreen }, "", "#" + currentScreen.split('-')[0]);
             return;
+        }
+
+        currentScreen = targetScreen;
+
+        // Réinitialise les catégories si l'on revient sur l'accueil
+        if (targetScreen === 'landing-screen') {
+            selectedCats.clear();
+            if (fullData.length > 0) { genCats(); }
+        }
+
+        // Rafraîchit les catégories des règles si l'on revient sur cet écran
+        if (targetScreen === 'rules-screen') {
+            renderRulesCategories();
+        }
+
+        // Réinitialise les équipes si l'on revient sur l'écran de configuration
+        if (targetScreen === 'setup-screen') {
+            renderTeams();
         }
 
         show(targetScreen);
