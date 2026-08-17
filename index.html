@@ -723,83 +723,93 @@
             font-size: clamp(24px, 6vw, 28px);
         }
 
-       /* --- 8. SUMMARY SCREEN (STRUCTURE PARFAITEMENT CALIBRÉE) --- */
+       /* --- 8. SUMMARY SCREEN (HERO CARD ÉLÉGANTE) --- */
         .summary-card-hero {
             background: var(--surface-color);
-            border-radius: var(--radius-lg);
-            padding: 8px 14px;
+            border-radius: var(--radius-xl);
+            padding: 14px 20px 12px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid var(--border-lighter);
-            margin-top: -10px;
-            margin-bottom: 6px;
+            box-shadow: 0 10px 25px rgba(45, 35, 66, 0.06);
+            border: 1px solid var(--border-light);
+            margin-top: -6px;
+            margin-bottom: 8px;
             width: 100%;
             flex-shrink: 0;
+            gap: 6px;
         }
 
+        /* Badge Catégorie sous forme de capsule douce */
         .summary-category-badge {
             display: inline-flex;
             align-items: center;
             gap: 5px;
             font-size: 11px;
-            font-weight: 800;
+            font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.8px;
             color: var(--cat-color, var(--primary));
-            margin-bottom: -2px;
+            background: rgba(45, 35, 66, 0.04);
+            padding: 4px 10px;
+            border-radius: var(--radius-pill);
         }
 
         .summary-category-badge .material-symbols-rounded {
-            font-size: 14px;
+            font-size: 15px;
         }
 
+        /* Thème identique au bas de la carte à jouer */
         .summary-theme-tag {
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            color: var(--text-muted);
+            color: var(--cat-color, var(--text-main));
+            opacity: 0.9;
             text-align: center;
-            max-width: 90%;
+            max-width: 95%;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            line-height: 1.25;
+            margin-bottom: 2px;
         }
 
+        /* Zone Score + Groins */
         .summary-score-display {
             display: flex;
             align-items: baseline;
             justify-content: center;
-            gap: 4px;
+            gap: 5px;
         }
 
         .summary-score {
-            font-size: 38px;
+            font-size: 46px;
             font-weight: 900;
             line-height: 1;
+            letter-spacing: -1.5px;
         }
 
         .summary-score-unit {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 800;
+            opacity: 0.9;
         }
 
+        /* Ligne des groins épurée */
         .summary-groins-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 5px;
             flex-wrap: wrap;
-            min-height: 24px;
-            padding: 2px 10px;
-            border-radius: var(--radius-pill);
+            min-height: 22px;
+            padding: 2px 0;
         }
 
         .summary-groin-item {
-            font-size: 18px;
+            font-size: 26px; /* Ajustez cette valeur pour agrandir ou réduire */
             opacity: 0;
             animation: popSummaryGroin 0.35s var(--bounce) forwards;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
@@ -1783,7 +1793,7 @@
                 <span class="material-symbols-rounded" id="sum-category-icon">category</span>
                 <span id="sum-category-text">Catégorie</span>
             </div>
-            
+
             <div class="summary-theme-tag" id="sum-theme">Thème</div>
 
             <div class="summary-score-display">
@@ -3140,13 +3150,34 @@ function transitionTo(sc) {
         const th = playableData[curTheme % playableData.length];
         
         const sumTeam = document.getElementById('sum-team');
-        sumTeam.innerText = tm.name; 
-        sumTeam.style.color = tm.color;
+        if (sumTeam) {
+            sumTeam.innerText = tm.name; 
+            sumTeam.style.color = tm.color;
+        }
         
+        const catColor = getCategoryColor(th.category);
+        const sumCatEl = document.getElementById('sum-category');
+        const sumCatText = document.getElementById('sum-category-text');
+        const sumCatIcon = document.getElementById('sum-category-icon');
+        const sumTheme = document.getElementById('sum-theme');
+
+        if (sumCatEl) {
+            sumCatEl.style.setProperty('--cat-color', catColor);
+        }
+        if (sumCatText) {
+            sumCatText.innerText = th.category;
+        }
+        if (sumCatIcon) {
+            sumCatIcon.innerText = getCategoryIcon(th.category);
+            sumCatIcon.style.color = catColor;
+        }
+        if (sumTheme) {
+            sumTheme.innerText = th.theme;
+        }
+
         const scoreEl = document.getElementById('sum-score');
         const unitEl = document.getElementById('sum-score-unit');
         const groinsRow = document.getElementById('summary-groins-row');
-        const sumTheme = document.getElementById('sum-theme');
 
         if (scoreEl) {
             scoreEl.innerText = `+${roundScore}`;
@@ -3155,9 +3186,6 @@ function transitionTo(sc) {
         if (unitEl) {
             unitEl.innerText = roundScore <= 1 ? "groin" : "groins";
             unitEl.style.color = tm.color;
-        }
-        if (sumTheme) {
-            sumTheme.innerText = th.theme;
         }
 
         // Ajout fluide et sécurisé des groins avec animationDelay (plus besoin de setTimeout)
