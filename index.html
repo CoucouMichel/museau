@@ -2387,8 +2387,8 @@ function transitionTo(sc) {
             nextCard.style.opacity = '0.85';
             
             formatCardText(nextCardTextEl, roundItems[cardIdx + 1].text);
-            nextCardTextEl.style.filter = 'blur(10px)';
-            nextCardTextEl.style.opacity = '0.4';
+            nextCardTextEl.style.filter = 'blur(14px)';
+            nextCardTextEl.style.opacity = '0.25';
         } else {
             nextCard.style.display = 'none';
         }
@@ -2416,14 +2416,14 @@ function transitionTo(sc) {
         card.style.opacity = '0';
         card.style.boxShadow = correct ? '0 0 40px rgba(0, 208, 132, 0.8)' : '0 0 40px rgba(255, 77, 77, 0.8)';
 
-        // Révélation nette et montée de la carte suivante
+        // Révélation nette et montée de la carte suivante uniquement à la validation
         if (nextCard && cardIdx + 1 < roundItems.length) {
             nextCard.style.transition = 'transform 0.3s var(--bounce), opacity 0.25s';
             nextCard.style.transform = 'scale(1) translateY(0px)';
             nextCard.style.opacity = '1';
 
             if (nextCardText) {
-                nextCardText.style.transition = 'filter 0.25s ease, opacity 0.25s ease';
+                nextCardText.style.transition = 'filter 0.2s ease, opacity 0.2s ease';
                 nextCardText.style.filter = 'blur(0px)';
                 nextCardText.style.opacity = '1';
             }
@@ -2476,25 +2476,16 @@ function transitionTo(sc) {
         cardEl.querySelector('.yes').style.opacity = dx > 0 ? Math.min(dx/100, 1) : 0;
         cardEl.querySelector('.no').style.opacity = dx < 0 ? Math.min(-dx/100, 1) : 0;
 
-        // Ratio de progression du glissement (0 à 1)
         const progress = Math.min(Math.abs(dx) / 120, 1);
-
         const nextCard = document.getElementById('next-card');
-        const nextCardText = document.getElementById('next-card-text');
 
+        // La carte du dessous monte légèrement pour donner l'effet de profondeur, mais le texte reste strictement flouté
         if (nextCard && cardIdx + 1 < roundItems.length) {
             const scale = 0.95 + (progress * 0.05);
             const translateY = 12 - (progress * 12);
             const opacity = 0.85 + (progress * 0.15);
             nextCard.style.transform = `scale(${scale}) translateY(${translateY}px)`;
             nextCard.style.opacity = opacity;
-
-            if (nextCardText) {
-                const blurVal = (10 * (1 - progress)).toFixed(1);
-                const textOpacity = (0.4 + (progress * 0.6)).toFixed(2);
-                nextCardText.style.filter = `blur(${blurVal}px)`;
-                nextCardText.style.opacity = textOpacity;
-            }
         }
     };
 
@@ -2518,9 +2509,9 @@ function transitionTo(sc) {
                 nextCard.style.opacity = '0.85';
 
                 if (nextCardText) {
-                    nextCardText.style.transition = 'filter 0.35s ease, opacity 0.35s ease';
-                    nextCardText.style.filter = 'blur(10px)';
-                    nextCardText.style.opacity = '0.4';
+                    nextCardText.style.transition = 'none';
+                    nextCardText.style.filter = 'blur(14px)';
+                    nextCardText.style.opacity = '0.25';
                 }
             }
         }
