@@ -740,6 +740,22 @@
             flex-shrink: 0;
         }
 
+        .summary-category-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--cat-color, var(--primary));
+            margin-bottom: -2px;
+        }
+
+        .summary-category-badge .material-symbols-rounded {
+            font-size: 14px;
+        }
+
         .summary-theme-tag {
             font-size: 11px;
             font-weight: 800;
@@ -816,7 +832,7 @@
             padding: 5px 14px 5px 6px;
             border-radius: var(--radius-pill); 
             font-weight: 600; 
-            font-size: 18px;
+            font-size: 15px;
             color: #FFFFFF; 
             gap: 8px;
             box-shadow: 0 3px 8px rgba(45, 35, 66, 0.08);
@@ -1763,6 +1779,11 @@
 
         <!-- Carte centrale épurée -->
         <div class="summary-card-hero">
+            <div class="summary-category-badge" id="sum-category">
+                <span class="material-symbols-rounded" id="sum-category-icon">category</span>
+                <span id="sum-category-text">Catégorie</span>
+            </div>
+            
             <div class="summary-theme-tag" id="sum-theme">Thème</div>
 
             <div class="summary-score-display">
