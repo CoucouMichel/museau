@@ -1466,6 +1466,54 @@
         [data-theme="dark"] .modal-color-dot.selected {
             box-shadow: 0 0 0 3px var(--surface-color), 0 0 0 5px var(--primary);
         }
+        /* Effet Confettis & Groins Victoire */
+        .celebration-rain-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100dvh;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .rain-item {
+            position: absolute;
+            top: -50px;
+            user-select: none;
+            animation: fallRain linear forwards;
+        }
+
+        @keyframes fallRain {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(0.8);
+                opacity: 1;
+            }
+            85% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(105vh) rotate(720deg) scale(1.1);
+                opacity: 0;
+            }
+        }
+
+        /* Mise en valeur du vainqueur */
+        .winner-banner-highlight {
+            animation: winnerGlow 1.8s infinite alternate ease-in-out;
+        }
+
+        @keyframes winnerGlow {
+            0% {
+                transform: scale(1);
+                filter: drop-shadow(0 4px 12px rgba(255, 184, 0, 0.4));
+            }
+            100% {
+                transform: scale(1.04);
+                filter: drop-shadow(0 8px 24px rgba(255, 184, 0, 0.8));
+            }
+        }
     </style>
 </head>
 <body>
@@ -3046,6 +3094,7 @@ function transitionTo(sc) {
     const wrongSoundFiles = ['wrong1.mp3', 'wrong2.mp3', 'wrong3.mp3', 'wrong4.mp3', 'wrong5.mp3', 'wrong6.mp3', 'wrong7.mp3'];
     const wrongAudios = wrongSoundFiles.map(file => new Audio(file));
     const sndWinner = new Audio('winner.mp3');
+    const sndVictory = new Audio('pigvictory.mp3');
 
     /* --- SUMMARY & END GAME --- */
     function endRound() {
@@ -3221,12 +3270,13 @@ function transitionTo(sc) {
             const rank = i + 1;
             const delay = (3 - rank) * 0.15;
             const isFirst = rank === 1;
+            const isFinalWinner = final && isFirst;
             
             podiumHtml += `
                 <div class="podium-step rank-${rank}" style="animation-delay: ${delay}s">
                     ${isFirst ? '<div class="crown-icon">👑</div>' : ''}
-                    <div class="podium-info" style="border-color: ${t.color}">
-                        <div class="podium-name">${t.name}</div>
+                    <div class="podium-info ${isFinalWinner ? 'winner-banner-highlight' : ''}" style="border-color: ${t.color}; ${isFinalWinner ? 'border-width: 4px; box-shadow: 0 10px 24px rgba(255, 184, 0, 0.4);' : ''}">
+                        <div class="podium-name" style="${isFinalWinner ? 'font-size: 16px; font-weight: 900; color: ' + t.color + ';' : ''}">${isFinalWinner ? '🏆 ' + t.name : t.name}</div>
                         <div class="podium-score" style="color: ${t.color}">${t.score}</div>
                     </div>
                     <div class="podium-block" style="background: ${t.color}">
@@ -3251,19 +3301,74 @@ function transitionTo(sc) {
                 </div>
             `;
         });
+
+        // Déclenchement son et célébration
+        if (final) {
+            if (teams.length > 1 && soundEnabled) {
+                sndVictory.currentTime = 0;
+                sndVictory.play().catch(e => console.error("Erreur pigvictory :", e));
+                triggerCelebrationRain();
+            }
+        }
         
-        const primaryBtn = document.getElementById('lb-btn-primary');
+        const primaryBtn = document.getElementById('lb-btn-primary') || document.querySelector('#leaderboard-screen .btn-primary');
         const homeBtn = document.getElementById('lb-btn-home');
         
         if (final) { 
-            primaryBtn.innerText = "Rejouer"; 
-            primaryBtn.onclick = replayGame; 
+            if (primaryBtn) {
+                primaryBtn.innerText = "Rejouer"; 
+                primaryBtn.onclick = replayGame;
+            }
             if (homeBtn) homeBtn.style.display = 'flex';
         } else { 
-            primaryBtn.innerText = "Manche Suivante"; 
-            primaryBtn.onclick = () => prepareRound(); 
+            if (primaryBtn) {
+                primaryBtn.innerText = "Manche Suivante"; 
+                primaryBtn.onclick = () => prepareRound(); 
+            }
             if (homeBtn) homeBtn.style.display = 'none';
         }
+    }
+
+    function triggerCelebrationRain() {
+        const oldCont = document.getElementById('rain-container');
+        if (oldCont) oldCont.remove();
+
+        const rainCont = document.createElement('div');
+        rainCont.id = 'rain-container';
+        rainCont.className = 'celebration-rain-container';
+        document.body.appendChild(rainCont);
+
+        const items = ['🐽', '🎉', '✨', '⭐', '🎈'];
+        const confettiColors = ['#FF3B7C', '#FFB800', '#00D084', '#3B82F6', '#9C27B0'];
+        const totalElements = 45;
+
+        for (let i = 0; i < totalElements; i++) {
+            const el = document.createElement('div');
+            el.className = 'rain-item';
+            
+            const isEmoji = Math.random() > 0.4;
+            if (isEmoji) {
+                el.innerText = items[Math.floor(Math.random() * items.length)];
+                el.style.fontSize = `${18 + Math.random() * 16}px`;
+            } else {
+                el.style.width = `${8 + Math.random() * 8}px`;
+                el.style.height = `${12 + Math.random() * 12}px`;
+                el.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+                el.style.borderRadius = '3px';
+            }
+
+            el.style.left = `${Math.random() * 100}vw`;
+            const duration = 2.2 + Math.random() * 2;
+            const delay = Math.random() * 2;
+            el.style.animationDuration = `${duration}s`;
+            el.style.animationDelay = `${delay}s`;
+
+            rainCont.appendChild(el);
+        }
+
+        setTimeout(() => {
+            if (rainCont) rainCont.remove();
+        }, 5500);
     }
 
     function replayGame() {
