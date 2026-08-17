@@ -447,17 +447,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
-            height: 16px;
-            margin-top: 2px;
+            gap: 3px;
+            width: 100%;
+            max-width: 280px;
+            margin: 4px auto 0 auto;
+            min-height: 22px;
         }
 
         .score-pill-dot {
-            font-size: 22px;
+            font-size: clamp(16px, 4.5vw, 20px);
             animation: popScorePill 0.35s var(--bounce) forwards;
-            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.15));
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
             line-height: 1;
-            margin: 0 1px;
+            flex-shrink: 0;
         }
 
         @keyframes popScorePill {
@@ -717,23 +719,23 @@
             font-size: clamp(24px, 6vw, 28px);
         }
 
-        /* --- 8. SUMMARY SCREEN (STRUCTURE PRO) --- */
         .summary-card-hero {
             background: var(--surface-color);
-            border-radius: var(--radius-xl);
-            padding: 16px 20px;
+            border-radius: var(--radius-lg);
+            padding: clamp(8px, 1.5vh, 12px) 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: clamp(4px, 0.8vh, 8px);
             box-shadow: var(--shadow-soft);
             border: 1px solid var(--border-lighter);
-            margin-bottom: 16px;
+            margin-bottom: clamp(6px, 1.2vh, 12px);
             width: 100%;
+            flex-shrink: 0;
         }
 
         .summary-theme-tag {
-            font-size: 12px;
+            font-size: clamp(10px, 2.6vw, 11px);
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.8px;
@@ -749,11 +751,11 @@
             display: flex;
             align-items: baseline;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
         }
 
         .summary-score {
-            font-size: 44px;
+            font-size: clamp(28px, 6.5vh, 36px);
             font-weight: 900;
             line-height: 1;
             opacity: 0;
@@ -767,7 +769,7 @@
         }
 
         .summary-score-unit {
-            font-size: 18px;
+            font-size: clamp(14px, 3.8vw, 16px);
             font-weight: 800;
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -777,16 +779,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
             flex-wrap: wrap;
-            min-height: 28px;
-            padding: 4px 10px;
+            min-height: 22px;
+            padding: 2px 8px;
             background: var(--pill-bg);
             border-radius: var(--radius-pill);
         }
 
         .summary-groin-item {
-            font-size: 20px;
+            font-size: clamp(13px, 3.5vw, 16px);
             line-height: 1;
             opacity: 0;
             transform: scale(0);
@@ -794,71 +796,53 @@
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        @keyframes popSummaryGroin {
-            0% { transform: scale(0); opacity: 0; }
-            70% { transform: scale(1.25); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-
-        .pill-badge {
-            background: white; 
-            color: var(--text-main); 
-            font-family: 'Nunito', sans-serif;
-            font-weight: 800; 
-            font-size: 14px;
-            padding: 8px 16px; 
-            border-radius: var(--radius-pill); 
-            box-shadow: 0 4px 12px rgba(45, 35, 66, 0.08);
-            border: 1px solid rgba(45, 35, 66, 0.04);
-            display: inline-flex; 
-            align-items: center;
-            justify-content: center;
-            white-space: nowrap;
-            z-index: 5;
-        }
-
-        /* --- RETOUR DE L'ANCIEN NUAGE DE RÉPONSES --- */
+        /* Nuage fluide compact sans scroll */
         .word-cloud-container {
             flex-grow: 1; 
             width: 100%; 
             display: flex; 
             flex-wrap: wrap; 
             justify-content: center; 
-            align-content: flex-start;
-            gap: 8px; 
-            padding: 8px 4px 24px 4px; 
-            overflow-y: auto; 
-            max-height: 52vh;
+            align-items: center;
+            align-content: center;
+            gap: clamp(3px, 0.7vh, 6px); 
+            padding: 2px 0; 
+            overflow: hidden;
         }
         
         .result-pill {
             display: flex; 
             align-items: center; 
-            padding: 4px 12px 4px 6px;
+            padding: clamp(2px, 0.4vh, 4px) clamp(8px, 2vw, 10px) clamp(2px, 0.4vh, 4px) 4px;
             border-radius: var(--radius-pill); 
             font-weight: 800; 
-            font-size: 13px;
+            font-size: clamp(10.5px, 2.7vw, 12px);
             opacity: 0; 
             transform: scale(0.5); 
-            box-shadow: var(--shadow-soft); 
-            color: white; 
-            gap: 6px;
+            box-shadow: 0 2px 6px rgba(45, 35, 66, 0.06); 
+            color: #FFFFFF; 
+            gap: 4px;
             max-width: 100%;
-            white-space: normal;
-            word-break: break-word;
-            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.15;
         }
 
-        .result-pill .truth-badge { flex-shrink: 0; }
         .result-pill.correct { background: var(--success); }
         .result-pill.wrong { background: var(--danger); }
         
         .truth-badge {
-            background: rgba(255, 255, 255, 0.25); border-radius: var(--radius-pill);
-            display: flex; align-items: center; padding: 4px 8px; gap: 4px;
+            background: rgba(255, 255, 255, 0.25); 
+            border-radius: var(--radius-pill);
+            display: inline-flex; 
+            align-items: center; 
+            padding: 2px 5px; 
+            gap: 2px;
+            flex-shrink: 0;
         }
-        .truth-badge .material-symbols-rounded { font-size: 16px; }
-        .truth-badge span { font-size: 11px; font-weight: 900; letter-spacing: 1px; }
+        .truth-badge .material-symbols-rounded { font-size: clamp(11px, 2.8vw, 13px); }
+        .truth-badge span { font-size: clamp(8.5px, 2.2vw, 9.5px); font-weight: 900; letter-spacing: 0.5px; }
 
         /* --- 9. ANIMATIONS & DRAMATIC EFFECTS --- */
         @keyframes popPill { to { opacity: 1; transform: scale(1); } }
@@ -1643,7 +1627,7 @@
 
     <!-- GAME SCREEN -->
     <div id="game-screen" class="screen">
-     <div class="game-top-bar-modern">
+     <div class="game-top-bar-modern" style="margin-bottom: 8px;">
             <div class="top-bar-left">
                 <button class="btn-icon-round" style="position: relative; left: 0;" onclick="goHome()">
                     <span class="material-symbols-rounded" style="font-size: 24px;">close</span>
@@ -1657,9 +1641,6 @@
                     <span class="meta-dot">•</span>
                     Carte <span id="game-progress">1/10</span>
                 </div>
-                <div class="game-score-pills" id="game-score-pills">
-                    <!-- Les groins s'ajoutent ici au fil des bonnes réponses -->
-                </div>
             </div>
             
             <div class="top-bar-right">
@@ -1668,7 +1649,10 @@
                     <span id="game-timer-val">30s</span>
                 </div>
             </div>
-        </div> 
+        </div>
+
+        <!-- Ligne de groins centrée sur la largeur totale -->
+        <div class="game-score-pills" id="game-score-pills" style="margin-bottom: clamp(12px, 3vh, 20px);"></div>
         
         <!-- Catégorie + Thème Uniformisés -->
         <div class="play-card-container">
