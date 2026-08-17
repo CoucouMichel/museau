@@ -719,46 +719,50 @@
             font-size: clamp(24px, 6vw, 28px);
         }
 
-        /* --- 8. SUMMARY SCREEN (ÉPURÉ ET ADAPTATIF) --- */
+        /* --- 8. SUMMARY SCREEN (STRUCTURE PARFAITEMENT CALIBRÉE) --- */
         .summary-card-hero {
             background: var(--surface-color);
-            border-radius: var(--radius-xl);
-            padding: 16px;
+            border-radius: var(--radius-lg);
+            padding: 10px 14px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 12px;
+            gap: 6px;
             box-shadow: var(--shadow-soft);
             border: 1px solid var(--border-lighter);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
             width: 100%;
             flex-shrink: 0;
         }
 
         .summary-theme-tag {
-            font-size: 13px;
+            font-size: 11px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.8px;
             color: var(--text-muted);
             text-align: center;
+            max-width: 90%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .summary-score-display {
             display: flex;
             align-items: baseline;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
         }
 
         .summary-score {
-            font-size: 52px;
+            font-size: 38px;
             font-weight: 900;
             line-height: 1;
         }
 
         .summary-score-unit {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 800;
         }
 
@@ -766,18 +770,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            gap: 4px;
             flex-wrap: wrap;
-            min-height: 32px;
-            padding: 4px 12px;
+            min-height: 24px;
+            padding: 2px 10px;
             background: var(--pill-bg);
             border-radius: var(--radius-pill);
         }
 
         .summary-groin-item {
-            font-size: 22px;
+            font-size: 18px;
             opacity: 0;
-            animation: popSummaryGroin 0.4s var(--bounce) forwards;
+            animation: popSummaryGroin 0.35s var(--bounce) forwards;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
         }
 
@@ -787,54 +791,60 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* Nuage de réponses adaptatif (Pas de scroll, centré) */
+        /* Grille 2 colonnes x 5 lignes : toujours stable et sans scroll */
         .word-cloud-container {
             flex-grow: 1; 
             width: 100%; 
-            display: flex; 
-            flex-wrap: wrap; 
-            justify-content: center; 
-            align-items: center;
-            align-content: center; /* Magie : centre parfaitement l'ensemble des réponses verticalement */
-            gap: 10px; 
-            padding: 4px 0 16px 0; 
-            overflow: hidden; /* Empêche le scroll */
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-auto-rows: 1fr;
+            gap: 6px;
+            padding: 2px 0 8px 0;
+            align-content: center;
+            overflow: hidden;
         }
         
         .result-pill {
             display: flex; 
             align-items: center; 
-            padding: 6px 14px 6px 6px;
+            padding: 4px 8px 4px 4px;
             border-radius: var(--radius-pill); 
             font-weight: 800; 
-            font-size: 14px; /* Taille normale lisible rétablie */
+            font-size: 12px;
             color: #FFFFFF; 
-            gap: 6px;
-            max-width: 100%;
-            box-shadow: 0 4px 10px rgba(45, 35, 66, 0.08);
+            gap: 5px;
+            box-shadow: 0 2px 6px rgba(45, 35, 66, 0.08);
             opacity: 0;
-            animation: popInPill 0.4s var(--bounce) forwards;
+            animation: popInPill 0.35s var(--bounce) forwards;
+            min-width: 0; /* Permet au texte de tronquer proprement */
         }
 
         @keyframes popInPill {
-            0% { opacity: 0; transform: scale(0.8) translateY(10px); }
-            100% { opacity: 1; transform: scale(1) translateY(0); }
+            0% { opacity: 0; transform: scale(0.85); }
+            100% { opacity: 1; transform: scale(1); }
         }
 
         .result-pill.correct { background: var(--success); }
         .result-pill.wrong { background: var(--danger); }
         
+        .result-pill span:not(.truth-badge) {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.2;
+        }
+
         .truth-badge {
             background: rgba(255, 255, 255, 0.25); 
             border-radius: var(--radius-pill);
-            display: flex; 
+            display: inline-flex; 
             align-items: center; 
-            padding: 4px 8px; 
-            gap: 4px;
+            padding: 3px 6px; 
+            gap: 3px;
             flex-shrink: 0;
         }
-        .truth-badge .material-symbols-rounded { font-size: 16px; }
-        .truth-badge span { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; }
+        .truth-badge .material-symbols-rounded { font-size: 13px; }
+        .truth-badge span { font-size: 10px; font-weight: 900; letter-spacing: 0.5px; }
 
         /* --- 9. ANIMATIONS & DRAMATIC EFFECTS --- */
         @keyframes popPill { to { opacity: 1; transform: scale(1); } }
