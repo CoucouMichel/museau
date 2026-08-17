@@ -719,84 +719,75 @@
             font-size: clamp(24px, 6vw, 28px);
         }
 
+        /* --- 8. SUMMARY SCREEN (ÉPURÉ ET ADAPTATIF) --- */
         .summary-card-hero {
             background: var(--surface-color);
-            border-radius: var(--radius-lg);
-            padding: clamp(8px, 1.5vh, 12px) 16px;
+            border-radius: var(--radius-xl);
+            padding: 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: clamp(4px, 0.8vh, 8px);
+            gap: 12px;
             box-shadow: var(--shadow-soft);
             border: 1px solid var(--border-lighter);
-            margin-bottom: clamp(6px, 1.2vh, 12px);
+            margin-bottom: 12px;
             width: 100%;
             flex-shrink: 0;
         }
 
         .summary-theme-tag {
-            font-size: clamp(10px, 2.6vw, 11px);
+            font-size: 13px;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.8px;
+            letter-spacing: 1px;
             color: var(--text-muted);
             text-align: center;
-            max-width: 90%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .summary-score-display {
             display: flex;
             align-items: baseline;
             justify-content: center;
-            gap: 4px;
+            gap: 6px;
         }
 
         .summary-score {
-            font-size: clamp(28px, 6.5vh, 36px);
+            font-size: 52px;
             font-weight: 900;
             line-height: 1;
-            opacity: 0;
-            transform: scale(0.6);
-            transition: all 0.4s var(--bounce);
-        }
-
-        .summary-score.revealed {
-            opacity: 1;
-            transform: scale(1);
         }
 
         .summary-score-unit {
-            font-size: clamp(14px, 3.8vw, 16px);
+            font-size: 18px;
             font-weight: 800;
-            opacity: 0;
-            transition: opacity 0.3s ease;
         }
 
         .summary-groins-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 6px;
             flex-wrap: wrap;
-            min-height: 22px;
-            padding: 2px 8px;
+            min-height: 32px;
+            padding: 4px 12px;
             background: var(--pill-bg);
             border-radius: var(--radius-pill);
         }
 
         .summary-groin-item {
-            font-size: clamp(13px, 3.5vw, 16px);
-            line-height: 1;
+            font-size: 22px;
             opacity: 0;
-            transform: scale(0);
-            animation: popSummaryGroin 0.35s var(--bounce) forwards;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            animation: popSummaryGroin 0.4s var(--bounce) forwards;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
         }
 
-        /* Nuage fluide compact sans scroll */
+        @keyframes popSummaryGroin {
+            0% { transform: scale(0); opacity: 0; }
+            70% { transform: scale(1.3); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Nuage de réponses adaptatif (Pas de scroll, centré) */
         .word-cloud-container {
             flex-grow: 1; 
             width: 100%; 
@@ -804,29 +795,30 @@
             flex-wrap: wrap; 
             justify-content: center; 
             align-items: center;
-            align-content: center;
-            gap: clamp(3px, 0.7vh, 6px); 
-            padding: 2px 0; 
-            overflow: hidden;
+            align-content: center; /* Magie : centre parfaitement l'ensemble des réponses verticalement */
+            gap: 10px; 
+            padding: 4px 0 16px 0; 
+            overflow: hidden; /* Empêche le scroll */
         }
         
         .result-pill {
             display: flex; 
             align-items: center; 
-            padding: clamp(2px, 0.4vh, 4px) clamp(8px, 2vw, 10px) clamp(2px, 0.4vh, 4px) 4px;
+            padding: 6px 14px 6px 6px;
             border-radius: var(--radius-pill); 
             font-weight: 800; 
-            font-size: clamp(10.5px, 2.7vw, 12px);
-            opacity: 0; 
-            transform: scale(0.5); 
-            box-shadow: 0 2px 6px rgba(45, 35, 66, 0.06); 
+            font-size: 14px; /* Taille normale lisible rétablie */
             color: #FFFFFF; 
-            gap: 4px;
+            gap: 6px;
             max-width: 100%;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            line-height: 1.15;
+            box-shadow: 0 4px 10px rgba(45, 35, 66, 0.08);
+            opacity: 0;
+            animation: popInPill 0.4s var(--bounce) forwards;
+        }
+
+        @keyframes popInPill {
+            0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .result-pill.correct { background: var(--success); }
@@ -835,14 +827,14 @@
         .truth-badge {
             background: rgba(255, 255, 255, 0.25); 
             border-radius: var(--radius-pill);
-            display: inline-flex; 
+            display: flex; 
             align-items: center; 
-            padding: 2px 5px; 
-            gap: 2px;
+            padding: 4px 8px; 
+            gap: 4px;
             flex-shrink: 0;
         }
-        .truth-badge .material-symbols-rounded { font-size: clamp(11px, 2.8vw, 13px); }
-        .truth-badge span { font-size: clamp(8.5px, 2.2vw, 9.5px); font-weight: 900; letter-spacing: 0.5px; }
+        .truth-badge .material-symbols-rounded { font-size: 16px; }
+        .truth-badge span { font-size: 11px; font-weight: 900; letter-spacing: 0.5px; }
 
         /* --- 9. ANIMATIONS & DRAMATIC EFFECTS --- */
         @keyframes popPill { to { opacity: 1; transform: scale(1); } }
@@ -1723,7 +1715,7 @@
             <div class="summary-groins-row" id="summary-groins-row"></div>
         </div>
 
-        <!-- Nuage de réponses d'origine -->
+        <!-- Nuage de réponses adaptatif sans scroll -->
         <div class="word-cloud-container" id="word-cloud">
             <!-- Injecté en JS -->
         </div>
@@ -3074,47 +3066,36 @@ function transitionTo(sc) {
         const scoreEl = document.getElementById('sum-score');
         const unitEl = document.getElementById('sum-score-unit');
         const groinsRow = document.getElementById('summary-groins-row');
+        const sumTheme = document.getElementById('sum-theme');
 
-        scoreEl.innerText = `+${roundScore}`;
-        scoreEl.style.color = tm.color;
-        unitEl.innerText = roundScore <= 1 ? "groin" : "groins";
-        unitEl.style.color = tm.color;
-        
-        // Séquence d'animation fun
-        groinsRow.innerHTML = '';
-        scoreEl.classList.remove('revealed');
-        unitEl.style.opacity = '0';
+        if (scoreEl) {
+            scoreEl.innerText = `+${roundScore}`;
+            scoreEl.style.color = tm.color;
+        }
+        if (unitEl) {
+            unitEl.innerText = roundScore <= 1 ? "groin" : "groins";
+            unitEl.style.color = tm.color;
+        }
+        if (sumTheme) {
+            sumTheme.innerText = th.theme;
+        }
 
-        if (roundScore > 0) {
-            // Affiche chaque groin un par un avec un léger délai en cascade
-            for (let i = 0; i < roundScore; i++) {
-                setTimeout(() => {
+        // Ajout fluide et sécurisé des groins avec animationDelay (plus besoin de setTimeout)
+        if (groinsRow) {
+            groinsRow.innerHTML = '';
+            if (roundScore > 0) {
+                groinsRow.style.display = 'flex';
+                for (let i = 0; i < roundScore; i++) {
                     const groinSpan = document.createElement('span');
                     groinSpan.className = 'summary-groin-item';
                     groinSpan.innerText = '🐽';
+                    groinSpan.style.animationDelay = `${i * 0.1}s`;
                     groinsRow.appendChild(groinSpan);
-                    
-                    // Joue un petit son optionnel de tick si souhaité
-                }, i * 150);
+                }
+            } else {
+                groinsRow.style.display = 'none'; // Cache la pastille grise si aucun point
             }
-
-            // Une fois que tous les groins sont apparus, on révèle le texte du score en gros
-            const totalDuration = (roundScore * 150) + 300;
-            setTimeout(() => {
-                scoreEl.classList.add('revealed');
-                unitEl.style.opacity = '1';
-            }, totalDuration);
-        } else {
-            // Si 0 point, on révèle directement
-            scoreEl.classList.add('revealed');
-            unitEl.style.opacity = '1';
         }
-        
-        const sumTheme = document.getElementById('sum-theme');
-        if (sumTheme) sumTheme.innerText = th.theme;
-        
-        const sumCategory = document.getElementById('sum-category');
-        if (sumCategory) sumCategory.innerText = th.category;
         
         const cloud = document.getElementById('word-cloud');
         if (cloud) {
@@ -3122,7 +3103,7 @@ function transitionTo(sc) {
             roundHist.forEach((h, i) => {
                 const pill = document.createElement('div');
                 pill.className = `result-pill ${h.correct ? 'correct' : 'wrong'}`;
-                pill.style.animation = `popPill 0.4s var(--bounce) ${i * 0.05}s forwards`;
+                pill.style.animationDelay = `${i * 0.06}s`; // Effet cascade naturel sur les mots
                 
                 const truthIcon = h.isRelated ? 'check' : 'close';
                 const truthText = h.isRelated ? 'OUI' : 'NON';
