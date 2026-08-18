@@ -391,21 +391,30 @@
             width: 100%;
             background: #FFFFFF;
             border-radius: var(--radius-xl);
-            padding: clamp(16px, 2.5vh, 22px) clamp(16px, 4vw, 24px);
+            padding: clamp(14px, 2.2vh, 18px) clamp(16px, 4vw, 22px);
             box-shadow: 0 10px 24px rgba(45, 35, 66, 0.05);
             border: 1px solid rgba(45, 35, 66, 0.05);
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            gap: 6px;
             flex-shrink: 0;
             margin-bottom: clamp(10px, 1.8vh, 18px);
         }
 
-        .btn-icon-round-static {
+        .cat-header-top-row {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 40px;
+        }
+
+        .btn-icon-round-inline {
             position: absolute;
-            left: clamp(12px, 3vw, 18px);
-            top: clamp(14px, 2.2vh, 18px);
-            transform: none;
+            left: 0;
             width: clamp(38px, 9vw, 42px);
             height: clamp(38px, 9vw, 42px);
             border-radius: 50%;
@@ -419,19 +428,56 @@
             transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
             z-index: 2;
         }
-        .btn-icon-round-static:active { transform: scale(0.92); }
-        .btn-icon-round-static .material-symbols-rounded { font-size: clamp(20px, 4.5vw, 24px); }
+        .btn-icon-round-inline:active {
+            transform: scale(0.92);
+        }
+        .btn-icon-round-inline .material-symbols-rounded {
+            font-size: clamp(20px, 4.5vw, 24px);
+        }
+
+        .cat-title-inline-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        /* Dark mode */
+        [data-theme="dark"] .btn-icon-round-inline {
+            background: var(--pill-bg);
+        }
+
+        .btn-icon-round-static {
+            position: absolute;
+            left: clamp(12px, 3vw, 16px);
+            top: 50%;
+            transform: translateY(-50%);
+            width: clamp(38px, 9vw, 42px);
+            height: clamp(38px, 9vw, 42px);
+            border-radius: 50%;
+            background: var(--bg-color);
+            color: var(--text-main);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 2;
+        }
+        .btn-icon-round-static:active { 
+            transform: translateY(-50%) scale(0.92); 
+        }
 
         .cat-header-center-group {
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            gap: 8px;
             width: 100%;
-            padding: 0 clamp(16px, 4vw, 28px);
+            padding: 0 clamp(36px, 8vw, 48px);
         }
+        .btn-icon-round-static .material-symbols-rounded { font-size: clamp(20px, 4.5vw, 24px); }
 
         
 
@@ -460,6 +506,11 @@
             transition: background 0.2s ease, color 0.2s ease;
         }
 
+        .category-badge-chip.valid {
+            background: rgba(16, 185, 129, 0.12) !important;
+            color: #10B981 !important;
+        }
+
         .cat-header-instruction {
             margin: 0;
             text-align: center;
@@ -468,11 +519,6 @@
             color: var(--text-muted);
             line-height: 1.45;
             max-width: 95%;
-        }
-
-        .category-badge-chip.valid {
-            background: rgba(16, 185, 129, 0.12);
-            color: #10B981;
         }
 
         /* Dark mode override */
@@ -505,7 +551,7 @@
         
         .cat-pill {
             background: #FFFFFF; 
-            border: 1.5px solid rgba(45, 35, 66, 0.06); 
+            border: 2px solid transparent; 
             color: var(--text-main);
             padding: clamp(10px, 1.6vh, 14px) clamp(14px, 3.8vw, 20px);
             min-height: clamp(46px, 6vh, 54px);
@@ -518,8 +564,9 @@
             cursor: pointer; 
             transition: transform 0.12s cubic-bezier(0.25, 0.8, 0.25, 1), 
                         border-color 0.2s ease, 
-                        opacity 0.2s ease;
-            box-shadow: 0 4px 12px rgba(45, 35, 66, 0.04);
+                        opacity 0.2s ease,
+                        box-shadow 0.2s ease;
+            box-shadow: var(--shadow-soft);
             opacity: 0.55;
             user-select: none;
             will-change: transform, border-color, opacity;
@@ -532,14 +579,14 @@
 
         /* Micro-enfoncement au tap */
         .cat-pill:active {
-            transform: scale(0.96);
+            transform: scale(0.95);
         }
 
         .cat-pill.selected {
             background: #FFFFFF; 
             color: var(--text-main); 
             border-color: var(--cat-color); 
-            box-shadow: none; 
+            box-shadow: 0 4px 12px rgba(45, 35, 66, 0.1); 
             opacity: 1; 
         }
 
@@ -1801,13 +1848,10 @@
     <div id="setup-screen" class="screen">
         <div class="cat-header-hero">
             <button class="btn-icon-round-static" onclick="transitionTo('landing-screen')">
-    <span class="material-symbols-rounded">arrow_back</span>
-</button>
+                <span class="material-symbols-rounded">arrow_back</span>
+            </button>
             <div class="cat-header-center-group">
                 <h2 class="cat-screen-title">Configuration</h2>
-                <p class="cat-header-instruction">
-                    Ajoutez les joueurs et réglez les paramètres de la partie.
-                </p>
             </div>
         </div>
         
@@ -1855,18 +1899,20 @@
     <!-- CATEGORY SCREEN -->
     <div id="category-screen" class="screen">
         <div class="cat-header-hero">
-            <button class="btn-icon-round-static" onclick="transitionTo('setup-screen')">
-                <span class="material-symbols-rounded">arrow_back</span>
-            </button>
-            <div class="cat-header-center-group">
-                <h2 class="cat-screen-title">Catégories</h2>
-                <div class="category-badge-chip">
-                    <span id="cat-count-val">0</span>/<span id="cat-count-total">12</span>
+            <div class="cat-header-top-row">
+                <button class="btn-icon-round-inline" onclick="transitionTo('setup-screen')">
+                    <span class="material-symbols-rounded">arrow_back</span>
+                </button>
+                <div class="cat-title-inline-group">
+                    <h2 class="cat-screen-title">Catégories</h2>
+                    <div class="category-badge-chip">
+                        <span id="cat-count-val">0</span>/<span id="cat-count-total">12</span>
+                    </div>
                 </div>
-                <p class="cat-header-instruction">
-                    Sélectionnez au moins une catégorie.<br>Des thèmes aléatoires seront tirés parmi vos choix.
-                </p>
             </div>
+            <p class="cat-header-instruction">
+                Sélectionnez au moins une catégorie.<br>Des thèmes aléatoires seront tirés parmi vos choix.
+            </p>
         </div>
         
         <div class="category-grid" id="category-container">
@@ -1888,9 +1934,13 @@
     </div>
     <!-- READY SCREEN -->
     <div id="ready-screen" class="screen">
-        <div class="unified-header">
-            <button class="btn-icon-round" onclick="transitionTo('category-screen')"><span class="material-symbols-rounded">arrow_back</span></button>
-            <div class="pill-badge" id="ready-round">Manche 1 / 5</div>
+        <div class="cat-header-hero">
+            <button class="btn-icon-round-static" onclick="transitionTo('category-screen')">
+                <span class="material-symbols-rounded">arrow_back</span>
+            </button>
+            <div class="cat-header-center-group">
+                <h2 class="cat-screen-title" id="ready-round">Manche 1 / 5</h2>
+            </div>
         </div>
         
         <div class="ready-content-wrapper">
@@ -2466,16 +2516,30 @@
 
     function show(sc) {
         currentScreen = sc; 
+        
+        // 1. Masquer uniquement les autres écrans
         document.querySelectorAll('.screen').forEach(s => {
-            s.classList.remove('active');
-            setTimeout(() => s.style.display = 'none', 300);
+            if (s.id !== sc) {
+                s.classList.remove('active');
+                setTimeout(() => {
+                    // On vérifie qu'on ne masque pas l'écran s'il est redevenu actif entre-temps
+                    if (s.id !== currentScreen) {
+                        s.style.display = 'none';
+                    }
+                }, 300);
+            }
         });
+
+        // 2. Afficher le nouvel écran
         const next = document.getElementById(sc);
-        setTimeout(() => {
-            next.style.display = 'flex';
-            void next.offsetWidth;
-            next.classList.add('active');
-        }, 300);
+        if (next) {
+            // Un délai plus court (ex: 50ms) permet une transition plus fluide qu'attendre 300ms
+            setTimeout(() => {
+                next.style.display = 'flex';
+                void next.offsetWidth; // Force le recalcul visuel du navigateur
+                next.classList.add('active');
+            }, 50); 
+        }
     }
 
     function transitionTo(sc) { 
@@ -2861,7 +2925,7 @@
         
         const countVal = document.getElementById('cat-count-val');
         const countTotal = document.getElementById('cat-count-total');
-        const badgeChip = document.querySelector('.category-badge-chip');
+        const badgeChip = document.querySelector('#category-screen .category-badge-chip');
 
         if (countVal) countVal.innerText = count;
         if (countTotal) countTotal.innerText = totalCats;
@@ -2945,18 +3009,25 @@
         
         const tm = teams[curTeam], th = playableData[curTheme % playableData.length];
         
-        document.getElementById('ready-round').innerText = `Manche ${tm.rounds + 1} / ${roundsPerTeam}`;
+        // Mise à jour du titre dans le nouvel en-tête
+        const roundEl = document.getElementById('ready-round');
+        if (roundEl) roundEl.innerText = `Manche ${tm.rounds + 1} / ${roundsPerTeam}`;
+        
         const tname = document.getElementById('ready-team');
-        tname.innerText = tm.name; 
-        tname.style.color = tm.color;
+        if (tname) {
+            tname.innerText = tm.name; 
+            tname.style.color = tm.color;
+        }
         
         document.getElementById('ready-cat').innerText = th.category;
         document.getElementById('ready-theme').innerText = th.theme;
 
         const catColor = getCategoryColor(th.category);
         const readyIcon = document.getElementById('ready-icon');
-        readyIcon.innerText = getCategoryIcon(th.category);
-        readyIcon.style.color = catColor;
+        if (readyIcon) {
+            readyIcon.innerText = getCategoryIcon(th.category);
+            readyIcon.style.color = catColor;
+        }
         
         document.getElementById('tut-yes-text').innerText = th.theme;
         document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
