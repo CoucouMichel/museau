@@ -404,12 +404,7 @@
             padding: 0 clamp(16px, 4vw, 28px);
         }
 
-        .cat-title-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
+        
 
         .cat-screen-title {
             font-size: clamp(20px, 4.8vw, 24px);
@@ -428,9 +423,11 @@
             color: var(--primary);
             font-weight: 900;
             font-size: 12px;
-            padding: 3px 8px;
+            padding: 2px 10px;
             border-radius: var(--radius-pill);
-            letter-spacing: 0.3px;
+            letter-spacing: 0.5px;
+            margin: 2px 0;
+            transition: background 0.2s ease, color 0.2s ease;
         }
 
         .cat-header-instruction {
@@ -478,7 +475,7 @@
         
         .cat-pill {
             background: #FFFFFF; 
-            border: 2px solid transparent; 
+            border: 1.5px solid rgba(45, 35, 66, 0.06); 
             color: var(--text-main);
             padding: clamp(10px, 1.6vh, 14px) clamp(14px, 3.8vw, 20px);
             min-height: clamp(46px, 6vh, 54px);
@@ -489,10 +486,13 @@
             align-items: center; 
             gap: clamp(8px, 2vw, 10px); 
             cursor: pointer; 
-            transition: transform 0.2s var(--bounce), border-color 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
-            box-shadow: 0 6px 16px rgba(45, 35, 66, 0.06);
+            transition: transform 0.12s cubic-bezier(0.25, 0.8, 0.25, 1), 
+                        border-color 0.2s ease, 
+                        opacity 0.2s ease;
+            box-shadow: 0 4px 12px rgba(45, 35, 66, 0.04);
             opacity: 0.55;
             user-select: none;
+            will-change: transform, border-color, opacity;
         }
 
         .cat-pill .material-symbols-rounded {
@@ -500,12 +500,16 @@
             flex-shrink: 0;
         }
 
+        /* Micro-enfoncement au tap */
+        .cat-pill:active {
+            transform: scale(0.96);
+        }
+
         .cat-pill.selected {
             background: #FFFFFF; 
             color: var(--text-main); 
             border-color: var(--cat-color); 
-            box-shadow: 0 6px 16px rgba(45, 35, 66, 0.1); 
-            transform: scale(1.04);
+            box-shadow: none; 
             opacity: 1; 
         }
 
@@ -1818,11 +1822,9 @@
                 <span class="material-symbols-rounded">arrow_back</span>
             </button>
             <div class="cat-header-center-group">
-                <div class="cat-title-row">
-                    <h2 class="cat-screen-title">Catégories</h2>
-                    <div class="category-badge-chip">
-                        <span id="cat-count-val">0</span>/<span id="cat-count-total">12</span>
-                    </div>
+                <h2 class="cat-screen-title">Catégories</h2>
+                <div class="category-badge-chip">
+                    <span id="cat-count-val">0</span>/<span id="cat-count-total">12</span>
                 </div>
                 <p class="cat-header-instruction">
                     Sélectionnez au moins une catégorie.<br>Des thèmes aléatoires seront tirés parmi vos choix.
@@ -2166,33 +2168,33 @@
     const DATA_URL = "https://gist.githubusercontent.com/CoucouMichel/1a8f14455a4ad686716af94e8408a18d/raw/data.json";
     let fullData = [], playableData = [], teams = [], selectedCats = new Set();
     const CATEGORY_COLORS = {
-        "Art": "#F59E0B",
-        "Cinéma & TV": "#8B5CF6",
-        "Décalé": "#D946EF",
-        "Gastronomie": "#7C3AED",
-        "Geek": "#4F46E5",
-        "Géographie": "#0284C7",
-        "Histoire": "#2563EB",
-        "Littérature": "#9333EA",
-        "Musique": "#6366F1",
-        "Nature": "#14B8A6",
-        "Science": "#EA580C",
-        "Sport": "#0EA5E9"
+        "Art": "#F59E0B",          // Jaune ambré
+        "Cinéma & TV": "#EF4444",  // Rouge tapis de cinéma
+        "Décalé": "#EC4899",       // Rose vibrant
+        "Gastronomie": "#EA580C",  // Orange chaud gourmand
+        "Geek": "#8B5CF6",         // Violet arcade / tech
+        "Géographie": "#0284C7",   // Bleu océan profond
+        "Histoire": "#D97706",     // Ocre / Bronze antique
+        "Littérature": "#9333EA",  // Pourpre encre
+        "Musique": "#6366F1",      // Indigo mélodique
+        "Nature": "#10B981",       // Vert chlorophylle
+        "Science": "#06B6D4",      // Cyan réactif
+        "Sport": "#84CC16"         // Vert lime énergique
     };
 
     const CATEGORY_COLORS_DARK = {
         "Art": "#FBBF24",
-        "Cinéma & TV": "#A78BFA",
+        "Cinéma & TV": "#F87171",
         "Décalé": "#F472B6",
-        "Gastronomie": "#A855F7",
-        "Geek": "#818CF8",
+        "Gastronomie": "#FB923C",
+        "Geek": "#A78BFA",
         "Géographie": "#38BDF8",
-        "Histoire": "#60A5FA",
+        "Histoire": "#F59E0B",
         "Littérature": "#C084FC",
-        "Musique": "#A5B4FC",
-        "Nature": "#2DD4BF",
-        "Science": "#FB923C",
-        "Sport": "#22D3EE"
+        "Musique": "#818CF8",
+        "Nature": "#34D399",
+        "Science": "#22D3EE",
+        "Sport": "#A3E635"
     };
 
     function getCategoryColor(cat) {
