@@ -687,6 +687,45 @@
             pointer-events: none;
             filter: grayscale(1);
         }
+
+        /* En-tête externe du joueur au-dessus de la carte */
+        .ready-external-player-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px; /* Augmenté de 2px à 8px pour laisser respirer */
+            margin-bottom: 6px;
+        }
+
+        /* Style de la pill de catégorie intégrée dans la carte */
+        #ready-screen .cat-pill {
+            background: #FFFFFF;
+            border: 2px solid var(--cat-color);
+            color: var(--text-main);
+            padding: 8px 16px;
+            min-height: 40px;
+            border-radius: var(--radius-pill);
+            font-weight: 800;
+            font-size: 15px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: none;
+            opacity: 1;
+            margin-bottom: 2px;
+        }
+
+        #ready-screen .cat-pill .material-symbols-rounded {
+            font-size: 20px;
+            color: var(--cat-color);
+        }
+
+        /* Dark Mode pour la pill interne */
+        [data-theme="dark"] #ready-screen .cat-pill {
+            background: var(--surface-color);
+            border-color: var(--cat-color);
+            color: var(--text-main);
+        }
         /* --- 7. GAME SCREEN --- */
         .game-top-bar-modern {
             display: grid;
@@ -1310,7 +1349,130 @@
             font-size: clamp(15px, 4vw, 18px); font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px;
         }
 
-        /* --- READY SCREEN HIERARCHY --- */
+        /* --- READY SCREEN - NOUVELLE RÉORGANISATION --- */
+        #ready-screen {
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .ready-content-centered {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            gap: clamp(14px, 2.5vh, 22px);
+            padding: 4px 0;
+        }
+
+        /* Pillule de catégorie identique à l'écran Category */
+        .ready-category-pill {
+            --cat-color: var(--primary);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 5px 12px;
+            border-radius: var(--radius-pill);
+            background: #FFFFFF;
+            color: var(--cat-color);
+            border: 1.5px solid var(--cat-color);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+            box-shadow: 0 4px 12px rgba(45, 35, 66, 0.06);
+        }
+
+        .ready-category-pill .material-symbols-rounded {
+            font-size: 17px;
+            color: var(--cat-color);
+        }
+
+        /* Carte centrale : sans ombre, fine bordure de la couleur du thème */
+        /* Carte centrale : sans bordure, avec une légère ombre grise et douce */
+        .ready-player-card-box {
+            width: 100%;
+            max-width: 350px;
+            background: #FFFFFF;
+            border-radius: var(--radius-xl);
+            padding: clamp(20px, 3.5vh, 28px) clamp(16px, 4vw, 24px);
+            box-shadow: 0 10px 30px rgba(45, 35, 66, 0.06), 0 2px 8px rgba(45, 35, 66, 0.04); /* Légère ombre grise */
+            border: none; /* Suppression totale de la bordure */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Petit label THÈME au-dessus du nom de la carte */
+        .ready-theme-subtitle {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-top: 8px;
+        }
+
+        .ready-theme-highlight {
+            width: 100%;
+            background: var(--bg-color);
+            padding: clamp(12px, 2vh, 16px) 16px;
+            border-radius: var(--radius-lg);
+            font-size: clamp(18px, 5vw, 24px);
+            font-weight: 900;
+            color: var(--cat-color); /* Le thème garde sa couleur de catégorie */
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        /* Dark Mode */
+        [data-theme="dark"] .ready-player-card-box {
+            background: var(--surface-color);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .ready-player-label {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .ready-player-name {
+            font-size: clamp(26px, 7vw, 34px);
+            font-weight: 900;
+            color: var(--text-main);
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+
+        .ready-theme-highlight {
+            width: 100%;
+            background: var(--bg-color);
+            padding: clamp(12px, 2vh, 16px) 16px;
+            border-radius: var(--radius-lg);
+            font-size: clamp(18px, 5vw, 24px);
+            font-weight: 900;
+            color: var(--cat-color);
+            line-height: 1.2;
+            word-break: break-word;
+        }
+
+        /* Dark Mode */
+        [data-theme="dark"] .ready-player-card-box,
+        [data-theme="dark"] .ready-category-pill {
+            background: var(--surface-color);
+            border-color: var(--cat-color);
+        }
+
+        [data-theme="dark"] .ready-theme-highlight {
+            background: var(--pill-bg);
+        }
         .ready-content-wrapper {
             flex-grow: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; 
             text-align: center; gap: clamp(16px, 4vh, 32px);
@@ -1321,6 +1483,67 @@
             font-weight: 800; padding: clamp(12px, 2vh, 16px) clamp(24px, 6vw, 32px); 
             border-radius: var(--radius-pill); border: 1px solid rgba(45, 35, 66, 0.08); 
             text-align: center; max-width: 100%; word-break: normal; overflow-wrap: normal;
+        }
+
+        /* Ligne horizontale pour l'avatar et le nom du joueur */
+        .ready-player-row {
+            display: inline-flex;
+            align-items: center; /* Assure un centrage vertical parfait entre le groin et le texte */
+            justify-content: center;
+            gap: 12px;
+            max-width: 100%;
+            margin-bottom: 8px;
+            padding: 0 4px;
+            box-sizing: border-box;
+        }
+
+        /* Avatar de groin dans Ready (proportionné et coloré dynamiquement) */
+        .ready-player-groin-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: rgba(45, 35, 66, 0.06);
+            border: 2px solid var(--cat-color);
+            transform: translateY(-3px); /* Remonte l'avatar pour l'aligner parfaitement */
+        }
+
+        .ready-player-groin-avatar .mini-snout {
+            width: 20px;
+            height: 13px;
+            border-radius: 10px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 3px;
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.2);
+            background: var(--cat-color);
+        }
+
+        .ready-player-groin-avatar .nostril {
+            width: 3px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.4);
+            display: inline-block;
+        }
+        .ready-player-groin-avatar .nostril.left { transform: rotate(10deg); }
+        .ready-player-groin-avatar .nostril.right { transform: rotate(-10deg); }
+
+        /* Nom du joueur flexible : couleur principale et taille adaptative */
+        .ready-player-name {
+            font-size: clamp(20px, 6vw, 32px);
+            font-weight: 900;
+            color: var(--text-main);
+            line-height: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: left;
         }
         
         .action-pill-btn {
@@ -2023,48 +2246,69 @@
 
         <button id="start-btn" class="btn-3d btn-primary" onclick="startGame()" disabled style="opacity: 0.5; flex-shrink: 0;">C'est parti !</button>
     </div>
+
     <!-- READY SCREEN -->
     <div id="ready-screen" class="screen">
+        <!-- Header unifié -->
         <div class="cat-header-hero">
             <button class="btn-icon-round-static" onclick="transitionTo('category-screen')">
                 <span class="material-symbols-rounded">arrow_back</span>
             </button>
             <div class="cat-header-center-group">
-                <h2 class="cat-screen-title" id="ready-round">Manche 1 / 5</h2>
+                <h2 class="cat-screen-title" id="ready-round">Manche 1 / 1</h2>
             </div>
         </div>
         
-        <div class="ready-content-wrapper">
-            <h2 id="ready-team" class="ready-team-title">Nom de l'équipe</h2>
+        <!-- Contenu central -->
+        <div class="ready-content-centered">
             
-            <div style="display: flex; flex-direction: column; align-items: center; width: 100%;">
-                <div class="ready-category-group">
-                    <span class="material-symbols-rounded ready-category-icon" id="ready-icon">category</span>
-                    <div class="ready-category-label" id="ready-cat">CATÉGORIE</div>
+            <!-- 1. Nom du joueur et son avatar en dehors de la carte (au-dessus) -->
+            <div class="ready-external-player-header">
+                <div class="ready-player-label">À ton tour,</div>
+                <div class="ready-player-row">
+                    <div class="ready-player-groin-avatar" id="ready-player-avatar">
+                        <div class="mini-snout" id="ready-player-snout">
+                            <span class="nostril left"></span>
+                            <span class="nostril right"></span>
+                        </div>
+                    </div>
+                    <div class="ready-player-name" id="ready-team">Clément</div>
                 </div>
-                <div id="ready-theme" class="ready-theme-pill">Nom du Thème</div>
             </div>
 
-            <div class="swipe-hint-container">
-                <div class="swipe-label left" style="text-align: center;">
-                    <span class="material-symbols-rounded">close</span>
-                    <span id="tut-no-text">PAS CLASSIQUES</span>
-                </div>
+            <!-- 2. Grande carte centrale -->
+            <div class="ready-player-card-box" id="ready-theme-card">
                 
+                <!-- La pill de catégorie à l'intérieur -->
+                <div class="cat-pill" id="ready-cat-pill" style="opacity: 1; cursor: default; pointer-events: none;">
+                    <span class="material-symbols-rounded" id="ready-icon">category</span>
+                    <span id="ready-cat">Catégorie</span>
+                </div>
+
+                <div class="ready-theme-subtitle">Thème</div>
+
+                <!-- Boîte du thème -->
+                <div class="ready-theme-highlight" id="ready-theme">Nom du Thème</div>
+            </div>
+
+            <!-- Tuto Swipe -->
+            <div class="swipe-hint-container">
+                <div class="swipe-label left">
+                    <span class="material-symbols-rounded">close</span>
+                    <span id="tut-no-text">PAS LE THÈME</span>
+                </div>
                 <div class="swipe-hand-wrapper">
                     <span class="material-symbols-rounded swipe-hand-icon">swipe</span>
                 </div>
-                
-                <div class="swipe-label right" style="text-align: center;">
+                <div class="swipe-label right">
                     <span class="material-symbols-rounded">check</span>
-                    <span id="tut-yes-text">CLASSIQUES</span>
+                    <span id="tut-yes-text">LE THÈME</span>
                 </div>
             </div>
         </div>
 
-        <button class="btn-3d btn-primary" onclick="startGameplay()">GO !</button>
+        <button class="btn-3d btn-primary" onclick="startGameplay()" style="flex-shrink: 0;">GO !</button>
     </div>
-
     <!-- GAME SCREEN -->
     <div id="game-screen" class="screen">
      <div class="game-top-bar-modern" style="margin-bottom: 8px;">
@@ -3103,31 +3347,57 @@
         if (teams[curTeam].rounds >= roundsPerTeam) { curTeam = (curTeam + 1) % teams.length; prepareRound(); return; }
         
         const tm = teams[curTeam], th = playableData[curTheme % playableData.length];
+        const catColor = getCategoryColor(th.category);
+        const catIcon = getCategoryIcon(th.category);
         
-        // Mise à jour du titre dans le nouvel en-tête
+        // 1. Header (Manche)
         const roundEl = document.getElementById('ready-round');
         if (roundEl) roundEl.innerText = `Manche ${tm.rounds + 1} / ${roundsPerTeam}`;
         
+        // 2. Nom du joueur (forcé en noir/texte principal) et Avatar de groin (avec sa couleur fétiche tm.color)
         const tname = document.getElementById('ready-team');
         if (tname) {
             tname.innerText = tm.name; 
-            tname.style.color = tm.color;
+            tname.style.color = 'var(--text-main)'; // Forcé en noir / texte principal
         }
-        
-        document.getElementById('ready-cat').innerText = th.category;
-        document.getElementById('ready-theme').innerText = th.theme;
 
-        const catColor = getCategoryColor(th.category);
-        const readyIcon = document.getElementById('ready-icon');
-        if (readyIcon) {
-            readyIcon.innerText = getCategoryIcon(th.category);
-            readyIcon.style.color = catColor;
+        const avatarBg = document.getElementById('ready-player-avatar');
+        const snoutBg = document.getElementById('ready-player-snout');
+        if (avatarBg) {
+            avatarBg.style.background = tm.color + '25';
+            avatarBg.style.borderColor = tm.color; // Couleur fétiche du joueur
+        }
+        if (snoutBg) {
+            snoutBg.style.background = tm.color; // Couleur fétiche du joueur
         }
         
-        document.getElementById('tut-yes-text').innerText = th.theme;
-        document.getElementById('tut-no-text').innerText = "PAS " + th.theme;
+        // 3. Carte, Bordure et Catégorie aux couleurs du THÈME (catColor)
+        const readyCard = document.getElementById('ready-theme-card');
+        if (readyCard) readyCard.style.setProperty('--cat-color', catColor);
+
+        const readyCatPill = document.getElementById('ready-cat-pill');
+        if (readyCatPill) readyCatPill.style.setProperty('--cat-color', catColor);
+
+        const readyCatEl = document.getElementById('ready-cat');
+        if (readyCatEl) readyCatEl.innerText = th.category;
+
+        const readyIconEl = document.getElementById('ready-icon');
+        if (readyIconEl) {
+            readyIconEl.innerText = catIcon;
+            readyIconEl.style.color = catColor;
+        }
+
+        const readyThemeEl = document.getElementById('ready-theme');
+        if (readyThemeEl) readyThemeEl.innerText = th.theme;
         
-        document.getElementById('play-card-text').innerText = "";
+        // 4. Instructions swipe bas
+        const tutYes = document.getElementById('tut-yes-text');
+        const tutNo = document.getElementById('tut-no-text');
+        if (tutYes) tutYes.innerText = th.theme;
+        if (tutNo) tutNo.innerText = "PAS " + th.theme;
+        
+        const playCardText = document.getElementById('play-card-text');
+        if (playCardText) playCardText.innerText = "";
 
         if (currentScreen === 'category-screen') {
             transitionTo('ready-screen');
