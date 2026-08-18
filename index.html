@@ -727,6 +727,67 @@
             color: var(--text-main);
         }
         /* --- 7. GAME SCREEN --- */
+
+        /* Alignement vertical du joueur dans le header du jeu */
+       .game-player-badge-row {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            vertical-align: middle;
+        }
+
+        /* Centrage absolu du cercle et du groin interne */
+        .game-player-groin-avatar {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center; /* Verrouille le museau pile au centre du cercle */
+            flex-shrink: 0;
+            background: rgba(45, 35, 66, 0.06);
+            border: 1.5px solid var(--cat-color);
+            transform: none !important;
+            margin: 0;
+            padding: 0;
+        }
+
+        .game-player-groin-avatar .mini-snout {
+            width: 15px !important;
+            height: 10px !important;
+            border-radius: 8px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 2px;
+            margin: 0 !important;
+            box-shadow: inset 0 -1.5px 0 rgba(0,0,0,0.2);
+        }
+
+        .game-player-groin-avatar .nostril {
+            width: 2px !important;
+            height: 4.5px !important;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.4);
+            display: inline-block;
+        }
+        .game-player-groin-avatar .nostril.left { transform: rotate(10deg); }
+        .game-player-groin-avatar .nostril.right { transform: rotate(-10deg); }
+
+        /* Alignement strict de la boîte de texte */
+        .game-player-badge-name {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--text-main);
+            line-height: 1;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        
         .game-top-bar-modern {
             display: grid;
             grid-template-columns: 80px 1fr 80px;
@@ -765,15 +826,16 @@
             font-weight: 800;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
         }
 
         .game-meta-labels .meta-dot {
             opacity: 0.4;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         /* Conteneur des groins en temps réel sous le header */
@@ -897,8 +959,8 @@
 
         .play-card.next-card {
             z-index: 5;
-            transform: translateY(10px);
-            opacity: 0.85;
+            transform: translateY(0px); /* Au lieu de translateY(10px) */
+            opacity: 1; /* Au lieu de 0.85 */
             box-shadow: 0 8px 20px rgba(45, 35, 66, 0.08);
         }
 
@@ -1442,14 +1504,6 @@
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-        }
-
-        .ready-player-name {
-            font-size: clamp(26px, 7vw, 34px);
-            font-weight: 900;
-            color: var(--text-main);
-            line-height: 1.1;
-            margin-bottom: 8px;
         }
 
         .ready-theme-highlight {
@@ -2312,32 +2366,38 @@
     </div>
     <!-- GAME SCREEN -->
     <div id="game-screen" class="screen">
-     <div class="game-top-bar-modern" style="margin-bottom: 8px;">
-            <div class="top-bar-left">
-                <button class="btn-icon-round" style="position: relative; left: 0;" onclick="goHome()">
-                    <span class="material-symbols-rounded" style="font-size: 24px;">close</span>
-                </button>
-            </div>
+        <!-- Header héroïque blanc unifié -->
+        <div class="cat-header-hero">
+            <button class="btn-icon-round-static" onclick="goHome()">
+                <span class="material-symbols-rounded">close</span>
+            </button>
             
-            <div class="top-bar-center">
-                <div class="game-team-title" id="game-team-badge">Équipe</div>
+            <div class="cat-header-center-group" style="flex-direction: column; gap: 2px;">
+                <!-- Joueur : avatar + nom -->
+                <div class="ready-player-row" style="margin-bottom: 0; gap: 8px;">
+                    <div class="ready-player-groin-avatar" id="game-player-avatar" style="width: 28px; height: 28px; transform: translateY(-1px);">
+                        <div class="mini-snout" id="game-player-snout" style="width: 16px; height: 10px;">
+                            <span class="nostril left" style="width: 2px; height: 5px;"></span>
+                            <span class="nostril right" style="width: 2px; height: 5px;"></span>
+                        </div>
+                    </div>
+                    <div class="ready-player-name" id="game-team-badge" style="font-size: 20px;">Clément</div>
+                </div>
+
+                <!-- Métadonnées manche et carte -->
                 <div class="game-meta-labels">
-                    Manche <span id="game-round-display">1/5</span>
+                    MANCHE <span id="game-round-display">1/5</span>
                     <span class="meta-dot">•</span>
-                    Carte <span id="game-progress">1/10</span>
+                    CARTE <span id="game-progress">1/10</span>
                 </div>
             </div>
-            
-            <div class="top-bar-right">
-                <div id="game-timer-badge" class="game-timer-badge" style="display: none;">
-                    <span class="material-symbols-rounded">timer</span>
-                    <span id="game-timer-val">30s</span>
-                </div>
+
+            <!-- Timer optionnel positionné à droite si actif -->
+            <div id="game-timer-badge" class="game-timer-badge" style="display: none; position: absolute; right: clamp(12px, 3vw, 16px); top: 50%; transform: translateY(-50%);">
+                <span class="material-symbols-rounded">timer</span>
+                <span id="game-timer-val">30s</span>
             </div>
         </div>
-
-        <!-- Ligne de groins centrée sur la largeur totale -->
-        <div class="game-score-pills" id="game-score-pills" style="margin-bottom: clamp(12px, 3vh, 20px);"></div>
         
         <!-- Catégorie + Thème Uniformisés -->
         <div class="play-card-container">
@@ -3502,7 +3562,17 @@
         const teamBadge = document.getElementById('game-team-badge');
         if (teamBadge) {
             teamBadge.innerText = tm.name;
-            teamBadge.style.color = tm.color; // Applique la couleur fétiche du joueur
+            teamBadge.style.color = 'var(--text-main)';
+        }
+
+        const gAvatarBg = document.getElementById('game-player-avatar');
+        const gSnoutBg = document.getElementById('game-player-snout');
+        if (gAvatarBg) {
+            gAvatarBg.style.background = tm.color + '25';
+            gAvatarBg.style.borderColor = tm.color;
+        }
+        if (gSnoutBg) {
+            gSnoutBg.style.background = tm.color;
         }
 
         const roundDisplay = document.getElementById('game-round-display');
@@ -3647,8 +3717,8 @@
         if (cardIdx + 1 < roundItems.length) {
             nextCard.style.display = 'flex';
             nextCard.style.transition = 'none';
-            nextCard.style.transform = 'translateY(10px)';
-            nextCard.style.opacity = '0.85';
+            nextCard.style.transform = 'translateY(0px)'; /* Au lieu de 10px */
+            nextCard.style.opacity = '1'; /* Au lieu de 0.85 */
             
             formatCardText(nextCardTextEl, roundItems[cardIdx + 1].text);
             formatCardTheme(nextFooterCat, th.theme);
@@ -3771,10 +3841,8 @@
         const progress = Math.min(Math.abs(dx) / 120, 1);
 
         if (nextCard && cardIdx + 1 < roundItems.length) {
-            const translateY = 10 - (progress * 10);
-            const opacity = 0.85 + (progress * 0.15);
-            nextCard.style.transform = `translateY(${translateY}px)`;
-            nextCard.style.opacity = opacity;
+            nextCard.style.transform = `translateY(0px)`; /* Remplace le calcul de translateY */
+            nextCard.style.opacity = '1'; /* Remplace le calcul d'opacity */
         }
     };
 
@@ -3795,8 +3863,8 @@
 
             if (nextCard && cardIdx + 1 < roundItems.length) {
                 nextCard.style.transition = 'transform 0.35s ease, opacity 0.35s ease';
-                nextCard.style.transform = 'translateY(10px)';
-                nextCard.style.opacity = '0.85';
+                nextCard.style.transform = 'translateY(0px)'; /* Au lieu de 10px */
+                nextCard.style.opacity = '1'; /* Au lieu de 0.85 */
 
                 if (nextCardText) {
                     nextCardText.style.transition = 'none';
