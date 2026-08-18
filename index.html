@@ -1407,24 +1407,25 @@
             overflow: hidden;
         }
 
-        /* Petit label THÈME au-dessus du nom de la carte */
+        /* Petit label THÈME au-dessus du nom de la carte avec plus d'espace en haut */
         .ready-theme-subtitle {
             font-size: 11px;
             font-weight: 800;
             color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            margin-top: 8px;
+            margin-top: 30px; /* Augmenté de 8px à 20px pour créer une belle respiration sous la pill */
         }
 
+        /* Boîte du thème avec une police plus grande */
         .ready-theme-highlight {
             width: 100%;
             background: var(--bg-color);
-            padding: clamp(12px, 2vh, 16px) 16px;
+            padding: clamp(14px, 2.2vh, 18px) 16px;
             border-radius: var(--radius-lg);
-            font-size: clamp(18px, 5vw, 24px);
+            font-size: clamp(22px, 6vw, 30px); /* Taille augmentée (minimum 22px, s'adapte à 6vw, maximum 30px) */
             font-weight: 900;
-            color: var(--cat-color); /* Le thème garde sa couleur de catégorie */
+            color: var(--text-main) !important;
             line-height: 1.2;
             word-break: break-word;
         }
@@ -2264,7 +2265,7 @@
             
             <!-- 1. Nom du joueur et son avatar en dehors de la carte (au-dessus) -->
             <div class="ready-external-player-header">
-                <div class="ready-player-label">À ton tour,</div>
+                <div class="ready-player-label">C'est au tour de</div>
                 <div class="ready-player-row">
                     <div class="ready-player-groin-avatar" id="ready-player-avatar">
                         <div class="mini-snout" id="ready-player-snout">
