@@ -351,6 +351,35 @@
             transform: translateY(2px);
         }
 
+        /* --- 5. SETUP SCREEN --- */
+        #setup-screen {
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        #setup-screen .setup-content-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            flex-grow: 1;
+            min-height: 0;
+            justify-content: space-evenly;
+            gap: clamp(8px, 1.5vh, 16px);
+        }
+
+        .setup-section-title-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+
+        .setup-section-label {
+            font-size: clamp(14px, 3.8vw, 16px);
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
         /* --- 6. CATEGORY SCREEN (REFONTE INTUITIVE & ÉLÉGANTE) --- */
         #category-screen {
             justify-content: space-between;
@@ -422,11 +451,12 @@
             background: rgba(255, 59, 124, 0.1);
             color: var(--primary);
             font-weight: 900;
-            font-size: 12px;
-            padding: 2px 10px;
-            border-radius: var(--radius-pill);
+            font-size: 11px;
             letter-spacing: 0.5px;
-            margin: 2px 0;
+            padding: 3px 8px;
+            border-radius: var(--radius-pill);
+            line-height: 1;
+            vertical-align: middle;
             transition: background 0.2s ease, color 0.2s ease;
         }
 
@@ -441,8 +471,8 @@
         }
 
         .category-badge-chip.valid {
-            background: var(--success-bg);
-            color: var(--success);
+            background: rgba(16, 185, 129, 0.12);
+            color: #10B981;
         }
 
         /* Dark mode override */
@@ -1767,11 +1797,18 @@
         </div>
     </div>
 
-    <!-- SETUP SCREEN -->
+<!-- SETUP SCREEN -->
     <div id="setup-screen" class="screen">
-        <div class="unified-header">
-            <button class="btn-icon-round" onclick="goHome()"><span class="material-symbols-rounded">arrow_back</span></button>
-            <h2>Configuration</h2>
+        <div class="cat-header-hero">
+            <button class="btn-icon-round-static" onclick="transitionTo('landing-screen')">
+    <span class="material-symbols-rounded">arrow_back</span>
+</button>
+            <div class="cat-header-center-group">
+                <h2 class="cat-screen-title">Configuration</h2>
+                <p class="cat-header-instruction">
+                    Ajoutez les joueurs et réglez les paramètres de la partie.
+                </p>
+            </div>
         </div>
         
         <div style="flex-grow: 1; overflow-y: auto;">
@@ -1786,9 +1823,9 @@
             </div>
 
             <div style="margin-bottom: 24px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
                     <span class="section-label" id="setup-players-title" style="margin-bottom: 0;">Sélection des joueurs</span>
-                    <span id="player-select-hint" style="font-size: 13px; font-weight: 800; color: var(--primary);">0 / 2 choisis</span>
+                    <span id="player-select-hint" class="category-badge-chip">0/2</span>
                 </div>
                 <div id="profiles-selection-grid" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center; padding: 4px 2px;">
                     <!-- Injecté en JS -->
@@ -2632,12 +2669,15 @@
     }
 
     function updateProfileSelectHint() {
-        const hint = document.getElementById('player-select-hint');
-        if (hint) {
-            hint.innerText = `${selectedProfileIds.length} / ${numTeams} choisi${selectedProfileIds.length > 1 ? 's' : ''}`;
-            hint.style.color = (selectedProfileIds.length === numTeams) ? "var(--success)" : "var(--primary)";
-        }
-    }
+    const hint = document.getElementById('player-select-hint');
+    if (!hint) return;
+
+    const selected = selectedProfileIds ? selectedProfileIds.length : 0;
+    const required = typeof numTeams !== 'undefined' ? numTeams : 1;
+
+    hint.innerText = `${selected}/${required}`;
+    hint.classList.toggle('valid', selected >= required);
+}
 
     function promptNewProfile() {
         const modal = document.getElementById('new-profile-modal');
