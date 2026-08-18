@@ -2345,7 +2345,17 @@
         if (type === 'time') timeLimit = val;
     }
 
+    function requestFullscreenMode() {
+    const docEl = document.documentElement;
+    if (docEl.requestFullscreen) {
+        docEl.requestFullscreen().catch(err => console.log(err));
+    } else if (docEl.webkitRequestFullscreen) {
+        docEl.webkitRequestFullscreen();
+    }
+}
+
     function startSoloMode() {
+        requestFullscreenMode();
         numTeams = 1;
         const wrapper = document.getElementById('team-select-wrapper');
         if (wrapper) wrapper.style.display = 'none';
@@ -2361,6 +2371,7 @@
     }
 
     function startMultiMode() {
+        requestFullscreenMode();
         numTeams = 2;
         const wrapper = document.getElementById('team-select-wrapper');
         if (wrapper) wrapper.style.display = 'block';
