@@ -1899,20 +1899,17 @@
     <!-- CATEGORY SCREEN -->
     <div id="category-screen" class="screen">
         <div class="cat-header-hero">
-            <div class="cat-header-top-row">
-                <button class="btn-icon-round-inline" onclick="transitionTo('setup-screen')">
-                    <span class="material-symbols-rounded">arrow_back</span>
-                </button>
-                <div class="cat-title-inline-group">
+            <button class="btn-icon-round-static" onclick="transitionTo('setup-screen')">
+                <span class="material-symbols-rounded">arrow_back</span>
+            </button>
+            <div class="cat-header-center-group">
+                <div style="display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
                     <h2 class="cat-screen-title">Catégories</h2>
                     <div class="category-badge-chip">
                         <span id="cat-count-val">0</span>/<span id="cat-count-total">12</span>
                     </div>
                 </div>
             </div>
-            <p class="cat-header-instruction">
-                Sélectionnez au moins une catégorie.<br>Des thèmes aléatoires seront tirés parmi vos choix.
-            </p>
         </div>
         
         <div class="category-grid" id="category-container">
@@ -2971,29 +2968,31 @@
     function startGame() {
         if (selectedCats.size === 0) return;
 
+        // Fonction utilitaire pour mélanger un tableau de manière aléatoire (Fisher-Yates / sort aléatoire)
+        const shuffle = (array) => [...array].sort(() => Math.random() - 0.5);
+
         const themesByCat = {};
         selectedCats.forEach(cat => {
-            themesByCat[cat] = fullData
-                .filter(d => d.category === cat)
-                .sort(() => Math.random() - 0.5);
+            themesByCat[cat] = shuffle(fullData.filter(d => d.category === cat));
         });
 
         const totalRoundsNeeded = teams.length * roundsPerTeam;
         playableData = [];
 
         for (let i = 0; i < totalRoundsNeeded; i++) {
+            // Si une catégorie est épuisée, on la recharge et on la re-mélange complètement
             const availableCats = Object.keys(themesByCat).filter(cat => themesByCat[cat].length > 0);
 
             if (availableCats.length === 0) {
                 selectedCats.forEach(cat => {
-                    themesByCat[cat] = fullData
-                        .filter(d => d.category === cat)
-                        .sort(() => Math.random() - 0.5);
+                    themesByCat[cat] = shuffle(fullData.filter(d => d.category === cat));
                 });
             }
 
             const activeCats = Object.keys(themesByCat).filter(cat => themesByCat[cat].length > 0);
             const randomCat = activeCats[Math.floor(Math.random() * activeCats.length)];
+            
+            // On retire le thème de la pile et on l'ajoute aux données jouables
             const pickedTheme = themesByCat[randomCat].pop();
             playableData.push(pickedTheme);
         }
