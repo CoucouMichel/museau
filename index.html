@@ -502,6 +502,11 @@
             50% { transform: scale(1.05); }
         }
         
+        #game-screen {
+            justify-content: space-between;
+            padding-bottom: calc(clamp(16px, 3vh, 28px) + env(safe-area-inset-bottom));
+        }
+
         .game-area-centered { 
             flex-grow: 1; 
             display: flex; 
@@ -509,15 +514,16 @@
             align-items: center; 
             justify-content: center; 
             width: 100%; 
+            margin-top: clamp(8px, 2vh, 18px);
         }
         
         .play-card-container { 
             position: relative; 
             width: 100%; 
-            max-width: 320px; 
+            max-width: 330px; 
             aspect-ratio: 3/4; 
             perspective: 1000px; 
-            margin: 0 auto; 
+            margin: auto auto 0 auto; 
             cursor: grab;
         }
         .play-card-container:active {
