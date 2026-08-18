@@ -358,29 +358,27 @@
         }
 
         .cat-header-hero {
+            position: relative;
             width: 100%;
             background: #FFFFFF;
             border-radius: var(--radius-xl);
-            padding: clamp(12px, 2vh, 16px) clamp(14px, 3.5vw, 20px);
+            padding: clamp(16px, 2.5vh, 22px) clamp(16px, 4vw, 24px);
             box-shadow: 0 10px 24px rgba(45, 35, 66, 0.05);
             border: 1px solid rgba(45, 35, 66, 0.05);
             display: flex;
-            flex-direction: column;
-            gap: 6px;
-            flex-shrink: 0;
-            margin-bottom: clamp(6px, 1.2vh, 12px);
-        }
-
-        .cat-header-top-row {
-            display: flex;
             align-items: center;
-            justify-content: space-between;
-            width: 100%;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-bottom: clamp(10px, 1.8vh, 18px);
         }
 
         .btn-icon-round-static {
-            width: clamp(38px, 9vw, 44px);
-            height: clamp(38px, 9vw, 44px);
+            position: absolute;
+            left: clamp(12px, 3vw, 18px);
+            top: clamp(14px, 2.2vh, 18px);
+            transform: none;
+            width: clamp(38px, 9vw, 42px);
+            height: clamp(38px, 9vw, 42px);
             border-radius: 50%;
             background: var(--bg-color);
             color: var(--text-main);
@@ -389,18 +387,37 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-            flex-shrink: 0;
+            transition: transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            z-index: 2;
         }
         .btn-icon-round-static:active { transform: scale(0.92); }
         .btn-icon-round-static .material-symbols-rounded { font-size: clamp(20px, 4.5vw, 24px); }
 
+        .cat-header-center-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 8px;
+            width: 100%;
+            padding: 0 clamp(16px, 4vw, 28px);
+        }
+
+        .cat-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
         .cat-screen-title {
-            font-size: clamp(20px, 5vw, 24px);
+            font-size: clamp(20px, 4.8vw, 24px);
             font-weight: 900;
             color: var(--text-main);
             margin: 0;
             letter-spacing: -0.5px;
+            line-height: 1.1;
         }
 
         .category-badge-chip {
@@ -410,19 +427,25 @@
             background: rgba(255, 59, 124, 0.1);
             color: var(--primary);
             font-weight: 900;
-            font-size: 13px;
-            padding: 6px 12px;
+            font-size: 12px;
+            padding: 3px 8px;
             border-radius: var(--radius-pill);
-            letter-spacing: 0.5px;
+            letter-spacing: 0.3px;
         }
 
         .cat-header-instruction {
             margin: 0;
             text-align: center;
-            font-size: clamp(12px, 3.2vw, 13.5px);
+            font-size: clamp(12.5px, 3.3vw, 14px);
             font-weight: 700;
             color: var(--text-muted);
-            line-height: 1.2;
+            line-height: 1.45;
+            max-width: 95%;
+        }
+
+        .category-badge-chip.valid {
+            background: var(--success-bg);
+            color: var(--success);
         }
 
         /* Dark mode override */
@@ -1791,16 +1814,20 @@
     <!-- CATEGORY SCREEN -->
     <div id="category-screen" class="screen">
         <div class="cat-header-hero">
-            <div class="cat-header-top-row">
-                <button class="btn-icon-round-static" onclick="transitionTo('setup-screen')">
-                    <span class="material-symbols-rounded">arrow_back</span>
-                </button>
-                <h2 class="cat-screen-title">Catégories</h2>
-                <div class="category-badge-chip">
-                    <span id="cat-count-val">12</span>/<span id="cat-count-total">12</span>
+            <button class="btn-icon-round-static" onclick="transitionTo('setup-screen')">
+                <span class="material-symbols-rounded">arrow_back</span>
+            </button>
+            <div class="cat-header-center-group">
+                <div class="cat-title-row">
+                    <h2 class="cat-screen-title">Catégories</h2>
+                    <div class="category-badge-chip">
+                        <span id="cat-count-val">0</span>/<span id="cat-count-total">12</span>
+                    </div>
                 </div>
+                <p class="cat-header-instruction">
+                    Sélectionnez au moins une catégorie.<br>Des thèmes aléatoires seront tirés parmi vos choix.
+                </p>
             </div>
-            <p class="cat-header-instruction">Sélectionnez les thèmes pour votre partie</p>
         </div>
         
         <div class="category-grid" id="category-container">
@@ -2792,8 +2819,14 @@
         
         const countVal = document.getElementById('cat-count-val');
         const countTotal = document.getElementById('cat-count-total');
+        const badgeChip = document.querySelector('.category-badge-chip');
+
         if (countVal) countVal.innerText = count;
         if (countTotal) countTotal.innerText = totalCats;
+        
+        if (badgeChip) {
+            badgeChip.classList.toggle('valid', count > 0);
+        }
         
         const startBtn = document.getElementById('start-btn');
         if (startBtn) {
