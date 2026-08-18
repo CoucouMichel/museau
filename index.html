@@ -351,49 +351,169 @@
             transform: translateY(2px);
         }
 
-        /* --- 6. CATEGORY SCREEN --- */
+        /* --- 6. CATEGORY SCREEN (REFONTE INTUITIVE & ÉLÉGANTE) --- */
+        #category-screen {
+            justify-content: space-between;
+            overflow: hidden;
+        }
+
+        .cat-header-hero {
+            width: 100%;
+            background: #FFFFFF;
+            border-radius: var(--radius-xl);
+            padding: clamp(12px, 2vh, 16px) clamp(14px, 3.5vw, 20px);
+            box-shadow: 0 10px 24px rgba(45, 35, 66, 0.05);
+            border: 1px solid rgba(45, 35, 66, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex-shrink: 0;
+            margin-bottom: clamp(6px, 1.2vh, 12px);
+        }
+
+        .cat-header-top-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .btn-icon-round-static {
+            width: clamp(38px, 9vw, 44px);
+            height: clamp(38px, 9vw, 44px);
+            border-radius: 50%;
+            background: var(--bg-color);
+            color: var(--text-main);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+            flex-shrink: 0;
+        }
+        .btn-icon-round-static:active { transform: scale(0.92); }
+        .btn-icon-round-static .material-symbols-rounded { font-size: clamp(20px, 4.5vw, 24px); }
+
+        .cat-screen-title {
+            font-size: clamp(20px, 5vw, 24px);
+            font-weight: 900;
+            color: var(--text-main);
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+
+        .category-badge-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 59, 124, 0.1);
+            color: var(--primary);
+            font-weight: 900;
+            font-size: 13px;
+            padding: 6px 12px;
+            border-radius: var(--radius-pill);
+            letter-spacing: 0.5px;
+        }
+
+        .cat-header-instruction {
+            margin: 0;
+            text-align: center;
+            font-size: clamp(12px, 3.2vw, 13.5px);
+            font-weight: 700;
+            color: var(--text-muted);
+            line-height: 1.2;
+        }
+
+        /* Dark mode override */
+        [data-theme="dark"] .cat-header-hero {
+            background: var(--surface-color);
+            border-color: var(--border-lighter);
+        }
+        [data-theme="dark"] .btn-icon-round-static {
+            background: var(--pill-bg);
+        }
+
+        .category-counter-pill span#cat-count-val {
+            color: var(--primary);
+            font-weight: 900;
+        }
+
         .category-grid {
             display: flex; 
             flex-wrap: wrap; 
-            gap: 12px; 
+            gap: clamp(12px, 2vh, 18px) clamp(8px, 2.5vw, 14px); 
             justify-content: center; 
             align-items: center; 
-            align-content: flex-start;
+            align-content: center; /* Regroupe harmonieusement les pastilles au centre */
             width: 100%; 
             flex-grow: 1; 
-            overflow-y: auto; 
-            padding: 12px 4px 24px 4px;
-            margin-bottom: 8px;
-            -webkit-overflow-scrolling: touch;
+            min-height: 0;
+            overflow: hidden;
+            padding: 8px 0;
         }
         
         .cat-pill {
-            background: white; 
-            border: 1px solid transparent; 
+            background: #FFFFFF; 
+            border: 2px solid transparent; 
             color: var(--text-main);
-            padding: 5px 10px;
+            padding: clamp(10px, 1.6vh, 14px) clamp(14px, 3.8vw, 20px);
+            min-height: clamp(46px, 6vh, 54px);
             border-radius: var(--radius-pill); 
             font-weight: 800; 
-            font-size: clamp(12px, 3.5vw, 14px);
-            display: flex; 
+            font-size: clamp(14px, 3.8vw, 16px);
+            display: inline-flex; 
             align-items: center; 
-            gap: 8px; 
+            gap: clamp(8px, 2vw, 10px); 
             cursor: pointer; 
-            transition: 0.2s var(--bounce);
-            box-shadow: var(--shadow-soft);
-            opacity: 0.5;
-            width: auto; 
+            transition: transform 0.2s var(--bounce), border-color 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 6px 16px rgba(45, 35, 66, 0.06);
+            opacity: 0.55;
+            user-select: none;
+        }
+
+        .cat-pill .material-symbols-rounded {
+            font-size: clamp(22px, 5.2vw, 26px);
+            flex-shrink: 0;
         }
 
         .cat-pill.selected {
-            background: white; 
+            background: #FFFFFF; 
             color: var(--text-main); 
             border-color: var(--cat-color); 
-            box-shadow: 0 4px 12px rgba(45, 35, 66, 0.08); 
-            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(45, 35, 66, 0.1); 
+            transform: scale(1.04);
             opacity: 1; 
         }
 
+        .cat-actions-bar {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            margin: clamp(6px, 1.2vh, 12px) 0;
+            flex-shrink: 0;
+        }
+
+        .cat-bulk-btn {
+            flex: 1;
+            height: clamp(38px, 5vh, 44px);
+            border-radius: var(--radius-pill);
+            font-size: 13px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s var(--bounce);
+        }
+
+        .cat-bulk-btn:disabled,
+        .cat-bulk-btn.disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            pointer-events: none;
+            filter: grayscale(1);
+        }
         /* --- 7. GAME SCREEN --- */
         .game-top-bar-modern {
             display: grid;
@@ -520,10 +640,10 @@
         .play-card-container { 
             position: relative; 
             width: 100%; 
-            max-width: 330px; 
-            aspect-ratio: 3/4; 
+            max-width: clamp(320px, 86vw, 360px); 
+            height: clamp(430px, 58vh, 520px); 
             perspective: 1000px; 
-            margin: auto auto 0 auto; 
+            margin: 0 auto; 
             cursor: grab;
         }
         .play-card-container:active {
@@ -1670,30 +1790,36 @@
 
     <!-- CATEGORY SCREEN -->
     <div id="category-screen" class="screen">
-        <div class="unified-header">
-            <button class="btn-icon-round" onclick="transitionTo('setup-screen')"><span class="material-symbols-rounded">arrow_back</span></button>
-            <h2>Catégories</h2>
-        </div>
-        
-        <div style="display: flex; justify-content: center; margin-bottom: 12px;">
-            <div class="category-counter">
-                <span id="cat-count-val">0</span> <span id="cat-label">sélectionnées</span>
+        <div class="cat-header-hero">
+            <div class="cat-header-top-row">
+                <button class="btn-icon-round-static" onclick="transitionTo('setup-screen')">
+                    <span class="material-symbols-rounded">arrow_back</span>
+                </button>
+                <h2 class="cat-screen-title">Catégories</h2>
+                <div class="category-badge-chip">
+                    <span id="cat-count-val">12</span>/<span id="cat-count-total">12</span>
+                </div>
             </div>
+            <p class="cat-header-instruction">Sélectionnez les thèmes pour votre partie</p>
         </div>
         
         <div class="category-grid" id="category-container">
-            <!-- Injected via JS -->
+            <!-- Injecté via JS -->
         </div>
 
-        <!-- Actions occupant exactement 100% de la largeur -->
-        <div style="display: flex; width: 100%; gap: 12px; margin-bottom: 12px; flex-shrink: 0;">
-            <button id="btn-deselect-all" class="action-pill-btn" onclick="selectAllCats(false)">Tout désélectionner</button>
-            <button id="btn-select-all" class="action-pill-btn" onclick="selectAllCats(true)">Tout sélectionner</button>
+        <div class="cat-actions-bar">
+            <button id="btn-deselect-all" class="action-pill-btn cat-bulk-btn" onclick="selectAllCats(false)">
+                <span class="material-symbols-rounded" style="font-size: 18px;">deselect</span>
+                <span>Tout désélectionner</span>
+            </button>
+            <button id="btn-select-all" class="action-pill-btn cat-bulk-btn" onclick="selectAllCats(true)">
+                <span class="material-symbols-rounded" style="font-size: 18px;">select_all</span>
+                <span>Tout sélectionner</span>
+            </button>
         </div>
 
-        <button id="start-btn" class="btn-3d btn-primary" onclick="startGame()" disabled style="opacity: 0.5;">C'est parti !</button>
+        <button id="start-btn" class="btn-3d btn-primary" onclick="startGame()" disabled style="opacity: 0.5; flex-shrink: 0;">C'est parti !</button>
     </div>
-
     <!-- READY SCREEN -->
     <div id="ready-screen" class="screen">
         <div class="unified-header">
@@ -2662,18 +2788,24 @@
 
     function updateCatCounter() {
         const count = selectedCats.size;
-        document.getElementById('cat-count-val').innerText = count;
-        document.getElementById('cat-label').innerText = count <= 1 ? "sélectionnée" : "sélectionnées";
+        const totalCats = fullData ? [...new Set(fullData.map(d => d.category))].length : 12;
+        
+        const countVal = document.getElementById('cat-count-val');
+        const countTotal = document.getElementById('cat-count-total');
+        if (countVal) countVal.innerText = count;
+        if (countTotal) countTotal.innerText = totalCats;
         
         const startBtn = document.getElementById('start-btn');
-        if (count === 0) {
-            startBtn.disabled = true;
-            startBtn.style.opacity = "0.5";
-            startBtn.style.pointerEvents = "none";
-        } else {
-            startBtn.disabled = false;
-            startBtn.style.opacity = "1";
-            startBtn.style.pointerEvents = "auto";
+        if (startBtn) {
+            if (count === 0) {
+                startBtn.disabled = true;
+                startBtn.style.opacity = "0.5";
+                startBtn.style.pointerEvents = "none";
+            } else {
+                startBtn.disabled = false;
+                startBtn.style.opacity = "1";
+                startBtn.style.pointerEvents = "auto";
+            }
         }
     }
 
