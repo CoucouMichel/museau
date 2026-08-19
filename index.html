@@ -1384,58 +1384,190 @@
                 75% { transform: translateX(-20px) rotate(-15deg); color: var(--danger); }
             }
 
-            /* --- PODIUM 3D PARTY GAME --- */
-            .podium-container {
-                display: flex; align-items: flex-end; justify-content: center;
-                gap: 8px; margin-top: 48px; margin-bottom: 32px; height: 260px; position: relative;
-            }
+            /* --- 10. LEADERBOARD SCREEN (MD3 ELEVATED TABLE) --- */
+        #leaderboard-screen {
+            justify-content: space-between;
+            overflow: hidden;
+        }
 
-            .podium-step {
-                display: flex; flex-direction: column; align-items: center;
-                width: 100px; position: relative; opacity: 0;
-                animation: slideUpBounce 0.6s var(--bounce) forwards;
-            }
-            .podium-step.rank-1 { order: 2; z-index: 10; width: 110px; }
-            .podium-step.rank-2 { order: 1; z-index: 5; }
-            .podium-step.rank-3 { order: 3; z-index: 5; }
+        .lb-table-card {
+            background: var(--surface-color);
+            border-radius: var(--radius-xl);
+            box-shadow: 0 10px 30px rgba(45, 35, 66, 0.06), 0 2px 8px rgba(45, 35, 66, 0.04);
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            flex-grow: 1;
+            min-height: 0;
+            overflow: hidden;
+            margin: 8px 0 16px 0;
+            border: 1px solid rgba(45, 35, 66, 0.04);
+        }
 
-            .podium-info {
-                background: white; padding: 12px 8px; border-radius: var(--radius-lg);
-                box-shadow: 0 8px 16px rgba(45,35,66,0.15); text-align: center;
-                width: 110%; margin-bottom: -16px; z-index: 2; border: 3px solid transparent;
-            }
-            .rank-1 .podium-info { transform: scale(1.1); margin-bottom: -12px; }
+        .lb-table-header {
+            display: grid;
+            grid-template-columns: 56px 1fr 80px;
+            align-items: center;
+            padding: 14px 16px;
+            background: rgba(45, 35, 66, 0.03);
+            border-bottom: 1px solid rgba(45, 35, 66, 0.06);
+            flex-shrink: 0;
+        }
 
-            .podium-name { font-weight: 900; font-size: 14px; color: var(--text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-            .podium-score { font-weight: 900; font-size: 22px; margin-top: 2px; }
+        .lb-th {
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+        .lb-col-rank { text-align: center; }
+        .lb-col-player { text-align: left; padding-left: 8px; }
+        .lb-col-score { text-align: right; }
 
-            .podium-block {
-                width: 100%; border-radius: 16px 16px 8px 8px; display: flex;
-                justify-content: center; padding-top: 32px; color: rgba(255, 255, 255, 0.9);
-                font-size: 56px; font-weight: 900; box-shadow: inset 0 -10px 0 rgba(0,0,0,0.15), 0 12px 24px rgba(45,35,66,0.2);
-            }
-            .rank-1 .podium-block { height: 160px; font-size: 72px; padding-top: 40px; }
-            .rank-2 .podium-block { height: 110px; }
-            .rank-3 .podium-block { height: 80px; padding-top: 24px; font-size: 48px; }
+        .lb-table-body {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            flex-grow: 1;
+            padding: 4px 0;
+        }
 
-            .crown-icon {
-                position: absolute; top: -50px; font-size: 48px;
-                filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-                animation: floatCrown 2.5s ease-in-out infinite; z-index: 15;
-            }
+        .lb-row {
+            display: grid;
+            grid-template-columns: 56px 1fr 80px;
+            align-items: center;
+            padding: 12px 16px;
+            border-bottom: 1px solid rgba(45, 35, 66, 0.04);
+            transition: background 0.2s ease;
+            position: relative;
+            opacity: 0;
+            animation: lbRowFadeIn 0.35s var(--bounce) forwards;
+        }
 
-            .lb-list-item {
-                background: white; padding: 16px 24px; border-radius: var(--radius-lg);
-                box-shadow: var(--shadow-soft); display: flex; align-items: center; margin-bottom: 8px;
-                opacity: 0; animation: slideInRight 0.5s var(--bounce) forwards;
-            }
-            .lb-list-rank { font-weight: 900; font-size: 18px; color: var(--text-muted); width: 40px; }
-            .lb-list-name { font-weight: 800; font-size: 18px; flex-grow: 1; color: var(--text-main); }
-            .lb-list-score { font-weight: 900; font-size: 20px; }
+        .lb-row:last-child {
+            border-bottom: none;
+        }
 
-            @keyframes slideUpBounce { 0% { opacity: 0; transform: translateY(150px); } 100% { opacity: 1; transform: translateY(0); } }
-            @keyframes floatCrown { 0%, 100% { transform: translateY(0) rotate(15deg) scale(1); } 50% { transform: translateY(-12px) rotate(0deg) scale(1.1); } }
-            @keyframes slideInRight { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: translateX(0); } }
+        .lb-row.leader {
+            background: rgba(255, 184, 0, 0.06);
+        }
+
+        @keyframes lbRowFadeIn {
+            0% { opacity: 0; transform: translateY(12px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Rank chip styling */
+        .lb-rank-badge {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 900;
+            margin: 0 auto;
+            background: rgba(45, 35, 66, 0.05);
+            color: var(--text-main);
+        }
+
+        .lb-rank-badge.rank-1 {
+            background: #FFB800;
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 184, 0, 0.35);
+        }
+
+        .lb-rank-badge.rank-2 {
+            background: #94A3B8;
+            color: white;
+        }
+
+        .lb-rank-badge.rank-3 {
+            background: #D97706;
+            color: white;
+        }
+
+        /* Player identity cell */
+        .lb-player-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-left: 8px;
+            min-width: 0;
+        }
+
+        .lb-player-name-wrap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .lb-player-name {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .lb-crown-icon {
+            font-size: 16px;
+            line-height: 1;
+            animation: bounceCrown 2s ease-in-out infinite;
+            filter: drop-shadow(0 2px 4px rgba(255, 184, 0, 0.4));
+            flex-shrink: 0;
+        }
+
+        @keyframes bounceCrown {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-3px) rotate(8deg); }
+        }
+
+        /* Score cell */
+        .lb-score-cell {
+            text-align: right;
+            display: flex;
+            align-items: baseline;
+            justify-content: flex-end;
+            gap: 3px;
+        }
+
+        .lb-score-value {
+            font-size: 20px;
+            font-weight: 900;
+            line-height: 1;
+        }
+
+        .lb-score-label {
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-muted);
+        }
+
+        /* Dark mode overrides */
+        [data-theme="dark"] .lb-table-card {
+            background: var(--surface-color);
+            border-color: var(--border-lighter);
+        }
+        [data-theme="dark"] .lb-table-header {
+            background: var(--pill-bg);
+            border-color: var(--border-lighter);
+        }
+        [data-theme="dark"] .lb-row {
+            border-color: var(--border-lighter);
+        }
+        [data-theme="dark"] .lb-row.leader {
+            background: rgba(255, 184, 0, 0.1);
+        }
+        [data-theme="dark"] .lb-rank-badge:not(.rank-1):not(.rank-2):not(.rank-3) {
+            background: var(--pill-bg);
+            color: var(--text-main);
+        }
 
             /* --- READY SCREEN CATEGORY MINIMALIST GROUP --- */
             .ready-category-group {
@@ -2528,18 +2660,37 @@
         <button class="btn-3d btn-primary" id="sum-next-btn" style="flex-shrink: 0; margin-top: 8px;">Suivant</button>
     </div>
         
-        <!-- LEADERBOARD SCREEN -->
-        <div id="leaderboard-screen" class="screen">
-            <button class="btn-icon-round" onclick="goHome()" style="position: absolute; top: 48px; left: 24px; z-index: 10;"><span class="material-symbols-rounded">home</span></button>
-            <div class="unified-header">
-                <h2>Classement</h2>
-            </div>
-            <div id="lb-container" style="flex-grow:1; overflow-y:auto; display:flex; flex-direction:column; gap:16px;"></div>
-            <div id="lb-actions" style="display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: auto; flex-shrink: 0;">
-                <button class="btn-3d btn-primary" id="lb-btn-primary" onclick="prepareRound()">Continuer</button>
-                <button class="btn-3d btn-ghost" id="lb-btn-home" style="display: none; height: 48px; font-size: 14px;" onclick="goHome()">Menu Principal</button>
+        <!-- LEADERBOARD SCREEN (MD3 REVAMP) -->
+    <div id="leaderboard-screen" class="screen">
+        <!-- Unified White Header -->
+        <div class="cat-header-hero" style="margin-bottom: 8px;">
+            <button class="btn-icon-round-static" onclick="goHome()">
+                <span class="material-symbols-rounded">close</span>
+            </button>
+            <div class="cat-header-center-group">
+                <h2 class="cat-screen-title" id="lb-header-title">Classement</h2>
             </div>
         </div>
+
+        <!-- MD3 Container -->
+        <div class="lb-table-card">
+            <div class="lb-table-header">
+                <span class="lb-th lb-col-rank">Rang</span>
+                <span class="lb-th lb-col-player">Joueur</span>
+                <span class="lb-th lb-col-score">Groins</span>
+            </div>
+            
+            <div class="lb-table-body" id="lb-container">
+                <!-- Dynamically injected via JS -->
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div id="lb-actions" style="display: flex; flex-direction: column; gap: 8px; width: 100%; margin-top: auto; flex-shrink: 0;">
+            <button class="btn-3d btn-primary" id="lb-btn-primary" onclick="prepareRound()">Continuer</button>
+            <button class="btn-3d btn-ghost" id="lb-btn-home" style="display: none; height: 48px; font-size: 14px;" onclick="goHome()">Menu Principal</button>
+        </div>
+    </div>
 
         <!-- RULES SCREEN -->
         <div id="rules-screen" class="screen">
@@ -4130,93 +4281,89 @@
         }
 
         function showLB(final) {
-            replaceScreen('leaderboard-screen');
-            
-            const cont = document.getElementById('lb-container');
-            cont.innerHTML = '';
-            const sort = [...teams].sort((a,b) => b.score - a.score);
-            
-            // Calcul des rangs avec gestion des ex æquo
-            let currentRank = 1;
-            const rankedTeams = sort.map((t, idx, arr) => {
-                if (idx > 0 && t.score < arr[idx - 1].score) {
-                    currentRank = idx + 1;
-                }
-                return { ...t, rank: currentRank };
-            });
-
-            // Hauteur des blocs selon le rang
-            const stepHeights = {
-                1: '130px',
-                2: '95px',
-                3: '70px'
-            };
-            
-            let podiumHtml = '<div class="podium-container" style="display: flex; align-items: flex-end; justify-content: center; gap: 8px;">';
-            const top3 = rankedTeams.slice(0, 3);
-            
-            top3.forEach((t, i) => {
-                const delay = (3 - (i + 1)) * 0.15;
-                const isFirst = t.rank === 1;
-                const isFinalWinner = final && isFirst;
-                const height = stepHeights[t.rank] || '70px';
-                
-                // On applique la classe du rang réel (t.rank) pour un rendu 100% identique en cas d'égalité
-                podiumHtml += `
-                    <div class="podium-step rank-${t.rank}" style="animation-delay: ${delay}s; flex: 1; max-width: 110px;">
-                        ${isFirst ? '<div class="crown-icon">👑</div>' : ''}
-                        <div class="podium-info ${isFinalWinner ? 'winner-banner-highlight' : ''}" style="border-color: ${t.color};">
-                            <div class="podium-name" style="${isFinalWinner ? 'font-weight: 900; color: ' + t.color + ';' : ''}">${isFinalWinner ? '🏆 ' + t.name : t.name}</div>
-                            <div class="podium-score" style="color: ${t.color}">${t.score}</div>
-                        </div>
-                        <div class="podium-block" style="background: ${t.color}; height: ${height} !important; font-size: ${t.rank === 1 ? '44px' : '36px'};">
-                            ${t.rank}
-                        </div>
-                    </div>
-                `;
-            });
-            podiumHtml += '</div>';
-            cont.innerHTML += podiumHtml;
-
-            const rest = rankedTeams.slice(3);
-            rest.forEach((t, i) => {
-                const delay = 0.6 + (i * 0.1);
-                
-                cont.innerHTML += `
-                    <div class="lb-list-item" style="animation-delay: ${delay}s; border-left: 6px solid ${t.color}">
-                        <div class="lb-list-rank">#${t.rank}</div>
-                        <div class="lb-list-name">${t.name}</div>
-                        <div class="lb-list-score" style="color: ${t.color}">${t.score}</div>
-                    </div>
-                `;
-            });
-
-            // Déclenchement son et célébration
-            if (final) {
-                if (teams.length > 1 && soundEnabled) {
-                    sndVictory.currentTime = 0;
-                    sndVictory.play().catch(e => console.error("Erreur pigvictory :", e));
-                    triggerCelebrationRain();
-                }
-            }
-            
-            const primaryBtn = document.getElementById('lb-btn-primary') || document.querySelector('#leaderboard-screen .btn-primary');
-            const homeBtn = document.getElementById('lb-btn-home');
-            
-            if (final) { 
-                if (primaryBtn) {
-                    primaryBtn.innerText = "Rejouer"; 
-                    primaryBtn.onclick = replayGame;
-                }
-                if (homeBtn) homeBtn.style.display = 'flex';
-            } else { 
-                if (primaryBtn) {
-                    primaryBtn.innerText = "Manche Suivante"; 
-                    primaryBtn.onclick = () => prepareRound(); 
-                }
-                if (homeBtn) homeBtn.style.display = 'none';
-            }
+        replaceScreen('leaderboard-screen');
+        
+        const cont = document.getElementById('lb-container');
+        if (!cont) return;
+        cont.innerHTML = '';
+        
+        const titleEl = document.getElementById('lb-header-title');
+        if (titleEl) {
+            titleEl.innerText = final ? "Résultat Final" : "Classement";
         }
+
+        const sortedTeams = [...teams].sort((a, b) => b.score - a.score);
+        
+        // Calculate ranks with support for multi-leader ties
+        let currentRank = 1;
+        const rankedTeams = sortedTeams.map((t, idx, arr) => {
+            if (idx > 0 && t.score < arr[idx - 1].score) {
+                currentRank = idx + 1;
+            }
+            return { ...t, rank: currentRank };
+        });
+
+        // Generate MD3 rows
+        rankedTeams.forEach((t, i) => {
+            const isLeader = t.rank === 1;
+            const rankClass = t.rank <= 3 ? `rank-${t.rank}` : '';
+            const row = document.createElement('div');
+            row.className = `lb-row ${isLeader ? 'leader' : ''}`;
+            row.style.animationDelay = `${i * 0.08}s`;
+
+            row.innerHTML = `
+                <div class="lb-col-rank">
+                    <div class="lb-rank-badge ${rankClass}">
+                        ${t.rank}
+                    </div>
+                </div>
+                
+                <div class="lb-player-cell">
+                    <div class="game-player-groin-avatar" style="width: 32px; height: 32px; background: ${t.color}25; border-color: ${t.color};">
+                        <div class="mini-snout" style="background: ${t.color}; width: 18px; height: 11px;">
+                            <span class="nostril left" style="width: 2.5px; height: 5px;"></span>
+                            <span class="nostril right" style="width: 2.5px; height: 5px;"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="lb-player-name-wrap">
+                        <span class="lb-player-name" style="${isLeader ? 'color: var(--text-main);' : ''}">${t.name}</span>
+                        ${isLeader ? '<span class="lb-crown-icon" title="En tête">👑</span>' : ''}
+                    </div>
+                </div>
+                
+                <div class="lb-score-cell">
+                    <span class="lb-score-value" style="color: ${t.color};">${t.score}</span>
+                    <span class="lb-score-label">${t.score <= 1 ? 'pt' : 'pts'}</span>
+                </div>
+            `;
+            cont.appendChild(row);
+        });
+
+        // Trigger celebration on final multi-player completion
+        if (final && teams.length > 1 && soundEnabled) {
+            sndVictory.currentTime = 0;
+            sndVictory.play().catch(e => console.error("Audio error:", e));
+            triggerCelebrationRain();
+        }
+        
+        const primaryBtn = document.getElementById('lb-btn-primary');
+        const homeBtn = document.getElementById('lb-btn-home');
+        
+        if (final) { 
+            if (primaryBtn) {
+                primaryBtn.innerText = "Rejouer"; 
+                primaryBtn.onclick = replayGame;
+            }
+            if (homeBtn) homeBtn.style.display = 'flex';
+        } else { 
+            if (primaryBtn) {
+                primaryBtn.innerText = "Manche Suivante"; 
+                primaryBtn.onclick = () => prepareRound(); 
+            }
+            if (homeBtn) homeBtn.style.display = 'none';
+        }
+    }
 
         function triggerCelebrationRain() {
             const oldCont = document.getElementById('rain-container');
