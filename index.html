@@ -884,6 +884,100 @@
                 font-size: 16px;
             }
 
+            /* Conteneur et badge de score en direct */
+        .game-live-score-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            margin-top: 4px;
+            margin-bottom: clamp(6px, 1.5vh, 12px);
+            z-index: 15;
+        }
+
+        .game-live-score-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--surface-color);
+            padding: 4px 14px 4px 6px;
+            border-radius: var(--radius-pill);
+            box-shadow: 0 4px 14px rgba(45, 35, 66, 0.06), 0 1px 3px rgba(45, 35, 66, 0.04);
+            border: 1px solid rgba(45, 35, 66, 0.05);
+            transition: transform 0.2s var(--bounce);
+        }
+
+        .live-score-val {
+            font-size: 17px;
+            font-weight: 900;
+            color: var(--text-main);
+            line-height: 1;
+            display: inline-block;
+            transition: transform 0.25s var(--bounce), color 0.2s ease;
+        }
+
+        .live-score-val.bump {
+            transform: scale(1.4);
+            color: var(--success);
+        }
+
+        .live-score-unit {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--text-muted);
+        }
+
+        /* Animation de chute du groin */
+        .score-drop-zone {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 40px;
+            pointer-events: none;
+        }
+
+        .falling-snout-particle {
+            position: absolute;
+            left: 50%;
+            top: -24px;
+            transform: translateX(-50%) scale(0.5);
+            opacity: 0;
+            animation: snoutDropImpact 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        @keyframes snoutDropImpact {
+            0% {
+                top: -30px;
+                transform: translateX(-50%) scale(0.6) rotate(-15deg);
+                opacity: 0;
+            }
+            40% {
+                opacity: 1;
+            }
+            80% {
+                top: 4px;
+                transform: translateX(-50%) scale(1.15) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                top: 6px;
+                transform: translateX(-50%) scale(0) rotate(5deg);
+                opacity: 0;
+            }
+        }
+
+        /* Dark Mode */
+        [data-theme="dark"] .game-live-score-badge {
+            background: var(--surface-color);
+            border-color: var(--border-lighter);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+        }
+
             .game-timer-badge.urgent {
                 background: var(--danger-bg);
                 color: var(--danger);
@@ -2570,6 +2664,22 @@
                     <span id="game-timer-val">30s</span>
                 </div>
             </div>
+
+            <!-- Compteur de groins en temps réel au-dessus de la carte -->
+        <div class="game-live-score-wrapper" id="game-live-score-wrapper">
+            <div class="game-live-score-badge">
+                <div class="game-player-groin-avatar" id="live-score-avatar" style="width: 22px; height: 22px;">
+                    <div class="mini-snout" id="live-score-snout" style="width: 13px; height: 8px;">
+                        <span class="nostril left" style="width: 1.5px; height: 3.5px;"></span>
+                        <span class="nostril right" style="width: 1.5px; height: 3.5px;"></span>
+                    </div>
+                </div>
+                <span class="live-score-val" id="live-score-val">0</span>
+                <span class="live-score-unit" id="live-score-unit">groin</span>
+            </div>
+            <!-- Zone d'ancrage pour l'animation de chute -->
+            <div class="score-drop-zone" id="score-drop-zone"></div>
+        </div>
             
             <!-- Catégorie + Thème Uniformisés -->
             <div class="play-card-container">
@@ -3718,139 +3828,194 @@
         }
 
         function startRealGame() {
-            drag = false; 
-            
-            const th = playableData[curTheme % playableData.length];
-            const catColor = CATEGORY_COLORS[th.category] || 'var(--primary)';
-            
-            // Application de la couleur de catégorie sur les deux cartes
-            const playCard = document.getElementById('play-card');
-            const nextCard = document.getElementById('next-card');
-            if (playCard) playCard.style.setProperty('--cat-color', catColor);
-            if (nextCard) nextCard.style.setProperty('--cat-color', catColor);
-            
-            // Nom du thème ajusté dynamiquement en bas de carte
-            const footerCat = document.getElementById('card-footer-cat');
-            formatCardTheme(footerCat, th.theme);
-            
-            const nextFooterCat = document.getElementById('next-card-footer-cat');
-            formatCardTheme(nextFooterCat, th.theme);
-            
-            const poolT = th.items.filter(i => i.isRelated).sort(() => Math.random() - 0.5);
-            const poolF = th.items.filter(i => !i.isRelated).sort(() => Math.random() - 0.5);
-            
-            // Garantit au moins 1 bonne réponse et 1 intrus
-            const guaranteedT = poolT.slice(0, 1);
-            const guaranteedF = poolF.slice(0, 1);
-            
-            // Complète à 10 cartes au total avec le reste
-            const remainingPool = [...poolT.slice(1), ...poolF.slice(1)].sort(() => Math.random() - 0.5);
-            const remainingNeeded = 10 - (guaranteedT.length + guaranteedF.length);
-            const selectedRemaining = remainingPool.slice(0, Math.max(0, remainingNeeded));
-            
-            roundItems = [...guaranteedT, ...guaranteedF, ...selectedRemaining].sort(() => Math.random() - 0.5);
-            
-            cardIdx = 0; 
-            roundScore = 0; 
-            roundHist = [];
-            updateGameScorePills(); // Réinitialise l'affichage des groins à 0 au début
-            
-            if (roundItems.length > 0) {
-                const cardTextEl = document.getElementById('play-card-text');
-                if (cardTextEl) formatCardText(cardTextEl, roundItems[0].text);
-            }
+    drag = false; 
+    
+    const th = playableData[curTheme % playableData.length];
+    const catColor = CATEGORY_COLORS[th.category] || 'var(--primary)';
+    
+    // Application de la couleur de catégorie sur les deux cartes
+    const playCard = document.getElementById('play-card');
+    const nextCard = document.getElementById('next-card');
+    if (playCard) playCard.style.setProperty('--cat-color', catColor);
+    if (nextCard) nextCard.style.setProperty('--cat-color', catColor);
+    
+    // Nom du thème ajusté dynamiquement en bas de carte
+    const footerCat = document.getElementById('card-footer-cat');
+    formatCardTheme(footerCat, th.theme);
+    
+    const nextFooterCat = document.getElementById('next-card-footer-cat');
+    formatCardTheme(nextFooterCat, th.theme);
+    
+    const poolT = th.items.filter(i => i.isRelated).sort(() => Math.random() - 0.5);
+    const poolF = th.items.filter(i => !i.isRelated).sort(() => Math.random() - 0.5);
+    
+    // Garantit au moins 1 bonne réponse et 1 intrus
+    const guaranteedT = poolT.slice(0, 1);
+    const guaranteedF = poolF.slice(0, 1);
+    
+    // Complète à 10 cartes au total avec le reste
+    const remainingPool = [...poolT.slice(1), ...poolF.slice(1)].sort(() => Math.random() - 0.5);
+    const remainingNeeded = 10 - (guaranteedT.length + guaranteedF.length);
+    const selectedRemaining = remainingPool.slice(0, Math.max(0, remainingNeeded));
+    
+    roundItems = [...guaranteedT, ...guaranteedF, ...selectedRemaining].sort(() => Math.random() - 0.5);
+    
+    cardIdx = 0; 
+    roundScore = 0; 
+    roundHist = [];
 
-            document.getElementById('countdown-overlay').classList.add('hidden');
-            replaceScreen('game-screen');
-            
-            const tm = teams[curTeam];
-            const teamBadge = document.getElementById('game-team-badge');
-            if (teamBadge) {
-                teamBadge.innerText = tm.name;
-                teamBadge.style.color = 'var(--text-main)';
-            }
+    // Récupération unique de l'équipe active
+    const tm = teams[curTeam];
 
-            const gAvatarBg = document.getElementById('game-player-avatar');
-            const gSnoutBg = document.getElementById('game-player-snout');
-            if (gAvatarBg) {
-                gAvatarBg.style.background = tm.color + '25';
-                gAvatarBg.style.borderColor = tm.color;
-            }
-            if (gSnoutBg) {
-                gSnoutBg.style.background = tm.color;
-            }
+    // Initialisation de l'avatar et du compteur de score en direct
+    const liveVal = document.getElementById('live-score-val');
+    const liveUnit = document.getElementById('live-score-unit');
+    const liveAvatar = document.getElementById('live-score-avatar');
+    const liveSnout = document.getElementById('live-score-snout');
 
-            const roundDisplay = document.getElementById('game-round-display');
-            if (roundDisplay) {
-                roundDisplay.innerText = `${tm.rounds + 1}/${roundsPerTeam}`;
-            }
+    if (liveVal) liveVal.innerText = "0";
+    if (liveUnit) liveUnit.innerText = "groin";
+    if (liveAvatar) {
+        liveAvatar.style.background = tm.color + '25';
+        liveAvatar.style.borderColor = tm.color;
+    }
+    if (liveSnout) {
+        liveSnout.style.background = tm.color;
+    }
+    
+    if (roundItems.length > 0) {
+        const cardTextEl = document.getElementById('play-card-text');
+        if (cardTextEl) formatCardText(cardTextEl, roundItems[0].text);
+    }
 
-            // Mise à jour de la bulle de catégorie
-            const catIcon = getCategoryIcon(th.category);
-            const cardBadgeText = document.getElementById('card-badge-text');
-            const cardBadgeIcon = document.getElementById('card-badge-icon');
-            if (cardBadgeText) cardBadgeText.innerText = th.category;
-            if (cardBadgeIcon) cardBadgeIcon.innerText = catIcon;
+    document.getElementById('countdown-overlay').classList.add('hidden');
+    replaceScreen('game-screen');
+    
+    // Header : Badge joueur
+    const teamBadge = document.getElementById('game-team-badge');
+    if (teamBadge) {
+        teamBadge.innerText = tm.name;
+        teamBadge.style.color = 'var(--text-main)';
+    }
 
-            const nextCardBadgeText = document.getElementById('next-card-badge-text');
-            const nextCardBadgeIcon = document.getElementById('next-card-badge-icon');
-            if (nextCardBadgeText) nextCardBadgeText.innerText = th.category;
-            if (nextCardBadgeIcon) nextCardBadgeIcon.innerText = catIcon;
-            
-            // Génération du motif de fond pour les deux cartes
-            const icons = getCategoryIcons(th.category);
-            let patternHtml = '';
-            const numCols = 8; 
-            const numRows = 14;
-            
-            for (let col = 0; col < numCols; col++) {
-                patternHtml += `<div class="pattern-column">`;
-                for (let row = 0; row < numRows; row++) {
-                    const iconIndex = (row * 2 + col * 3) % icons.length;
-                    patternHtml += `<span class="material-symbols-rounded">${icons[iconIndex]}</span>`;
-                }
-                patternHtml += `</div>`;
-            }
+    const gAvatarBg = document.getElementById('game-player-avatar');
+    const gSnoutBg = document.getElementById('game-player-snout');
+    if (gAvatarBg) {
+        gAvatarBg.style.background = tm.color + '25';
+        gAvatarBg.style.borderColor = tm.color;
+    }
+    if (gSnoutBg) {
+        gSnoutBg.style.background = tm.color;
+    }
 
-            const patternBg = document.getElementById('card-pattern-bg');
-            if (patternBg) patternBg.innerHTML = patternHtml;
+    const roundDisplay = document.getElementById('game-round-display');
+    if (roundDisplay) {
+        roundDisplay.innerText = `${tm.rounds + 1}/${roundsPerTeam}`;
+    }
 
-            const nextPatternBg = document.getElementById('next-card-pattern-bg');
-            if (nextPatternBg) nextPatternBg.innerHTML = patternHtml;
-            
-            // Gestion du timer
-            const tBadge = document.getElementById('game-timer-badge');
-            const tVal = document.getElementById('game-timer-val');
-            clearInterval(gameTimerInterval);
-            
-            if (timeLimit > 0) {
-                tBadge.style.display = 'inline-flex';
-                tBadge.classList.remove('urgent');
-                let tl = timeLimit;
-                tVal.innerText = tl + "s";
-                
-                gameTimerInterval = setInterval(() => {
-                    tl--;
-                    tVal.innerText = tl + "s";
-                    
-                    // Active le clignotement rouge sous 5 secondes
-                    if (tl <= 5) {
-                        tBadge.classList.add('urgent');
-                    } else {
-                        tBadge.classList.remove('urgent');
-                    }
-                    
-                    if (tl <= 0) { 
-                        clearInterval(gameTimerInterval); 
-                        endRound(); 
-                    }
-                }, 1000);
-            } else {
-                tBadge.style.display = 'none';
-            }
-            
-            loadCard();
+    // Mise à jour de la bulle de catégorie
+    const catIcon = getCategoryIcon(th.category);
+    const cardBadgeText = document.getElementById('card-badge-text');
+    const cardBadgeIcon = document.getElementById('card-badge-icon');
+    if (cardBadgeText) cardBadgeText.innerText = th.category;
+    if (cardBadgeIcon) cardBadgeIcon.innerText = catIcon;
+
+    const nextCardBadgeText = document.getElementById('next-card-badge-text');
+    const nextCardBadgeIcon = document.getElementById('next-card-badge-icon');
+    if (nextCardBadgeText) nextCardBadgeText.innerText = th.category;
+    if (nextCardBadgeIcon) nextCardBadgeIcon.innerText = catIcon;
+    
+    // Génération du motif de fond pour les deux cartes
+    const icons = getCategoryIcons(th.category);
+    let patternHtml = '';
+    const numCols = 8; 
+    const numRows = 14;
+    
+    for (let col = 0; col < numCols; col++) {
+        patternHtml += `<div class="pattern-column">`;
+        for (let row = 0; row < numRows; row++) {
+            const iconIndex = (row * 2 + col * 3) % icons.length;
+            patternHtml += `<span class="material-symbols-rounded">${icons[iconIndex]}</span>`;
         }
+        patternHtml += `</div>`;
+    }
+
+    const patternBg = document.getElementById('card-pattern-bg');
+    if (patternBg) patternBg.innerHTML = patternHtml;
+
+    const nextPatternBg = document.getElementById('next-card-pattern-bg');
+    if (nextPatternBg) nextPatternBg.innerHTML = patternHtml;
+    
+    // Gestion du timer
+    const tBadge = document.getElementById('game-timer-badge');
+    const tVal = document.getElementById('game-timer-val');
+    clearInterval(gameTimerInterval);
+    
+    if (timeLimit > 0) {
+        tBadge.style.display = 'inline-flex';
+        tBadge.classList.remove('urgent');
+        let tl = timeLimit;
+        tVal.innerText = tl + "s";
+        
+        gameTimerInterval = setInterval(() => {
+            tl--;
+            tVal.innerText = tl + "s";
+            
+            // Active le clignotement rouge sous 5 secondes
+            if (tl <= 5) {
+                tBadge.classList.add('urgent');
+            } else {
+                tBadge.classList.remove('urgent');
+            }
+            
+            if (tl <= 0) { 
+                clearInterval(gameTimerInterval); 
+                endRound(); 
+            }
+        }, 1000);
+    } else {
+        tBadge.style.display = 'none';
+    }
+    
+    loadCard();
+}
+
+        function triggerSnoutDropAnim() {
+        const dropZone = document.getElementById('score-drop-zone');
+        const liveVal = document.getElementById('live-score-val');
+        const liveUnit = document.getElementById('live-score-unit');
+        const tm = teams[curTeam];
+
+        if (dropZone) {
+            // Création de la particule de groin qui tombe
+            const particle = document.createElement('div');
+            particle.className = 'falling-snout-particle';
+            particle.innerHTML = `
+                <div class="game-player-groin-avatar" style="width: 24px; height: 24px; background: ${tm.color}25; border-color: ${tm.color};">
+                    <div class="mini-snout" style="background: ${tm.color}; width: 14px; height: 9px;">
+                        <span class="nostril left" style="width: 1.5px; height: 4px;"></span>
+                        <span class="nostril right" style="width: 1.5px; height: 4px;"></span>
+                    </div>
+                </div>
+            `;
+            dropZone.appendChild(particle);
+            setTimeout(() => particle.remove(), 500);
+        }
+
+        // Mise à jour du score avec rebond au moment où le groin atterrit
+        setTimeout(() => {
+            if (liveVal) {
+                liveVal.innerText = roundScore;
+                liveVal.classList.remove('bump');
+                void liveVal.offsetWidth;
+                liveVal.classList.add('bump');
+                setTimeout(() => liveVal.classList.remove('bump'), 250);
+            }
+            if (liveUnit) {
+                liveUnit.innerText = roundScore <= 1 ? "groin" : "groins";
+            }
+        }, 220);
+    }
 
         function formatCardText(element, text) {
             const words = text.split(/\s+/);
@@ -3984,8 +4149,8 @@
             if (correct) {
                 roundScore++;
                 playSound('correct');
-                updateGameScorePills(); // Ajoute un groin instantanément au centre avec une animation fun
-            } else {
+                triggerSnoutDropAnim(); // Déclenche l'animation de chute et le rebond du score
+        } else {
                 playSound('wrong');
             }
             
