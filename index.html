@@ -1397,10 +1397,10 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            flex-grow: 1;
-            min-height: 0;
+            flex-grow: 0; /* Empêche la carte de s'étirer inutilement vers le bas */
+            min-height: auto;
             overflow: hidden;
-            margin: 8px 0 16px 0;
+            margin: 8px auto 16px auto;
             border: 1px solid rgba(45, 35, 66, 0.04);
         }
 
@@ -1428,18 +1428,21 @@
         .lb-table-body {
             display: flex;
             flex-direction: column;
-            overflow-y: hidden; /* Au lieu de auto */
-            flex-grow: 1;
-            padding: 4px 0;
+            overflow-y: hidden;
+            flex-grow: 0;
+            padding: 0;
         }
 
+        /* Hauteur fixe et compacte d'origine */
         .lb-row {
             display: grid;
             grid-template-columns: 56px 1fr 80px;
             align-items: center;
-            padding: clamp(10px, 1.8vh, 16px) 16px;
-            flex: 1; /* Distribue équitablement la hauteur entre les 2 à 5 joueurs */
+            padding: 12px 16px;
+            flex: none; /* Conserve le padding d'origine sans étirement */
             border-bottom: 1px solid rgba(45, 35, 66, 0.04);
+            transition: background 0.2s ease;
+            position: relative;
             opacity: 0;
             animation: lbRowFadeIn 0.35s var(--bounce) forwards;
         }
