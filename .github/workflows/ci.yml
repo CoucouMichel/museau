@@ -20,6 +20,15 @@ jobs:
       - run: npm run data:check
       - run: npm test
       - run: npm run build
+      # L'ancienne version (branche ancienne-version) reste jouable sur /ancienne-version/
+      - uses: actions/checkout@v4
+        with:
+          ref: ancienne-version
+          path: legacy
+      - name: Ajoute l'ancienne version au site
+        run: |
+          mkdir -p dist/ancienne-version
+          cp legacy/index.html legacy/*.mp3 legacy/*.png dist/ancienne-version/
       - uses: actions/upload-pages-artifact@v3
         if: github.ref == 'refs/heads/main'
         with:

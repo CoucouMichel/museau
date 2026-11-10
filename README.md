@@ -87,3 +87,7 @@ assets/                    sources des icônes/splash Android (+ anciens assets 
 - [Charte graphique](docs/DESIGN.md)
 - [Publier sur Google Play](docs/PLAY_STORE.md)
 - [Politique de confidentialité](docs/privacy-policy.md)
+
+## Ancienne version
+
+La version d'avant la refonte (fichier `index.html` unique, charte « claymorphism ») est conservée sur la branche [`ancienne-version`](https://github.com/CoucouMichel/museau/tree/ancienne-version). Elle est aussi publiée sur GitHub Pages, dans le sous-dossier `/ancienne-version/`.
