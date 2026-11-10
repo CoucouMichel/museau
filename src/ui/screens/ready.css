@@ -1,35 +1,39 @@
 /* « Passe le téléphone » */
 .screen--ready .screen__body {
   justify-content: center;
-  gap: var(--sp-5);
+  gap: var(--sp-6);
 }
 .ready__player {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--sp-2);
+  gap: var(--sp-3);
+  text-align: center;
 }
 .ready__name {
-  font-size: var(--fs-2xl);
-  text-align: center;
+  font-size: var(--fs-3xl);
+  letter-spacing: -0.03em;
   word-break: break-word;
 }
 .ready__theme {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--sp-2);
-  padding: var(--sp-5) var(--sp-4);
+  gap: var(--sp-3);
+  padding: var(--sp-6) var(--sp-5);
   text-align: center;
+  outline: var(--hairline) solid var(--c-rule);
+  outline-offset: -8px;
 }
 .ready__theme .eyebrow {
-  margin-top: var(--sp-2);
+  display: none;
 }
 .ready__theme-text {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: clamp(1.5rem, 7vw, 2rem);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: clamp(1.6rem, 7.5vw, 2.1rem);
   line-height: 1.15;
+  color: var(--c-accent);
   text-wrap: balance;
 }
 
@@ -40,23 +44,19 @@
   z-index: 60;
   display: grid;
   place-items: center;
-  background: color-mix(in srgb, var(--c-paper) 92%, transparent);
+  background: var(--c-paper);
   animation: fade-in var(--dur) ease;
 }
 .countdown__num {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 9rem;
-  color: var(--c-groin);
-  -webkit-text-stroke: 4px var(--c-line);
-  paint-order: stroke fill;
-  text-shadow: 0 8px 0 var(--c-line);
+  font-family: var(--font-serif);
+  font-size: 10rem;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--c-ink);
 }
 .countdown__num--pop {
-  animation: count-pop 600ms var(--ease-bounce);
+  animation: count-in 600ms var(--ease-out);
 }
-@keyframes count-pop {
-  0% { transform: scale(0.4); opacity: 0; }
-  50% { transform: scale(1.1); opacity: 1; }
-  100% { transform: scale(1); }
+@keyframes count-in {
+  from { opacity: 0; transform: scale(0.92); }
 }

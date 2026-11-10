@@ -51,7 +51,7 @@ export default {
       if (!cancelled) replace('play');
     }
 
-    const goBtn = button({ label: 'Je suis prêt·e !', icon: 'play_arrow', size: 'lg', onClick: launch });
+    const goBtn = button({ label: 'Je suis prêt·e', size: 'lg', onClick: launch });
 
     const el = screen(
       topbar({
@@ -80,7 +80,7 @@ export default {
           { class: 'swipe-hint' },
           h('div', { class: 'swipe-hint__side swipe-hint__side--no' }, icon('arrow_back'), h('span', null, 'Intrus')),
           h('div', { class: 'swipe-hint__hand' }, icon('swipe')),
-          h('div', { class: 'swipe-hint__side swipe-hint__side--yes' }, h('span', null, 'Dans le thème'), icon('arrow_forward')),
+          h('div', { class: 'swipe-hint__side swipe-hint__side--yes' }, h('span', null, 'Le thème'), icon('arrow_forward')),
         ),
       ),
       footer(goBtn),

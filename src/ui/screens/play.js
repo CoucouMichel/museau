@@ -1,13 +1,12 @@
 /**
  * Écran de jeu : pile de cartes à swiper (ou boutons / flèches du clavier).
  */
-import { h, replayClass, wait, prefersReducedMotion } from '../../core/dom.js';
+import { h, replayClass, wait } from '../../core/dom.js';
 import { replace, reset } from '../../core/router.js';
 import { screen, topbar, body, footer } from '../components/layout.js';
-import { avatar, snout } from '../components/snout.js';
 import { categoryChip } from '../components/categoryChip.js';
 import { confirmQuit } from '../components/quitGame.js';
-import { icon, iconDataUrl } from '../icons.js';
+import { icon } from '../icons.js';
 import { getGame, finishRound } from '../../game/session.js';
 import { currentPlayer, currentRoundNumber, startRound, answerCard } from '../../game/engine.js';
 import { getCategory } from '../../data/categories.js';
@@ -46,11 +45,11 @@ export default {
     let done = false;
 
     // ---------- Éléments ----------
-    const scoreVal = h('span', { class: 'score-pill__val' }, '0');
+    const scoreVal = h('span', { class: 'score__val' }, '00');
     const scorePill = h(
       'div',
-      { class: 'score-pill', 'aria-live': 'polite', 'aria-label': 'Score de la manche' },
-      snout({ color: player.color, size: 28 }),
+      { class: 'score', 'aria-live': 'polite' },
+      h('span', { class: 'kicker' }, 'Groins'),
       scoreVal,
     );
 
@@ -63,12 +62,16 @@ export default {
     const makeCard = (extra) =>
       h(
         'div',
-        { class: ['play-card', extra], style: { '--cat': cat.color, '--pattern': iconDataUrl(cat.icon) } },
-        h('div', { class: 'play-card__pattern', 'aria-hidden': 'true' }),
-        h('div', { class: 'play-card__top' }, categoryChip(theme.category, { small: true })),
-        h('p', { class: 'play-card__word' }),
-        h('p', { class: 'play-card__theme' }, theme.theme),
-        h('span', { class: 'stamp stamp--yes', 'aria-hidden': 'true' }, 'Groin !'),
+        { class: ['play-card', extra], style: { '--cat': cat.color } },
+        h(
+          'div',
+          { class: 'play-card__frame' },
+          categoryChip(theme.category),
+          h('p', { class: 'play-card__theme' }, theme.theme),
+          h('p', { class: 'play-card__word' }),
+          h('span', { class: 'play-card__orn', 'aria-hidden': 'true' }, '·\u2002·\u2002·'),
+        ),
+        h('span', { class: 'stamp stamp--yes', 'aria-hidden': 'true' }, 'Thème'),
         h('span', { class: 'stamp stamp--no', 'aria-hidden': 'true' }, 'Intrus'),
       );
 
@@ -120,8 +123,10 @@ export default {
       dots.children[index].classList.add(res.correct ? 'progress-dots__dot--ok' : 'progress-dots__dot--ko');
       playSound(res.correct ? 'correct' : 'wrong');
       haptic(res.correct ? 'correct' : 'wrong');
-      if (res.correct) flySnout();
-      else replayClass(deck, 'deck--shake');
+      if (res.correct) {
+        scoreVal.textContent = String(round.score).padStart(2, '0');
+        replayClass(scorePill, 'score--bump');
+      }
 
       const dir = saysYes ? 1 : -1;
       card.classList.add(saysYes ? 'play-card--yes' : 'play-card--no');
@@ -135,25 +140,6 @@ export default {
       if (res.finished) return finish();
       showCurrent();
       locked = false;
-    }
-
-    function flySnout() {
-      const from = card.getBoundingClientRect();
-      const to = scorePill.getBoundingClientRect();
-      const fly = snout({ color: player.color, size: 44, cls: 'snout--flying' });
-      fly.style.left = `${from.left + from.width / 2 - 22}px`;
-      fly.style.top = `${from.top + from.height / 2 - 22}px`;
-      document.body.append(fly);
-      const dx = to.left + 14 - (from.left + from.width / 2 - 22);
-      const dy = to.top + 4 - (from.top + from.height / 2 - 22);
-      requestAnimationFrame(() => {
-        fly.style.transform = `translate(${dx}px, ${dy}px) scale(.6) rotate(20deg)`;
-      });
-      setTimeout(() => {
-        fly.remove();
-        scoreVal.textContent = String(round.score);
-        replayClass(scorePill, 'score-pill--bump');
-      }, prefersReducedMotion() ? 0 : 420);
     }
 
     function finish() {
@@ -262,15 +248,7 @@ export default {
         onBack: () => ctx.requestQuit(),
         backIcon: 'close',
         backLabel: 'Quitter la partie',
-        center: h(
-          'div',
-          { class: 'play__who' },
-          avatar(player.color, { size: 28 }),
-          h('div', null,
-            h('h2', { class: 'play__name' }, player.name),
-            h('p', { class: 'topbar__meta' }, `Manche ${currentRoundNumber(game)} / ${game.roundsPerPlayer}`),
-          ),
-        ),
+        center: h('p', { class: 'topbar__meta' }, `${player.name} · Manche ${currentRoundNumber(game)}/${game.roundsPerPlayer}`),
         right: timerEl,
       }),
       body(h('div', { class: 'play__status' }, dots, scorePill), deck),
@@ -278,10 +256,8 @@ export default {
         h(
           'div',
           { class: 'answer-row' },
-          h('button', { class: 'answer-btn answer-btn--no', type: 'button', onClick: () => commit(false) },
-            h('span', { class: 'answer-btn__icon' }, icon('close')), h('span', null, 'Intrus')),
-          h('button', { class: 'answer-btn answer-btn--yes', type: 'button', onClick: () => commit(true) },
-            h('span', { class: 'answer-btn__icon' }, icon('check')), h('span', null, 'Dans le thème')),
+          h('button', { class: 'answer-btn answer-btn--no', type: 'button', onClick: () => commit(false) }, icon('close'), h('span', null, 'Intrus')),
+          h('button', { class: 'answer-btn answer-btn--yes', type: 'button', onClick: () => commit(true) }, h('span', null, 'Le thème'), icon('check')),
         ),
       ),
       pauseLayer,

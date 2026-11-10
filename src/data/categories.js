@@ -4,90 +4,62 @@
  * Ajouter une catégorie = ajouter une entrée ici + des lignes dans
  * public/data/themes.json. Rien d'autre à toucher dans le code.
  *
- *  - color   : couleur de la catégorie (identique en clair et en sombre,
- *              la lisibilité est assurée par le contour encre)
- *  - icon    : nom d'icône Material Symbols (voir src/ui/icons.js)
- *  - pattern : icônes utilisées pour le motif de fond des cartes
+ *  - color   : couleur de la catégorie, volontairement sourde (registre
+ *              « encre d'imprimerie ») ; éclaircie automatiquement en mode sombre
  */
 export const CATEGORIES = {
   Art: {
-    color: '#F5A524',
-    icon: 'palette',
-    pattern: ['palette', 'brush', 'museum'],
+    color: '#B5862E',
     description: 'Peinture, sculpture, œuvres de maîtres et mouvements artistiques.',
   },
   'Cinéma & TV': {
-    color: '#EF4E4E',
-    icon: 'movie',
-    pattern: ['movie', 'theaters', 'tv'],
+    color: '#A23B3B',
     description: "Filmographies d'acteurs, réalisateurs, séries cultes et cérémonies.",
   },
   Décalé: {
-    color: '#E25FC4',
-    icon: 'sentiment_very_satisfied',
-    pattern: ['sentiment_very_satisfied', 'toys', 'celebration'],
+    color: '#9A4A7A',
     description: 'Critères transversaux, caractéristiques surprenantes et objets du quotidien.',
   },
   Gastronomie: {
-    color: '#F97B3B',
-    icon: 'restaurant',
-    pattern: ['restaurant', 'local_pizza', 'wine_bar'],
+    color: '#B4602F',
     description: 'Plats régionaux, ingrédients phares, vins, spiritueux et cocktails.',
   },
   Geek: {
-    color: '#8A63F2',
-    icon: 'sports_esports',
-    pattern: ['sports_esports', 'smart_toy', 'rocket_launch'],
+    color: '#5A4A99',
     description: 'Jeux vidéo, comics, mangas, science-fiction, fantasy et mascottes.',
   },
   Géographie: {
-    color: '#2B8CE6',
-    icon: 'public',
-    pattern: ['public', 'explore', 'landscape'],
+    color: '#2E5E8C',
     description: 'Capitales, frontières, fleuves, monuments mondiaux et transports.',
   },
   Histoire: {
-    color: '#C7863A',
-    icon: 'castle',
-    pattern: ['castle', 'history_edu', 'swords'],
+    color: '#86683E',
     description: 'Grandes périodes, dirigeants, conflits majeurs, héros et mythes antiques.',
   },
   Littérature: {
-    color: '#A452D9',
-    icon: 'auto_stories',
-    pattern: ['auto_stories', 'stylus', 'menu_book'],
+    color: '#6D3F7A',
     description: 'Romans classiques, bande dessinée franco-belge, théâtre et poésie.',
   },
   Musique: {
-    color: '#5465F0',
-    icon: 'music_note',
-    pattern: ['music_note', 'headphones', 'piano'],
+    color: '#3D4C8F',
     description: "Discographies d'artistes, groupes mythiques, titres cultes et courants.",
   },
   Nature: {
-    color: '#22B573',
-    icon: 'forest',
-    pattern: ['forest', 'pets', 'eco'],
+    color: '#3E7050',
     description: 'Faune, flore, races animales, botanique et habitats naturels.',
   },
   Science: {
-    color: '#14B3C7',
-    icon: 'science',
-    pattern: ['science', 'biotech', 'planet'],
+    color: '#2C7380',
     description: 'Astronomie, chimie, physique, médecine et grandes inventions.',
   },
   Sport: {
-    color: '#86C232',
-    icon: 'sports_soccer',
-    pattern: ['sports_soccer', 'sports_basketball', 'trophy'],
+    color: '#6A7D2E',
     description: 'Palmarès internationaux, tournois majeurs, athlètes de légende et records.',
   },
 };
 
 const FALLBACK = {
-  color: '#FF6F9C',
-  icon: 'category',
-  pattern: ['category'],
+  color: '#7A1E2C',
   description: '',
 };
 

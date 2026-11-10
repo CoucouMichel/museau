@@ -23,7 +23,7 @@ npx cap add android
 ```
 
 ```bash
-npx @capacitor/assets generate --android --iconBackgroundColor "#FF6F9C" --splashBackgroundColor "#FFF4EC" --splashBackgroundColorDark "#1B1220"
+npx @capacitor/assets generate --android --iconBackgroundColor "#7A1E2C" --splashBackgroundColor "#F5F1EA" --splashBackgroundColorDark "#141311"
 ```
 
 La dernière commande crée les icônes (y compris l'icône adaptative) et les splash screens à partir des fichiers de `assets/`. Le dossier `android/` créé doit être **commité** (sauf ce qui est dans `.gitignore`).

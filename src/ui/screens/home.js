@@ -1,30 +1,47 @@
 import { h } from '../../core/dom.js';
 import { go } from '../../core/router.js';
-import { screen, body, footer, iconButton, button } from '../components/layout.js';
+import { screen, body, footer } from '../components/layout.js';
 import { logo } from '../components/snout.js';
+import { icon } from '../icons.js';
+import { loadThemes } from '../../data/themes.js';
+import { haptic } from '../../core/haptics.js';
 import './home.css';
+
+const MENU = [
+  ['I', 'Entre amis', () => go('setup', { mode: 'multi' })],
+  ['II', 'Partie solo', () => go('setup', { mode: 'solo' })],
+  ['III', 'Règles du jeu', () => go('rules')],
+];
 
 export default {
   id: 'home',
   render() {
+    const count = h('span', { class: 'kicker' }, ' ');
+    loadThemes()
+      .then((t) => (count.textContent = `${t.length} thèmes`))
+      .catch(() => {});
+
+    const nav = (label, onClick) =>
+      h('button', { class: 'home__link', type: 'button', onClick: () => { haptic('tap'); onClick(); } }, label);
+
     return screen(
-      h('div', { class: 'home__pattern', 'aria-hidden': 'true' }),
-      h(
-        'header',
-        { class: 'topbar' },
-        h('div', { class: 'topbar__side' }, iconButton('settings', 'Paramètres', () => go('settings'))),
-        h('div', { class: 'topbar__center' }),
-        h('div', { class: 'topbar__side topbar__side--right' }, iconButton('bar_chart', 'Statistiques', () => go('stats'))),
-      ),
+      h('header', { class: 'home__mast' }, h('span', { class: 'kicker' }, 'Culture générale'), count),
       body(h('div', { class: 'home__hero' }, logo())),
       footer(
         h(
-          'div',
-          { class: 'home__modes' },
-          button({ label: 'Solo', icon: 'person', size: 'lg', onClick: () => go('setup', { mode: 'solo' }) }),
-          button({ label: 'Entre amis', icon: 'groups', size: 'lg', onClick: () => go('setup', { mode: 'multi' }) }),
+          'nav',
+          { class: 'home__menu', 'aria-label': 'Menu principal' },
+          MENU.map(([num, label, onClick]) =>
+            h(
+              'button',
+              { class: 'home__item', type: 'button', onClick: () => { haptic('tap'); onClick(); } },
+              h('span', { class: 'home__num' }, num),
+              h('span', { class: 'home__label' }, label),
+              icon('arrow_forward'),
+            ),
+          ),
         ),
-        button({ label: 'Règles du jeu', icon: 'help', variant: 'ghost', onClick: () => go('rules') }),
+        h('div', { class: 'home__foot' }, nav('Statistiques', () => go('stats')), nav('Paramètres', () => go('settings'))),
       ),
     );
   },

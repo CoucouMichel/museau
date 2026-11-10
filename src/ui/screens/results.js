@@ -3,50 +3,45 @@
  */
 import { h } from '../../core/dom.js';
 import { replace, reset } from '../../core/router.js';
-import { screen, topbar, body, footer, button } from '../components/layout.js';
-import { avatar, snout } from '../components/snout.js';
+import { screen, topbar, body, footer, button, pageHead } from '../components/layout.js';
+import { avatar } from '../components/snout.js';
 import { confirmQuit } from '../components/quitGame.js';
-import { celebrate } from '../components/confetti.js';
-import { icon } from '../icons.js';
 import { getGame, rematch, abandon } from '../../game/session.js';
-import { ranking, winners, isSolo, accuracy, currentRoundNumber, CARDS_PER_ROUND } from '../../game/engine.js';
+import { ranking, winners, isSolo, accuracy, CARDS_PER_ROUND } from '../../game/engine.js';
 import { playSound } from '../../core/audio.js';
 import { haptic } from '../../core/haptics.js';
 import './results.css';
 
+const ordinal = (n) => (n === 1 ? '1er' : `${n}e`);
+const groinsWord = (n) => (n > 1 ? 'groins' : 'groin');
+
 function soloResult(game) {
   const p = game.players[0];
   const max = game.playlist.length * CARDS_PER_ROUND;
-  const pct = accuracy(p.correct, p.answered);
   return h(
     'div',
     { class: 'solo-result' },
-    h('div', { class: 'solo-result__score card', style: { '--player-color': p.color } },
-      snout({ color: p.color, size: 64 }),
-      h('p', { class: 'solo-result__big' }, String(p.score)),
-      h('p', { class: 'solo-result__unit' }, `groin${p.score > 1 ? 's' : ''} sur ${max}`),
-    ),
+    h('p', { class: 'solo-result__big' }, String(p.score), h('span', null, `/${max}`)),
     h('div', { class: 'stat-tiles' },
-      h('div', { class: 'stat-tile' }, h('strong', null, `${pct} %`), h('span', null, 'Précision')),
+      h('div', { class: 'stat-tile' }, h('strong', null, `${accuracy(p.correct, p.answered)} %`), h('span', null, 'Précision')),
       h('div', { class: 'stat-tile' }, h('strong', null, String(p.bestRound)), h('span', null, 'Meilleure manche')),
       h('div', { class: 'stat-tile' }, h('strong', null, String(game.playlist.length)), h('span', null, 'Manches')),
     ),
   );
 }
 
-function rankingList(game, final) {
-  const ranked = ranking(game.players);
+function rankingList(game) {
   return h(
     'ol',
     { class: 'ranking' },
-    ranked.map((p, i) =>
+    ranking(game.players).map((p, i) =>
       h(
         'li',
-        { class: ['rank-row', p.rank === 1 && 'rank-row--lead'], style: { '--player-color': p.color, '--i': i } },
-        h('span', { class: ['rank-row__rank', `rank-row__rank--${Math.min(p.rank, 4)}`] }, String(p.rank)),
-        avatar(p.color, { size: 40 }),
-        h('span', { class: 'rank-row__name' }, p.name, p.rank === 1 && final && h('span', { class: 'rank-row__crown' }, icon('crown'))),
-        h('span', { class: 'rank-row__score' }, String(p.score), h('small', null, p.score > 1 ? ' groins' : ' groin')),
+        { class: ['rank-row', p.rank === 1 && 'rank-row--lead'], style: { '--i': i } },
+        h('span', { class: 'rank-row__rank' }, ordinal(p.rank)),
+        avatar(p.color, { size: 36 }),
+        h('span', { class: 'rank-row__name' }, p.name),
+        h('span', { class: 'rank-row__score' }, String(p.score), h('small', null, groinsWord(p.score))),
       ),
     ),
   );
@@ -63,24 +58,30 @@ export default {
     }
     const solo = isSolo(game);
     const champs = winners(game);
+    const roundsDone = Math.floor(game.turn / game.players.length);
 
     let title;
-    if (!final) title = `Après la manche ${currentRoundNumber(game) - 1}`;
-    else if (solo) title = 'Partie terminée';
-    else if (champs.length > 1) title = 'Égalité !';
-    else title = `${champs[0].name} gagne !`;
+    let lede;
+    if (!final) {
+      title = 'Classement';
+      lede = `Après ${roundsDone} manche${roundsDone > 1 ? 's' : ''} sur ${game.roundsPerPlayer}.`;
+    } else if (solo) {
+      title = 'Partie terminée';
+      lede = `${game.players[0].name}, voici ton score.`;
+    } else if (champs.length > 1) {
+      title = 'Ex æquo';
+      lede = `${champs.map((c) => c.name).join(' et ')} se partagent la victoire.`;
+    } else {
+      title = `${champs[0].name} l’emporte`;
+      lede = `Avec ${champs[0].score} ${groinsWord(champs[0].score)}.`;
+    }
 
     if (final) {
-      let stop = () => {};
       const t = setTimeout(() => {
         playSound('victory');
         haptic('success');
-        stop = celebrate(solo ? undefined : [...champs.map((c) => c.color), '#FFC23D', '#FF6F9C']);
       }, 250);
-      ctx.onCleanup(() => {
-        clearTimeout(t);
-        stop();
-      });
+      ctx.onCleanup(() => clearTimeout(t));
     }
 
     const goHome = () => {
@@ -91,23 +92,17 @@ export default {
     return screen(
       topbar({
         onBack: final ? goHome : confirmQuit,
-        backIcon: final ? 'home' : 'close',
+        backIcon: 'close',
         backLabel: final ? 'Menu principal' : 'Quitter la partie',
-        title: final ? 'Résultats' : 'Classement',
+        title: final ? 'Résultats' : 'Entracte',
       }),
-      body(
-        h('div', { class: 'results__head' },
-          final && h('div', { class: 'results__trophy' }, icon('trophy')),
-          h('h2', { class: 'results__title' }, title),
-        ),
-        solo ? soloResult(game) : rankingList(game, final),
-      ),
+      body(pageHead(title, lede), solo ? soloResult(game) : rankingList(game)),
       final
         ? footer(
-            button({ label: 'Revanche', icon: 'restart_alt', size: 'lg', onClick: () => { rematch(); replace('ready'); } }),
-            button({ label: 'Menu principal', icon: 'home', variant: 'ghost', onClick: goHome }),
+            button({ label: 'Revanche', size: 'lg', onClick: () => { rematch(); replace('ready'); } }),
+            button({ label: 'Menu principal', variant: 'ghost', onClick: goHome }),
           )
-        : footer(button({ label: 'Manche suivante', icon: 'arrow_forward', size: 'lg', onClick: () => replace('ready') })),
+        : footer(button({ label: 'Manche suivante', size: 'lg', onClick: () => replace('ready') })),
     );
   },
 };

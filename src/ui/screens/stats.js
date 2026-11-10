@@ -1,8 +1,8 @@
 /** Liste des joueurs et de leurs statistiques globales. */
 import { h } from '../../core/dom.js';
 import { go, back } from '../../core/router.js';
-import { screen, topbar, body, footer, button } from '../components/layout.js';
-import { avatar } from '../components/snout.js';
+import { screen, topbar, body, footer, button, pageHead } from '../components/layout.js';
+import { avatar, snout } from '../components/snout.js';
 import { icon } from '../icons.js';
 import { listProfiles, profileTotals } from '../../core/profiles.js';
 import { accuracy } from '../../game/engine.js';
@@ -19,7 +19,7 @@ export default {
       if (!profiles.length) {
         list.replaceChildren(
           h('li', { class: 'empty' },
-            h('span', { class: 'empty__icon' }, icon('bar_chart')),
+            h('span', { class: 'empty__icon' }, snout({ size: 56, stroke: 4 })),
             h('p', null, 'Aucun joueur pour l’instant.'),
             h('p', { class: 'empty__sub' }, 'Crée un joueur et lance une partie pour voir tes stats ici.'),
           ),
@@ -30,13 +30,13 @@ export default {
         ...profiles.map((p) => {
           const t = profileTotals(p);
           return h('li', null,
-            h('button', { class: 'profile-row card', type: 'button', onClick: () => go('profile', { id: p.id }) },
-              avatar(p.color, { size: 48 }),
+            h('button', { class: 'profile-row', type: 'button', onClick: () => go('profile', { id: p.id }) },
+              avatar(p.color, { size: 44 }),
               h('div', { class: 'profile-row__text' },
                 h('h3', null, p.name),
                 h('p', null, `${p.gamesPlayed} partie${p.gamesPlayed > 1 ? 's' : ''} · ${p.gamesWon} victoire${p.gamesWon > 1 ? 's' : ''} · ${p.totalGroins} groin${p.totalGroins > 1 ? 's' : ''}`),
               ),
-              h('div', { class: 'profile-row__pct' }, h('strong', null, t.total ? `${accuracy(t.correct, t.total)} %` : '—'), h('span', null, 'précision')),
+              h('div', { class: 'profile-row__pct' }, h('strong', null, t.total ? `${accuracy(t.correct, t.total)} %` : '—'), h('span', null, 'Précision')),
               icon('chevron_right'),
             ),
           );
@@ -46,9 +46,9 @@ export default {
     refresh();
 
     return screen(
-      topbar({ title: 'Statistiques', onBack: back }),
-      body(list),
-      footer(button({ label: 'Nouveau joueur', icon: 'add', variant: 'ghost', onClick: async () => { if (await newPlayerModal()) refresh(); } })),
+      topbar({ title: 'Joueurs', onBack: back }),
+      body(pageHead('Statistiques'), list),
+      footer(button({ label: 'Nouveau joueur', variant: 'ghost', onClick: async () => { if (await newPlayerModal()) refresh(); } })),
     );
   },
 };

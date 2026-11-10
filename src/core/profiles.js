@@ -9,10 +9,10 @@
  */
 import { read, write, readLegacy, removeLegacy } from './storage.js';
 
-/** Palette des avatars joueurs (12 couleurs bien distinctes). */
+/** Palette des avatars joueurs : 12 encres distinctes, éclaircies en mode sombre. */
 export const PLAYER_COLORS = [
-  '#FF6F9C', '#FFB020', '#2BB673', '#3D8BFF', '#9B5DE5', '#FF7A45',
-  '#14B8C4', '#E5484D', '#8BC34A', '#F15BB5', '#5C6AC4', '#B08968',
+  '#7A1E2C', '#2F5D50', '#2E5E8C', '#B4602F', '#6D3F7A', '#86683E',
+  '#2C7380', '#A23B3B', '#3D4C8F', '#6A7D2E', '#9A4A7A', '#4A4540',
 ];
 export const MAX_NAME_LENGTH = 15;
 

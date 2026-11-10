@@ -112,3 +112,7 @@ export function toggle({ checked, onChange, label }) {
 
 /** Titre de section. */
 export const sectionTitle = (text, extra) => h('div', { class: 'section-title' }, h('h3', null, text), extra);
+
+/** Grand titre d'écran en romain + chapeau en italique bordeaux. */
+export const pageHead = (title, lede) =>
+  h('div', { class: 'page-head' }, h('h1', { class: 'page-title' }, title), lede && h('p', { class: 'page-lede' }, lede));

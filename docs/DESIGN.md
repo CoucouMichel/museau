@@ -1,120 +1,106 @@
-# Charte graphique Museau
+# Charte graphique Museau — direction « Éditorial »
 
 ## Intention
 
-Museau est un jeu d'ambiance : on le joue à plusieurs, en se passant le téléphone, souvent en riant. La charte doit être **lisible à bout de bras**, **tactile** (on a envie d'appuyer) et **reconnaissable** au premier coup d'œil dans le Play Store.
+Museau est un jeu de **culture générale**. La charte doit le dire avant même la première carte : sérieuse sans être austère, lettrée sans être scolaire. On s'inspire du **supplément culture d'un journal du dimanche** : papier crème, grande typographie à empattements, filets fins, une seule couleur d'accent.
 
-Direction retenue : **« sticker »**. Des formes rondes et pleines, un contour encre épais et une ombre décalée sans flou, comme des autocollants posés sur du papier. Tout élément pressé « s'enfonce » (il descend de l'épaisseur de son ombre).
+Trois principes :
 
-L'ancienne charte (claymorphism rose/violet, ombres floues) a été abandonnée : elle était générique, peu contrastée en plein soleil et demandait une quarantaine de surcharges pour le mode sombre.
+1. **La typographie porte la hiérarchie.** Pas d'ombres, pas de dégradés, pas de pastilles colorées : un titre en grand corps, un chapeau en italique, des surtitres en petites capitales espacées.
+2. **Les filets structurent.** Les listes, menus et tableaux sont séparés par des filets de 1 px, comme une page imprimée.
+3. **Une seule couleur d'accent, le bordeaux.** Le vert sapin et la brique sont réservés au sens (« dans le thème » / « intrus »).
 
-## Logo & mascotte
+Le mode sombre n'est pas une simple inversion : c'est la même page « imprimée à l'encre claire sur papier noir », avec un bordeaux éclairci pour garder le contraste.
 
-Le **groin** est la mascotte, le logo et l'avatar des joueurs. Sa silhouette (dôme arrondi à base légèrement creusée, deux narines ovales inclinées vers l'extérieur) reprend `assets/logo-outline.png`. Il est dessiné en SVG dans `src/ui/components/snout.js` :
+## Logo & monogramme
 
-- `logo()` : groin + « museau » en Fredoka + étiquette jaune « groin ou pas groin ? » inclinée de −3°.
-- `avatar(color)` : pastille ronde teintée avec un groin de la couleur du joueur.
-- `snout()` : groin seul (compteur de score, groin volant, confettis).
+Le **groin en trait fin** (dérivé de `assets/logo-outline.png`) est le monogramme. Il hérite de la couleur du texte (`currentColor`) et se colore en CSS.
 
-Le nom s'écrit **en minuscules** dans le logo (« museau ») et avec une majuscule dans le texte courant (« Museau »).
+- `logo()` : monogramme bordeaux + « Museau » en Fraunces (corps 76) + devise en italique bordeaux « Groin ou pas groin ? ».
+- `avatar(color)` : cercle fin et groin à la couleur du joueur.
+- Icône d'application : groin crème sur fond bordeaux.
 
-## Couleurs
+Le nom s'écrit « Museau » (majuscule initiale).
 
-Toutes les couleurs sont des variables CSS définies dans `src/styles/tokens.css`. **Aucune couleur n'est écrite en dur ailleurs** (à l'exception des couleurs de catégorie et de joueur, qui sont des données).
+## Couleurs (`src/styles/tokens.css`)
 
 | Rôle | Token | Clair | Sombre |
 |---|---|---|---|
-| Action principale | `--c-groin` | `#FF6F9C` | `#FF7FA8` |
-| Récompense, victoire | `--c-truffe` | `#FFC23D` | idem |
-| Dans le thème | `--c-yes` | `#1FBF75` | idem |
-| Intrus | `--c-no` | `#FF5B4F` | idem |
-| Fond d'écran | `--c-paper` | `#FFF4EC` | `#1B1220` |
-| Cartes, panneaux | `--c-surface` | `#FFFFFF` | `#2A1F31` |
-| Fond secondaire | `--c-surface-2` | `#FDE8EE` | `#352640` |
-| Texte | `--c-ink` | `#2A1A2E` | `#FFF1F6` |
-| Texte secondaire | `--c-ink-soft` | `#6B5870` | `#C2B0C7` |
-| Contours et ombres | `--c-line` | `#2A1A2E` | `#0B060D` |
-| Texte sur couleur vive | `--c-on-color` | `#2A1A2E` | `#2A1A2E` |
+| Fond d'écran (papier) | `--c-paper` | `#F5F1EA` | `#141311` |
+| Cartes, champs | `--c-surface` | `#FBF9F5` | `#1C1A17` |
+| Fond secondaire | `--c-sunk` | `#EDE7DC` | `#24211D` |
+| Texte, boutons pleins | `--c-ink` | `#161514` | `#EEE8DD` |
+| Texte secondaire | `--c-ink-soft` | `#6B645B` | `#A39B8E` |
+| Filets | `--c-rule` | `#D9D2C5` | `#35312B` |
+| Accent (bordeaux) | `--c-accent` | `#7A1E2C` | `#D4707F` |
+| Dans le thème (sapin) | `--c-yes` | `#2F5D50` | `#79B39C` |
+| Intrus (brique) | `--c-no` | `#B0402F` | `#E0806C` |
+| Texte sur bouton plein | `--c-on-ink` | `#F5F1EA` | `#141311` |
 
 Règles :
-- Sur une couleur vive (bouton rose, vert, rouge, jaune, couleur de catégorie), le texte et les icônes sont **toujours en encre foncée** (`--c-on-color`), jamais en blanc. Contraste ≥ 7:1.
-- Les fonds teintés sont obtenus par `color-mix(in srgb, <couleur> 20–30 %, var(--c-surface))`, ce qui marche automatiquement en clair comme en sombre.
+- **Aucune couleur en dur** hors `tokens.css`, sauf les couleurs de données (catégories, joueurs).
+- Le bordeaux sert aux éléments « éditoriaux » : devise, thème de la manche, numéros de menu, carte en cours. Jamais aux boutons.
+- Action principale = bouton **plein encre** ; secondaire = **contour encre**.
 
-### Catégories (`src/data/categories.js`)
+### Catégories & joueurs
 
-| Catégorie | Couleur | Icône |
-|---|---|---|
-| Art | `#F5A524` | palette |
-| Cinéma & TV | `#EF4E4E` | movie |
-| Décalé | `#E25FC4` | sentiment_very_satisfied |
-| Gastronomie | `#F97B3B` | restaurant |
-| Geek | `#8A63F2` | sports_esports |
-| Géographie | `#2B8CE6` | public |
-| Histoire | `#C7863A` | castle |
-| Littérature | `#A452D9` | auto_stories |
-| Musique | `#5465F0` | music_note |
-| Nature | `#22B573` | forest |
-| Science | `#14B3C7` | science |
-| Sport | `#86C232` | sports_soccer |
-
-### Joueurs
-
-12 couleurs bien distinctes dans `PLAYER_COLORS` (`src/core/profiles.js`). La première couleur libre est proposée par défaut.
+Les couleurs de catégorie (`src/data/categories.js`) et de joueur (`PLAYER_COLORS`, `src/core/profiles.js`) sont des **encres sourdes** : ocre, garance, prune, sapin, bleu de Prusse… Elles n'apparaissent qu'en petites touches (carré de 8–10 px devant le nom d'une catégorie, cercle fin de l'avatar). En mode sombre, elles sont automatiquement éclaircies via `--data-mix` (`color-mix` vers le blanc), d'où les variables `--cat-ui` et `--player-ui` à utiliser en CSS.
 
 ## Typographie
 
-| Usage | Police | Graisse |
+| Usage | Police | Style |
 |---|---|---|
-| Titres, boutons, mots des cartes, scores | **Fredoka** | 600 / 700 |
-| Texte courant, libellés | **Nunito** | 600 → 900 |
+| Titres, mots des cartes, scores, noms, menus | **Fraunces** (serif) | 400 romain, 400 italique |
+| Interface, surtitres, boutons, textes courants | **Inter** (sans) | 400 / 500 / 600 |
 
-Les deux polices sont sous licence OFL et **embarquées** (`@fontsource`, sous-ensemble latin) : aucun appel réseau.
+Les deux polices sont sous licence OFL et **embarquées** (`@fontsource`, sous-ensemble latin).
 
-Échelle (`--fs-*`) : 11 · 12 · 14 · 16 · 20 · 26 · 36 · 56 px. Les mots des cartes ont 4 tailles automatiques selon leur longueur (`data-size="l|m|s|xs"`).
+| Élément | Réglage |
+|---|---|
+| Titre d'écran (`.page-title`) | Fraunces 44 px, interlettrage −0,03 em |
+| Chapeau (`.page-lede`) | Fraunces italique 20 px, bordeaux |
+| Surtitre (`.kicker`) | Inter 600, 11 px, capitales, interlettrage 0,18 em, gris |
+| Bouton | Inter 600, 12 px, capitales, interlettrage 0,14 em |
+| Mot de la carte | Fraunces 24 → 48 px selon la longueur |
+| Score | Fraunces 92 px, chiffres alignés |
 
-Les « surtitres » (`.eyebrow`) sont en Nunito 900, capitales, interlettrage 0,12 em, couleur secondaire.
+Typographie française : espace fine insécable avant `?` `!` `:` (` `), apostrophe typographique (’).
 
-## Formes & profondeur
+## Formes
 
-| Token | Valeur | Usage |
-|---|---|---|
-| `--stroke` | 2,5 px | contour de tous les éléments interactifs et surfaces |
-| `--shadow` | `0 4px 0 var(--c-line)` | boutons, cartes, panneaux |
-| `--shadow-s` | `0 2px 0 var(--c-line)` | puces, tuiles secondaires |
-| `--radius-s/m/l` | 12 / 18 / 26 px | |
-| `--radius-pill` | 999 px | boutons, puces |
+| Token | Valeur |
+|---|---|
+| `--hairline` | 1 px — tous les filets et contours |
+| `--radius` | 2 px — angles quasi droits (boutons, cartes) |
+| `--radius-pill` | réservé aux puces joueurs, interrupteurs et avatars |
 
-Pression : `transform: translateY(var(--lift)); box-shadow: none`.
+La carte de jeu a un **double cadre** (cadre extérieur + filet intérieur à 10 px), comme une carte imprimée. C'est la seule surface qui porte une ombre, très diffuse, pour la détacher pendant le glissé.
 
 ## Icônes
 
-Material Symbols **Rounded, remplies**, embarquées en SVG (`src/ui/icons.js`). Taille par défaut 24 px (`--icon-size`). Pour ajouter une icône : ajouter son import dans `icons.js` (seules les icônes importées sont incluses dans le build).
+Material Symbols **Outlined** (trait), utilisées avec parcimonie : retour, fermer, flèches, coche, poubelle, chrono, geste de swipe. Tout le reste passe par le texte. Liste dans `src/ui/icons.js`.
 
 ## Mouvement
 
-- Courbes : `--ease-out` (sorties, transitions d'écran), `--ease-bounce` (apparitions, interrupteurs, score).
-- Durées : 120 / 220 / 400 ms.
-- Moments forts : groin du logo qui remue, tampons « Groin ! / Intrus » pendant le glissé, groin qui vole jusqu'au compteur, pastilles de progression, confettis-groins à la victoire.
-- `prefers-reduced-motion` est respecté (animations neutralisées, pas de confettis).
+Sobre et rapide : fondus et glissements de 6–12 px (`--ease-out`, 240 ms). Le score change de couleur un instant (bordeaux) à chaque bonne réponse. Pas de confettis, pas de rebonds. `prefers-reduced-motion` est respecté.
 
 ## Composants
 
-Définis dans `src/styles/components.css` et `src/ui/components/` :
-
 | Composant | Classe / fonction |
 |---|---|
-| Bouton | `.btn` + `--primary` `--ghost` `--yes` `--no` `--danger`, tailles `--lg` `--sm` — `button({...})` |
-| Bouton icône | `.icon-btn` — `iconButton(icon, label, onClick)` |
-| Barre de titre | `.topbar` — `topbar({ title, onBack, right })` |
-| Panneau | `.panel` / `.card` |
-| Sélecteur segmenté | `.segmented` — `segmented({...})` |
-| Interrupteur | `.switch` — `toggle({...})` |
-| Puce catégorie | `.cat-chip` — `categoryChip(name)` |
-| Avatar | `.avatar` — `avatar(color)` |
-| Tuiles de stats | `.stat-tiles` / `.stat-tile` |
-| Modale | `openModal()`, `confirmDialog()` |
+| En-tête d'écran | `pageHead(titre, chapeau)` |
+| Barre du haut | `topbar({ title, onBack, right })` — surtitre centré + filet |
+| Bouton | `button({ label, variant: 'primary' \| 'ghost' \| 'danger' })` |
+| Bouton icône | `iconButton(icon, label, onClick)` |
+| Section | `.panel` + `sectionTitle(texte)` |
+| Sélecteur segmenté | `segmented({...})` — cases à filet, sélection pleine encre |
+| Interrupteur | `toggle({...})` |
+| Catégorie | `categoryChip(nom)` — carré de couleur + capitales |
+| Avatar | `avatar(couleur)` |
+| Chiffres clés | `.stat-tiles` / `.stat-tile` |
+| Modale | `openModal()`, `confirmDialog()` — feuille qui monte du bas |
 | Toast | `toast(message)` |
 
 ## Ton éditorial
 
-Tutoiement, phrases courtes, jeux de mots sur le cochon avec modération : « Joli coup de groin ! », « Ça sent le roussi… », « Ramasse les groins ». L'écriture inclusive se limite au point médian sur les mots courts (« prêt·e »).
+Tutoiement, phrases courtes et soignées, une pointe d'humour pince-sans-rire : « Une belle érudition. », « Il y a de la marge. », « Clément l'emporte ». Les jeux de mots porcins restent dans le nom et la devise.

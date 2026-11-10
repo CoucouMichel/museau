@@ -1,7 +1,7 @@
 /** Modale de création d'un joueur (pseudo + couleur du groin). */
 import { h } from '../../core/dom.js';
 import { openModal } from './modal.js';
-import { avatar } from './snout.js';
+import { avatar, snoutSvg } from './snout.js';
 import { PLAYER_COLORS, MAX_NAME_LENGTH, createProfile, suggestColor, listProfiles } from '../../core/profiles.js';
 import { haptic } from '../../core/haptics.js';
 
@@ -16,7 +16,7 @@ export function newPlayerModal() {
     class: 'input',
     type: 'text',
     maxlength: String(MAX_NAME_LENGTH),
-    placeholder: 'Ex. Chloé',
+    placeholder: 'Chloé',
     autocomplete: 'off',
     enterkeyhint: 'done',
     'aria-label': 'Pseudo',
@@ -35,6 +35,7 @@ export function newPlayerModal() {
           'aria-checked': String(c === color),
           'aria-label': `Couleur ${c}${used.has(c) ? ' (déjà prise)' : ''}`,
           style: { '--swatch': c },
+          html: snoutSvg({ stroke: 7 }),
           onClick: () => {
             haptic('tap');
             color = c;

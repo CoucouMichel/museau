@@ -3,7 +3,6 @@ import { h } from '../../core/dom.js';
 import { back } from '../../core/router.js';
 import { screen, topbar, body, iconButton, sectionTitle } from '../components/layout.js';
 import { avatar } from '../components/snout.js';
-import { icon } from '../icons.js';
 import { getProfile, deleteProfile, profileTotals } from '../../core/profiles.js';
 import { CATEGORIES, categoryNames } from '../../data/categories.js';
 import { accuracy } from '../../game/engine.js';
@@ -43,7 +42,7 @@ export default {
     };
 
     return screen(
-      topbar({ title: 'Profil', onBack: back, right: iconButton('delete', `Supprimer ${p.name}`, remove, 'icon-btn--danger') }),
+      topbar({ title: 'Fiche joueur', onBack: back, right: iconButton('delete', `Supprimer ${p.name}`, remove, 'icon-btn--danger') }),
       body(
         h('div', { class: 'profile-head' },
           avatar(p.color, { size: 96 }),
@@ -55,18 +54,18 @@ export default {
           h('div', { class: 'stat-tile' }, h('strong', null, String(p.totalGroins)), h('span', null, 'Groins')),
           h('div', { class: 'stat-tile' }, h('strong', null, totals.total ? `${accuracy(totals.correct, totals.total)} %` : '—'), h('span', null, 'Précision')),
         ),
-        sectionTitle('Flair par catégorie'),
+        h('section', { class: 'panel' }, sectionTitle('Flair par catégorie'),
         h('ul', { class: 'cat-bars' },
           rows.map((r) =>
             h('li', { class: ['cat-bar', !r.total && 'cat-bar--empty'], style: { '--cat': r.cat.color, '--pct': `${r.pct}%` } },
-              h('span', { class: 'cat-bar__icon' }, icon(r.cat.icon)),
+              h('span', { class: 'cat-bar__icon' }),
               h('span', { class: 'cat-bar__name' }, r.name),
               h('span', { class: 'cat-bar__val' }, r.total ? `${r.pct} %` : '—'),
               h('span', { class: 'cat-bar__track', 'aria-hidden': 'true' }, h('span', { class: 'cat-bar__fill' })),
             ),
           ),
-        ),
-        p.bestRound > 0 && h('p', { class: 'profile-best' }, icon('local_fire_department'), `Meilleure manche : ${p.bestRound} groin${p.bestRound > 1 ? 's' : ''}`),
+        )),
+        p.bestRound > 0 && h('p', { class: 'profile-best' }, `Meilleure manche\u00a0: ${p.bestRound} groin${p.bestRound > 1 ? 's' : ''} sur 10`),
       ),
     );
   },

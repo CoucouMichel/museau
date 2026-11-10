@@ -3,7 +3,7 @@
  */
 import { h } from '../../core/dom.js';
 import { go, back } from '../../core/router.js';
-import { screen, topbar, body, footer, button } from '../components/layout.js';
+import { screen, topbar, body, footer, button, pageHead } from '../components/layout.js';
 import { icon } from '../icons.js';
 import { CATEGORIES, categoryNames } from '../../data/categories.js';
 import { loadThemes, countByCategory } from '../../data/themes.js';
@@ -25,7 +25,7 @@ export default {
 
     const grid = h('div', { class: 'cat-grid' });
     const allBtn = h('button', { class: 'link-btn', type: 'button', onClick: toggleAll });
-    const startBtn = button({ label: 'C’est parti !', icon: 'play_arrow', size: 'lg', onClick: start });
+    const startBtn = button({ label: 'Commencer', size: 'lg', onClick: start });
 
     function toggleAll() {
       haptic('tap');
@@ -52,7 +52,7 @@ export default {
                 refresh();
               },
             },
-            h('span', { class: 'cat-tile__icon' }, icon(cat.icon)),
+            h('span', { class: 'cat-tile__icon', 'aria-hidden': 'true' }),
             h('span', { class: 'cat-tile__name' }, name),
             h('span', { class: 'cat-tile__count' }, counts[name] ? `${counts[name]} thème${counts[name] > 1 ? 's' : ''}` : '…'),
             h('span', { class: 'cat-tile__check', 'aria-hidden': 'true' }, icon('check')),
@@ -62,7 +62,7 @@ export default {
       allBtn.textContent = selected.size === names.length ? 'Aucune' : 'Toutes';
       startBtn.disabled = selected.size === 0 || !themes;
       startBtn.querySelector('span:last-child').textContent =
-        selected.size === 0 ? 'Choisis au moins une catégorie' : `C’est parti ! (${selected.size})`;
+        selected.size === 0 ? 'Choisis au moins une catégorie' : `Commencer · ${selected.size} catégorie${selected.size > 1 ? 's' : ''}`;
     }
 
     function start() {
@@ -89,8 +89,8 @@ export default {
     refresh();
 
     return screen(
-      topbar({ title: 'Catégories', onBack: back, right: allBtn }),
-      body(grid),
+      topbar({ title: 'Étape 2 sur 2', onBack: back, right: allBtn }),
+      body(pageHead('Catégories', 'Choisis tes terrains de jeu.'), grid),
       footer(startBtn),
     );
   },

@@ -17,25 +17,26 @@ body {
 body {
   background: var(--c-paper);
   color: var(--c-ink);
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
   font-size: var(--fs-m);
-  font-weight: 700;
-  line-height: 1.4;
+  font-weight: 400;
+  line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior: none;
-  transition: background-color var(--dur) ease;
+  font-feature-settings: 'ss01', 'cv11';
+  transition: background-color var(--dur) ease, color var(--dur) ease;
 }
 
-h1, h2, h3, h4, p {
+h1, h2, h3, h4, p, figure {
   margin: 0;
 }
 
 h1, h2, h3 {
-  font-family: var(--font-display);
-  font-weight: 700;
+  font-family: var(--font-serif);
+  font-weight: 400;
   line-height: 1.1;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
 }
 
 button,
@@ -57,7 +58,7 @@ ol, ul {
 }
 
 :focus-visible {
-  outline: 3px solid var(--c-groin);
+  outline: 2px solid var(--c-accent);
   outline-offset: 3px;
 }
 [tabindex='-1']:focus {
@@ -66,6 +67,15 @@ ol, ul {
 
 [hidden] {
   display: none !important;
+}
+
+/* Couleurs de données (catégories / joueurs) adaptées au thème. */
+[style*='--cat'] {
+  --cat-ui: color-mix(in srgb, var(--cat), #fff var(--data-mix));
+}
+[style*='--player-color'],
+[style*='--avatar-color'] {
+  --player-ui: color-mix(in srgb, var(--player-color, var(--avatar-color)), #fff var(--data-mix));
 }
 
 /* ---------- Gabarit applicatif ---------- */
@@ -84,10 +94,10 @@ ol, ul {
   display: flex;
   flex-direction: column;
   padding:
-    calc(env(safe-area-inset-top) + var(--sp-3))
+    calc(env(safe-area-inset-top) + var(--sp-4))
     var(--gutter)
-    calc(env(safe-area-inset-bottom) + var(--sp-4));
-  gap: var(--sp-3);
+    calc(env(safe-area-inset-bottom) + var(--sp-5));
+  gap: var(--sp-4);
 }
 
 .screen__body {
@@ -97,10 +107,8 @@ ol, ul {
   overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
-  gap: var(--sp-4);
-  /* Laisse respirer les ombres « sticker » sans qu'elles soient coupées. */
-  padding: var(--sp-1) var(--sp-1) var(--sp-3);
-  margin: 0 calc(-1 * var(--sp-1));
+  gap: var(--sp-5);
+  padding-bottom: var(--sp-3);
   scrollbar-width: none;
 }
 .screen__body::-webkit-scrollbar {
@@ -110,34 +118,47 @@ ol, ul {
 .screen__footer {
   display: flex;
   flex-direction: column;
-  gap: var(--sp-3);
+  gap: var(--sp-2);
   flex-shrink: 0;
 }
 
-/* ---------- Transitions d'écran ---------- */
+/* ---------- Transitions d'écran : fondu discret ---------- */
 .screen--enter-forward { animation: screen-in-right var(--dur) var(--ease-out); }
 .screen--enter-back { animation: screen-in-left var(--dur) var(--ease-out); }
-.screen--enter-fade { animation: screen-fade var(--dur) var(--ease-out); }
+.screen--enter-fade { animation: screen-fade var(--dur-slow) var(--ease-out); }
 
-@keyframes screen-in-right { from { opacity: 0; transform: translateX(24px); } }
-@keyframes screen-in-left { from { opacity: 0; transform: translateX(-24px); } }
-@keyframes screen-fade { from { opacity: 0; transform: scale(0.98); } }
+@keyframes screen-in-right { from { opacity: 0; transform: translateX(12px); } }
+@keyframes screen-in-left { from { opacity: 0; transform: translateX(-12px); } }
+@keyframes screen-fade { from { opacity: 0; } }
 
 /* ---------- Utilitaires typographiques ---------- */
+.kicker,
 .eyebrow {
-  font-size: var(--fs-xs);
-  font-weight: 900;
+  font-family: var(--font-sans);
+  font-size: var(--fs-kicker);
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: var(--tracking-kicker);
   color: var(--c-ink-soft);
 }
 
+.italic {
+  font-family: var(--font-serif);
+  font-style: italic;
+}
+
+.rule {
+  height: var(--hairline);
+  background: var(--c-rule);
+  border: none;
+  margin: 0;
+}
+
+.prose {
+  color: var(--c-ink-soft);
+}
 .prose p + p {
   margin-top: var(--sp-3);
-}
-.prose {
-  font-weight: 600;
-  color: var(--c-ink-soft);
 }
 
 @media (prefers-reduced-motion: reduce) {

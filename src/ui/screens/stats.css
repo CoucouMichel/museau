@@ -1,35 +1,34 @@
-/* Statistiques & profil */
+/* Statistiques & fiche joueur */
 .profile-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-3);
+  border-top: var(--hairline) solid var(--c-rule-strong);
 }
 .profile-row {
   display: flex;
   align-items: center;
   gap: var(--sp-3);
   width: 100%;
-  padding: var(--sp-3);
+  min-height: 76px;
+  padding: var(--sp-3) 0;
+  background: none;
+  border: none;
+  border-bottom: var(--hairline) solid var(--c-rule);
   text-align: left;
-  transition: transform var(--dur-fast), box-shadow var(--dur-fast);
 }
 .profile-row:active {
-  transform: translateY(var(--lift));
-  box-shadow: none;
+  background: var(--c-sunk);
 }
 .profile-row__text {
   flex: 1;
   min-width: 0;
 }
 .profile-row__text h3 {
-  font-size: var(--fs-l);
+  font-size: var(--fs-xl);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 .profile-row__text p {
   font-size: var(--fs-xs);
-  font-weight: 700;
   color: var(--c-ink-soft);
 }
 .profile-row__pct {
@@ -38,89 +37,81 @@
   align-items: flex-end;
 }
 .profile-row__pct strong {
-  font-family: var(--font-display);
-  font-size: var(--fs-l);
-  color: var(--c-groin-deep);
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--fs-xl);
 }
-[data-theme='dark'] .profile-row__pct strong { color: var(--c-groin); }
 .profile-row__pct span {
-  font-size: var(--fs-2xs);
-  font-weight: 900;
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-kicker);
   text-transform: uppercase;
   color: var(--c-ink-soft);
 }
 .profile-row > .icon {
+  --icon-size: 18px;
   color: var(--c-ink-soft);
 }
 
 .profile-head {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: var(--sp-2);
+  gap: var(--sp-4);
+  padding-top: var(--sp-2);
+}
+.profile-head .avatar {
+  --avatar-size: 64px !important;
 }
 .profile-head__name {
-  font-size: var(--fs-2xl);
-  text-align: center;
+  font-size: var(--fs-3xl);
+  letter-spacing: -0.03em;
   word-break: break-word;
 }
 .profile-best {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--sp-2);
-  font-weight: 800;
+  font-family: var(--font-serif);
+  font-style: italic;
   color: var(--c-ink-soft);
 }
-.profile-best .icon { color: var(--c-no); }
 
-.cat-bars {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-}
 .cat-bar {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  grid-template-areas: 'icon name val' 'icon track track';
+  grid-template-columns: 10px 1fr auto;
+  grid-template-areas: 'icon name val' '. track track';
   align-items: center;
   column-gap: var(--sp-3);
   row-gap: 6px;
-  padding: var(--sp-2) var(--sp-3);
-  background: var(--c-surface);
-  border: 2px solid var(--c-line);
-  border-radius: var(--radius-m);
+  padding: var(--sp-3) 0;
+  border-bottom: var(--hairline) solid var(--c-rule);
 }
 .cat-bar__icon {
   grid-area: icon;
-  display: grid;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: var(--cat);
-  border: 2px solid var(--c-line);
-  color: var(--c-on-color);
+  width: 10px;
+  height: 10px;
+  background: var(--cat-ui);
 }
-.cat-bar__icon .icon { --icon-size: 18px; }
-.cat-bar__name { grid-area: name; font-weight: 800; }
-.cat-bar__val { grid-area: val; font-family: var(--font-display); font-weight: 700; }
+.cat-bar__name {
+  grid-area: name;
+  font-family: var(--font-serif);
+  font-size: var(--fs-l);
+}
+.cat-bar__val {
+  grid-area: val;
+  font-size: var(--fs-s);
+  font-variant-numeric: tabular-nums;
+}
 .cat-bar__track {
   grid-area: track;
-  height: 10px;
-  border-radius: var(--radius-pill);
-  background: var(--c-surface-2);
-  border: 2px solid var(--c-line);
-  overflow: hidden;
+  height: 2px;
+  background: var(--c-rule);
 }
 .cat-bar__fill {
   display: block;
   height: 100%;
   width: var(--pct);
-  background: var(--cat);
-  border-right: 2px solid var(--c-line);
+  background: var(--cat-ui);
   animation: grow 700ms var(--ease-out);
 }
-.cat-bar--empty { opacity: 0.55; }
-.cat-bar--empty .cat-bar__fill { border: none; }
+.cat-bar--empty {
+  opacity: 0.45;
+}
 @keyframes grow { from { width: 0; } }

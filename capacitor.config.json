@@ -3,7 +3,7 @@
   "appName": "Museau",
   "webDir": "dist",
   "android": {
-    "backgroundColor": "#FFF4EC",
+    "backgroundColor": "#F5F1EA",
     "allowMixedContent": false,
     "captureInput": true,
     "webContentsDebuggingEnabled": false
@@ -11,7 +11,7 @@
   "plugins": {
     "SplashScreen": {
       "launchAutoHide": false,
-      "backgroundColor": "#FFF4EC",
+      "backgroundColor": "#F5F1EA",
       "showSpinner": false
     }
   }

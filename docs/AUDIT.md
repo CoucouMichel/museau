@@ -12,7 +12,7 @@ _Audit réalisé sur l'état du dépôt au commit `804ea50` (avant refonte)._
 | Bugs bloquants | 6 bugs de logique (cf. §3) | Corrigés |
 | Sécurité | Injection HTML possible via les pseudos | Plus aucun `innerHTML` sur des données utilisateur |
 | Tests | Aucun | 14 tests unitaires du moteur + script de validation des données |
-| Charte graphique | Cohérente en intention mais ~40 surcharges dark mode, couleurs en dur, CSS dupliqué | Système de tokens unique, clair/sombre/auto |
+| Charte graphique | Claymorphism rose générique, ~40 surcharges dark mode, couleurs en dur, CSS dupliqué | Direction « Éditorial » (voir DESIGN.md), tokens uniques, clair/sombre/auto |
 | Fiche Play Store | Rien | Icône 512, bannière 1024×500, 7 captures 9:16, politique de confidentialité |
 
 **Verdict avant refonte : non publiable.** L'app ne fonctionnait pas hors connexion, le bouton retour Android aurait fermé l'application en pleine partie, et plusieurs bugs cassaient le déroulé du jeu.
@@ -72,17 +72,17 @@ Script : `npm run data:check` (et `npm run data:fix`).
 | `user-scalable=no, maximum-scale=1` : zoom interdit | Zoom autorisé |
 | Boutons icône sans libellé (`←`, `✕`, ⚙️) | `aria-label` partout |
 | `div` cliquables (profils, catégories) : inaccessibles au clavier et aux lecteurs d'écran | Vrais `<button>` avec `aria-pressed` / `aria-checked` |
-| Texte blanc sur vert `#00D084` (contraste 1,9:1) | Texte encre sur couleurs vives (≥ 7:1) |
+| Texte blanc sur vert `#00D084` (contraste 1,9:1) | Encre sur papier (≥ 15:1), gris secondaire ≥ 4,5:1 |
 | Boutons de réponse à 65 % d'opacité | Pleine opacité, cibles ≥ 48 px |
-| Aucune prise en compte de `prefers-reduced-motion` | Animations réduites, confettis désactivés |
+| Aucune prise en compte de `prefers-reduced-motion` | Animations réduites |
 | Swipe uniquement tactile/souris | + boutons + flèches ← → du clavier |
 
 ## 7. Performance
 
 | | Avant | Après |
 |---|---|---|
-| Premier chargement réseau | ~200 Ko HTML + police Material Symbols variable (≈ 3,5 Mo) + 2 polices Nunito + Gist 560 Ko | 34 Ko JS gzip + 7 Ko CSS gzip + 6 polices woff2 (~100 Ko) + JSON local |
-| Icônes | Police complète de ~3 000 icônes | 73 SVG embarqués |
+| Premier chargement réseau | ~200 Ko HTML + police Material Symbols variable (≈ 3,5 Mo) + 2 polices Nunito + Gist 560 Ko | 20 Ko JS gzip + 5 Ko CSS gzip + 6 polices woff2 (~150 Ko) + JSON local |
+| Icônes | Police complète de ~3 000 icônes | 11 SVG embarqués |
 | Sons | 13 `<audio>` chargés au démarrage, latence notable sur Android | Web Audio, chargé au premier contact, latence quasi nulle |
 | Poids du dépôt utile | 4,4 Mo dont 2,8 Mo d'images inutilisées | Images mises de côté dans `assets/legacy/` |
 

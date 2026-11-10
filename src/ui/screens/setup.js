@@ -3,7 +3,7 @@
  */
 import { h } from '../../core/dom.js';
 import { go, back } from '../../core/router.js';
-import { screen, topbar, body, footer, button, segmented, sectionTitle } from '../components/layout.js';
+import { screen, topbar, body, footer, button, segmented, sectionTitle, pageHead } from '../components/layout.js';
 import { avatar } from '../components/snout.js';
 import { icon } from '../icons.js';
 import { listProfiles } from '../../core/profiles.js';
@@ -40,7 +40,6 @@ export default {
     const hint = h('p', { class: 'setup__hint' });
     const startBtn = button({
       label: 'Choisir les catégories',
-      icon: 'arrow_forward',
       onClick: () => {
         setSetting('lastSetup', { ...getSetting('lastSetup'), roundsPerPlayer: setup.roundsPerPlayer, timer: setup.timer });
         go('categories', { playerIds: [...selection], roundsPerPlayer: setup.roundsPerPlayer, timer: setup.timer });
@@ -100,7 +99,7 @@ export default {
       hint.textContent = profiles.length === 0
         ? 'Crée ton premier joueur pour commencer.'
         : solo
-          ? 'Qui joue ?'
+          ? 'Qui joue\u202f?'
           : n < min
             ? `Sélectionne au moins ${min} joueurs. L’ordre de sélection donne l’ordre de passage.`
             : 'L’ordre de sélection donne l’ordre de passage.';
@@ -109,8 +108,9 @@ export default {
     refresh();
 
     return screen(
-      topbar({ title: solo ? 'Partie solo' : 'Partie entre amis', onBack: back }),
+      topbar({ title: 'Étape 1 sur 2', onBack: back }),
       body(
+        pageHead(solo ? 'Partie solo' : 'Entre amis', solo ? 'Seul face aux intrus.' : 'Le téléphone passera de main en main.'),
         h(
           'section',
           { class: 'panel' },
