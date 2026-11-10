@@ -1,0 +1,18 @@
+{
+  "appId": "fr.museau.app",
+  "appName": "Museau",
+  "webDir": "dist",
+  "android": {
+    "backgroundColor": "#FFF4EC",
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchAutoHide": false,
+      "backgroundColor": "#FFF4EC",
+      "showSpinner": false
+    }
+  }
+}

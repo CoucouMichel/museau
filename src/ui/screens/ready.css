@@ -1,0 +1,62 @@
+/* « Passe le téléphone » */
+.screen--ready .screen__body {
+  justify-content: center;
+  gap: var(--sp-5);
+}
+.ready__player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.ready__name {
+  font-size: var(--fs-2xl);
+  text-align: center;
+  word-break: break-word;
+}
+.ready__theme {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-5) var(--sp-4);
+  text-align: center;
+}
+.ready__theme .eyebrow {
+  margin-top: var(--sp-2);
+}
+.ready__theme-text {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 7vw, 2rem);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+
+/* Compte à rebours */
+.countdown {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  place-items: center;
+  background: color-mix(in srgb, var(--c-paper) 92%, transparent);
+  animation: fade-in var(--dur) ease;
+}
+.countdown__num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 9rem;
+  color: var(--c-groin);
+  -webkit-text-stroke: 4px var(--c-line);
+  paint-order: stroke fill;
+  text-shadow: 0 8px 0 var(--c-line);
+}
+.countdown__num--pop {
+  animation: count-pop 600ms var(--ease-bounce);
+}
+@keyframes count-pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}

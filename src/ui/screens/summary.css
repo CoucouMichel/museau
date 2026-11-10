@@ -1,0 +1,95 @@
+/* Bilan de manche */
+.summary__hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-5) var(--sp-4) var(--sp-4);
+  text-align: center;
+}
+.summary__theme {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-l);
+  text-wrap: balance;
+}
+.summary__score {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+  padding: var(--sp-2) var(--sp-5) var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--player-color) 22%, var(--c-surface));
+  border: var(--stroke) solid var(--c-line);
+}
+.summary__score-val {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-2xl);
+  line-height: 1;
+}
+.summary__score-unit {
+  font-weight: 900;
+  color: var(--c-ink-soft);
+}
+.summary__verdict {
+  font-weight: 800;
+  color: var(--c-ink-soft);
+}
+.summary__list-title {
+  text-align: center;
+}
+
+.answers {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.answer {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-3) var(--sp-2) var(--sp-2);
+  background: var(--c-surface);
+  border: 2px solid var(--c-line);
+  border-radius: var(--radius-m);
+  animation: pop-in var(--dur-slow) var(--ease-bounce) both;
+}
+.answer:nth-child(n) { animation-delay: calc(var(--i, 0) * 40ms); }
+.answer__mark {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 2px solid var(--c-line);
+  color: var(--c-on-color);
+  flex-shrink: 0;
+}
+.answer__mark .icon { --icon-size: 18px; }
+.answer--ok .answer__mark { background: var(--c-yes); }
+.answer--ko .answer__mark { background: var(--c-no); }
+.answer--ko { background: color-mix(in srgb, var(--c-no) 10%, var(--c-surface)); }
+.answer__text {
+  flex: 1;
+  font-weight: 800;
+  min-width: 0;
+}
+.answer__truth {
+  flex-shrink: 0;
+  font-size: var(--fs-2xs);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  border: 2px solid currentColor;
+}
+.answer__truth--yes { color: var(--c-yes); }
+.answer__truth--no { color: var(--c-no); }
+.answer--skip {
+  color: var(--c-ink-soft);
+  border-style: dashed;
+  background: transparent;
+}

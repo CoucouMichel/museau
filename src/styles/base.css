@@ -1,0 +1,151 @@
+/* ============================================================
+ *  Base : reset, typographie, gabarit des écrans
+ * ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+}
+
+body {
+  background: var(--c-paper);
+  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-m);
+  font-weight: 700;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+  transition: background-color var(--dur) ease;
+}
+
+h1, h2, h3, h4, p {
+  margin: 0;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+ol, ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+:focus-visible {
+  outline: 3px solid var(--c-groin);
+  outline-offset: 3px;
+}
+[tabindex='-1']:focus {
+  outline: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* ---------- Gabarit applicatif ---------- */
+.app {
+  position: relative;
+  width: 100%;
+  max-width: var(--app-max-width);
+  height: 100dvh;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding:
+    calc(env(safe-area-inset-top) + var(--sp-3))
+    var(--gutter)
+    calc(env(safe-area-inset-bottom) + var(--sp-4));
+  gap: var(--sp-3);
+}
+
+.screen__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+  /* Laisse respirer les ombres « sticker » sans qu'elles soient coupées. */
+  padding: var(--sp-1) var(--sp-1) var(--sp-3);
+  margin: 0 calc(-1 * var(--sp-1));
+  scrollbar-width: none;
+}
+.screen__body::-webkit-scrollbar {
+  display: none;
+}
+
+.screen__footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  flex-shrink: 0;
+}
+
+/* ---------- Transitions d'écran ---------- */
+.screen--enter-forward { animation: screen-in-right var(--dur) var(--ease-out); }
+.screen--enter-back { animation: screen-in-left var(--dur) var(--ease-out); }
+.screen--enter-fade { animation: screen-fade var(--dur) var(--ease-out); }
+
+@keyframes screen-in-right { from { opacity: 0; transform: translateX(24px); } }
+@keyframes screen-in-left { from { opacity: 0; transform: translateX(-24px); } }
+@keyframes screen-fade { from { opacity: 0; transform: scale(0.98); } }
+
+/* ---------- Utilitaires typographiques ---------- */
+.eyebrow {
+  font-size: var(--fs-xs);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--c-ink-soft);
+}
+
+.prose p + p {
+  margin-top: var(--sp-3);
+}
+.prose {
+  font-weight: 600;
+  color: var(--c-ink-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}

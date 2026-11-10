@@ -1,0 +1,72 @@
+/* Préparation de partie */
+.setup__hint {
+  font-size: var(--fs-s);
+  font-weight: 600;
+  color: var(--c-ink-soft);
+  margin-top: calc(-1 * var(--sp-2));
+}
+.player-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+.player-chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  min-height: var(--tap);
+  padding: 4px var(--sp-4) 4px 4px;
+  background: var(--c-surface);
+  border: var(--stroke) solid var(--c-line);
+  border-radius: var(--radius-pill);
+  font-weight: 800;
+  transition: transform var(--dur-fast), background-color var(--dur) ease;
+  max-width: 100%;
+}
+.player-chip:active {
+  transform: scale(0.96);
+}
+.player-chip .avatar {
+  border-width: 2px;
+}
+.player-chip__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.player-chip--selected {
+  background: color-mix(in srgb, var(--player-color) 30%, var(--c-surface));
+  box-shadow: var(--shadow-s);
+}
+.player-chip__badge {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  display: grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 4px;
+  border-radius: var(--radius-pill);
+  background: var(--c-ink);
+  color: var(--c-paper);
+  font-size: var(--fs-xs);
+  font-weight: 900;
+}
+.player-chip__badge .icon {
+  --icon-size: 14px;
+}
+.player-chip--add {
+  border-style: dashed;
+  background: transparent;
+  color: var(--c-ink-soft);
+}
+.player-chip__plus {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--c-surface-2);
+}
