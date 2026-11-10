@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-10T00:00:00Z",
+  "title": "Design System: Museau",
+  "extensions": {
+    "colorMeta": {
+      "primary": { "role": "primary", "displayName": "Snout Pink", "canonical": "#FF3B7C", "tonalRamp": ["#5C0A26","#8F1240","#C2205A","#FF3B7C","#FF6A9B","#FF94B8","#FFC2D6","#FFE8F0"] },
+      "secondary": { "role": "secondary", "displayName": "Groin Gold", "canonical": "#FFB800", "tonalRamp": ["#4D3800","#7A5800","#A87A00","#D69A00","#FFB800","#FFCB4D","#FFE08F","#FFF4D1"] },
+      "lilac-paper": { "role": "neutral", "displayName": "Lilac Paper", "canonical": "#F4F0FA", "tonalRamp": ["#12101A","#1E1A2B","#2D2342","#736B82","#B9B2C8","#DDD7E8","#F4F0FA","#FFFFFF"] },
+      "success": { "role": "tertiary", "displayName": "Yes Green", "canonical": "#00D084", "tonalRamp": ["#00382A","#006B4A","#00A368","#00D084","#4DE0AE","#99EDD0","#E0F9ED","#F2FEF8"] },
+      "danger": { "role": "tertiary", "displayName": "No Red", "canonical": "#FF4D4D", "tonalRamp": ["#4D0A0A","#8F1A1A","#D63333","#FF4D4D","#FF7F7F","#FFB0B0","#FFE5E5","#FFF4F4"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Wordmark", "purpose": "The MUSEAU title on the landing screen." },
+      "card-word": { "displayName": "Card Word", "purpose": "The word on the play card." },
+      "label": { "displayName": "Label", "purpose": "Section labels and button text, uppercase." }
+    },
+    "shadows": [
+      { "name": "soft", "value": "0 8px 24px rgba(45,35,66,0.08)", "purpose": "Toggles, inputs, panels." },
+      { "name": "button-lift", "value": "0 4px 12px rgba(255,59,124,0.35)", "purpose": "Primary pink buttons." },
+      { "name": "card", "value": "0 16px 36px rgba(45,35,66,0.12), 0 2px 8px rgba(45,35,66,0.04)", "purpose": "The active play card." }
+    ],
+    "motion": [
+      { "name": "bounce", "value": "cubic-bezier(0.34, 1.56, 0.64, 1)", "purpose": "Pop-in and score feedback." },
+      { "name": "press", "value": "0.2s cubic-bezier(0.25, 0.8, 0.25, 1)", "purpose": "Button press transitions." }
+    ],
+    "breakpoints": [
+      { "name": "app-frame", "value": "500px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The single main action on a screen.",
+      "html": "<button class=\"ds-btn-primary\">C'EST PARTI !</button>",
+      "css": ".ds-btn-primary{width:100%;height:60px;border:none;border-radius:999px;background:#FF3B7C;color:#fff;font-family:Nunito,sans-serif;font-size:16px;font-weight:800;letter-spacing:1px;text-transform:uppercase;box-shadow:0 4px 12px rgba(255,59,124,.35);cursor:pointer;transition:all .2s cubic-bezier(.25,.8,.25,1)}.ds-btn-primary:active{transform:translateY(2px);box-shadow:0 2px 6px rgba(255,59,124,.25)}.ds-btn-primary:focus-visible{outline:2px solid #2D2342;outline-offset:3px}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Tertiary action such as the rules link.",
+      "html": "<button class=\"ds-btn-ghost\">Règles du jeu</button>",
+      "css": ".ds-btn-ghost{width:100%;height:48px;border-radius:999px;background:#F4F0FA;color:#2D2342;border:2px solid rgba(45,35,66,.12);font-family:Nunito,sans-serif;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s}.ds-btn-ghost:active{background:rgba(45,35,66,.05);transform:translateY(2px)}.ds-btn-ghost:focus-visible{outline:2px solid #FF3B7C;outline-offset:3px}"
+    },
+    {
+      "name": "Segmented Toggle",
+      "kind": "chip",
+      "refersTo": "toggle-selected",
+      "description": "Choose a number of teams, rounds or timer.",
+      "html": "<div class=\"ds-toggle\"><button>1</button><button class=\"on\">3</button><button>5</button></div>",
+      "css": ".ds-toggle{display:flex;background:#fff;border-radius:999px;padding:6px;box-shadow:0 8px 24px rgba(45,35,66,.08)}.ds-toggle button{flex:1;height:44px;border:none;border-radius:999px;background:transparent;color:#736B82;font-family:Nunito,sans-serif;font-size:16px;font-weight:800;cursor:pointer;transition:.2s}.ds-toggle .on{background:#FF3B7C;color:#fff;box-shadow:0 4px 12px rgba(255,59,124,.3)}.ds-toggle button:focus-visible{outline:2px solid #FF3B7C}"
+    },
+    {
+      "name": "Team Input",
+      "kind": "input",
+      "refersTo": "button-secondary",
+      "description": "Pill text field for team names.",
+      "html": "<input class=\"ds-input\" value=\"Les Groins\">",
+      "css": ".ds-input{width:100%;height:56px;border:none;border-radius:999px;padding:0 24px;background:#fff;color:#2D2342;font-family:Nunito,sans-serif;font-size:16px;font-weight:700;box-shadow:0 8px 24px rgba(45,35,66,.08)}.ds-input:focus{outline:2px solid #FF3B7C}"
+    },
+    {
+      "name": "Play Card",
+      "kind": "card",
+      "refersTo": "play-card",
+      "description": "The swipeable word card, framed in its category color.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-in\"><span class=\"ds-badge\">Histoire</span><span class=\"ds-word\">Austerlitz</span></div></div>",
+      "css": ".ds-card{width:240px;height:300px;padding:12px;background:#fff;border-radius:26px;border:1px solid rgba(45,35,66,.06);box-shadow:0 16px 36px rgba(45,35,66,.12),0 2px 8px rgba(45,35,66,.04)}.ds-card-in{height:100%;border:2.5px solid #D97706;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-family:Nunito,sans-serif;color:#2D2342}.ds-badge{font-size:12px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#D97706}.ds-word{font-size:32px;font-weight:800;line-height:1.25}"
+    },
+    {
+      "name": "Mascot Snout",
+      "kind": "custom",
+      "refersTo": "button-primary",
+      "description": "CSS pig snout used as avatar and score icon.",
+      "html": "<div class=\"ds-snout\"><span class=\"l\"></span><span class=\"r\"></span></div>",
+      "css": ".ds-snout{width:40px;height:26px;border-radius:13px;background:#FF3B7C;display:flex;align-items:center;justify-content:space-around;padding:0 6px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.2)}.ds-snout span{width:5px;height:11px;border-radius:50%;background:#D81A5B;display:inline-block}.ds-snout .l{transform:rotate(10deg)}.ds-snout .r{transform:rotate(-10deg)}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Party Table Game",
+    "overview": "Museau looks like something you would put in the middle of a table: a deck of big, readable cards on a soft lilac cloth, passed from hand to hand. The mood is clean and friendly, with one saturated pink doing the talking.",
+    "keyCharacteristics": ["Pill-shaped controls and generous radii everywhere.", "One hot-pink action color on calm lilac or violet-black.", "Heavy, rounded Nunito for every word.", "Soft tinted shadows; buttons press down 2px.", "Each category owns a color that frames its cards."],
+    "rules": [
+      { "name": "The One Hot Color Rule", "body": "Snout Pink is the only action color; category colors frame content and never become buttons.", "section": "colors" },
+      { "name": "The Heavy Round Rule", "body": "Never use a weight below 500; headings are 900.", "section": "typography" },
+      { "name": "The Press Down Rule", "body": "Interactive elements respond to touch by moving down 2px and shrinking their shadow; they never lift on hover.", "section": "elevation" }
+    ],
+    "dos": ["Do use Snout Pink for the one main action per screen.", "Do keep every control a pill or circle with at least 38px height.", "Do write all UI copy in French, and keep the \"groin\" vocabulary.", "Do frame cards with their category color and keep the word at 32px or larger.", "Do provide the dark theme via the [data-theme=\"dark\"] variable overrides."],
+    "donts": ["Don't add hard offset shadows, gradients-as-decoration or neon glows.", "Don't use category colors for buttons or toggles.", "Don't use sharp corners or a second typeface.", "Don't crowd screens; one action and a few controls at a time."]
+  }
+}
